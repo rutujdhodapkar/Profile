@@ -283,6 +283,7 @@
                 box-shadow: 0 5px 15px rgba(0,0,0,0.1);
                 width: 100%;
                 max-width: 300px;
+                transition: box-shadow 0.3s ease; /* Added transition for glow effect */
             }
 
             .project-item img {
@@ -301,6 +302,11 @@
                 font-size: 14px;
                 color: black; /* Changed project item paragraph color to black */
                 padding: 0 15px 15px;
+            }
+
+            /* Glow effect on hover for Project 1 */
+            .project-item:hover {
+                box-shadow: 0 0 20px rgba(0, 204, 255, 1); /* Glow effect */
             }
 
             /* Contact Section */
@@ -516,9 +522,11 @@
             <h3>Projects</h3>
             <div class="project-list">
                 <div class="project-item">
-                    <img src="Gemini_Generated_Image_qpyl7qqpyl7qqpyl.jpeg" alt="Project 1">
-                    <h4>Text To Emotion Detection</h4>
-                    <p>Machine Learning model for detecting emotion type base on user input as text.</p>
+                    <a href="https://rutujproject1-czzltsg8apdmaxpiz4xgzj.streamlit.app/" style="text-decoration: none;">
+                        <img src="Gemini_Generated_Image_qpyl7qqpyl7qqpyl.jpeg" alt="Project 1">
+                        <h4>Text To Emotion Detection</h4>
+                        <p>Machine Learning model for detecting emotion type base on user input as text.</p>
+                    </a>
                 </div>
                 <div class="project-item">
                     <img src="Gemini_Generated_Image_lpspq6lpspq6lpsp.jpeg" alt="Project 2">
