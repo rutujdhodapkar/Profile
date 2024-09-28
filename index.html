@@ -5,8 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rutuj's personal Website</title>
+    <title>Portfolio.</title>
     <style>
+ 
         * {
             margin: 0;
             padding: 0;
@@ -16,7 +17,7 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            background-color: #f7f7f7;
+            background-color: #e5e5e5;
             color: black; /* Changed text color to black */
             padding-top: 60px; /* Add padding to account for fixed header */
             scroll-behavior: smooth; /* Enable smooth scrolling for the whole page */
@@ -36,13 +37,12 @@
             justify-content: space-between;
             align-items: center;
             transition: top 0.3s ease;
-            backdrop-filter: blur(5px); /* Make transparency effect a little blur */
+            backdrop-filter: blur(10px); /* Make transparency effect a little blur */
         }
 
-        .logo {
-            font-size: 16px; /* Make header size small */
-            font-weight: bold;
-            color: black; /* Changed logo color to black */
+        .logo img {
+            width: 150px; /* Set the desired width for the logo image */
+            height: auto; /* Maintain aspect ratio */
         }
 
         .nav {
@@ -65,12 +65,13 @@
 
         .nav ul li a {
             text-decoration: none;
-            color: black; /* Changed link color to black */
+            color: rgba(0, 0, 0, 0.912); /* Changed link color to black */
             font-weight: bold;
             font-size: 16px;
             padding: 10px 15px; /* Add padding for clickable area */
             border-radius: 20px; /* Rounded corners */
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            
         }
 
         .nav ul li a.active {
@@ -167,9 +168,15 @@
 
         .hero h2 span {
             font-size: 54px;
-            background: linear-gradient(45deg, #4f8bf3, #9143da);
+            background: linear-gradient(80deg, #247688, #35217c); /* homepage Rutuj Dhodapkar name shades */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .hero .subtitle {
+            color: #79c7e8; /* Light bluish green color */
+            font-size: 24px; /* Adjust font size as needed */
+            margin-top: 8px; /* Space between name and subtitle */
         }
 
         .hero p {
@@ -183,17 +190,37 @@
             display: inline-block;
             margin-top: 30px;
             padding: 12px 24px;
-            background-color: #0072ff; /* Blue button */
-            color: white;
+            background-color: transparent; /* Changed button color to transparent */
+            color: black; /* Changed button text color to black */
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 50px; /* More curve on button */
             font-weight: bold;
             font-size: 16px;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid black; /* Added border to button */
+            position: relative; /* Added position relative for gradient effect */
+            overflow: hidden; /* Added overflow hidden for gradient effect */
+        }
+
+        .cta-button:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #00c6ff, #0072ff); /* Gradient background for button */
+            z-index: -1;
+            transition: transform 0.5s ease, opacity 0.5s ease; /* Added transition for gradient effect */
+            transform: scaleX(0); /* Initial scale for gradient effect */
+            transform-origin: left; /* Set transform origin to left for gradient effect */
+        }
+
+        .cta-button:hover:before {
+            transform: scaleX(1); /* Scale to 100% on hover for gradient effect */
         }
 
         .cta-button:hover {
-            background-color: #0056b3; /* Darker blue on hover */
             box-shadow: 0 0 20px rgba(0, 123, 255, 1); /* Darker blue effect on hover */
         }
 
@@ -331,8 +358,9 @@
 
         /* Education Section */
         .education {
-            background-color: #f7f7f7;
+            background: rgba(173, 253, 254, 0.066); /* Fixed the gradient syntax */
         }
+        
 
         .education-list {
             display: flex;
@@ -423,14 +451,14 @@
 <body>
     <!-- Navigation -->
     <header>
-        <div class="logo"> Rutuj's personal Website</div>
+        <div class="logo"><img src="portfolio.png" alt="Portfolio Logo"></div>
         <nav class="nav">
             <ul>
                 <li><a href="#top" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#about" class="nav-link">About Me</a></li>
                 <li><a href="#education" class="nav-link">Education</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#projects" class="nav-link">Selected Projects</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
         </nav>
@@ -440,10 +468,11 @@
     <!-- Side Menu -->
     <div class="side-menu">
         <ul>
+            <li><a href="#top" class="nav-link">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#education">Education</a></li>
             <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
+            <li><a href="#projects">Selected Projects</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </div>
@@ -452,7 +481,8 @@
     <section class="hero" id="top">
         <div class="hero-text">
             <h2>Hello there!<br>I'm <span id="name"></span></h2>
-            <p>Welcome to my personal website! Here you can find information about my education, skills, projects, and how to get in touch with me.</p>
+            <p class="subtitle">AIML Student</p> <!-- Added subtitle here -->
+            <p>Welcome to my Portfolio website! Here you can find information about my education, skills, projects, and how to get in touch with me.</p>
             <a href="#contact" class="cta-button">Get in Touch</a>
         </div>
     </section>
@@ -486,21 +516,24 @@
     <section id="skills" class="skills">
         <h3>Skills</h3>
         <div class="skills-list">
-            <div class="skill-item">JavaScript</div>
-            <div class="skill-item">Python (Programming Language)</div>
-            <div class="skill-item">Applied Machine Learning</div>
-            <div class="skill-item">Machine Learning Algorithms</div>
-            <div class="skill-item">R (Programming Language)</div>
-            <div class="skill-item">Computer Vision</div>
-            <div class="skill-item">Deep Learning</div>
-            <div class="skill-item">Machine Learning</div>
             <div class="skill-item">Artificial Intelligence (AI)</div>
-            <div class="skill-item">Cloud Computing</div>
-            <div class="skill-item">Java (Programming Language)</div>
-            <div class="skill-item">Mathematics & Statistics</div>
-            <div class="skill-item">SQL</div>
+            <div class="skill-item">Machine Learning</div>
+            <div class="skill-item">Deep Learning</div>
             <div class="skill-item">Data Vissulization</div>
+            <div class="skill-item">Computer Vision</div>
+            <div class="skill-item">Cloud Computing</div>
         </div>
+<br><br>
+        <div style="background: linear-gradient(90deg, #adfcfe, #2bbad7, #4749cd, #6d27cf, #c940b7, #ff00a2, #e30505); height: 1px; margin: 20px 0;"></div>
+
+        <h3>Programming languages</h3>
+        <div class="Programming-language-list">
+            <div class="skill-item">Python (Programming Language)</div>
+            <div class="skill-item">R (Programming Language)</div>
+            <div class="skill-item">Java (Programming Language)</div>
+            <div class="skill-item">JavaScript (Programming Language)</div>
+        </div>
+
     </section>
 
     <!-- Projects Section -->
