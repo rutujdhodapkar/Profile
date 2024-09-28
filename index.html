@@ -5,9 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio.</title>
+    <title>Rutuj's personal Website</title>
     <style>
- 
         * {
             margin: 0;
             padding: 0;
@@ -17,37 +16,39 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-
+            background-color: #f7f7f7;
             color: black; /* Changed text color to black */
             padding-top: 60px; /* Add padding to account for fixed header */
             scroll-behavior: smooth; /* Enable smooth scrolling for the whole page */
         }
 
-        /* Button at the top */
-        .top-button {
+        /* Header section */
+        header {
+            background-color: rgba(255, 255, 255, 0.5); /* Add transparency effect */
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             position: fixed;
-            top: 10px;
-            left: 50%; /* Center horizontally */
-            transform: translateX(-50%); /* Adjust to center */
-            background-color: transparent; /* Make background transparent */
-            padding: 2.5px;
-            border-radius: 60px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.150), 0 -4px 6px rgba(0, 0, 0, 0.150); 
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 1002; /* Higher than side menu */
-            backdrop-filter: blur(10px); /* Make transparency effect a little blur */
-            width: auto; /* Allow auto width adjustment */
-            max-width: 90%; /* Limit max width for larger screens */
-            display: flex; /* Use flexbox for alignment */
-            justify-content: center; /* Center content */
-            flex-direction: column; /* Stack items vertically */
-            align-items: center; /* Align items to the center */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: top 0.3s ease;
+            backdrop-filter: blur(5px); /* Make transparency effect a little blur */
+        }
+
+        .logo {
+            font-size: 16px; /* Make header size small */
+            font-weight: bold;
+            color: black; /* Changed logo color to black */
         }
 
         .nav {
             display: flex;
-            justify-content: center; /* Center navigation links */
+            justify-content: flex-end;
             align-items: center;
-            flex-wrap: wrap; /* Allow wrapping for smaller screens */
         }
 
         .nav ul {
@@ -55,7 +56,6 @@
             list-style: none;
             flex-wrap: wrap;
             justify-content: center;
-            padding: 0; /* Remove padding */
         }
 
         .nav ul li {
@@ -65,7 +65,7 @@
 
         .nav ul li a {
             text-decoration: none;
-            color: rgba(0, 0, 0, 0.912); /* Changed link color to black */
+            color: black; /* Changed link color to black */
             font-weight: bold;
             font-size: 16px;
             padding: 10px 15px; /* Add padding for clickable area */
@@ -96,11 +96,57 @@
             transform: scale(1.1);
         }
 
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -250px;
+            width: 250px;
+            height: 50%; /* Make side menu shorter from top to middle */
+            background-color: rgba(255, 255, 255, 0.5); /* Add transparency effect to side menu */
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); /* Make shadow darker when side menu is open */
+            transition: right 0.3s ease-in-out;
+            z-index: 1001;
+            padding-top: 60px;
+            display: none; /* Hide side menu by default */
+            backdrop-filter: blur(5px); /* Make transparency effect a little blur */
+            border-radius: 10px; /* Make edges of side menu curve */
+        }
+
+        .side-menu.open {
+            right: 0;
+            display: block; /* Show side menu when open */
+        }
+
+        .side-menu ul {
+            list-style: none;
+            padding: 20px;
+        }
+
+        .side-menu ul li {
+            margin-bottom: 15px;
+        }
+
+        .side-menu ul li a {
+            text-decoration: none;
+            color: black; /* Changed side menu link color to black */
+            font-size: 20px; /* Increased font size */
+            font-weight: bold;
+            padding: 12px 20px; /* Increased padding for larger button */
+            border-radius: 25px; /* More rounded corners */
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Added transition for highlight effect */
+        }
+
+        .side-menu ul li a:hover {
+            transform: scale(1.05); /* Highlight button animation */
+            background-color: rgba(0, 123, 255, 0.1); /* Light background on hover */
+            box-shadow: 0 0 20px rgba(0, 123, 255, 1); /* Darker blue effect on hover */
+        }
+
         /* Hero section */
         .hero {
             display: flex;
             align-items: center;
-            justify-content: center; /* Center content for larger screens */
+            justify-content: space-between;
             background-color: #fff;
             padding: 60px 20px;
             min-height: 100vh;
@@ -108,7 +154,7 @@
 
         .hero-text {
             max-width: 50%;
-            text-align: center; /* Center text for larger screens */
+            text-align: left;
         }
 
         .hero h2 {
@@ -117,21 +163,13 @@
             color: black; /* Changed hero heading color to black */
             margin-bottom: 20px;
             line-height: 1.2;
-            text-align: center; /* Center the header */
         }
 
         .hero h2 span {
             font-size: 54px;
-            background: linear-gradient(80deg, #247688, #35217c); /* homepage Rutuj Dhodapkar name shades */
+            background: linear-gradient(45deg, #4f8bf3, #9143da);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-
-        .hero .subtitle {
-            color: #79c7e8; /* Light bluish green color */
-            font-size: 24px; /* Adjust font size as needed */
-            margin-top: 8px; /* Space between name and subtitle */
-            text-align: center; /* Center the subtitle */
         }
 
         .hero p {
@@ -139,44 +177,23 @@
             color: black; /* Changed hero paragraph color to black */
             margin-top: 20px;
             line-height: 1.8;
-            text-align: center; /* Center the paragraph */
         }
 
         .cta-button {
             display: inline-block;
             margin-top: 30px;
             padding: 12px 24px;
-            background-color: transparent; /* Changed button color to transparent */
-            color: black; /* Changed button text color to black */
+            background-color: #0072ff; /* Blue button */
+            color: white;
             text-decoration: none;
-            border-radius: 50px; /* More curve on button */
+            border-radius: 5px;
             font-weight: bold;
             font-size: 16px;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            border: 2px solid black; /* Added border to button */
-            position: relative; /* Added position relative for gradient effect */
-            overflow: hidden; /* Added overflow hidden for gradient effect */
-        }
-
-        .cta-button:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #00c6ff, #0072ff); /* Gradient background for button */
-            z-index: -1;
-            transition: transform 0.5s ease, opacity 0.5s ease; /* Added transition for gradient effect */
-            transform: scaleX(0); /* Initial scale for gradient effect */
-            transform-origin: left; /* Set transform origin to left for gradient effect */
-        }
-
-        .cta-button:hover:before {
-            transform: scaleX(1); /* Scale to 100% on hover for gradient effect */
         }
 
         .cta-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
             box-shadow: 0 0 20px rgba(0, 123, 255, 1); /* Darker blue effect on hover */
         }
 
@@ -194,7 +211,6 @@
             font-size: 28px;
             margin-bottom: 20px;
             color: black; /* Changed section headings color to black */
-            text-align: center; /* Center section headings */
         }
 
         .about p, .skills p, .projects p, .contact p, .education p {
@@ -315,9 +331,8 @@
 
         /* Education Section */
         .education {
-            background: rgba(173, 253, 254, 0.066); /* Fixed the gradient syntax */
+            background-color: #f7f7f7;
         }
-        
 
         .education-list {
             display: flex;
@@ -388,47 +403,56 @@
                 max-width: 100%;
                 text-align: center;
             }
-
-            /* New styles for small screens */
-            .top-button {
-                flex-direction: column; /* Stack items vertically */
-                align-items: flex-end; /* Align items to the right */
-            }
         }
 
         @media (min-width: 769px) {
-            .hero {
-                justify-content: center; /* Center content for larger screens */
+            .side-menu {
+                display: none; /* Hide side menu on larger screens */
             }
 
-            .nav {
+            header .nav {
                 display: flex;
+            }
+
+            .side-menu.open {
+                display: none; /* Ensure side menu doesn't display on larger screens */
             }
         }
     </style>
 </head>
 <body>
-    <!-- Button at the top -->
-    <div class="top-button">
-        <div class="menu-toggle">&#9776;</div>
+    <!-- Navigation -->
+    <header>
+        <div class="logo"> Rutuj's personal Website</div>
         <nav class="nav">
             <ul>
                 <li><a href="#top" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About Me</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#education" class="nav-link">Education</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#projects" class="nav-link">Selected Projects</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
         </nav>
+        <div class="menu-toggle">&#9776;</div>
+    </header>
+
+    <!-- Side Menu -->
+    <div class="side-menu">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </div>
 
     <!-- Hero Section -->
     <section class="hero" id="top">
         <div class="hero-text">
             <h2>Hello there!<br>I'm <span id="name"></span></h2>
-            <p class="subtitle">AIML Student</p> <!-- Added subtitle here -->
-            <p>Welcome to my Portfolio website! Here you can find information about my education, skills, projects, and how to get in touch with me.</p>
+            <p>Welcome to my personal website! Here you can find information about my education, skills, projects, and how to get in touch with me.</p>
             <a href="#contact" class="cta-button">Get in Touch</a>
         </div>
     </section>
@@ -462,24 +486,21 @@
     <section id="skills" class="skills">
         <h3>Skills</h3>
         <div class="skills-list">
-            <div class="skill-item">Artificial Intelligence (AI)</div>
-            <div class="skill-item">Machine Learning</div>
-            <div class="skill-item">Deep Learning</div>
-            <div class="skill-item">Data Vissulization</div>
-            <div class="skill-item">Computer Vision</div>
-            <div class="skill-item">Cloud Computing</div>
-        </div>
-<br><br>
-        <div style="background: linear-gradient(90deg, #adfcfe, #2bbad7, #4749cd, #6d27cf, #c940b7, #ff00a2, #e30505); height: 1px; margin: 20px 0;"></div>
-
-        <h3>Programming languages</h3>
-        <div class="Programming-language-list">
+            <div class="skill-item">JavaScript</div>
             <div class="skill-item">Python (Programming Language)</div>
+            <div class="skill-item">Applied Machine Learning</div>
+            <div class="skill-item">Machine Learning Algorithms</div>
             <div class="skill-item">R (Programming Language)</div>
+            <div class="skill-item">Computer Vision</div>
+            <div class="skill-item">Deep Learning</div>
+            <div class="skill-item">Machine Learning</div>
+            <div class="skill-item">Artificial Intelligence (AI)</div>
+            <div class="skill-item">Cloud Computing</div>
             <div class="skill-item">Java (Programming Language)</div>
-            <div class="skill-item">JavaScript (Programming Language)</div>
+            <div class="skill-item">Mathematics & Statistics</div>
+            <div class="skill-item">SQL</div>
+            <div class="skill-item">Data Vissulization</div>
         </div>
-
     </section>
 
     <!-- Projects Section -->
@@ -546,10 +567,24 @@
         <a href="#contact">Contact</a>
     </footer>
 
-    <!-- JavaScript for Typing Animation and Glow Effect -->
+    <!-- JavaScript for Side Menu Toggle, Typing Animation, and Glow Effect -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sideMenu = document.querySelector('.side-menu');
             const navLinks = document.querySelectorAll('.nav-link');
+            const projectsSection = document.querySelector('.projects');
+
+            menuToggle.addEventListener('click', function() {
+                sideMenu.classList.toggle('open');
+            });
+
+            // Close side menu when clicking outside of it
+            document.addEventListener('click', function(event) {
+                if (!sideMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+                    sideMenu.classList.remove('open');
+                }
+            });
 
             // Typing animation for name
             const nameElement = document.getElementById('name');
