@@ -1,13 +1,15 @@
+<!-- Start of Selection -->
 <!-- © 2024 Rutuj Dhodapkar. All rights reserved. -->
 
 <!DOCTYPE html>
 <html lang="en">
+ 
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio.</title>
+    <title>Portfolio</title>
     <style>
- 
         * {
             margin: 0;
             padding: 0;
@@ -17,171 +19,139 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            background-color: #e5e5e5;
-            color: black; /* Changed text color to black */
-            padding-top: 60px; /* Add padding to account for fixed header */
-            scroll-behavior: smooth; /* Enable smooth scrolling for the whole page */
-        }
-
-        /* Header section */
-        header {
-            background-color: rgba(255, 255, 255, 0.5); /* Add transparency effect */
-            padding: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1002; /* Higher than side menu */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: top 0.3s ease;
-            backdrop-filter: blur(10px); /* Make transparency effect a little blur */
-        }
-
-        .logo img {
-            width: 150px; /* Set the desired width for the logo image */
-            height: auto; /* Maintain aspect ratio */
+            background-color: #ffffff; /* Changed background color to white */
+            color: black;
+            padding-top: 60px;
+            scroll-behavior: smooth;
         }
 
         .nav {
             display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .nav ul {
-            display: flex;
-            list-style: none;
-            flex-wrap: wrap;
             justify-content: center;
         }
 
-        .nav ul li {
-            margin: 5px 10px;
-            position: relative; /* For the indicator */
+        /* Header 2 section */
+        header.header-2 {
+            background-color: rgba(255, 255, 255, 0.123);
+            padding: 5px 20px; /* Decreased padding for top and bottom */
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.1); /* Added shadow on top and bottom */
+            position: fixed;
+            top: 7.5%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1002;
+            display: flex; /* Always show header 2 */
+            flex-direction: row; /* Arrange items horizontally */
+            justify-content: center;
+            align-items: center;
+            width: auto; /* Adjust width to fit content */
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: 40px;
+            backdrop-filter: blur(10px); /* Added blur effect */
+            transition: padding 0.3s ease; /* Added transition for padding */
         }
 
-        .nav ul li a {
+        .header-2 .nav ul {
+            display: flex;
+            list-style: none;
+            flex-direction: row; /* Arrange items horizontally */
+        }
+
+        .header-2 .nav ul li {
+            margin: 10px 0; /* Adjusted margin for better spacing */
+        }
+
+        .header-2 .nav ul li a {
             text-decoration: none;
-            color: rgba(0, 0, 0, 0.912); /* Changed link color to black */
+            color: rgba(0, 0, 0, 0.9);
             font-weight: bold;
             font-size: 16px;
-            padding: 10px 15px; /* Add padding for clickable area */
-            border-radius: 20px; /* Rounded corners */
+            padding: 10px 15px;
+            border-radius: 20px;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            
         }
 
-        .nav ul li a.active {
-            background: linear-gradient(90deg, #00c6ff, #0072ff); /* Gradient background for active link */
-            color: white; /* Change text color to white */
-            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7); /* Blue effect */
+        .header-2 .nav ul li a.active {
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
         }
 
-        .nav ul li a:hover {
-            background: rgba(0, 123, 255, 0.1); /* Light background on hover */
-            box-shadow: 0 0 20px rgba(0, 123, 255, 1); /* Darker blue effect on hover */
+        .header-2 .nav ul li a:hover {
+            background: rgba(0, 123, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 123, 255, 1);
         }
 
-        .menu-toggle {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            z-index: 1003; /* Higher than side menu */
+        .header-2 .nav ul li:first-child {
+            display: block; /* Initially show only the first item */
         }
 
-        .menu-toggle:hover {
-            transform: scale(1.1);
+        .header-2 .nav ul li:not(:first-child) {
+            display: block; /* Show all items */
         }
 
-        .side-menu {
-            position: fixed;
-            top: 0;
-            right: -250px;
-            width: 250px;
-            height: 50%; /* Make side menu shorter from top to middle */
-            background-color: rgba(255, 255, 255, 0.5); /* Add transparency effect to side menu */
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); /* Make shadow darker when side menu is open */
-            transition: right 0.3s ease-in-out;
-            z-index: 1001;
-            padding-top: 60px;
-            display: none; /* Hide side menu by default */
-            backdrop-filter: blur(5px); /* Make transparency effect a little blur */
-            border-radius: 10px; /* Make edges of side menu curve */
+        .header-2.expanded {
+            padding: 20px 20px; /* Increased padding for top and bottom when expanded */
+            animation: expand 0.5s ease-out; /* Slow-opening animation */
         }
 
-        .side-menu.open {
-            right: 0;
-            display: block; /* Show side menu when open */
+        .header-2.expanded .nav ul li {
+            display: block; /* Show all items when expanded */
         }
 
-        .side-menu ul {
-            list-style: none;
-            padding: 20px;
-        }
-
-        .side-menu ul li {
-            margin-bottom: 15px;
-        }
-
-        .side-menu ul li a {
-            text-decoration: none;
-            color: black; /* Changed side menu link color to black */
-            font-size: 20px; /* Increased font size */
-            font-weight: bold;
-            padding: 12px 20px; /* Increased padding for larger button */
-            border-radius: 25px; /* More rounded corners */
-            transition: background-color 0.3s ease, transform 0.3s ease; /* Added transition for highlight effect */
-        }
-
-        .side-menu ul li a:hover {
-            transform: scale(1.05); /* Highlight button animation */
-            background-color: rgba(0, 123, 255, 0.1); /* Light background on hover */
-            box-shadow: 0 0 20px rgba(0, 123, 255, 1); /* Darker blue effect on hover */
+        @keyframes expand {
+            from {
+                max-height: 0;
+            }
+            to {
+                max-height: 500px; /* Adjust as needed */
+            }
         }
 
         /* Hero section */
         .hero {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            background-color: #fff;
+            justify-content: space-between; /* Align text to the left and image to the right */
+            background-color: #ffffff;
             padding: 60px 20px;
             min-height: 100vh;
-        }
-
-        .hero-text {
-            max-width: 50%;
-            text-align: left;
+            text-align: left; /* Align text to the left */
         }
 
         .hero h2 {
             font-size: 48px;
             font-weight: bold;
-            color: black; /* Changed hero heading color to black */
+            color: black;
             margin-bottom: 20px;
             line-height: 1.2;
         }
 
         .hero h2 span {
             font-size: 54px;
-            background: linear-gradient(80deg, #247688, #35217c); /* homepage Rutuj Dhodapkar name shades */
+            background: linear-gradient(80deg, #247688, #35217c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        .hero .subtitle {
-            color: #79c7e8; /* Light bluish green color */
-            font-size: 24px; /* Adjust font size as needed */
-            margin-top: 8px; /* Space between name and subtitle */
-        }
-
+        /* for aiml student homepage desctiption */
+        .hero .subtitle { 
+    color: #2c3e50; /* Dark slate gray for text, improves readability */
+    font-size: 20px; /* Increased font size */
+    margin-top: 20px; /* Adjusted margin to align with other texts */
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    background-color: transparent; /* Remove background color */
+    padding: 0; /* Remove padding */
+    border-radius: 0; /* Remove border radius */
+    display: block; /* Change display to block to align with other texts */
+    border: none; /* Remove border */
+}
         .hero p {
             font-size: 18px;
-            color: black; /* Changed hero paragraph color to black */
+            color: black;
             margin-top: 20px;
             line-height: 1.8;
         }
@@ -190,16 +160,16 @@
             display: inline-block;
             margin-top: 30px;
             padding: 12px 24px;
-            background-color: transparent; /* Changed button color to transparent */
-            color: black; /* Changed button text color to black */
+            background-color: transparent;
+            color: black;
             text-decoration: none;
-            border-radius: 50px; /* More curve on button */
+            border-radius: 50px;
             font-weight: bold;
             font-size: 16px;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            border: 2px solid black; /* Added border to button */
-            position: relative; /* Added position relative for gradient effect */
-            overflow: hidden; /* Added overflow hidden for gradient effect */
+            border: 2px solid black;
+            position: relative;
+            overflow: hidden;
         }
 
         .cta-button:before {
@@ -209,8 +179,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, #00c6ff, #0072ff); /* Gradient background for button */
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
             z-index: -1;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            transform: scaleX(0);
             transition: transform 0.5s ease, opacity 0.5s ease; /* Added transition for gradient effect */
             transform: scaleX(0); /* Initial scale for gradient effect */
             transform-origin: left; /* Set transform origin to left for gradient effect */
@@ -415,21 +387,28 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .nav {
-                display: none;
-            }
-
-            .menu-toggle {
-                display: block;
+            header.header-2 {
+                display: none; /* Hide header 2 on small screens */
             }
 
             .hero {
                 flex-direction: column;
+                background-image: url('c:/Users/rutuj/OneDrive/Desktop/White and Black Simple Minimalist Portfolio Cover A4 Document.png');
+                background-size: cover;
+                background-position: right;
             }
 
             .hero-text {
                 max-width: 100%;
                 text-align: center;
+            }
+
+            header {
+                width: auto; /* Show only current content/page title */
+            }
+
+            .hero-image {
+                display: none; /* Hide image on small screens */
             }
         }
 
@@ -438,7 +417,11 @@
                 display: none; /* Hide side menu on larger screens */
             }
 
-            header .nav {
+            header.header-2 {
+                display: flex; /* Show header 2 on larger screens */
+            }
+
+            header.header-2 .nav {
                 display: flex;
             }
 
@@ -446,44 +429,56 @@
                 display: none; /* Ensure side menu doesn't display on larger screens */
             }
         }
+
+        /* Left side box */
+        .left-box {
+            position: fixed;
+            top: 12%;
+            left: -300px; /* Initially hide the box */
+            transform: translateY(-50%);
+            background-color: #ffffff25; /* Changed background color to white */
+            color: #000000; /* Changed text color to black */
+            padding: 15px 25px; /* Adjusted padding for better spacing */
+            border-radius: 25px; /* Changed border radius for more curved edges */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
+            transition: left 0.3s ease, box-shadow 0.3s ease; /* Added transition for box shadow */
+            z-index: 1001;
+            backdrop-filter: blur(10px); /* Added blur effect */
+            font-family: 'Arial Black', sans-serif; /* Changed font to Arial Black */
+            font-weight: bold; /* Made text bold */
+            color: #333333; /* Changed text color to match the image */
+        }
+
+        .left-box.show {
+            left: 0; /* Show the box */
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <header>
-        <div class="logo"><img src="portfolio.png" alt="Portfolio Logo"></div>
+    <header class="header-2">
         <nav class="nav">
             <ul>
                 <li><a href="#top" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About Me</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#education" class="nav-link">Education</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#projects" class="nav-link">Selected Projects</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
         </nav>
-        <div class="menu-toggle">&#9776;</div>
     </header>
-
-    <!-- Side Menu -->
-    <div class="side-menu">
-        <ul>
-            <li><a href="#top" class="nav-link">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Selected Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </div>
 
     <!-- Hero Section -->
     <section class="hero" id="top">
         <div class="hero-text">
             <h2>Hello there!<br>I'm <span id="name"></span></h2>
-            <p class="subtitle">AIML Student</p> <!-- Added subtitle here -->
+            <p class="subtitle">Learning Artificial Intelligence & Machine Learning</p> <!-- Added subtitle here -->
             <p>Welcome to my Portfolio website! Here you can find information about my education, skills, projects, and how to get in touch with me.</p>
             <a href="#contact" class="cta-button">Get in Touch</a>
+        </div>
+        <div class="hero-image" style="text-align: right; padding-right: 100px; padding-top: px;">
+            <img src="Black White Minimalist Photo Collage Student Portfolio.png" alt="Portfolio Image" style="max-width: 50%; height: auto; margin-right: 30px;"> <!-- Made image smaller and aligned to the right -->
         </div>
     </section>
 
@@ -524,9 +519,9 @@
             <div class="skill-item">Cloud Computing</div>
         </div>
 <br><br>
-        <div style="background: linear-gradient(90deg, #adfcfe, #2bbad7, #4749cd, #6d27cf, #c940b7, #ff00a2, #e30505); height: 1px; margin: 20px 0;"></div>
+        
 
-        <h3>Programming languages</h3>
+        <h3>Known Programming languages</h3>
         <div class="Programming-language-list">
             <div class="skill-item">Python (Programming Language)</div>
             <div class="skill-item">R (Programming Language)</div>
@@ -600,24 +595,16 @@
         <a href="#contact">Contact</a>
     </footer>
 
-    <!-- JavaScript for Side Menu Toggle, Typing Animation, and Glow Effect -->
+    <!-- JavaScript for Typing Animation, and Glow Effect -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const sideMenu = document.querySelector('.side-menu');
             const navLinks = document.querySelectorAll('.nav-link');
             const projectsSection = document.querySelector('.projects');
-
-            menuToggle.addEventListener('click', function() {
-                sideMenu.classList.toggle('open');
-            });
-
-            // Close side menu when clicking outside of it
-            document.addEventListener('click', function(event) {
-                if (!sideMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-                    sideMenu.classList.remove('open');
-                }
-            });
+            const header2 = document.querySelector('.header-2');
+            const leftBox = document.createElement('div');
+            leftBox.classList.add('left-box');
+            leftBox.textContent = "RUTUJ DHODAPKAR";
+            document.body.appendChild(leftBox);
 
             // Typing animation for name
             const nameElement = document.getElementById('name');
@@ -654,12 +641,57 @@
                 let scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
                 navLinks.forEach(link => {
                     let section = document.querySelector(link.getAttribute('href'));
-                    if (section.offsetTop <= scrollPos && (section.offsetTop + section.offsetHeight) > scrollPos) {
+                    let sectionHeight = section.offsetHeight;
+                    let sectionTop = section.offsetTop;
+                    let sectionBottom = sectionTop + sectionHeight;
+                    let viewportHeight = window.innerHeight;
+
+                    if ((sectionTop <= scrollPos + viewportHeight * 0.5) && (sectionBottom >= scrollPos + viewportHeight * 0.5)) {
                         navLinks.forEach(nav => nav.classList.remove('active'));
                         link.classList.add('active');
                     }
                 });
+
+                // Show or hide the left box based on scroll position
+                if (scrollPos > document.querySelector('.hero').offsetHeight) {
+                    leftBox.classList.add('show');
+                } else {
+                    leftBox.classList.remove('show');
+                }
             });
+
+            // Expand header 2 on click
+            header2.addEventListener('click', (e) => {
+                if (!header2.contains(e.target.closest('.nav-link'))) {
+                    header2.classList.toggle('expanded');
+                }
+            });
+
+            // Function to update active link and apply glow effect
+            function updateActiveLink() {
+                let scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+                navLinks.forEach(link => {
+                    let section = document.querySelector(link.getAttribute('href'));
+                    let sectionHeight = section.offsetHeight;
+                    let sectionTop = section.offsetTop;
+                    let sectionBottom = sectionTop + sectionHeight;
+                    let viewportHeight = window.innerHeight;
+
+                    if ((sectionTop <= scrollPos + viewportHeight * 0.5) && (sectionBottom >= scrollPos + viewportHeight * 0.5)) {
+                        navLinks.forEach(nav => nav.classList.remove('active'));
+                        link.classList.add('active');
+                        link.style.boxShadow = '0 0 20px rgba(0, 123, 255, 1)'; // Apply glow effect
+                    } else {
+                        link.style.boxShadow = 'none'; // Remove glow effect
+                    }
+                });
+            }
+
+            // Initial call to set the active link on page load
+            updateActiveLink();
+
+            // Update active link on scroll
+            window.addEventListener('scroll', updateActiveLink);
         });
     </script>
 </body>
