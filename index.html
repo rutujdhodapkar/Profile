@@ -23,6 +23,7 @@
             color: black;
             padding-top: 60px;
             scroll-behavior: smooth;
+            
         }
 
         .nav {
@@ -134,7 +135,16 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        /* for aiml student homepage desctiption */
+
+        @media (min-width: 769px) {
+            .hero h2 span {
+                background: linear-gradient(90deg, #a5a6a6, #868686, #6e6e6e, #464646); /* Blue gradient for larger screens */
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+
+        /* for aiml student homepage description */
         .hero .subtitle { 
     color: #2c3e50; /* Dark slate gray for text, improves readability */
     font-size: 20px; /* Increased font size */
@@ -410,6 +420,14 @@
             .hero-image {
                 display: none; /* Hide image on small screens */
             }
+
+            .contact-buttons a {
+                background: linear-gradient(90deg, #0088ffb9, #00ccffb9); /* Purple gradient for small screens */
+            }
+
+            .contact-buttons a img {
+                display: none; /* Hide images on buttons for small screens */
+            }
         }
 
         @media (min-width: 769px) {
@@ -496,12 +514,12 @@
         <div class="education-list">
             <div class="education-item">
                 <h4>Diploma Artificial Intelligence & Machine Learning</h4>
-                <p>K.K. Wagh Ploytechnic, 2022 - 2025</p>
+                <p>K.K. Wagh Polytechnic, 2022 - 2025</p>
                 <p>---</p>
             </div>
             <div class="education-item">
                 <h4>High School</h4>
-                <p>Bhosla Milltery School, 2020 - 2022</p>
+                <p>Bhosla Military School, 2020 - 2022</p>
                 <p>First class Distinction</p>
             </div>
         </div>
@@ -514,7 +532,7 @@
             <div class="skill-item">Artificial Intelligence (AI)</div>
             <div class="skill-item">Machine Learning</div>
             <div class="skill-item">Deep Learning</div>
-            <div class="skill-item">Data Vissulization</div>
+            <div class="skill-item">Data Visualization</div>
             <div class="skill-item">Computer Vision</div>
             <div class="skill-item">Cloud Computing</div>
         </div>
@@ -539,23 +557,23 @@
                 <a href="https://rutujproject1-czzltsg8apdmaxpiz4xgzj.streamlit.app/" style="text-decoration: none;">
                     <img src="Gemini_Generated_Image_qpyl7qqpyl7qqpyl.jpeg" alt="Project 1">
                     <h4>Text To Emotion Detection</h4>
-                    <p>Machine Learning model for detecting emotion type base on user input as text.</p>
+                    <p>Machine Learning model for detecting emotion type based on user input as text.</p>
                 </a>
             </div>
             <div class="project-item">
                 <img src="Gemini_Generated_Image_lpspq6lpspq6lpsp.jpeg" alt="Project 2">
-                <h4>Text To Website Generator </h4>
-                <p>ML/DL-based system for generating JS code to make websites as per user text input</p>
+                <h4>Text To Website Generator</h4>
+                <p>ML/DL-based system for generating JS code to make websites as per user text input.</p>
             </div>
             <div class="project-item">
                 <img src="Gemini_Generated_Image_ah0ypvah0ypvah0y.jpeg" alt="Project 3">
-                <h4>Real-Time AI-Based Chess Review,Recommendation System</h4>
-                <p>Ai base project that detects and classifies chess moves in real-time using deep learning, and generate output of Best chess move</p>
+                <h4>Real-Time AI-Based Chess Review, Recommendation System</h4>
+                <p>AI-based project that detects and classifies chess moves in real-time using deep learning, and generates output of the best chess move.</p>
             </div>
             <div class="project-item">
                 <img src="Gemini_Generated_Image_rpcjqbrpcjqbrpcj.jpeg" alt="Project 4">
                 <h4>Python Tic-Tac-Toe Game</h4>
-                <p>Python code to play tic-tac-toe game online</p>
+                <p>Python code to play tic-tac-toe game online.</p>
             </div>
         </div>
     </section>
@@ -567,7 +585,7 @@
         <div class="contact-buttons">
 
             <a href="https://www.instagram.com/rutujdhodapkar/" class="instagram" style="display: flex; align-items: center;">
-                <img src="instagram.jpeg" alt="instagram Logo" style="width: 20px; height: 20px; margin-right: 5px;">Instagram</a>
+                <img src="instagram.jpeg" alt="Instagram Logo" style="width: 20px; height: 20px; margin-right: 5px;">Instagram</a>
 
             <a href="https://x.com/RutujDhodapkar" class="twitter" style="display: flex; align-items: center;">
                 <img src="x com.jpeg" alt="X Logo" style="width: 20px; height: 20px; margin-right: 5px;">
@@ -581,7 +599,7 @@
                 <img src="github.jpeg" alt="GitHub Logo" style="width: 20px; height: 20px; margin-right: 5px;">GitHub</a>
 
             <a href="mailto:rutujdhodapkar@gmail.com" class="email" style="display: flex; align-items: center;">
-                <img src="mail.jpeg" alt="LinkedIn Logo" style="width: 20px; height: 20px; margin-right: 5px;">Email</a>
+                <img src="mail.jpeg" alt="Email Logo" style="width: 20px; height: 20px; margin-right: 5px;">Email</a>
         </div>
     </section>
 
