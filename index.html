@@ -742,12 +742,24 @@
                 } else {
                     leftBox.classList.remove('show');
                 }
+
+                // Collapse header if expanded
+                if (header2.classList.contains('expanded')) {
+                    header2.classList.remove('expanded');
+                }
             });
 
             // Expand header 2 on click
             header2.addEventListener('click', (e) => {
                 if (!header2.contains(e.target.closest('.nav-link'))) {
                     header2.classList.toggle('expanded');
+                }
+            });
+
+            // Collapse header if user clicks anywhere outside the header
+            document.addEventListener('click', (e) => {
+                if (!header2.contains(e.target) && header2.classList.contains('expanded')) {
+                    header2.classList.remove('expanded');
                 }
             });
 
