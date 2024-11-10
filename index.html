@@ -410,7 +410,7 @@
 
         /* Education Section */
         .education {
-            background: rgba(173, 253, 254, 0.066); /* Fixed the gradient syntax */
+            background: #ffffff; /* Fixed the gradient syntax */
         }
         
 
@@ -492,7 +492,7 @@
             }
 
             .contact-buttons a {
-                background: linear-gradient(90deg, #000000f8, #000000); /* Purple gradient for small screens */
+                background: linear-gradient(90deg, #000000f8, #000000); /*for small screens */
             }
 
             .contact-buttons a img {
@@ -562,7 +562,7 @@
     <section class="hero" id="top">
         <div class="hero-text">
             <h2>Hello there!<br>I'm <span id="name"></span></h2>
-            <p class="subtitle">Learning Artificial Intelligence & Machine Learning</p> <!-- Added subtitle here -->
+            <p class="subtitle"> <a href="https://www.google.com/search?q=Artificial+Intelligence+and+Machine+Learning" target="_blank" style="color: black; text-decoration: none;">Learning Artificial Intelligence</a><a href="https://www.google.com/search?q=Machine+Learning" target="_blank" style="color: black; text-decoration: none;"> & Machine Learning</a></p> <!-- Added subtitle here -->
             <p>Welcome to my Portfolio website! Here you can find information about my education, skills, projects, and how to get in touch with me.</p>
             <a href="#contact" class="cta-button">Get in Touch</a>
         </div>
@@ -573,10 +573,17 @@
 
     <!-- About Section -->
     <section id="about" class="about">
-        <h3>$:/WHOAMI</h3>
-        <p>Hey there! I'm Rutuj, a tech enthusiast with a passion for all things AI, machine learning (ML), deep learning (DL), cloud computing, and web development. From coding algorithms in Python to designing sleek, responsive websites, I love turning complex ideas into simple, effective solutions. Right now, I'm diving deep into artificial intelligence and exploring how it, along with cloud technologies, can reshape the way we interact with and deploy technology at scale.</p>
-        <p>Whether it's building machine learning models that detect real-time objects, optimizing cloud infrastructure for seamless performance, or enhancing website functionality for a smooth user experience, I'm always eager to learn and push the boundaries of what's possible. To me, technology is more than just a tool—it's an art form that can solve real-world problems in creative and innovative ways.</p>
-        <p>When I'm not coding or working with cloud solutions, you'll find me exploring the latest tech trends, experimenting with new tools, or sharing my journey on social media. Let's connect and create something amazing together!</p>
+        <h3 onclick="openChatGPT()">$:/WHOAMI</h3>
+        <script>
+            function openChatGPT() {
+                const query = "search all sections on Rutuj Dhodapkar's portfolio";
+                const url = `https://chat.openai.com/?q=${encodeURIComponent(query)}`;
+                window.open(url, "_blank");
+            }
+        </script>
+        <p onclick="openChatGPT()">Hey there! I'm Rutuj, a tech enthusiast with a passion for all things AI, machine learning (ML), deep learning (DL), cloud computing, and web development. From coding algorithms in Python to designing sleek, responsive websites, I love turning complex ideas into simple, effective solutions. Right now, I'm diving deep into artificial intelligence and exploring how it, along with cloud technologies, can reshape the way we interact with and deploy technology at scale.</p>
+        <p onclick="openChatGPT()">Whether it's building machine learning models that detect real-time objects, optimizing cloud infrastructure for seamless performance, or enhancing website functionality for a smooth user experience, I'm always eager to learn and push the boundaries of what's possible. To me, technology is more than just a tool—it's an art form that can solve real-world problems in creative and innovative ways.</p>
+        <p onclick="openChatGPT()">When I'm not coding or working with cloud solutions, you'll find me exploring the latest tech trends, experimenting with new tools, or sharing my journey on social media. Let's connect and create something amazing together!</p>
     </section>
 
     <!-- Education Section -->
@@ -585,12 +592,12 @@
         <div class="education-list">
             <div class="education-item">
                 <h4>Diploma Artificial Intelligence & Machine Learning</h4>
-                <p>K.K. Wagh Polytechnic, 2022 - 2025</p>
+                <p><a href="https://www.kkwagh.edu.in/" target="_blank" style="text-decoration: none; color: black;">K.K. Wagh Polytechnic, 2022 - 2025</a></p>
                 <p>---</p>
             </div>
             <div class="education-item">
                 <h4>High School</h4>
-                <p>Bhosla Military School, 2020 - 2022</p>
+                <p><a href="https://bms.bhonsala.in/" target="_blank" style="text-decoration: none; color: black;">Bhosla Military School, 2020 - 2022</a></p>
                 <p>First class Distinction</p>
             </div>
         </div>
@@ -600,22 +607,21 @@
     <section id="skills" class="skills">
         <h3>Skills</h3>
         <div class="skills-list">
-            <div class="skill-item">Artificial Intelligence (AI)</div>
-            <div class="skill-item">Machine Learning</div>
-            <div class="skill-item">Deep Learning</div>
-            <div class="skill-item">Data Visualization</div>
-            <div class="skill-item">Computer Vision</div>
-            <div class="skill-item">Cloud Computing</div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Artificial+Intelligence+(AI)" target="_blank" rel="noopener" style="color: black; text-decoration: none;">Artificial Intelligence (AI)</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Machine+Learning" target="_blank" rel="noopener" style="color: black; text-decoration: none;">Machine Learning</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Deep+Learning" target="_blank" rel="noopener" style="color: black; text-decoration: none;">Deep Learning</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Data+Visualization" target="_blank" rel="noopener" style="color: black; text-decoration: none;">Data Visualization</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Computer+Vision" target="_blank" rel="noopener" style="color: black; text-decoration: none;">Computer Vision</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Cloud+Computing" target="_blank" rel="noopener" style="color: black; text-decoration: none;">Cloud Computing</a></div>
         </div>
 <br><br>
         
-
         <h3>Known Programming languages</h3>
         <div class="Programming-language-list">
-            <div class="skill-item">Python (Programming Language)</div>
-            <div class="skill-item">R (Programming Language)</div>
-            <div class="skill-item">Java (Programming Language)</div>
-            <div class="skill-item">JavaScript (Programming Language)</div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Python+Programming+Language" target="_blank" rel="noopener" style="color: black; text-decoration: none;">Python (Programming Language)</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=R+Programming+Language" target="_blank" rel="noopener" style="color: black; text-decoration: none;">R (Programming Language)</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Java+Programming+Language" target="_blank" rel="noopener" style="color: black; text-decoration: none;">Java (Programming Language)</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=JavaScript+Programming+Language" target="_blank" rel="noopener" style="color: black; text-decoration: none;">JavaScript (Programming Language)</a></div>
         </div>
 
     </section>
@@ -706,7 +712,7 @@
         <a href="#contact">Contact</a>
     </footer>
 
-    <!-- JavaScript for Typing Animation, and Glow Effect -->
+    <!-- sliding rutuj dhodapkar button from about page -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const navLinks = document.querySelectorAll('.nav-link');
@@ -714,7 +720,7 @@
             const header2 = document.querySelector('.header-2');
             const leftBox = document.createElement('div');
             leftBox.classList.add('left-box');
-            leftBox.textContent = "RUTUJ DHODAPKAR";
+            leftBox.innerHTML = "<a href='javascript:openChatGPT()' style='text-decoration: none; color: black;'>RUTUJ DHODAPKAR</a>";
             document.body.appendChild(leftBox);
 
             // Typing animation for name
@@ -731,6 +737,11 @@
             }
 
             typeWriter();
+
+            // Add click event to open Google search
+            nameElement.addEventListener('click', function() {
+                window.open('https://www.google.com/search?q=Rutuj+Dhodapkar', '_blank');
+            });
 
             // Smooth scrolling for anchor links
             const links = document.querySelectorAll('a[href^="#"]');
