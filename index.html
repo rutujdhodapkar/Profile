@@ -25,6 +25,11 @@
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
     </script>
     <style>
 
@@ -41,7 +46,11 @@
             color: black;
             padding-top: 60px;
             scroll-behavior: smooth;
-            
+        }
+
+        body.dark-mode {
+            background-color: #121212; /* Dark background color */
+            color: #ffffff; /* Light text color */
         }
 
         .nav {
@@ -73,6 +82,10 @@
             max-height: 60px; /* Initial max-height */
         }
 
+        body.dark-mode header.header-2 {
+            background-color: rgba(125, 125, 125, 0.37); /* Dark background color for header */
+        }
+
         .header-2 .nav ul {
             display: flex;
             list-style: none;
@@ -91,6 +104,10 @@
             padding: 10px 15px;
             border-radius: 20px;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.dark-mode .header-2 .nav ul li a {
+            color: rgba(255, 255, 255, 0.9); /* Light text color for nav links */
         }
 
         .header-2 .nav ul li a.active {
@@ -137,12 +154,20 @@
             text-align: left; /* Align text to the left */
         }
 
+        body.dark-mode .hero {
+            background-color: #121212; /* Dark background color for page 1 hero section */
+        }
+
         .hero h2 {
             font-size: 48px;
             font-weight: bold;
             color: black;
             margin-bottom: 20px;
             line-height: 1.2;
+        }
+
+        body.dark-mode .hero h2 {
+            color: white; /* Light text color for page 1 text heading */
         }
 
         .hero h2 span {
@@ -175,11 +200,20 @@
     display: block; /* Change display to block to align with other texts */
     border: none; /* Remove border */
 }
+
+        body.dark-mode .hero .subtitle {
+            color: #b0c4de; /* Light steel blue for dark mode */
+        }
+
         .hero p {
             font-size: 18px;
             color: black;
             margin-top: 20px;
             line-height: 1.8;
+        }
+
+        body.dark-mode .hero p {
+            color: white; /* Light text color for hero paragraph */
         }
 
         .cta-button {
@@ -196,6 +230,11 @@
             border: 2px solid black;
             position: relative;
             overflow: hidden;
+        }
+
+        body.dark-mode .cta-button {
+            color: white; /* Light text color for button "get connected"*/
+            border: 2px solid white; /* Light border color for button */
         }
 
         .cta-button:before {
@@ -233,10 +272,23 @@
             background-color: #ffffff; /* Changed background color to white */
         }
 
+        body.dark-mode .about {
+            background-color: #222222; /* Dark background color for about section */
+        }
+
         .about h3, .skills h3, .projects h3, .contact h3, .education h3, .certificates h3 {
             font-size: 28px;
             margin-bottom: 20px;
             color: black; /* Changed section headings color to black */
+        }
+
+        body.dark-mode .about h3, 
+        body.dark-mode .skills h3, 
+        body.dark-mode .projects h3, 
+        body.dark-mode .contact h3, 
+        body.dark-mode .education h3, 
+        body.dark-mode .certificates h3 {
+            color: white; /* Light text color for section headings */
         }
 
         .about p, .skills p, .projects p, .contact p, .education p, .certificates p {
@@ -247,9 +299,22 @@
             color: black; /* Changed content color to black */
         }
 
+        body.dark-mode .about p, 
+        body.dark-mode .skills p, 
+        body.dark-mode .projects p, 
+        body.dark-mode .contact p, 
+        body.dark-mode .education p, 
+        body.dark-mode .certificates p {
+            color: white; /* Light text color for content */
+        }
+
         /* Skills Section */
         .skills {
             background-color: #fff;
+        }
+
+        body.dark-mode .skills {
+            background-color: #000000; /* Dark background color for skills section */
         }
 
         .skills-list {
@@ -270,11 +335,20 @@
             margin: 5px;
         }
 
+        body.dark-mode .skill-item {
+            background-color: #bcbcbc; /* Dark background color for skill items */
+            color: rgb(190, 190, 190); /* Light text color for skill items */
+        }
+
         /* Certificates Section */
         .certificates {
             background-color: #f7f7f7;
             position: relative;
             overflow: hidden;
+        }
+
+        body.dark-mode .certificates {
+            background-color: #1e1e1e; /* Dark background color for certificates section */
         }
 
         .certificate-list {
@@ -299,6 +373,10 @@
             text-align: center; /* Center align text */
         }
 
+        body.dark-mode .certificate-item {
+            background-color: #404040; /* Dark background color for certificate items */
+        }
+
         .certificate-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 35px rgba(0, 123, 255, 0.697); /* Darker glow and spread up to 35 */
@@ -316,6 +394,10 @@
             color: black; /* Changed certificate item heading color to black */
         }
 
+        body.dark-mode .certificate-item h4 {
+            color: white; /* Light text color for certificate item heading */
+        }
+
         .certificate-item p {
             font-size: 14px;
             color: black; /* Changed certificate item paragraph color to black */
@@ -323,11 +405,19 @@
             text-align: center; /* Center align text */
         }
 
+        body.dark-mode .certificate-item p {
+            color: white; /* Light text color for certificate item paragraph */
+        }
+
         /* Projects Section */
         .projects {
             background-color: #f7f7f7;
             position: relative;
             overflow: hidden;
+        }
+
+        body.dark-mode .projects {
+            background-color: #1e1e1e; /* Dark background color for projects section */
         }
 
         .project-list {
@@ -351,6 +441,10 @@
             position: relative;
         }
 
+        body.dark-mode .project-item {
+            background-color: #3f3f3f; /* Dark background color for project items */
+        }
+
         .project-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 35px rgba(0, 123, 255, 0.697); /* Darker glow and spread up to 35 */
@@ -368,15 +462,27 @@
             color: black; /* Changed project item heading color to black */
         }
 
+        body.dark-mode .project-item h4 {
+            color: white; /* Light text color for project item heading */
+        }
+
         .project-item p {
             font-size: 14px;
             color: black; /* Changed project item paragraph color to black */
             padding: 0 15px 15px;
         }
 
+        body.dark-mode .project-item p {
+            color: white; /* Light text color for project item paragraph */
+        }
+
         /* Contact Section */
         .contact {
             background-color: #fff;
+        }
+
+        body.dark-mode .contact {
+            background-color: #000000; /* Dark background color for contact section */
         }
 
         .contact-buttons {
@@ -412,7 +518,10 @@
         .education {
             background: #ffffff; /* Fixed the gradient syntax */
         }
-        
+
+        body.dark-mode .education {
+            background: #121212; /* Dark background color for education section */
+        }
 
         .education-list {
             display: flex;
@@ -431,15 +540,27 @@
             text-align: center;
         }
 
+        body.dark-mode .education-item {
+            background-color: #333333; /* Dark background color for education items */
+        }
+
         .education-item h4 {
             font-size: 20px;
             margin-bottom: 10px;
             color: black; /* Changed education item heading color to black */
         }
 
+        body.dark-mode .education-item h4 {
+            color: white; /* Light text color for education item heading */
+        }
+
         .education-item p {
             font-size: 14px;
             color: black; /* Changed education item paragraph color to black */
+        }
+
+        body.dark-mode .education-item p {
+            color: white; /* Light text color for education item paragraph */
         }
 
         /* Footer Section */
@@ -448,6 +569,10 @@
             color: white; /* Changed content color to white */
             padding: 20px;
             text-align: center;
+        }
+
+        body.dark-mode footer {
+            background-color: #121212; /* Dark background color for footer */
         }
 
         footer p {
@@ -476,6 +601,10 @@
                 background-image: url('White and Black Simple Minimalist Portfolio Cover A4 Document.png');
                 background-size: cover;
                 background-position: right;
+            }
+
+            body.dark-mode .hero {
+                background-image: url('Dark Minimalist Portfolio Cover A4 Document.png'); /* Dark background image for hero section */
             }
 
             .hero-text {
@@ -537,12 +666,20 @@
             color: #333333; /* Changed text color to match the image */
         }
 
+        body.dark-mode .left-box {
+            background-color: #333333; /* Dark background color for left box */
+            color: white; /* Light text color for left box */
+        }
+
         .left-box.show {
             left: 0; /* Show the box */
         }
     </style>
 </head>
 <body>
+    <!-- Dark Mode Toggle Button -->
+    <button onclick="toggleDarkMode()" style="position: fixed; top: 10px; right: 10px; padding: 10px 20px; background-color: #bcbcbc45; color: #959595; border: none; border-radius: 20px; cursor: pointer; z-index: 1003; box-shadow: 0 0 10px rgba(255, 255, 255, 0);">Change Theme</button>
+
     <!-- Navigation -->
     <header class="header-2">
         <nav class="nav">
@@ -562,12 +699,12 @@
     <section class="hero" id="top">
         <div class="hero-text">
             <h2>Hello there!<br>I'm <span id="name"></span></h2>
-            <p class="subtitle"> <a href="https://www.google.com/search?q=Artificial+Intelligence+and+Machine+Learning" target="_blank" style="color: black; text-decoration: none;">Learning Artificial Intelligence</a><a href="https://www.google.com/search?q=Machine+Learning" target="_blank" style="color: black; text-decoration: none;"> & Machine Learning</a></p> <!-- Added subtitle here -->
+            <p class="subtitle"> <a href="https://www.google.com/search?q=Artificial+Intelligence+and+Machine+Learning" target="_blank" style="color:rgb(144, 144, 144); text-decoration: none;">Learning Artificial Intelligence</a><a href="https://www.google.com/search?q=Machine+Learning" target="_blank" style="color: rgb(144, 144, 144); text-decoration: none;"> & Machine Learning</a></p> <!-- Added subtitle here -->
             <p>Welcome to my Portfolio website! Here you can find information about my education, skills, projects, and how to get in touch with me.</p>
             <a href="#contact" class="cta-button">Get in Touch</a>
         </div>
         <div class="hero-image" style="text-align: right; padding-right: 100px; padding-top: px;">
-            <img src="Black White Minimalist Photo Collage Student Portfolio.png" alt="Portfolio Image" style="max-width: 43%; height: auto; margin-right: 80px;"> <!-- Made image smaller and aligned to the right -->
+            <img src="Black White Minimalist Photo Collage Student Portfolio.png" alt="Portfolio Image" style="max-width: 40%; height: auto; margin-right: 45px;"> <!-- Made image smaller and aligned to the right -->
         </div>
     </section>
 
@@ -592,12 +729,12 @@
         <div class="education-list">
             <div class="education-item">
                 <h4>Diploma Artificial Intelligence & Machine Learning</h4>
-                <p><a href="https://www.kkwagh.edu.in/" target="_blank" style="text-decoration: none; color: black;">K.K. Wagh Polytechnic, 2022 - 2025</a></p>
+                <p><a href="https://www.kkwagh.edu.in/" target="_blank" style="text-decoration: none; color: rgb(150, 150, 150);">K.K. Wagh Polytechnic, 2022 - 2025</a></p>
                 <p>---</p>
             </div>
             <div class="education-item">
                 <h4>High School</h4>
-                <p><a href="https://bms.bhonsala.in/" target="_blank" style="text-decoration: none; color: black;">Bhosla Military School, 2020 - 2022</a></p>
+                <p><a href="https://bms.bhonsala.in/" target="_blank" style="text-decoration: none; color: rgb(150, 150, 150);">Bhosla Military School, 2020 - 2022</a></p>
                 <p>First class Distinction</p>
             </div>
         </div>
@@ -720,7 +857,7 @@
             const header2 = document.querySelector('.header-2');
             const leftBox = document.createElement('div');
             leftBox.classList.add('left-box');
-            leftBox.innerHTML = "<a href='javascript:openChatGPT()' style='text-decoration: none; color: black;'>RUTUJ DHODAPKAR</a>";
+            leftBox.innerHTML = "<a href='javascript:openChatGPT()' style='text-decoration: none; color: gray;'>RUTUJ DHODAPKAR</a>";
             document.body.appendChild(leftBox);
 
             // Typing animation for name
