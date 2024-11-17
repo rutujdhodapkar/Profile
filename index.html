@@ -30,8 +30,8 @@
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
         }
-    </script>
-  /* Auto detect dark mode preference */
+
+        // Auto detect dark mode preference
         function detectDarkMode() {
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 document.body.classList.add('dark-mode');
@@ -45,6 +45,7 @@
 
         // Detect dark mode on initial load
         document.addEventListener('DOMContentLoaded', detectDarkMode);
+    </script>
     <style>
 
         * {
@@ -767,6 +768,7 @@
         </div>
 <br><br>
         
+
         <div class="Programming-language-list">
             <div class="skill-item"><a href="https://www.google.com/search?q=Python+Programming+Language" target="_blank" rel="noopener" style="color: black; text-decoration: none;">Python (Programming Language)</a></div>
             <div class="skill-item"><a href="https://www.google.com/search?q=R+Programming+Language" target="_blank" rel="noopener" style="color: black; text-decoration: none;">R (Programming Language)</a></div>
