@@ -12,6 +12,45 @@
     <meta name="keywords" content="Rutuj, Rutuj Dhodapkar, portfolio, web developer, projects, skills, Rutuj Dhodapkar Portfolio, Rutuj portfolio, Dhodapkar, Dhodapkar portfolio">
     <meta name="author" content="Rutuj Dhodapkar">
     <title>Rutuj Dhodapkar - Portfolio</title>
+<style>
+    .custom-cursor {
+        width: 15px; /* Increased size */
+        height: 15px; /* Increased size */
+        border-radius: 50%;
+        background-color: rgb(200, 200, 200); /* Fixed color */
+        position: absolute;
+        pointer-events: none;
+        z-index: 1000;
+        transition: opacity 0.2s ease, transform 0.2s ease; /* Added more smoothness */
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cursor = document.createElement('div');
+        cursor.classList.add('custom-cursor');
+        document.body.appendChild(cursor);
+
+        document.addEventListener('mousemove', function(e) {
+            cursor.style.left = e.pageX + 'px';
+            cursor.style.top = e.pageY + 'px';
+            cursor.style.transform = 'translate(-50%, -50%)'; /* Center the cursor */
+        });
+
+        document.addEventListener('mouseover', function(e) {
+            if (e.target !== document.body) {
+                cursor.style.opacity = 0;
+            }
+        });
+
+        document.addEventListener('mouseout', function(e) {
+            if (e.target !== document.body) {
+                cursor.style.opacity = 1;
+            }
+        });
+    });
+</script>
+
+
 
  <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -294,7 +333,7 @@
         .about h3, .skills h3, .projects h3, .contact h3, .education h3, .certificates h3 {
             font-size: 28px;
             margin-bottom: 20px;
-            color: black; /* Changed section headings color to black */
+            color: rgb(66, 66, 66); /* Changed section headings color to black */
         }
 
         body.dark-mode .about h3, 
@@ -329,7 +368,7 @@
         }
 
         body.dark-mode .skills {
-            background-color: #000000; /* Dark background color for skills section */
+            background-color: #2b2b2b; /* Dark background color for skills section */
         }
 
         .skills-list {
@@ -348,6 +387,11 @@
             font-weight: bold;
             color: black;
             margin: 5px;
+            transition: box-shadow 0.5s ease; /* Added transition for box-shadow */
+        }
+
+        .skill-item:hover {
+            box-shadow: 0 0 45px rgba(0, 47, 255, 0.664); /* Glow effect on hover */
         }
 
         body.dark-mode .skill-item {
