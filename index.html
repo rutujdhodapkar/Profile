@@ -5,6 +5,38 @@
 <html lang="en">
  
 <head>
+    <style>
+        .exit-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background-color: rgba(125, 125, 125, 0.421); /* Added transparency */
+            color: #ffffff;
+            border: none;
+            border-radius: 30px; /* Made round edges */
+            font-size: 1.5rem; /* Increased font size for bigger arrow */
+            font-weight: bold; /* Make arrow bold */
+            cursor: pointer;
+            z-index: 1001;
+            backdrop-filter: blur(5px); /* Added blur effect */
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backButton = document.createElement('button');
+            backButton.classList.add('exit-button');
+            backButton.innerHTML = '&#x2190;'; // Unicode for left arrow
+            backButton.addEventListener('click', function() {
+                if (window.history.length > 1) {
+                    window.history.back();
+                } else {
+                    window.close();
+                }
+            });
+            document.body.appendChild(backButton);
+        });
+    </script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
