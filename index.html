@@ -14,6 +14,496 @@
     <title>Rutuj Dhodapkar - Portfolio</title>
 <style>
     .custom-cursor {
+        width: 25px; /* Increased size */
+        height: 25px; /* Increased size */
+        border-radius: 50%;
+        background-color: rgba(200, 200, 200, 0.297); /* Fixed color */
+        position: absolute;
+        pointer-events: none;
+        z-index: 1000;
+        transition: opacity 0.90s ease, transform 0.90s ease, left 0.1s ease, top 0.1s ease; /* Added more smoothness and latency */
+        backdrop-filter: blur(2px); /* Added blur effect */
+    }
+    
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cursor = document.createElement('div');
+        cursor.classList.add('custom-cursor');
+        document.body.appendChild(cursor);
+
+        document.addEventListener('mousemove', function(e) {
+            cursor.style.left = e.pageX + 'px';
+            cursor.style.top = e.pageY + 'px';
+            cursor.style.transform = 'translate(-50%, -50%)'; /* Center the cursor */
+        });
+
+        document.addEventListener('mouseover', function(e) {
+            if (e.target !== document.body) {
+                cursor.style.opacity = 0;
+            }
+        });
+
+        document.addEventListener('mouseout', function(e) {
+            if (e.target !== document.body) {
+                cursor.style.opacity = 1;
+            }
+        });
+    });
+</script>
+
+
+
+ <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "osm73s829r");
+ </script>
+    <script>
+        // Disable right-click menu
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Auto detect dark mode preference
+        function detectDarkMode() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        }
+
+        // Listen for changes in the user's color scheme preference
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', detectDarkMode);
+
+        // Detect dark mode on initial load
+        document.addEventListener('DOMContentLoaded', detectDarkMode);
+    </script>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff; /* Changed background color to white */
+            color: black;
+            padding-top: 60px;
+            scroll-behavior: smooth;
+        }
+
+        body.dark-mode {
+            background-color: #121212; /* Dark background color */
+            color: #ffffff; /* Light text color */
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Header 2 section */
+        header.header-2 {
+            background-color: rgba(255, 255, 255, 0.123);
+            padding: 5px 20px; /* Decreased padding for top and bottom */
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.1); /* Added shadow on top and bottom */
+            position: fixed;
+            top: 7.5%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1002;
+            display: flex; /* Always show header 2 */
+            flex-direction: row; /* Arrange items horizontally */
+            justify-content: center;
+            align-items: center;
+            width: auto; /* Adjust width to fit content */
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: 40px;
+            backdrop-filter: blur(10px); /* Added blur effect */
+            transition: padding 0.3s ease, max-height 0.5s ease; /* Added transition for padding and max-height */
+            overflow: visible; /* Ensure content doesn't overflow */
+            max-height: 60px; /* Initial max-height */
+        }
+
+        body.dark-mode header.header-2 {
+            background-color: rgba(125, 125, 125, 0.37); /* Dark background color for header */
+        }
+
+        .header-2 .nav ul {
+            display: flex;
+            list-style: none;
+            flex-direction: row; /* Arrange items horizontally */
+        }
+
+        .header-2 .nav ul li {
+            margin: 10px 0; /* Adjusted margin for better spacing */
+        }
+
+        .header-2 .nav ul li a {
+            text-decoration: none;
+            color: rgba(0, 0, 0, 0.9);
+            font-weight: bold;
+            font-size: 1rem; /* Adjusted font size for better scaling */
+            padding: 10px 15px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.dark-mode .header-2 .nav ul li a {
+            color: rgba(255, 255, 255, 0.9); /* Light text color for nav links */
+        }
+
+        .header-2 .nav ul li a.active {
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+        }
+
+        .header-2 .nav ul li a:hover {
+            background: rgba(0, 123, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 123, 255, 1);
+        }
+
+        .header-2 .nav ul li:first-child {
+            display: block; /* Initially show only the first item */
+        }
+
+        .header-2 .nav ul li:not(:first-child) {
+            display: block; /* Show all items */
+        }
+
+        .header-2.expanded {
+            padding: 20px 20px; /* Increased padding for top and bottom when expanded */
+            max-height: 500px; /* Adjust as needed */
+        }
+
+        @keyframes expand {
+            from {
+                max-height: 60px;
+            }
+            to {
+                max-height: 500px; /* Adjust as needed */
+            }
+        }
+
+        /* Hero section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Align text to the left and image to the right */
+            background-color: #ffffff;
+            padding: 60px 20px;
+            min-height: 100vh;
+            text-align: left; /* Align text to the left */
+        }
+
+        body.dark-mode .hero {
+            background-color: #121212; /* Dark background color for page 1 hero section */
+        }
+
+        .hero h2 {
+            font-size: 3rem; /* Adjusted font size for better scaling */
+            font-weight: bold;
+            color: black;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        body.dark-mode .hero h2 {
+            color: white; /* Light text color for page 1 text heading */
+        }
+
+        .hero h2 span {
+            font-size: 3.5rem; /* Adjusted font size for better scaling */
+            background: linear-gradient(80deg, #fe00e5, #7b00ff, #00b3ff, #00c8fa); /*rutuj dhodapkar text color*/
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @media (min-width: 769px) {
+            .hero h2 span {
+                background: linear-gradient(90deg, #a5a6a6, #868686, #6e6e6e, #464646); /* Blue gradient for larger screens */
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+
+        /* for aiml student homepage description */
+        .hero .subtitle { 
+    color: #112b45; /* Dark slate gray for text, improves readability */
+    font-size: 1.25rem; /* Adjusted font size for better scaling */
+    margin-top: 20px; /* Adjusted margin to align with other texts */
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    background-color: transparent; /* Remove background color */
+    padding: 0; /* Remove padding */
+    border-radius: 0; /* Remove border radius */
+    display: block; /* Change display to block to align with other texts */
+    border: none; /* Remove border */
+}
+
+        body.dark-mode .hero .subtitle {
+            color: #b0c4de; /* Light steel blue for dark mode */
+        }
+
+        .hero p {
+            font-size: 1.125rem; /* Adjusted font size for better scaling */
+            color: black;
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+
+        body.dark-mode .hero p {
+            color: white; /* Light text color for hero paragraph */
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background-color: transparent;
+            color: black;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1rem; /* Adjusted font size for better scaling */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            border: 2px solid black;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .cta-button {
+            color: white; /* Light text color for button "get connected"*/
+            border: 2px solid white; /* Light border color for button */
+        }
+
+        .cta-button:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0, 123, 255, 0.699), rgba(0, 36, 86, 0)); /* Darker gradient colors in blue shades */
+            z-index: -1;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            transform: scaleX(0);
+            transition: transform 0.5s ease, opacity 0.5s ease; /* Added transition for gradient effect */
+            transform: scaleX(0); /* Initial scale for gradient effect */
+            transform-origin: left; /* Set transform origin to left for gradient effect */
+        }
+
+        .cta-button:hover:before {
+            transform: scaleX(1); /* Scale to 100% on hover for gradient effect */
+        }
+
+        .cta-button:hover {
+            box-shadow: 0 0 50px rgb(0, 102, 255); /* Improved shadow color in blue shades */
+            transform: scale(1.05); /* Slightly enlarge the button on hover */
+        }
+
+        /* About Section */
+        .about, .skills, .projects, .contact, .education, .certificates {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .about {
+            background-color: #ffffff; /* Changed background color to white */
+        }
+
+        body.dark-mode .about {
+            background-color: #222222; /* Dark background color for about section */
+        }
+
+        .about h3, .skills h3, .projects h3, .contact h3, .education h3, .certificates h3 {
+            font-size: 1.75rem; /* Adjusted font size for better scaling */
+            margin-bottom: 20px;
+            color: rgb(66, 66, 66); /* Changed section headings color to black */
+        }
+
+        body.dark-mode .about h3, 
+        body.dark-mode .skills h3, 
+        body.dark-mode .projects h3, 
+        body.dark-mode .contact h3, 
+        body.dark-mode .education h3, 
+        body.dark-mode .certificates h3 {
+            color: white; /* Light text color for section headings */
+        }
+
+        .about p, .skills p, .projects p, .contact p, .education p, .certificates p {
+            font-size: 1rem; /* Adjusted font size for better scaling */
+            max-width: 800px;
+            margin: 0 auto 20px;
+            line-height: 1.8;
+            color: black; /* Changed content color to black */
+        }
+
+        body.dark-mode .about p, 
+        body.dark-mode .skills p, 
+        body.dark-mode .projects p, 
+        body.dark-mode .contact p, 
+        body.dark-mode .education p, 
+        body.dark-mode .certificates p {
+            color: white; /* Light text color for content */
+        }
+
+        /* Skills Section */
+        .skills {
+            background-color: #fff;
+        }
+
+        body.dark-mode .skills {
+            background-color: #2b2b2b; /* Dark background color for skills section */
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-left: 0; /* No padding for skills list */
+        }
+
+        .skill-item {
+            display: inline-block;
+            background-color: #f0f0f0;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1rem; /* Adjusted font size for better scaling */
+            font-weight: bold;
+            color: black;
+            margin: 5px;
+            transition: box-shadow 0.5s ease; /* Added transition for box-shadow */
+        }
+
+        .skill-item:hover {
+            box-shadow: 0 0 45px rgba(0, 47, 255, 0.664); /* Glow effect on hover */
+        }
+
+        body.dark-mode .skill-item {
+            background-color: #bcbcbc; /* Dark background color for skill items */
+            color: rgb(190, 190, 190); /* Light text color for skill items */
+        }
+
+        /* Certificates Section */
+        .certificates {
+            background-color: #f7f7f7;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .certificates {
+            background-color: #1e1e1e; /* Dark background color for certificates section */
+        }
+
+        .certificate-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .certificate-item {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3); /* Darker shadow */
+            width: 100%;
+            max-width: 300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            text-align: center; /* Center align text */
+        }
+
+        body.dark-mode .certificate-item {
+            background-color: #404040; /* Dark background color for certificate items */
+        }
+
+        .certificate-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 35px rgba(0, 123, 255, 0.697); /* Darker glow and spread up to 35 */
+        }
+
+        .certificate-item img {
+            width: 100%;
+            height: auto; /* Adjust height to auto for correct aspect ratio */
+            object-fit: cover;
+        }
+
+        .certificate-item h4 {
+            font-size: 1.25rem; /* Adjusted font size for better scaling */
+            margin: 15px 0 10px;
+            color: black; /* Changed certificate item heading color to black */
+        }
+
+        body.dark-mode .certificate-item h4 {
+            color: white; /* Light text color for certificate item heading */
+        }
+
+        .certificate-item p {
+            font-size: 1rem; /* Adjusted font size for better scaling */
+            color: black; /* Changed certificate item paragraph color to black */
+            padding: 0 15px 15px;
+            text-align: center; /* Center align text */
+        }
+
+        body.dark-mode .certificate-item p {
+            color: white; /* Light text color for certificate item paragraph */
+        }
+
+        /* Projects Section */
+        .projects {
+            background-color: #f7f7f7;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .projects {
+            background-color: #1e1e1e; /* Dark background color for projects section */
+        }
+
+        .project-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+<!-- Start of Selection -->
+<!-- © 2024 Rutuj Dhodapkar. All rights reserved. -->
+
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rutuj Dhodapkar's personal portfolio showcasing projects, skills, and contact information and much more.">
+    <meta name="keywords" content="Rutuj, Rutuj Dhodapkar, portfolio, web developer, projects, skills, Rutuj Dhodapkar Portfolio, Rutuj portfolio, Dhodapkar, Dhodapkar portfolio">
+    <meta name="author" content="Rutuj Dhodapkar">
+    <title>Rutuj Dhodapkar - Portfolio</title>
+<style>
+    .custom-cursor {
         width: 15px; /* Increased size */
         height: 15px; /* Increased size */
         border-radius: 50%;
@@ -154,7 +644,7 @@
             text-decoration: none;
             color: rgba(0, 0, 0, 0.9);
             font-weight: bold;
-            font-size: 16px;
+            font-size: 1rem; /* Adjusted font size for better scaling */
             padding: 10px 15px;
             border-radius: 20px;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -213,7 +703,7 @@
         }
 
         .hero h2 {
-            font-size: 48px;
+            font-size: 3rem; /* Adjusted font size for better scaling */
             font-weight: bold;
             color: black;
             margin-bottom: 20px;
@@ -225,7 +715,7 @@
         }
 
         .hero h2 span {
-            font-size: 54px;
+            font-size: 3.5rem; /* Adjusted font size for better scaling */
             background: linear-gradient(80deg, #fe00e5, #7b00ff, #00b3ff, #00c8fa); /*rutuj dhodapkar text color*/
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -242,7 +732,7 @@
         /* for aiml student homepage description */
         .hero .subtitle { 
     color: #112b45; /* Dark slate gray for text, improves readability */
-    font-size: 20px; /* Increased font size */
+    font-size: 1.25rem; /* Adjusted font size for better scaling */
     margin-top: 20px; /* Adjusted margin to align with other texts */
     font-family: 'League Spartan', sans-serif;
     font-weight: 600;
@@ -260,7 +750,7 @@
         }
 
         .hero p {
-            font-size: 18px;
+            font-size: 1.125rem; /* Adjusted font size for better scaling */
             color: black;
             margin-top: 20px;
             line-height: 1.8;
@@ -279,7 +769,7 @@
             text-decoration: none;
             border-radius: 50px;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 1rem; /* Adjusted font size for better scaling */
             transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
             border: 2px solid black;
             position: relative;
@@ -331,7 +821,7 @@
         }
 
         .about h3, .skills h3, .projects h3, .contact h3, .education h3, .certificates h3 {
-            font-size: 28px;
+            font-size: 1.75rem; /* Adjusted font size for better scaling */
             margin-bottom: 20px;
             color: rgb(66, 66, 66); /* Changed section headings color to black */
         }
@@ -346,7 +836,7 @@
         }
 
         .about p, .skills p, .projects p, .contact p, .education p, .certificates p {
-            font-size: 16px;
+            font-size: 1rem; /* Adjusted font size for better scaling */
             max-width: 800px;
             margin: 0 auto 20px;
             line-height: 1.8;
@@ -383,7 +873,7 @@
             background-color: #f0f0f0;
             padding: 10px 20px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 1rem; /* Adjusted font size for better scaling */
             font-weight: bold;
             color: black;
             margin: 5px;
@@ -448,7 +938,7 @@
         }
 
         .certificate-item h4 {
-            font-size: 20px;
+            font-size: 1.25rem; /* Adjusted font size for better scaling */
             margin: 15px 0 10px;
             color: black; /* Changed certificate item heading color to black */
         }
@@ -458,7 +948,7 @@
         }
 
         .certificate-item p {
-            font-size: 14px;
+            font-size: 1rem; /* Adjusted font size for better scaling */
             color: black; /* Changed certificate item paragraph color to black */
             padding: 0 15px 15px;
             text-align: center; /* Center align text */
@@ -567,11 +1057,26 @@
             box-shadow: 0 0 20px rgba(0, 123, 255, 1); /* Darker blue effect on hover */
         }
 
-        .contact-buttons a.instagram { background-color: #000; }
-        .contact-buttons a.twitter { background-color: #000; }
-        .contact-buttons a.linkedin { background-color: #000; }
-        .contact-buttons a.github { background-color: #000; }
-        .contact-buttons a.email { background-color: #000; }
+        .contact-buttons a.instagram { 
+            background-color: #000; 
+            border: 2px solid #ffffff55; /* Added white border */
+        }
+        .contact-buttons a.twitter { 
+            background-color: #000; 
+            border: 2px solid #ffffff55; /* Added white border */
+        }
+        .contact-buttons a.linkedin { 
+            background-color: #000; 
+            border: 2px solid #ffffff55; /* Added white border */
+        }
+        .contact-buttons a.github { 
+            background-color: #000; 
+            border: 2px solid #ffffff55; /* Added white border */
+        }
+        .contact-buttons a.email { 
+            background-color: #000; 
+            border: 2px solid #ffffff55; /* Added white border */
+        }
 
         /* Education Section */
         .education {
