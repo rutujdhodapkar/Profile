@@ -6,37 +6,45 @@
  
 <head>
     <style>
+        /* Add some basic styling */
+        .logo {
+            width: 200px; /* Adjust the width as needed */
+            height: auto; /* Maintain the aspect ratio */
+        }
+    </style>
+    <style>
         .exit-button {
             position: fixed;
             top: 10px;
             left: 10px;
             padding: 10px 20px;
-            background-color: rgba(125, 125, 125, 0.421); /* Added transparency */
+            background-color: rgba(125, 125, 125, 0.104); /* Added transparency */
             color: #ffffff;
             border: none;
             border-radius: 30px; /* Made round edges */
-            font-size: 1.5rem; /* Increased font size for bigger arrow */
+            font-size: 1rem; /* Increased font size for bigger arrow */
             font-weight: bold; /* Make arrow bold */
             cursor: pointer;
             z-index: 1001;
-            backdrop-filter: blur(5px); /* Added blur effect */
+            backdrop-filter: blur(3px); /* Added blur effect */
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const backButton = document.createElement('button');
-            backButton.classList.add('exit-button');
-            backButton.innerHTML = '&#x2190;'; // Unicode for left arrow
-            backButton.addEventListener('click', function() {
-                if (window.history.length > 1) {
-                    window.history.back();
-                } else {
-                    window.close();
-                }
-            });
-            document.body.appendChild(backButton);
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const backButton = document.createElement('button');
+        backButton.classList.add('exit-button');
+        backButton.innerHTML = 'Exit'; // Changed from arrow to text "Exit"
+        backButton.addEventListener('click', function() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.close();
+            }
         });
-    </script>
+        document.body.appendChild(backButton);
+    });
+</script>
+
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -171,7 +179,7 @@
         }
 
         body.dark-mode header.header-2 {
-            background-color: rgba(125, 125, 125, 0.37); /* Dark background color for header */
+            background-color: rgba(44, 44, 44, 0.197); /* Dark background color for header */
         }
 
         .header-2 .nav ul {
@@ -201,7 +209,7 @@
         .header-2 .nav ul li a.active {
             background: linear-gradient(90deg, #00c6ff, #0072ff);
             color: white;
-            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+            box-shadow: 0 0 10px rgba(0, 51, 255, 0.7);
         }
 
         .header-2 .nav ul li a:hover {
@@ -1268,9 +1276,11 @@
         }
 
         body.dark-mode .left-box {
-            background-color: #333333; /* Dark background color for left box */
-            color: white; /* Light text color for left box */
-        }
+    background-color: #3333332b; /* Dark background color for left box */
+    color: white; /* Light text color for left box */
+    backdrop-filter: blur(5px); /* Added blur effect */
+}
+
 
         .left-box.show {
             left: 0; /* Show the box */
@@ -1279,7 +1289,10 @@
 </head>
 <body>
     <!-- Dark Mode Toggle Button -->
-    <button onclick="toggleDarkMode()" style="position: fixed; top: 10px; right: 10px; padding: 10px 20px; background-color: #bcbcbc45; color: #959595; border: none; border-radius: 20px; cursor: pointer; z-index: 1003; box-shadow: 0 0 10px rgba(255, 255, 255, 0);">Change Theme</button>
+    <button onclick="toggleDarkMode()" style="position: fixed; top: 10px; right: 10px; padding: 10px 20px; background-color: rgba(188, 188, 188, 0.27); color: #959595; border: none; border-radius: 20px; cursor: pointer; z-index: 1003; box-shadow: 0 0 10px rgba(255, 255, 255, 0); backdrop-filter: blur(5px);">
+        Change Theme
+    </button>
+    
 
     <!-- Navigation -->
     <header class="header-2">
@@ -1311,7 +1324,7 @@
 
     <!-- About Section -->
     <section id="about" class="about">
-        <h3 onclick="openChatGPT()">$:/WHOAMI</h3>
+        <h3 onclick="openChatGPT()">$: /WHOAMI</h3>
         <script>
             function openChatGPT() {
                 const query = "search on web about Rutuj Dhodapkar";
@@ -1323,6 +1336,7 @@
         <p onclick="openChatGPT()">Whether it's building machine learning models that detect real-time objects, optimizing cloud infrastructure for seamless performance, or enhancing website functionality for a smooth user experience, I'm always eager to learn and push the boundaries of what's possible. To me, technology is more than just a tool—it's an art form that can solve real-world problems in creative and innovative ways.</p>
         <p onclick="openChatGPT()">When I'm not coding or working with cloud solutions, you'll find me exploring the latest tech trends, experimenting with new tools, or sharing my journey on social media. Let's connect and create something amazing together!</p>
     </section>
+   
 
     <!-- Education Section -->
     <section id="education" class="education">
@@ -1340,7 +1354,7 @@
             </div>
         </div>
     </section>
-
+    <hr style="border: none; height: 1.1px; background: linear-gradient(to right, #ff0000,#ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);">
     <!-- Skills Section -->
     <section id="skills" class="skills">
         <h3>Skills</h3>
@@ -1363,7 +1377,7 @@
         </div>
 
     </section>
-
+    <hr style="border: none; height: 1.1px; background: linear-gradient(to right, #ff0000,#ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);">
     <!-- Certificates Section -->
     <section id="certificates" class="certificates">
         <h3>Certificates</h3>
@@ -1384,7 +1398,7 @@
             </div>
         </div>
     </section>
-
+    
     <!-- Projects Section -->
     <section id="projects" class="projects">
         <h3>Projects</h3>
@@ -1413,7 +1427,7 @@
             </div>
         </div>
     </section>
-
+    <hr style="border: none; height: 1.1px; background: linear-gradient(to right, #ff0000,#ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);">
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <h3>Contact Me</h3>
@@ -1438,7 +1452,7 @@
                 <img src="mail.png" alt="Email Logo" style="width: 20px; height: 20px; margin-right: 5px;">Email</a>
         </div>
     </section>
-
+    <hr style="border: none; height: 1.1px; background: linear-gradient(to right, #ff0000,#ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);">
     <!-- Footer Section -->
     <footer>
         <p>©2024 Rutuj Dhodapkar Portfolio. All Rights Reserved.</p>
