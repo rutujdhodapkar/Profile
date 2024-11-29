@@ -33,17 +33,20 @@
     document.addEventListener('DOMContentLoaded', function() {
         const backButton = document.createElement('button');
         backButton.classList.add('exit-button');
-        backButton.innerHTML = 'Exit'; // Changed from arrow to text "Exit"
+        backButton.innerHTML = 'Exit'; // Button text is "Exit"
+        
         backButton.addEventListener('click', function() {
             if (window.history.length > 2) {
-                window.history.back();
+                window.history.go(-2); // Go back two pages in history
             } else {
                 window.close();
             }
         });
+        
         document.body.appendChild(backButton);
     });
 </script>
+
 
     
     <meta charset="UTF-8">
