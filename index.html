@@ -35,7 +35,7 @@
         backButton.classList.add('exit-button');
         backButton.innerHTML = 'Exit'; // Changed from arrow to text "Exit"
         backButton.addEventListener('click', function() {
-            if (window.history.length > 1) {
+            if (window.history.length > 2) {
                 window.history.back();
             } else {
                 window.close();
