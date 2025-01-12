@@ -5,6 +5,21 @@
 <html lang="en">
  
 <head>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('contextmenu', function(event) {
+                event.preventDefault();
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('keydown', function(event) {
+                event.preventDefault();
+            });
+        });
+    </script>
     <style>
         /* Add some basic styling */
         .logo {
@@ -27,6 +42,7 @@
             cursor: pointer;
             z-index: 1001;
             backdrop-filter: blur(3px); /* Added blur effect */
+            -webkit-backdrop-filter: blur(3px); /* Added blur effect for Safari */
         }
     </style>
 <script>
@@ -66,6 +82,7 @@
         z-index: 1000;
         transition: opacity 0.90s ease, transform 0.90s ease, left 0.1s ease, top 0.1s ease; /* Added more smoothness and latency */
         backdrop-filter: blur(2px); /* Added blur effect */
+        -webkit-backdrop-filter: blur(2px); /* Added blur effect for Safari */
     }
     
 </style>
@@ -176,6 +193,7 @@
             margin: 0 auto;
             border-radius: 40px;
             backdrop-filter: blur(10px); /* Added blur effect */
+            -webkit-backdrop-filter: blur(10px); /* Added blur effect for Safari */
             transition: padding 0.3s ease, max-height 0.5s ease; /* Added transition for padding and max-height */
             overflow: visible; /* Ensure content doesn't overflow */
             max-height: 60px; /* Initial max-height */
@@ -239,6 +257,12 @@
             }
             to {
                 max-height: 500px; /* Adjust as needed */
+            }
+        }
+
+        @media (max-width: 768px) {
+            header.header-2 {
+                display: none; /* Hide header on small screens */
             }
         }
 
@@ -631,9 +655,9 @@
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .contact-buttons a:hover {
+        .contact-buttons a:hover, .contact-buttons a:focus, .contact-buttons a:active {
             background-color: #e0e0e0;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 50px rgba(0, 76, 255, 0.8); /* Increased blue light spread on hover */
         }
 
         body.dark-mode .contact-buttons a {
@@ -641,8 +665,9 @@
             color: white;
         }
 
-        body.dark-mode .contact-buttons a:hover {
+        body.dark-mode .contact-buttons a:hover, body.dark-mode .contact-buttons a:focus, body.dark-mode .contact-buttons a:active {
             background-color: #5f5f5f;
+            box-shadow: 0 0 50px rgba(0, 76, 255, 0.8); /* Increased blue light spread on hover in dark mode */
         }
 
         /* Footer Section */
@@ -653,7 +678,7 @@
         }
 
         body.dark-mode footer {
-            background-color: #3f3f3f;
+            background-color: #2b2b2b;
             color: white;
         }
 
@@ -680,9 +705,60 @@
             text-decoration: underline;
         }
 
+        /* Multi-color line at the top of the page */
+        .multi-color-line {
+            height: 4px;
+            background: linear-gradient(to right, #ff0000, #ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1003;
+        }
+
+/* Current Page Title for Small Screens */
+.current-page-title {
+    position: fixed;
+    top: 10%; /* Position at the middle-top */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for centering */
+    background: rgba(255, 255, 255, 0.2); /* Increased transparency for glass effect */
+    color: #f0f0f0; /* Softer white for text */
+    width: 180px; /* Slightly wider for more text space */
+    height: 60px; /* Slightly taller for better aesthetics */
+    display: flex;
+    align-items: center; /* Center text vertically */
+    justify-content: center; /* Center text horizontally */
+    border-radius: 30px; /* Softer curve for modern look */
+    z-index: 1004;
+    font-size: 1.1rem; /* Slightly larger font for readability */
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for depth */
+    backdrop-filter: blur(10px); /* Enhanced blur effect for glass effect */
+    -webkit-backdrop-filter: blur(10px); /* Enhanced blur effect for Safari */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.current-page-title:empty {
+    display: none; /* Hide element when there is no text */
+}
+
+/* Hide the title on larger screens */
+@media screen and (min-width: 780px) {
+    .current-page-title {
+        display: none; /* Hide on larger screens */
+    }
+}
+
     </style>
 </head>
 <body>
+    <!-- Multi-color line at the top of the page -->
+    <div class="multi-color-line"></div>
+
+    <!-- Current Page Title for Small Screens -->
+    <div class="current-page-title" id="currentPageTitle"></div>
+
     <!-- Dark Mode Toggle Button -->
     <button onclick="toggleDarkMode()" style="position: fixed; top: 10px; right: 10px; padding: 10px 20px; background-color: rgba(188, 188, 188, 0.27); color: #959595; border: none; border-radius: 20px; cursor: pointer; z-index: 1003; box-shadow: 0 0 10px rgba(255, 255, 255, 0); backdrop-filter: blur(5px);">
         Change Theme
@@ -713,8 +789,15 @@
             <a href="#contact" class="cta-button">Get in Touch</a>
         </div>
         <div class="hero-image" style="text-align: right; padding-right: 100px; padding-top: px;">
-            <img src="Black White Minimalist Photo Collage Student Portfolio.png" alt="Portfolio Image" style="max-width: 40%; height: auto; margin-right: 45px;"> <!-- Made image smaller and aligned to the right -->
+            <img src="Black White Minimalist Photo Collage Student Portfolio.png" alt="Portfolio Image" style="max-width: 40%; height: auto; margin-right: 45px;" class="responsive-image"> <!-- Made image smaller and aligned to the right -->
         </div>
+        <style>
+            @media (max-width: 600px) {
+                .hero-image {
+                    display: none;
+                }
+            }
+        </style>
     </section>
 
     <!-- About Section -->
@@ -737,18 +820,37 @@
     <section id="education" class="education">
         <h3>Education</h3>
         <div class="education-list">
-            <div class="education-item">
-                <h4>Diploma Artificial Intelligence & Machine Learning</h4>
-                <p><a href="https://www.kkwagh.edu.in/" target="_blank" style="text-decoration: none; color: rgb(150, 150, 150);">K.K. Wagh Polytechnic, 2022 - 2025</a></p>
-                <p>---</p>
+            <div class="education-item" style="width: 100%;">
+                <div class="h4-box">
+                    <h4>Diploma Artificial Intelligence & Machine Learning</h4>
+                    <p><a href="https://www.kkwagh.edu.in/" target="_blank" rel="noopener" style="text-decoration: none; color: rgb(150, 150, 150);">K.K. Wagh Polytechnic, 2022 - 2025</a></p>
+                    <p>---</p>
+                </div>
             </div>
-            <div class="education-item">
-                <h4>High School</h4>
-                <p><a href="https://bms.bhonsala.in/" target="_blank" style="text-decoration: none; color: rgb(150, 150, 150);">Bhosla Military School, 2020 - 2022</a></p>
-                <p>First class Distinction</p>
+            <div class="education-item" style="width: 100%;">
+                <div class="h4-box">
+                    <h4>High School</h4>
+                    <p><a href="https://bms.bhonsala.in/" target="_blank" rel="noopener" style="text-decoration: none; color: rgb(150, 150, 150);">Bhosla Military School, 2020 - 2022</a></p>
+                    <p>First class Distinction</p>
+                </div>
             </div>
         </div>
     </section>
+    <style>
+        .h4-box {
+            background-color: #f0f0f0; /* Light theme background color */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px; /* Made edges more curved */
+            max-width: 800px; /* Set max width for uniformity */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        body.dark-mode .h4-box {
+            background-color: #333333; /* Dark theme background color */
+        }
+    </style>
     <hr style="border: none; height: 1.1px; background: linear-gradient(to right, #ff0000,#ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);">
     <!-- Skills Section -->
     <section id="skills" class="skills">
@@ -874,6 +976,7 @@
             const navLinks = document.querySelectorAll('.nav-link');
             const projectsSection = document.querySelector('.projects');
             const header2 = document.querySelector('.header-2');
+            const currentPageTitle = document.getElementById('currentPageTitle');
 
             // Typing animation for name
             const nameElement = document.getElementById('name');
@@ -923,6 +1026,7 @@
                     if ((sectionTop <= scrollPos + viewportHeight * 0.5) && (sectionBottom >= scrollPos + viewportHeight * 0.5)) {
                         navLinks.forEach(nav => nav.classList.remove('active'));
                         link.classList.add('active');
+                        currentPageTitle.textContent = link.textContent; // Update current page title
                     }
                 });
 
