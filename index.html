@@ -755,19 +755,25 @@
 <body>
  <div id="new-ui-message">New UI Coming Soon</div>
 
+<div id="new-ui-message">New UI Coming Soon</div>
+
 <style>
   #new-ui-message {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
     color: white;
     text-align: center;
     padding: 10px;
     z-index: 9999; /* Ensures it's on top of other content */
     font-family: Arial, sans-serif;
     font-size: 14px;
+    backdrop-filter: blur(10px); /* Adds the glass blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari support */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Thin border for definition */
   }
 </style>
     <!-- Multi-color line at the top of the page -->
