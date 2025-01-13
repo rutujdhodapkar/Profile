@@ -1,5 +1,6 @@
 <!-- Start of Selection 2024 -->
-<!--Created on 2024-->
+<!--Created in 2024-->
+<!-- © 2024 Rutuj Dhodapkar. All rights reserved. -->
 <!-- © 2025 Rutuj Dhodapkar. All rights reserved. -->
 
 <!DOCTYPE html>
@@ -563,10 +564,14 @@
             background-color: #f7f7f7;
             position: relative;
             overflow: hidden;
+            padding-top: 50px; /* Added space at the top */
+            padding-bottom: 50px; /* Added space at the bottom */
         }
 
         body.dark-mode .projects {
             background-color: #1e1e1e; /* Dark background color for projects section */
+            padding-top: 50px; /* Added space at the top in dark mode */
+            padding-bottom: 50px; /* Added space at the bottom in dark mode */
         }
 
         .project-list {
@@ -574,7 +579,8 @@
             justify-content: flex-start;
             overflow-x: scroll;
             scroll-behavior: smooth;
-            padding-bottom: 20px;
+            padding-top: 50px; /* Added more space at the top for scrolling area */
+            padding-bottom: 50px;
             scrollbar-width: none; /* Hide scrollbar for Firefox */
         }
 
@@ -586,10 +592,9 @@
             background-color: #fff;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.3); /* Darker shadow */
             width: 300px;
             flex: 0 0 auto;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
             position: relative;
             margin-right: 20px;
         }
@@ -769,28 +774,43 @@
     </style>
 </head>
 <body>
- <div id="new-ui-message">New UI Coming Soon</div>
 
-<div id="new-ui-message">New UI Coming Soon</div>
+    <!-- New UI Coming Soon -->
+    <div id="new-ui-message">New UI Coming Soon</div>
 
-<style>
-  #new-ui-message {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-    color: white;
-    text-align: center;
-    padding: 10px;
-    z-index: 9999; /* Ensures it's on top of other content */
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    backdrop-filter: blur(10px); /* Adds the glass blur effect */
-    -webkit-backdrop-filter: blur(10px); /* For Safari support */
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Thin border for definition */
-  }
+    <style>
+      #new-ui-message {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        color: white;
+        text-align: center;
+        padding: 10px;
+        z-index: 9999; /* Ensures it's on top of other content */
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        backdrop-filter: blur(10px); /* Adds the glass blur effect */
+        -webkit-backdrop-filter: blur(10px); /* For Safari support */
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+        border-top: 1px solid rgba(255, 255, 255, 0.2); /* Thin border for definition */
+        transition: opacity 1s ease-out; /* Transition for fade-out effect */
+      }
+    </style>
+
+    <script>
+      // Function to hide the message with animation after 5 seconds
+      setTimeout(function() {
+        var message = document.getElementById('new-ui-message');
+        if (message) {
+          message.style.opacity = '0'; // Start fade-out animation
+          setTimeout(function() {
+            message.style.display = 'none'; // Hide after animation
+          }, 1000); // Match the duration of the fade-out transition
+        }
+      }, 5000);
+    </script>
 </style>
     <!-- Multi-color line at the top of the page -->
     <div class="multi-color-line"></div>
@@ -943,32 +963,42 @@
             <div class="project-item">
                 <a href="https://rutujproject1-czzltsg8apdmaxpiz4xgzj.streamlit.app/" style="text-decoration: none;">
                     <img src="Gemini_Generated_Image_qpyl7qqpyl7qqpyl.jpeg" alt="Project 1">
-                    <h4>Text To Emotion Detection</h4>
-                    <p>Machine Learning model for detecting emotion type based on user input as text.</p>
+                    <h4>Text to Emotion Detection</h4>
+                    <p>A machine learning model for detecting the type of emotion based on user input as text.</p>
+                    <p style="font-family: 'Calibri', sans-serif;">Developed in 2024</p>
                 </a>
             </div>
+
             <div class="project-item">
                 <img src="Gemini_Generated_Image_lpspq6lpspq6lpsp.jpeg" alt="Project 2">
-                <h4>Text To Website Generator</h4>
-                <p>ML/DL-based system for generating JS code to make websites as per user text input.</p>
+                <h4>Text to Website Generator</h4>
+                <p>An ML/DL-based system for generating JS code to create websites based on user text input.</p>
+                <p style="font-family: 'Calibri', sans-serif;">Project is in process</p>
             </div>
+
             <div class="project-item">
                 <img src="Gemini_Generated_Image_ah0ypvah0ypvah0y.jpeg" alt="Project 3">
-                <h4>Real-Time AI-Based Chess Review, Recommendation System</h4>
-                <p>AI-based project that detects and classifies chess moves in real-time using deep learning, and generates output of the best chess move.</p>
+                <h4>Real-Time AI-Based Chess Review and Recommendation System</h4>
+                <p>An AI-based project that detects and classifies chess moves in real-time using deep learning, and generates the best chess move as output.</p>
+                <p style="font-family: 'Calibri', sans-serif;">Developed in 2024-25</p>
             </div>
+
             <div class="project-item">
                 <img src="Gemini_Generated_Image_rpcjqbrpcjqbrpcj.jpeg" alt="Project 4">
                 <h4>Python Tic-Tac-Toe Game</h4>
-                <p>Python code to play tic-tac-toe game online.</p>
+                <p>Python code to play the tic-tac-toe game online.</p>
+                <p style="font-family: 'Calibri', sans-serif;">Developed in 2024</p>
             </div>
+
             <div class="project-item">
-                <a href="https://diabetes-prediction-main-600million.streamlit.app/" target="_blank" style="text-decoration: none;">
+                <a href="https://diabetes-prediction-main-600million.streamlit.app/" target="_blank" rel="noopener" style="text-decoration: none;">
                     <img src="diabetes.jpg" alt="Project 5">
                     <h4>Diabetes Prediction Using PyTorch</h4>
-                    <p>Deep learning model developed with PyTorch to predict diabetes based on medical data.</p>
+                    <p>A deep learning model developed with PyTorch to predict diabetes based on medical data.</p>
+                    <p style="font-family: 'Calibri', sans-serif;">Developed in 2025</p>
                 </a>
             </div>
+
         </div>
         <button class="scroll-arrow right" onclick="scrollProjects('right')">&#9654;</button>
     </section>
