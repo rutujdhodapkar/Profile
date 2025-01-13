@@ -15,7 +15,7 @@ I am Rutuj Dhodapkar, a passionate AI developer with a deep understanding of des
 ## How to View My Portfolio
 
 You can check out my portfolio live at:  
-[https://rutujdhodapkar.netlify.app](https://rutujdhodapkar.netlify.app)
+[Portfolio](https://rutujdhodapkar.netlify.app)
 
 ## Contact Me
 
