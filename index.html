@@ -6,8 +6,29 @@
 <!DOCTYPE html>
 <html lang="en">
   
-<head>
+<head>   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rutuj Dhodapkar's personal portfolio showcasing projects, skills, and contact information and much more.">
+    <meta name="keywords" content="Rutuj, Rutuj Dhodapkar, portfolio, web developer, projects, skills, Rutuj Dhodapkar Portfolio, Rutuj portfolio, Dhodapkar, Dhodapkar portfolio">
+    <meta name="author" content="Rutuj Dhodapkar">
 
+
+    <meta property="og:title" content="Rutuj Dhodapkar | AI Developer Portfolio">
+    <meta property="og:description" content="Explore my portfolio showcasing development expertise, projects, and technical skills like AI, ML, DL.">
+    <meta property="og:image" content="https://vectorseek.com/wp-content/uploads/2023/09/ADOBE-PORTFOLIO-Logo-Vector.svg-.png">
+    <meta property="og:url" content="https://rutujdhodapkarweb1.netlify.app">
+    <meta property="og:type" content="website">
+
+    <!-- For Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rutuj Dhodapkar | AI Developer Portfolio">
+    <meta name="twitter:description" content="Explore my portfolio showcasing development expertise, projects, and technical skills like AI, ML, DL.">
+    <meta name="twitter:image" content="https://vectorseek.com/wp-content/uploads/2023/09/ADOBE-PORTFOLIO-Logo-Vector.svg-.png">
+
+
+    <title>Rutuj Dhodapkar - Portfolio</title>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.addEventListener('contextmenu', function(event) {
@@ -27,81 +48,28 @@
         .logo {
             width: 200px; /* Adjust the width as needed */
             height: auto; /* Maintain the aspect ratio */
+            transition: transform 0.3s ease; /* Added transition for animations */
+        }
+
+        .logo:hover {
+            transform: scale(1.1); /* Scale up on hover */
         }
     </style>
-    <style>
-        .exit-button {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            padding: 10px 20px;
-            background-color: rgba(125, 125, 125, 0.104); /* Added transparency */
-            color: #ffffff;
-            border: none;
-            border-radius: 30px; /* Made round edges */
-            font-size: 1rem; /* Increased font size for bigger arrow */
-            font-weight: bold; /* Make arrow bold */
-            cursor: pointer;
-            z-index: 1001;
-            backdrop-filter: blur(3px); /* Added blur effect */
-            -webkit-backdrop-filter: blur(3px); /* Added blur effect for Safari */
-        }
-    </style>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const backButton = document.createElement('button');
-        backButton.classList.add('exit-button');
-        backButton.innerHTML = 'Exit'; // Button text is "Exit"
-        
-        backButton.addEventListener('click', function() {
-            if (window.history.length > 2) {
-                window.history.go(-2); // Go back two pages in history
-            } else {
-                window.close();
-            }
-        });
-        
-        document.body.appendChild(backButton);
-    });
-</script>
 
 
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rutuj Dhodapkar's personal portfolio showcasing projects, skills, and contact information and much more.">
-    <meta name="keywords" content="Rutuj, Rutuj Dhodapkar, portfolio, web developer, projects, skills, Rutuj Dhodapkar Portfolio, Rutuj portfolio, Dhodapkar, Dhodapkar portfolio">
-    <meta name="author" content="Rutuj Dhodapkar">
-
-
-<meta property="og:title" content="Rutuj Dhodapkar | AI Developer Portfolio">
-<meta property="og:description" content="Explore my portfolio showcasing development expertise, projects, and technical skills like AI, ML, DL.">
-<meta property="og:image" content="https://vectorseek.com/wp-content/uploads/2023/09/ADOBE-PORTFOLIO-Logo-Vector.svg-.png">
-<meta property="og:url" content="https://rutujdhodapkarweb1.netlify.app">
-<meta property="og:type" content="website">
-
-<!-- For Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Rutuj Dhodapkar | AI Developer Portfolio">
-<meta property="og:description" content="Explore my portfolio showcasing development expertise, projects, and technical skills like AI, ML, DL.">
-<meta name="twitter:image" content="https://vectorseek.com/wp-content/uploads/2023/09/ADOBE-PORTFOLIO-Logo-Vector.svg-.png">
-
-
-    <title>Rutuj Dhodapkar - Portfolio</title>
 <style>
     .custom-cursor {
         width: 25px; /* Increased size */
         height: 25px; /* Increased size */
-        border-radius: 50%;
+        border-radius: 60%; /* Made radius a little larger */
         background-color: rgba(200, 200, 200, 0.297); /* Fixed color */
         position: absolute;
         pointer-events: none;
         z-index: 1000;
-        transition: opacity 0.90s ease, transform 0.90s ease, left 0.1s ease, top 0.1s ease; /* Added more smoothness and latency */
+        transition: opacity 0.05s ease, transform 0.05s ease, left 0.025s ease, top 0.025s ease; /* Made the effect faster */
         backdrop-filter: blur(2px); /* Added blur effect */
         -webkit-backdrop-filter: blur(2px); /* Added blur effect for Safari */
     }
-    
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -109,10 +77,22 @@
         cursor.classList.add('custom-cursor');
         document.body.appendChild(cursor);
 
-        document.addEventListener('mousemove', function(e) {
-            cursor.style.left = e.pageX + 'px';
-            cursor.style.top = e.pageY + 'px';
+        let cursorX = 0;
+        let cursorY = 0;
+
+        function updateCursorPosition(e) {
+            cursorX = e.clientX;
+            cursorY = e.clientY;
+            cursor.style.left = cursorX + window.scrollX + 'px';
+            cursor.style.top = cursorY + window.scrollY + 'px';
             cursor.style.transform = 'translate(-50%, -50%)'; /* Center the cursor */
+        }
+
+        document.addEventListener('mousemove', updateCursorPosition);
+
+        document.addEventListener('scroll', function() {
+            cursor.style.left = cursorX + window.scrollX + 'px';
+            cursor.style.top = cursorY + window.scrollY + 'px';
         });
 
         document.addEventListener('mouseover', function(e) {
@@ -821,10 +801,117 @@
     <div class="current-page-title" id="currentPageTitle"></div>
 
     <!-- Dark Mode Toggle Button -->
-    <button onclick="toggleDarkMode()" style="position: fixed; top: 10px; right: 10px; padding: 10px 20px; background-color: rgba(188, 188, 188, 0.27); color: #959595; border: none; border-radius: 20px; cursor: pointer; z-index: 1003; box-shadow: 0 0 10px rgba(255, 255, 255, 0); backdrop-filter: blur(5px);">
-        Change Theme
-    </button>
-    
+    <div id="darkModeToggleContainer" style="position: fixed; bottom: 10px; right: 10px; z-index: 1003;">
+        <button id="darkModeToggleButton" onclick="toggleSettingsMenu()" style="padding: 10px; background-color: rgba(188, 188, 188, 0.27); color: #959595; border: none; border-radius: 20px; cursor: pointer; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); transition: transform 0.3s ease, opacity 0.5s ease;">
+            ⚙️
+        </button>
+        <div id="settingsMenu" style="display: none; position: absolute; bottom: 40px; right: 0; border-radius: 10px; padding: 10px; opacity: 0; transition: opacity 0.5s ease;" class="settings-menu light-mode">
+            <div style="margin-bottom: 10px;">Theme</div>
+            <label class="switch">
+                <input type="checkbox" onclick="toggleDarkMode()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(14px);
+        }
+
+        .logo {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Different shadow for dark mode */
+        body.dark-mode .settings-menu {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Different shadow for light mode */
+        body:not(.dark-mode) .settings-menu {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <script>
+        // Hide the button after 6 seconds if not hovered, with animation
+        setTimeout(function() {
+            const button = document.getElementById('darkModeToggleButton');
+            button.addEventListener('mouseenter', function() {
+                button.style.opacity = '1';
+            });
+            button.addEventListener('mouseleave', function() {
+                button.style.opacity = '0';
+            });
+            if (!button.matches(':hover')) {
+                button.style.opacity = '0';
+            }
+        }, 6000);
+    </script>
+    <script>
+        // Hide settings menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('settingsMenu');
+            const button = event.target.closest('button');
+            if (menu.style.display === 'block' && !menu.contains(event.target) && !button) {
+                menu.style.opacity = '0';
+                setTimeout(() => menu.style.display = 'none', 500);
+            }
+        });
+    </script>
+    <script>
+        function toggleSettingsMenu() {
+            const menu = document.getElementById('settingsMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+                setTimeout(() => menu.style.opacity = '1', 10); // Delay to ensure transition
+            } else {
+                menu.style.opacity = '0';
+                setTimeout(() => menu.style.display = 'none', 500); // Match the duration of the fade-out transition
+            }
+        }
+    </script>
 
     <!-- Navigation -->
     <header class="header-2">
@@ -1066,7 +1153,7 @@
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
-                    const offset = targetElement.getBoundingClientRect().top + window.scrollY - 60; // Adjust for header height
+                    const offset = targetElement.getBoundingClientRect().top + window.scrollY - 100; // Adjust for header height
                     window.scrollTo({
                         top: offset,
                         behavior: 'smooth'
@@ -1126,7 +1213,7 @@
                         link.classList.add('active');
                         link.style.boxShadow = '0 0 35px rgba(0, 123, 255, 1)'; // Apply darker glow effect and spread up to 35
                     } else {
-                        link.style.boxShadow = 'none'; // Remove glow effect
+                        link.style.boxShadow = 'none'; // Remove glow effect on header
                     }
                 });
             }
