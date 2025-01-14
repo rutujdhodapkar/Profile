@@ -803,7 +803,7 @@
         <button id="darkModeToggleButton" onclick="toggleSettingsMenu()" style="padding: 10px; background-color: rgba(188, 188, 188, 0.27); color: #959595; border: none; border-radius: 20px; cursor: pointer; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); transition: transform 0.3s ease, opacity 0.5s ease;">
             ⚙️
         </button>
-        <div id="settingsMenu" style="display: none; position: absolute; bottom: 40px; right: 0; border-radius: 10px; padding: 10px; opacity: 0; transition: opacity 0.5s ease;" class="settings-menu light-mode">
+        <div id="settingsMenu" style="display: none; position: absolute; bottom: 40px; right: 0; border-radius: 10px; padding: 10px; opacity: 0; transition: opacity 0.5s ease; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);" class="settings-menu light-mode">
             <div style="margin-bottom: 10px;">Theme</div>
             <label class="switch">
                 <input type="checkbox" onclick="toggleDarkMode()">
