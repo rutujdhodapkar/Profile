@@ -8,9 +8,7 @@
   
 <head>   
 
-   
 
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Rutuj Dhodapkar's personal portfolio showcasing projects, skills, and contact information and much more.">
@@ -32,6 +30,35 @@
 
 
     <title>Rutuj Dhodapkar - Portfolio</title>
+    
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Allow text selection and copying
+            document.addEventListener('selectstart', function(event) {
+                event.stopPropagation();
+            });
+
+            // Prevent drag and drop
+            document.addEventListener('dragstart', function(event) {
+                event.preventDefault();
+            });
+
+            // Ensure links show normal cursor
+            const links = document.querySelectorAll('a');
+            links.forEach(function(link) {
+                link.style.cursor = 'default';
+            });
+
+            // Make images non-selectable
+            const images = document.querySelectorAll('img');
+            images.forEach(function(image) {
+                image.style.userSelect = 'none';
+            });
+        });
+    </script>
+
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1068,7 +1095,7 @@
                 <img src="static/Gemini_Generated_Image_ah0ypvah0ypvah0y.jpeg" alt="Project 3">
                 <h4>Real-Time AI-Based Chess Review and Recommendation System</h4>
                 <p>An AI-based project that detects and classifies chess moves in real-time using deep learning, and generates the best chess move as output.</p>
-                <p style="font-family: 'Calibri', sans-serif;">Developed in 2024-25</p>
+                <p style="font-family: 'Calibri', sans-serif;">In Progress</p>
             </div>
 
             <div class="project-item">
@@ -1088,6 +1115,13 @@
                     <p style="font-family: 'Calibri', sans-serif;">Developed in 2025</p>
                 </a>
             </div>
+
+        <div class="project-item">
+            <img src="static/Gemini_Generated_Image_lpspq6lpspq6lpsp.jpeg" alt="Project 6">
+            <h4>Text to Web Generation</h4>
+            <p>A AI based project that generates a complete web page from a given text description using advanced AI techniques.</p>
+            <p style="font-family: 'Calibri', sans-serif;">In Progress</p>
+        </div>
 
         </div>
         <button class="scroll-arrow right" onclick="scrollProjects('right')">&#9654;</button>
