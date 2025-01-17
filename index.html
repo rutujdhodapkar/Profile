@@ -7,8 +7,6 @@
 <html lang="en">
   
 <head>   
-
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Rutuj Dhodapkar's personal portfolio showcasing projects, skills, and contact information and much more.">
@@ -30,35 +28,6 @@
 
 
     <title>Rutuj Dhodapkar - Portfolio</title>
-    
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Allow text selection and copying
-            document.addEventListener('selectstart', function(event) {
-                event.stopPropagation();
-            });
-
-            // Prevent drag and drop
-            document.addEventListener('dragstart', function(event) {
-                event.preventDefault();
-            });
-
-            // Ensure links show normal cursor
-            const links = document.querySelectorAll('a');
-            links.forEach(function(link) {
-                link.style.cursor = 'default';
-            });
-
-            // Make images non-selectable
-            const images = document.querySelectorAll('img');
-            images.forEach(function(image) {
-                image.style.userSelect = 'none';
-            });
-        });
-    </script>
-
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -158,7 +127,6 @@
         // Toggle dark mode
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
-            updateSelectionColor();
         }
 
         // Auto detect dark mode preference
@@ -168,7 +136,6 @@
             } else {
                 document.body.classList.remove('dark-mode');
             }
-            updateSelectionColor();
         }
 
         // Listen for changes in the user's color scheme preference
@@ -176,18 +143,6 @@
 
         // Detect dark mode on initial load
         document.addEventListener('DOMContentLoaded', detectDarkMode);
-
-        // Change selection color based on theme
-        function updateSelectionColor() {
-            const style = document.createElement('style');
-            style.innerHTML = `
-                ::selection {
-                    background-color: ${document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000'};
-                    color: ${document.body.classList.contains('dark-mode') ? '#000000' : '#ffffff'};
-                }
-            `;
-            document.head.appendChild(style);
-        }
     </script>
     <style>
 
@@ -351,7 +306,7 @@
                 -webkit-text-fill-color: transparent;
             }
             body.dark-mode .hero h2 span {
-                background: linear-gradient(80deg, #fe00e5, #7b00ff, #00b3ff, #00c8fa); /*rutuj dhodapkar text color*/
+                background: linear-gradient(90deg, #fe00e5,  #00c8fa); /* Darker gradient for dark mode on larger screens */
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
             }
@@ -561,4 +516,45 @@
 
         .certificate-item img {
             width: 100%;
-            height: auto; /* Adjust height to auto for correct aspect r
+            height: auto; /* Adjust height to auto for correct aspect ratio */
+            object-fit: cover;
+        }
+
+        .certificate-item h4 {
+            font-size: 1.25rem; /* Adjusted font size for better scaling */
+            margin: 15px 0 10px;
+            color: black; /* Changed certificate item heading color to black */
+        }
+
+        body.dark-mode .certificate-item h4 {
+            color: white; /* Light text color for certificate item heading */
+        }
+
+        .certificate-item p {
+            font-size: 1rem; /* Adjusted font size for better scaling */
+            color: black; /* Changed certificate item paragraph color to black */
+            padding: 0 15px 15px;
+            text-align: center; /* Center align text */
+        }
+
+        body.dark-mode .certificate-item p {
+            color: white; /* Light text color for certificate item paragraph */
+        }
+
+        /* Projects Section */
+        .projects {
+            background-color: #f7f7f7;
+            position: relative;
+            overflow: hidden;
+            padding-top: 50px; /* Added space at the top */
+            padding-bottom: 50px; /* Added space at the bottom */
+        }
+
+        body.dark-mode .projects {
+            background-color: #1e1e1e; /* Dark background color for projects section */
+            padding-top: 50px; /* Added space at the top in dark mode */
+            padding-bottom: 50px; /* Added space at the bottom in dark mode */
+        }
+
+        .project-list {
+            display: flex
