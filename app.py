@@ -1,11 +1,21 @@
-from flask import Flask, send_file
+import streamlit as st
 
-app = Flask(__name__)
+# Set page config
+st.set_page_config(page_title="Index.html Viewer", layout="wide")
 
-@app.route('/')
-def home():
-    # Replace 'index.html' with the full path to your file if it's outside 'templates'
-    return send_file('index.html')
+# Title of the app
+st.title("Display HTML File in Streamlit")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# Path to the HTML file
+html_file = "index.html"
+
+# Read the HTML file
+try:
+    with open(html_file, 'r', encoding='utf-8') as file:
+        html_content = file.read()
+    
+    # Display the HTML file
+    st.markdown(html_content, unsafe_allow_html=True)
+
+except FileNotFoundError:
+    st.error("The file 'index.html' was not found. Please ensure it's in the same directory as this script.")
