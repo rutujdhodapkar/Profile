@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Main</title>
+    <title>Host Main</title>
+    <style>
+        body {
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <iframe src="main.html" style="display:none;"></iframe>
     <script>
-        window.open('main.html', '_self');
+        document.querySelector('iframe').style.display = 'block';
+        document.body.style.display = 'block';
     </script>
 </body>
 </html>
-
