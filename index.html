@@ -3,18 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Host Main</title>
+    <title>Rutuj Dhodapkar - Portfolio</title>
     <style>
+        /* Styling for the iframe container */
+        #iframe-container {
+            display: none; /* Initially hide the iframe */
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* You can add additional styling here if needed */
         body {
-            display: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* To avoid scrollbars when iframe is full screen */
         }
     </style>
+    <script>
+        // Function to dynamically load the iframe with the content from otherpage.html
+        function loadIframe() {
+            var iframe = document.createElement('iframe');
+            iframe.src = "otherpage.html";  // Specify the file you want to load
+            iframe.style.width = "100%";
+            iframe.style.height = "100vh";  // Adjust height to fill the screen
+            document.getElementById('iframe-container').appendChild(iframe);  // Append iframe to container
+            document.getElementById('iframe-container').style.display = 'block';  // Show iframe after loading
+        }
+
+        window.onload = function() {
+            loadIframe();  // Automatically load the iframe on page load
+        };
+    </script>
 </head>
 <body>
-    <iframe src="main.html" style="display:none;"></iframe>
-    <script>
-        document.querySelector('iframe').style.display = 'block';
-        document.body.style.display = 'block';
-    </script>
+    <div id="iframe-container"></div> <!-- Hidden container to load iframe -->
 </body>
 </html>
