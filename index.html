@@ -1,3 +1,4 @@
+
 <!-- Start of Selection 2024 -->
 <!--Created on 2024-->
 <!-- © 2024 Rutuj Dhodapkar. All rights reserved. -->
@@ -563,4 +564,764 @@
             box-shadow: 0 5px 25px rgba(0,0,0,0.3); /* Darker shadow */
             width: 100%;
             max-width: 300px;
-         
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            text-align: center; /* Center align text */
+        }
+
+        body.dark-mode .certificate-item {
+            background-color: #404040; /* Dark background color for certificate items */
+        }
+
+        .certificate-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 35px rgba(0, 123, 255, 0.697); /* Darker glow and spread up to 35 */
+        }
+
+        .certificate-item img {
+            width: 100%;
+            height: auto; /* Adjust height to auto for correct aspect ratio */
+            object-fit: cover;
+        }
+
+        .certificate-item h4 {
+            font-size: 1.25rem; /* Adjusted font size for better scaling */
+            margin: 15px 0 10px;
+            color: black; /* Changed certificate item heading color to black */
+        }
+
+        body.dark-mode .certificate-item h4 {
+            color: white; /* Light text color for certificate item heading */
+        }
+
+        .certificate-item p {
+            font-size: 1rem; /* Adjusted font size for better scaling */
+            color: black; /* Changed certificate item paragraph color to black */
+            padding: 0 15px 15px;
+            text-align: center; /* Center align text */
+        }
+
+        body.dark-mode .certificate-item p {
+            color: white; /* Light text color for certificate item paragraph */
+        }
+
+        /* Projects Section */
+        .projects {
+            background-color: #f7f7f7;
+            position: relative;
+            overflow: hidden;
+            padding-top: 50px; /* Added space at the top */
+            padding-bottom: 50px; /* Added space at the bottom */
+        }
+
+        body.dark-mode .projects {
+            background-color: #1e1e1e; /* Dark background color for projects section */
+            padding-top: 50px; /* Added space at the top in dark mode */
+            padding-bottom: 50px; /* Added space at the bottom in dark mode */
+        }
+
+        .project-list {
+            display: flex;
+            justify-content: flex-start;
+            overflow-x: scroll;
+            scroll-behavior: smooth;
+            padding-top: 50px; /* Added more space at the top for scrolling area */
+            padding-bottom: 50px;
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+        }
+
+        .project-list::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+        }
+
+        .project-item {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 300px;
+            flex: 0 0 auto;
+            transition: transform 0.3s ease;
+            position: relative;
+            margin-right: 20px;
+        }
+
+        body.dark-mode .project-item {
+            background-color: #3f3f3f; /* Dark background color for project items */
+        }
+
+        .project-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added smooth transition for transform and box-shadow */
+        }
+
+        .project-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 35px rgba(0, 123, 255, 0.697); /* Darker glow and spread up to 35 */
+        }
+
+        .project-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-item h4 {
+            font-size: 20px;
+            margin: 15px 0 10px;
+            color: black; /* Changed project item heading color to black */
+        }
+
+        body.dark-mode .project-item h4 {
+            color: white; /* Light text color for project item heading */
+        }
+
+        .project-item p {
+            font-size: 14px;
+            color: black; /* Changed project item paragraph color to black */
+            padding: 0 15px 15px;
+        }
+
+        body.dark-mode .project-item p {
+            color: white; /* Light text color for project item paragraph */
+        }
+
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .scroll-arrow.left {
+            left: 10px;
+        }
+
+        .scroll-arrow.right {
+            right: 10px;
+        }
+
+        /* Contact Section */
+        .contact-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .contact-buttons a {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: black; /* Button color set to black for white mode */
+            color: white; /* Text color set to white for white mode */
+            text-decoration: none;
+            border-radius: 30px; /* Made corners more curved */
+            font-weight: bold;
+            transition: box-shadow 0.3s ease; /* Removed background-color transition */
+        }
+
+        .contact-buttons a:hover, .contact-buttons a:focus, .contact-buttons a:active {
+            box-shadow: 0 0 35px rgba(0, 76, 255, 0.8); /* Increased blue light spread on hover */
+        }
+
+        body.dark-mode .contact-buttons a {
+            background-color: #3f3f3f;
+            color: white;
+        }
+
+        body.dark-mode .contact-buttons a:hover, body.dark-mode .contact-buttons a:focus, body.dark-mode .contact-buttons a:active {
+            box-shadow: 0 0 35px rgba(0, 76, 255, 0.8); /* Increased blue light spread on hover in dark mode */
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        body.dark-mode footer {
+            background-color: #2b2b2b;
+            color: white;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            color: black;
+        }
+
+        body.dark-mode footer p {
+            color: white;
+        }
+
+        footer a {
+            color: black;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        body.dark-mode footer a {
+            color: white;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Multi-color line at the top of the page */
+        .multi-color-line {
+            height: 4px;
+            background: linear-gradient(to right, #ff0000, #ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1003;
+        }
+
+/* Current Page Title for Small Screens */
+.current-page-title {
+    position: fixed;
+    top: 10%; /* Position at the middle-top */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for centering */
+    background: rgba(255, 255, 255, 0.2); /* Increased transparency for glass effect */
+    color: #f0f0f0; /* Softer white for text */
+    width: 180px; /* Slightly wider for more text space */
+    height: 60px; /* Slightly taller for better aesthetics */
+    display: flex;
+    align-items: center; /* Center text vertically */
+    justify-content: center; /* Center text horizontally */
+    border-radius: 30px; /* Softer curve for modern look */
+    z-index: 1004;
+    font-size: 1.1rem; /* Slightly larger font for readability */
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for depth */
+    backdrop-filter: blur(10px); /* Enhanced blur effect for glass effect */
+    -webkit-backdrop-filter: blur(10px); /* Enhanced blur effect for Safari */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.current-page-title:empty {
+    display: none; /* Hide element when there is no text */
+}
+
+/* Hide the title on larger screens */
+@media screen and (min-width: 780px) {
+    .current-page-title {
+        display: none; /* Hide on larger screens */
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- New UI Coming Soon -->
+    <div id="new-ui-message">New UI Coming Soon</div>
+
+    <style>
+      #new-ui-message {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        color: white;
+        text-align: center;
+        padding: 10px;
+        z-index: 9999; /* Ensures it's on top of other content */
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        backdrop-filter: blur(10px); /* Adds the glass blur effect */
+        -webkit-backdrop-filter: blur(10px); /* For Safari support */
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+        border-top: 1px solid rgba(255, 255, 255, 0.2); /* Thin border for definition */
+        transition: opacity 1s ease-out; /* Transition for fade-out effect */
+      }
+    </style>
+
+    <script>
+      // Function to hide the message with animation after 5 seconds
+      setTimeout(function() {
+        var message = document.getElementById('new-ui-message');
+        if (message) {
+          message.style.opacity = '0'; // Start fade-out animation
+          setTimeout(function() {
+            message.style.display = 'none'; // Hide after animation
+          }, 1000); // Match the duration of the fade-out transition
+        }
+      }, 5000);
+    </script>
+</style>
+    <!-- Multi-color line at the top of the page -->
+    <div class="multi-color-line"></div>
+
+    <!-- Current Page Title for Small Screens -->
+    <div class="current-page-title" id="currentPageTitle"></div>
+
+    <!-- Dark Mode Toggle Button -->
+    <div id="darkModeToggleContainer" style="position: fixed; bottom: 10px; right: 10px; z-index: 1003;">
+        <button id="darkModeToggleButton" onclick="toggleSettingsMenu()" style="padding: 10px; background-color: rgba(188, 188, 188, 0.27); color: #959595; border: none; border-radius: 20px; cursor: pointer; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); transition: transform 0.3s ease, opacity 0.5s ease;">
+            ⚙️
+        </button>
+        <div id="settingsMenu" style="display: none; position: absolute; bottom: 40px; right: 0; border-radius: 10px; padding: 10px; opacity: 0; transition: opacity 0.5s ease; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);" class="settings-menu light-mode">
+            <div style="margin-bottom: 10px;">Theme</div>
+            <label class="switch">
+                <input type="checkbox" id="themeToggleSwitch" onclick="toggleDarkMode()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(14px);
+        }
+
+        .logo {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Different shadow for dark mode */
+        body.dark-mode .settings-menu {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Different shadow for light mode */
+        body:not(.dark-mode) .settings-menu {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <script>
+        // Hide the button after 6 seconds if not hovered, with animation
+        setTimeout(function() {
+            const button = document.getElementById('darkModeToggleButton');
+            button.addEventListener('mouseenter', function() {
+                button.style.opacity = '1';
+            });
+            button.addEventListener('mouseleave', function() {
+                button.style.opacity = '0';
+            });
+            if (!button.matches(':hover')) {
+                button.style.opacity = '0';
+            }
+        }, 6000);
+    </script>
+    <script>
+        // Hide settings menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('settingsMenu');
+            const button = event.target.closest('button');
+            if (menu.style.display === 'block' && !menu.contains(event.target) && !button) {
+                menu.style.opacity = '0';
+                setTimeout(() => menu.style.display = 'none', 500);
+            }
+        });
+    </script>
+    <script>
+        function toggleSettingsMenu() {
+            const menu = document.getElementById('settingsMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+                setTimeout(() => menu.style.opacity = '1', 10); // Delay to ensure transition
+            } else {
+                menu.style.opacity = '0';
+                setTimeout(() => menu.style.display = 'none', 500); // Match the duration of the fade-out transition
+            }
+        }
+    </script>
+
+    <!-- Navigation -->
+    <header class="header-2">
+        <nav class="nav">
+            <ul>
+                <li><a href="#top" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#certificates" class="nav-link">Certificates</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="top">
+        <div class="hero-text">
+            <h2>Hello There!<br>I'm <span id="name"></span></h2>
+            <p class="subtitle"> <a href="https://www.google.com/search?q=Artificial+Intelligence+and+Machine+Learning" target="_blank" style="color:rgb(144, 144, 144); text-decoration: none;">Learning Artificial Intelligence</a><a href="https://www.google.com/search?q=Machine+Learning" target="_blank" style="color: rgb(144, 144, 144); text-decoration: none;"> & Machine Learning</a></p> <!-- Added subtitle here -->
+            <p>Welcome to my Portfolio website! Here you can find information about my education, skills, projects, and how to get in touch with me.</p>
+            <a href="#contact" class="cta-button">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h3 onclick="openChatGPT()">$: /WHOAMI</h3>
+        <script>
+            function openChatGPT() {
+                const query = "search on web about Rutuj Dhodapkar";
+                const url = `https://chat.openai.com/?q=${encodeURIComponent(query)}`;
+                window.open(url, "_blank");
+            }
+        </script>
+        <p onclick="openChatGPT()">Hey there! I'm Rutuj, a tech enthusiast with a passion for all things AI, machine learning (ML), deep learning (DL), cloud computing, and web development. From coding algorithms in Python to designing sleek, responsive websites, I love turning complex ideas into simple, effective solutions. Right now, I'm diving deep into artificial intelligence and exploring how it, along with cloud technologies, can reshape the way we interact with and deploy technology at scale.</p>
+        <p onclick="openChatGPT()">Whether it's building machine learning models that detect real-time objects, optimizing cloud infrastructure for seamless performance, or enhancing website functionality for a smooth user experience, I'm always eager to learn and push the boundaries of what's possible. To me, technology is more than just a tool—it's an art form that can solve real-world problems in creative and innovative ways.</p>
+        <p onclick="openChatGPT()">When I'm not coding or working with cloud solutions, you'll find me exploring the latest tech trends, experimenting with new tools, or sharing my journey on social media. Let's connect and create something amazing together!</p>
+    </section>
+   
+
+    <!-- Education Section -->
+    <section id="education" class="education">
+        <h3>Education</h3>
+        <div class="education-list">
+            <div class="education-item" style="width: 100%;">
+                <div class="h4-box">
+                    <h4>Diploma Artificial Intelligence & Machine Learning</h4>
+                    <p><a href="https://www.kkwagh.edu.in/" target="_blank" rel="noopener" style="text-decoration: none; color: rgb(150, 150, 150);">K.K. Wagh Polytechnic, 2022 - 2025</a></p>
+                    <p>---</p>
+                </div>
+            </div>
+            <div class="education-item" style="width: 100%;">
+                <div class="h4-box">
+                    <h4>High School</h4>
+                    <p><a href="https://bms.bhonsala.in/" target="_blank" rel="noopener" style="text-decoration: none; color: rgb(150, 150, 150);">Bhosla Military School, 2020 - 2022</a></p>
+                    <p>First class Distinction</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <style>
+        .h4-box {
+            background-color: #f0f0f0; /* Light theme background color */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px; /* Made edges more curved */
+            max-width: 800px; /* Set max width for uniformity */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        body.dark-mode .h4-box {
+            background-color: #333333; /* Dark theme background color */
+        }
+    </style>
+    <hr style="border: none; height: 1.1px; background: linear-gradient(to right, #ff0000,#ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);">
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <h3>Skills</h3>
+        <div class="skills-list">
+            <div class="skill-item"><a href="https://www.google.com/search?q=Artificial+Intelligence+(AI)" target="_blank" rel="noopener" class="skill-link">Artificial Intelligence (AI)</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Machine+Learning" target="_blank" rel="noopener" class="skill-link">Machine Learning</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Deep+Learning" target="_blank" rel="noopener" class="skill-link">Deep Learning</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Data+Visualization" target="_blank" rel="noopener" class="skill-link">Data Visualization</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Computer+Vision" target="_blank" rel="noopener" class="skill-link">Computer Vision</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Cloud+Computing" target="_blank" rel="noopener" class="skill-link">Cloud Computing</a></div>
+        </div>
+<br><br>
+        
+        <div class="Programming-language-list">
+            <div class="skill-item"><a href="https://www.google.com/search?q=Python+Programming+Language" target="_blank" rel="noopener" class="skill-link">Python (Programming Language)</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=R+Programming+Language" target="_blank" rel="noopener" class="skill-link">R (Programming Language)</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=Java+Programming+Language" target="_blank" rel="noopener" class="skill-link">Java (Programming Language)</a></div>
+            <div class="skill-item"><a href="https://www.google.com/search?q=JavaScript+Programming+Language" target="_blank" rel="noopener" class="skill-link">JavaScript (Programming Language)</a></div>
+        </div>
+
+    </section>
+
+    <style>
+        .skill-link {
+            text-decoration: none;
+        }
+
+        /* Light theme */
+        .skills .skill-link {
+            color: black;
+        }
+
+        /* Dark theme */
+        body.dark-mode .skills .skill-link {
+            color: white;
+        }
+    </style>
+    <hr style="border: none; height: 1.1px; background: linear-gradient(to right, #ff0000,#ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);">
+    <!-- Certificates Section -->
+    <section id="certificates" class="certificates">
+        <h3>Certificates</h3>
+        <div class="certificate-list">
+            <div class="certificate-item">
+                <a href="https://www.credly.com/badges/c82cd67d-8903-4611-bc52-b71b7fc784b3/public_url" target="_blank" style="text-decoration: none;">
+                    <img src="static/aws-academy-graduate-aws-academy-cloud-foundations.png" alt="Certificate 1">
+                    <h4>AWS Academy Graduate - AWS Academy Cloud Foundations</h4>
+                    <p>Issued by Amazon Web Services Training and Certification 2024</p>
+                </a>
+            </div>
+            <div class="certificate-item">
+                <a href="https://www.credly.com/badges/9fdff037-5639-42ee-9f8b-85191b0bb2cc/public_url" target="_blank" style="text-decoration: none;">
+                    <img src="static/aws-educate-machine-learning-foundations.png" alt="Certificate 2">
+                    <h4>AWS Educate Graduate - AWS Educate Machine Learning Foundations</h4>
+                    <p>Issued by Amazon Web Services Training and Certification 2024</p>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <h3>Projects</h3>
+        <button class="scroll-arrow left" onclick="scrollProjects('left')">&#9664;</button>
+        <div class="project-list">
+            <div class="project-item">
+                <a href="https://rutujproject1-czzltsg8apdmaxpiz4xgzj.streamlit.app/" style="text-decoration: none;">
+                    <img src="static/Gemini_Generated_Image_qpyl7qqpyl7qqpyl.jpeg" alt="Project 1">
+                    <h4>Text to Emotion Detection</h4>
+                    <p>A machine learning model for detecting the type of emotion based on user input as text.</p>
+                    <p style="font-family: 'Calibri', sans-serif;">Developed in 2024</p>
+                </a>
+            </div>
+          
+            <div class="project-item">
+                <img src="static/Gemini_Generated_Image_ah0ypvah0ypvah0y.jpeg" alt="Project 3">
+                <h4>Real-Time AI-Based Chess Review and Recommendation System</h4>
+                <p>An AI-based project that detects and classifies chess moves in real-time using deep learning, and generates the best chess move as output.</p>
+                <p style="font-family: 'Calibri', sans-serif;">In Progress</p>
+            </div>
+
+            <div class="project-item">
+                <a href="https://tictactoerutuj.netlify.app/" target="_blank" style="text-decoration: none;">
+                    <img src="static/Gemini_Generated_Image_rpcjqbrpcjqbrpcj.jpeg" alt="Project 4">
+                    <h4>Python Tic-Tac-Toe Game</h4>
+                    <p>Python code to play the tic-tac-toe game online.</p>
+                    <p style="font-family: 'Calibri', sans-serif;">Developed in 2024</p>
+                </a>
+            </div>
+
+            <div class="project-item">
+                <a href="https://diabetes-prediction-main-600million.streamlit.app/" target="_blank" rel="noopener" style="text-decoration: none;">
+                    <img src="static/diabetes.jpg" alt="Project 5">
+                    <h4>Diabetes Prediction Using PyTorch</h4>
+                    <p>A deep learning model developed with PyTorch to predict diabetes based on medical data.</p>
+                    <p style="font-family: 'Calibri', sans-serif;">Developed in 2025</p>
+                </a>
+            </div>
+
+        <div class="project-item">
+            <img src="static/Gemini_Generated_Image_lpspq6lpspq6lpsp.jpeg" alt="Project 6">
+            <h4>Text to Web Generation</h4>
+            <p>A AI based project that generates a complete web page from a given text description using advanced AI techniques.</p>
+            <p style="font-family: 'Calibri', sans-serif;">In Progress</p>
+        </div>
+
+
+        
+    <hr style="border: none; height: 1.1px; background: linear-gradient(to right, #ff0000,#ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);">
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h3>Contact Me</h3>
+        <p>Let's get in touch through the following platforms:</p>
+        <div class="contact-buttons">
+
+            <a href="https://www.instagram.com/rutujdhodapkar/" class="instagram" style="display: flex; align-items: center;">
+                <img src="static/instagram.png" alt="Instagram Logo" style="width: 20px; height: 20px; margin-right: 5px;">Instagram</a>
+
+            <a href="https://x.com/RutujDhodapkar" class="twitter" style="display: flex; align-items: center;">
+                <img src="static/x com.png" alt="X Logo" style="width: 20px; height: 20px; margin-right: 5px;">
+                X.com</a>
+
+            <a href="https://www.linkedin.com/in/rutuj-dhodapkar-80bb5424a/" class="linkedin" style="display: flex; align-items: center;">
+                <img src="static/linkdin.png" alt="LinkedIn Logo" style="width: 20px; height: 20px; margin-right: 5px;">
+                LinkedIn</a>
+
+            <a href="https://github.com/rutujdhodapkar" class="github" style="display: flex; align-items: center;">
+                <img src="static/github.png" alt="GitHub Logo" style="width: 20px; height: 20px; margin-right: 5px;">GitHub</a>
+
+            <a href="mailto:rutujdhodapkar@gmail.com" class="email" style="display: flex; align-items: center;">
+                <img src="static/mail.png" alt="Email Logo" style="width: 20px; height: 20px; margin-right: 5px;">Email</a>
+        </div>
+    </section>
+    <hr style="border: none; height: 1.1px; background: linear-gradient(to right, #ff0000,#ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);">
+    <!-- Footer Section -->
+    <footer>
+        <p>©2024-2025 Rutuj Dhodapkar Portfolio. All Rights Reserved.</p>
+        <a href="#about">About</a> | 
+        <a href="#education">Education</a> | 
+        <a href="#skills">Skills</a> | 
+        <a href="#certificates">Certificates</a> | 
+        <a href="#projects">Projects</a> | 
+        <a href="#contact">Contact</a>
+    </footer>
+
+    <!-- sliding rutuj dhodapkar button from about page -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const projectsSection = document.querySelector('.projects');
+            const header2 = document.querySelector('.header-2');
+            const currentPageTitle = document.getElementById('currentPageTitle');
+
+            // Typing animation for name
+            const nameElement = document.getElementById('name');
+            const text = "Rutuj Dhodapkar";
+            let i = 0;
+
+            function typeWriter() {
+                if (i < text.length) {
+                    nameElement.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 150); // Speed of typing
+                }
+            }
+
+            typeWriter();
+
+            // Add click event to open Google search
+            nameElement.addEventListener('click', function() {
+                window.open('https://www.google.com/search?q=Rutuj+Dhodapkar', '_blank');
+            });
+
+            // Smooth scrolling for anchor links
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    const offset = targetElement.getBoundingClientRect().top + window.scrollY - 100; // Adjust for header height
+                    window.scrollTo({
+                        top: offset,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Highlight active link on scroll
+            window.addEventListener('scroll', () => {
+                let scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+                navLinks.forEach(link => {
+                    let section = document.querySelector(link.getAttribute('href'));
+                    let sectionHeight = section.offsetHeight;
+                    let sectionTop = section.offsetTop;
+                    let sectionBottom = sectionTop + sectionHeight;
+                    let viewportHeight = window.innerHeight;
+
+                    if ((sectionTop <= scrollPos + viewportHeight * 0.5) && (sectionBottom >= scrollPos + viewportHeight * 0.5)) {
+                        navLinks.forEach(nav => nav.classList.remove('active'));
+                        link.classList.add('active');
+                        currentPageTitle.textContent = link.textContent; // Update current page title
+                    }
+                });
+
+                // Collapse header if expanded
+                if (header2.classList.contains('expanded')) {
+                    header2.classList.remove('expanded');
+                }
+            });
+
+            // Expand header 2 on click
+            header2.addEventListener('click', (e) => {
+                if (!header2.contains(e.target.closest('.nav-link'))) {
+                    header2.classList.toggle('expanded');
+                }
+            });
+
+            // Collapse header if user clicks anywhere outside the header
+            document.addEventListener('click', (e) => {
+                if (!header2.contains(e.target) && header2.classList.contains('expanded')) {
+                    header2.classList.remove('expanded');
+                }
+            });
+
+            // Function to update active link and apply glow effect
+            function updateActiveLink() {
+                let scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+                navLinks.forEach(link => {
+                    let section = document.querySelector(link.getAttribute('href'));
+                    let sectionHeight = section.offsetHeight;
+                    let sectionTop = section.offsetTop;
+                    let sectionBottom = sectionTop + sectionHeight;
+                    let viewportHeight = window.innerHeight;
+
+                    if ((sectionTop <= scrollPos + viewportHeight * 0.5) && (sectionBottom >= scrollPos + viewportHeight * 0.5)) {
+                        navLinks.forEach(nav => nav.classList.remove('active'));
+                        link.classList.add('active');
+                        link.style.boxShadow = '0 0 35px rgba(0, 123, 255, 1)'; // Apply darker glow effect and spread up to 35
+                    } else {
+                        link.style.boxShadow = 'none'; // Remove glow effect on header
+                    }
+                });
+            }
+            // Initial call to set the active link on page load
+            updateActiveLink();
+
+            // Update active link on scroll
+            window.addEventListener('scroll', updateActiveLink);
+
+            // Fix for onmouse event error
+            document.querySelectorAll('*').forEach(element => {
+                element.addEventListener('mouseover', function(event) {
+                    event.stopPropagation();
+                });
+            });
+        });
+
+        function scrollProjects(direction) {
+            const projectList = document.querySelector('.project-list');
+            const scrollAmount = 320; // Adjust scroll amount as needed
+            if (direction === 'left') {
+                projectList.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                projectList.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
