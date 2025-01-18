@@ -5,13 +5,8 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
-
     <title>Rutuj Dhodapkar - Portfolio</title>
-
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Rutuj Dhodapkar's personal portfolio showcasing projects, skills, and contact information and much more.">
@@ -30,11 +25,7 @@
     <meta name="twitter:title" content="Rutuj Dhodapkar | AI Student Portfolio">
     <meta name="twitter:description" content="Explore my portfolio showcasing development expertise, projects, and technical skills like AI, ML, DL.">
     <meta name="twitter:image" content="https://vectorseek.com/wp-content/uploads/2023/09/ADOBE-PORTFOLIO-Logo-Vector.svg-.png">
-
-
 </head>
-
-
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,7 +58,6 @@
         });
     </script>
 </head>
-
 <head>   
     <style>
         /* Style for the select element */
@@ -152,6 +142,12 @@
         transition: opacity 0.05s ease, transform 0.05s ease, left 0.025s ease, top 0.025s ease; /* Made the effect faster */
         backdrop-filter: blur(2px); /* Added blur effect */
         -webkit-backdrop-filter: blur(2px); /* Added blur effect for Safari */
+    }
+
+    @media (max-width: 600px) {
+        .custom-cursor {
+            display: none; /* Hide cursor on smaller screens */
+        }
     }
 </style>
 
@@ -823,10 +819,10 @@
     top: 10%; /* Position at the middle-top */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Adjust for centering */
-    background: rgba(255, 255, 255, 0.2); /* Increased transparency for glass effect */
-    color: #f0f0f0; /* Softer white for text */
+    background: rgba(255, 255, 255, 0.055); /* Increased transparency for glass effect */
+    color: #333; /* Neutral text color for better contrast in both themes */
     width: 180px; /* Slightly wider for more text space */
-    height: 60px; /* Slightly taller for better aesthetics */
+    height: 60px; /* Initial height */
     display: flex;
     align-items: center; /* Center text vertically */
     justify-content: center; /* Center text horizontally */
@@ -835,13 +831,33 @@
     font-size: 1.1rem; /* Slightly larger font for readability */
     font-weight: bold;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for depth */
-    backdrop-filter: blur(10px); /* Enhanced blur effect for glass effect */
-    -webkit-backdrop-filter: blur(10px); /* Enhanced blur effect for Safari */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+    backdrop-filter: blur(7px); /* Enhanced blur effect for glass effect */
+    -webkit-backdrop-filter: blur(15px); /* Enhanced blur effect for Safari */
+    transition: height 0.3s ease, background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+    cursor: pointer; /* Indicate clickable element */
+}
+
+body.dark-mode .current-page-title {
+    background: rgba(50, 50, 50, 0.5); /* Darker background for dark mode */
+    color: #f0f0f0; /* Light text color for dark mode */
 }
 
 .current-page-title:empty {
     display: none; /* Hide element when there is no text */
+}
+
+/* Expanded menu style */
+.current-page-title.expanded {
+    height: 200px; /* Expanded height to show menu */
+    background: rgba(235, 235, 235, 0.8); /* Less transparent when expanded */
+    backdrop-filter: blur(20px); /* Additional blur effect when expanded */
+    -webkit-backdrop-filter: blur(20px); /* Additional blur effect for Safari when expanded */
+}
+
+body.dark-mode .current-page-title.expanded {
+    background: rgba(50, 50, 50, 0.8); /* Less transparent when expanded in dark mode */
+    backdrop-filter: blur(20px); /* Additional blur effect when expanded in dark mode */
+    -webkit-backdrop-filter: blur(20px); /* Additional blur effect for Safari when expanded in dark mode */
 }
 
 /* Hide the title on larger screens */
@@ -850,6 +866,18 @@
         display: none; /* Hide on larger screens */
     }
 }
+
+/* JavaScript to handle click and expand */
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentPageTitle = document.getElementById('currentPageTitle');
+        if (currentPageTitle) {
+            currentPageTitle.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+            });
+        }
+    });
+</script>
 
     </style>
 </head>
@@ -1050,7 +1078,7 @@
     <section class="hero" id="top">
         <div class="hero-text">
             <h2>Hello There!<br>I'm <span id="name"></span></h2>
-            <p class="subtitle"> <a href="https://www.google.com/search?q=Artificial+Intelligence+and+Machine+Learning" target="_blank" style="color:rgb(144, 144, 144); text-decoration: none;">Learning Artificial Intelligence</a><a href="https://www.google.com/search?q=Machine+Learning" target="_blank" style="color: rgb(144, 144, 144); text-decoration: none;"> & Machine Learning</a></p> <!-- Added subtitle here -->
+            <p class="subtitle"> <a href="https://www.google.com/search?q=Artificial+Intelligence+and+Machine+Learning" target="_blank" style="color:#cbcbcb; text-decoration: none;">Learning Artificial Intelligence</a><a href="https://www.google.com/search?q=Machine+Learning" target="_blank" style="color: #cbcbcb; text-decoration: none;"> & Machine Learning</a></p> <!-- Added subtitle here -->
             <p>Welcome to my Portfolio website! Here you can find information about my education, skills, projects, and how to get in touch with me.</p>
             <a href="#contact" class="cta-button">Get in Touch</a>
         </div>
@@ -1059,6 +1087,12 @@
     <!-- About Section -->
     <section id="about" class="about">
         <h3 onclick="openChatGPT()">$: /WHOAMI</h3>
+    </head>
+    <body>
+        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px;">
+            <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;"><span class="highlight">AI Student</span></p>
+        </div>
+    </body>
         <script>
             function openChatGPT() {
                 const query = "search on web about Rutuj Dhodapkar";
