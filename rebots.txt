@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://rutujdhodapkar.netlify.app/sitemap.xml
+Sitemap: https://rutujdhodapkar.vercel.app/sitemap.xml
