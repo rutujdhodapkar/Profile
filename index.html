@@ -1,0 +1,260 @@
+<!-- Start of Selection 2024 -->
+<!--Created on 2024-->
+<!-- © 2024 Rutuj Dhodapkar. All rights reserved. -->
+<!-- © 2025 Rutuj Dhodapkar. All rights reserved. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Rutuj Dhodapkar - Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rutuj Dhodapkar's personal portfolio showcasing projects, skills, and contact information and much more.">
+    <meta name="keywords" content="Rutuj, Rutuj Dhodapkar, portfolio, developer, projects, skills, Rutuj Dhodapkar Portfolio, Rutuj portfolio, Dhodapkar, Dhodapkar portfolio">
+    <meta name="author" content="Rutuj Dhodapkar">
+
+
+    <meta property="og:title" content="Rutuj Dhodapkar | AI student Portfolio ">
+    <meta property="og:description" content="Explore my portfolio showcasing development expertise, projects, and technical skills like AI, ML, DL.">
+    <meta property="og:image" content="https://vectorseek.com/wp-content/uploads/2023/09/ADOBE-PORTFOLIO-Logo-Vector.svg-.png">
+    <meta property="og:url" content="https://rutujdhodapkar.vercel.app">
+    <meta property="og:type" content="website">
+
+    <!-- For Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rutuj Dhodapkar | AI Student Portfolio">
+    <meta name="twitter:description" content="Explore my portfolio showcasing development expertise, projects, and technical skills like AI, ML, DL.">
+    <meta name="twitter:image" content="https://vectorseek.com/wp-content/uploads/2023/09/ADOBE-PORTFOLIO-Logo-Vector.svg-.png">
+</head>
+
+
+
+
+
+<body>
+    <style>
+        body {
+            -webkit-user-select: none; /* Disable text selection for the entire body */
+            user-select: none; /* Disable text selection for the entire body */
+            overflow: hidden; /* Disable scroll */
+            min-height: 100vh;
+            background: #F5F9FF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .portfolio-text {
+            -webkit-user-select: text; /* Allow text selection for the portfolio text */
+            user-select: text; /* Allow text selection for the portfolio text */
+            position: absolute;
+            top: -80px; /* Increased distance from the top */
+            width: 100%;
+            font-size: 50px; /* Increased font size */
+            font-weight: bold;
+            color: #2F3545;
+        }
+
+        ::selection {
+            background: black;
+            color: white;
+        }
+
+        .container {
+            position: relative;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .loader {
+            --path: #2F3545;
+            --dot: #5628EE;
+            --duration: 3s;
+            width: 44px;
+            height: 44px;
+            position: relative;
+            display: inline-block;
+            margin: 0 16px;
+        }
+
+        .loader:before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            position: absolute;
+            display: block;
+            background: var(--dot);
+            top: 37px;
+            left: 19px;
+            transform: translate(-18px, -18px);
+            animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+        }
+
+        .loader svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .loader svg rect,
+        .loader svg polygon,
+        .loader svg circle {
+            fill: none;
+            stroke: var(--path);
+            stroke-width: 10px;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+        }
+
+        .loader svg polygon {
+            stroke-dasharray: 145 76 145 76;
+            stroke-dashoffset: 0;
+            animation: pathTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+        }
+
+        .loader svg rect {
+            stroke-dasharray: 192 64 192 64;
+            stroke-dashoffset: 0;
+            animation: pathRect 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+        }
+
+        .loader svg circle {
+            stroke-dasharray: 150 50 150 50;
+            stroke-dashoffset: 75;
+            animation: pathCircle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+        }
+
+        .loader.triangle {
+            width: 48px;
+        }
+
+        .loader.triangle:before {
+            left: 21px;
+            transform: translate(-10px, -18px);
+            animation: dotTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+        }
+
+        @keyframes pathTriangle {
+            33% {
+                stroke-dashoffset: 74;
+            }
+            66% {
+                stroke-dashoffset: 147;
+            }
+            100% {
+                stroke-dashoffset: 221;
+            }
+        }
+
+        @keyframes dotTriangle {
+            33% {
+                transform: translate(0, 0);
+            }
+            66% {
+                transform: translate(10px, -18px);
+            }
+            100% {
+                transform: translate(-10px, -18px);
+            }
+        }
+
+        @keyframes pathRect {
+            25% {
+                stroke-dashoffset: 64;
+            }
+            50% {
+                stroke-dashoffset: 128;
+            }
+            75% {
+                stroke-dashoffset: 192;
+            }
+            100% {
+                stroke-dashoffset: 256;
+            }
+        }
+
+        @keyframes dotRect {
+            25% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(18px, -18px);
+            }
+            75% {
+                transform: translate(0, -36px);
+            }
+            100% {
+                transform: translate(-18px, -18px);
+            }
+        }
+
+        @keyframes pathCircle {
+            25% {
+                stroke-dashoffset: 125;
+            }
+            50% {
+                stroke-dashoffset: 175;
+            }
+            75% {
+                stroke-dashoffset: 225;
+            }
+            100% {
+                stroke-dashoffset: 275;
+            }
+        }
+
+        html {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prevent redirection or performing click on select element
+            const selectElements = document.querySelectorAll('select');
+            selectElements.forEach(function(select) {
+                select.addEventListener('click', function(event) {
+                    event.preventDefault();
+                });
+            });
+        });
+
+        document.addEventListener('click', function(event) {
+            event.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(event) {
+            event.preventDefault();
+        });
+
+        // Open "main.html" after 2 seconds
+        setTimeout(function() {
+            window.location.href = 'main.html';
+        }, 2000);
+    </script>
+    <div class="container">
+        <div class="portfolio-text">Portfolio</div>
+        <div class="loader">
+            <svg viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="32"></circle>
+            </svg>
+        </div>
+
+        <div class="loader triangle">
+            <svg viewBox="0 0 86 80">
+                <polygon points="43 8 79 72 7 72"></polygon>
+            </svg>
+        </div>
+
+        <div class="loader">
+            <svg viewBox="0 0 80 80">
+                <rect x="8" y="8" width="64" height="64"></rect>
+            </svg>
+        </div>
+    </div>
+</body>
+</html>
