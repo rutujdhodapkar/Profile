@@ -5,6 +5,78 @@
 
 <!DOCTYPE html>
 <html lang="en">
+    
+<!-- right click menu -->
+    <!-- <script>
+        // Create the context menu HTML structure dynamically
+        const contextMenuHTML = `
+            <div id="context-menu">
+                <ul>
+                    <li onclick="searchOnChatGPT()">Search on ChatGPT</li>
+                    <li onclick="searchOnWeb()">Search on Web</li>
+                    <li onclick="showInsights()">Insights</li>
+                    <li onclick="saveWeb()">Save Web</li>
+                    <li onclick="copyText()">Copy Text</li>
+                </ul>
+            </div>
+        `;
+        
+        // Append the context menu to the body
+        document.body.insertAdjacentHTML('beforeend', contextMenuHTML);
+
+        // Right-click functionality
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();  // Prevent the default right-click menu
+            const contextMenu = document.getElementById('context-menu');
+            contextMenu.style.top = `${event.clientY}px`;
+            contextMenu.style.left = `${event.clientX}px`;
+            contextMenu.style.display = 'block';  // Show the custom context menu
+        });
+
+        // Close context menu when clicking elsewhere on the page
+        document.addEventListener('click', function() {
+            const contextMenu = document.getElementById('context-menu');
+            contextMenu.style.display = 'none';  // Hide the menu
+        });
+
+        // Function to search on ChatGPT
+        function searchOnChatGPT() {
+            window.open('https://chat.openai.com/', '_blank');
+        }
+
+        // Function to search on Web
+        function searchOnWeb() {
+            const query = prompt('Enter your search query:');
+            if (query) {
+                window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+            }
+        }
+
+        // Placeholder function for Insights
+        function showInsights() {
+            alert('Insights feature is not yet implemented.');
+        }
+
+        // Placeholder function for Save Web
+        function saveWeb() {
+            alert('Save Web feature is not yet implemented.');
+        }
+
+        // Function to copy selected text
+        function copyText() {
+            const selectedText = window.getSelection().toString();
+            if (selectedText) {
+                navigator.clipboard.writeText(selectedText).then(() => {
+                    alert('Text copied to clipboard.');
+                }).catch(err => {
+                    alert('Failed to copy text.');
+                });
+            } else {
+                alert('No text selected.');
+            }
+        }
+    </script>  -->
+
 <head>
     <title>Rutuj Dhodapkar - Portfolio</title>
     <meta charset="UTF-8">
@@ -13,11 +85,11 @@
     <meta name="keywords" content="Rutuj, Rutuj Dhodapkar, portfolio, developer, projects, skills, Rutuj Dhodapkar Portfolio, Rutuj portfolio, Dhodapkar, Dhodapkar portfolio">
     <meta name="author" content="Rutuj Dhodapkar">
 
-
+ 
     <meta property="og:title" content="Rutuj Dhodapkar | AI student Portfolio ">
     <meta property="og:description" content="Explore my portfolio showcasing development expertise, projects, and technical skills like AI, ML, DL.">
     <meta property="og:image" content="https://vectorseek.com/wp-content/uploads/2023/09/ADOBE-PORTFOLIO-Logo-Vector.svg-.png">
-    <meta property="og:url" content="https://rutujdhodapkar.netlify.app">
+    <meta property="og:url" content="https://rutujdhodapkar.vercel.app">
     <meta property="og:type" content="website">
 
     <!-- For Twitter -->
@@ -26,6 +98,57 @@
     <meta name="twitter:description" content="Explore my portfolio showcasing development expertise, projects, and technical skills like AI, ML, DL.">
     <meta name="twitter:image" content="https://vectorseek.com/wp-content/uploads/2023/09/ADOBE-PORTFOLIO-Logo-Vector.svg-.png">
 </head>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
+
+    .context-menu {
+        display: none;
+        position: absolute;
+        z-index: 1000;
+        width: 200px;
+        background-color: var(--menu-bg-color, rgb(44, 44, 44));
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        overflow: hidden;
+        color: var(--menu-text-color, white);
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .context-menu__item {
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .context-menu__item:hover {
+        background-color: var(--menu-hover-bg-color, #828282);
+    }
+
+    body.light-theme {
+        --menu-bg-color: white;
+        --menu-text-color: black;
+        --menu-hover-bg-color: #e0e0e0;
+    }
+
+    body.dark-theme {
+        --menu-bg-color: rgb(44, 44, 44);
+        --menu-text-color: white;
+        --menu-hover-bg-color: #828282;
+    }
+</style>
+
+<div class="context-menu" id="context-menu">
+    <div class="context-menu__item" onclick="searchOnChatGPT()">Search on ChatGPT</div>
+    <div class="context-menu__item" onclick="searchOnWeb()">Search on Web</div>
+    <div class="context-menu__item" onclick="showInsights()">Insights</div>
+    <div class="context-menu__item" onclick="saveWeb()">Save Web</div>
+    <div class="context-menu__item" onclick="copyText()">Copy Text</div>
+</div>
+
+
+
+
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -231,7 +354,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
             background-color: #ffffff; /* Changed background color to white */
             color: black;
@@ -364,6 +487,7 @@
             color: black;
             margin-bottom: 20px;
             line-height: 1.2;
+            font-family: 'Roboto', sans-serif;
         }
 
         body.dark-mode .hero h2 {
@@ -415,6 +539,7 @@
             color: black;
             margin-top: 20px;
             line-height: 1.8;
+            font-family: 'Open Sans', sans-serif;
         }
 
         body.dark-mode .hero p {
@@ -435,6 +560,7 @@
             border: 2px solid black;
             position: relative;
             overflow: hidden;
+            font-family: 'Roboto', sans-serif;
         }
 
         body.dark-mode .cta-button {
@@ -485,6 +611,7 @@
             font-size: 1.75rem; /* Adjusted font size for better scaling */
             margin-bottom: 20px;
             color: rgb(66, 66, 66); /* Changed section headings color to black */
+            font-family: 'Roboto', sans-serif;
         }
 
         body.dark-mode .about h3, 
@@ -502,6 +629,7 @@
             margin: 0 auto 20px;
             line-height: 1.8;
             color: rgb(0, 0, 0); /* Changed content color to black */
+            font-family: 'Open Sans', sans-serif;
         }
 
         body.dark-mode .about p, 
@@ -539,6 +667,7 @@
             color: white; /* Changed text color to white */
             margin: 5px;
             transition: box-shadow 0.5s ease; /* Added transition for box-shadow */
+            font-family: 'Roboto', sans-serif;
         }
 
         .skill-item:hover {
@@ -602,6 +731,7 @@
             font-size: 1.25rem; /* Adjusted font size for better scaling */
             margin: 15px 0 10px;
             color: black; /* Changed certificate item heading color to black */
+            font-family: 'Roboto', sans-serif;
         }
 
         body.dark-mode .certificate-item h4 {
@@ -613,6 +743,7 @@
             color: black; /* Changed certificate item paragraph color to black */
             padding: 0 15px 15px;
             text-align: center; /* Center align text */
+            font-family: 'Open Sans', sans-serif;
         }
 
         body.dark-mode .certificate-item p {
@@ -682,6 +813,7 @@
             font-size: 20px;
             margin: 15px 0 10px;
             color: black; /* Changed project item heading color to black */
+            font-family: 'Roboto', sans-serif;
         }
 
         body.dark-mode .project-item h4 {
@@ -692,6 +824,7 @@
             font-size: 14px;
             color: black; /* Changed project item paragraph color to black */
             padding: 0 15px 15px;
+            font-family: 'Open Sans', sans-serif;
         }
 
         body.dark-mode .project-item p {
@@ -739,6 +872,7 @@
             border-radius: 30px; /* Made corners more curved */
             font-weight: bold;
             transition: box-shadow 0.3s ease; /* Removed background-color transition */
+            font-family: 'Roboto', sans-serif;
         }
 
         .contact-buttons a:hover, .contact-buttons a:focus, .contact-buttons a:active {
@@ -769,6 +903,7 @@
         footer p {
             margin-bottom: 10px;
             color: black;
+            font-family: 'Roboto', sans-serif;
         }
 
         body.dark-mode footer p {
@@ -779,6 +914,7 @@
             color: black;
             text-decoration: none;
             margin: 0 10px;
+            font-family: 'Roboto', sans-serif;
         }
 
         body.dark-mode footer a {
@@ -822,6 +958,7 @@
     -webkit-backdrop-filter: blur(15px); /* Enhanced blur effect for Safari */
     transition: height 0.3s ease, background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
     cursor: pointer; /* Indicate clickable element */
+    font-family: 'Roboto', sans-serif;
 }
 
 body.dark-mode .current-page-title {
@@ -884,7 +1021,7 @@ body.dark-mode .current-page-title.expanded {
         text-align: center;
         padding: 10px;
         z-index: 9999; /* Ensures it's on top of other content */
-        font-family: Arial, sans-serif;
+        font-family: 'Roboto', sans-serif;
         font-size: 14px;
         backdrop-filter: blur(10px); /* Adds the glass blur effect */
         -webkit-backdrop-filter: blur(10px); /* For Safari support */
@@ -1065,7 +1202,30 @@ body.dark-mode .current-page-title.expanded {
     <section class="hero" id="top">
         <div class="hero-text">
             <h2>Hello There!<br>I'm <span id="name"></span></h2>
-            <p class="subtitle"> <a href="https://www.google.com/search?q=Artificial+Intelligence+and+Machine+Learning" target="_blank" style="color:#cbcbcb; text-decoration: none;">Learning Artificial Intelligence</a><a href="https://www.google.com/search?q=Machine+Learning" target="_blank" style="color: #cbcbcb; text-decoration: none;"> & Machine Learning</a></p> <!-- Added subtitle here -->
+            <p class="learning-text">Learning Artificial Intelligence and Machine Learning</p>
+            <style>
+                .learning-text {
+                    font-size: 1.7em;
+                    font-weight: bold;
+                }
+
+                body.light-theme .learning-text {
+                    color: black; /* Black color for light theme */
+                }
+
+                body.dark-theme .learning-text {
+                    color: rgb(230, 230, 230); /* White color for dark theme */
+                }
+            </style>
+
+
+            </style>
+            <div style="height: 10px;"></div>
+            <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px;">
+                <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;">
+                    <span style="cursor: pointer;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">Say hello</span>, and keep scrolling.
+                </p>
+            </div>      
             <p>Welcome to my Portfolio website! Here you can find information about my education, skills, projects, and how to get in touch with me.</p>
             <a href="#contact" class="cta-button">Get in Touch</a>
         </div>
@@ -1073,12 +1233,13 @@ body.dark-mode .current-page-title.expanded {
 
     <!-- About Section -->
     <section id="about" class="about">
-        <h3 onclick="openChatGPT()">$: /WHOAMI</h3>
+        <h3>Bio</h3>
     </head>
     <body>
         <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px;">
-            <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;"><span class="highlight">AI Student</span></p>
+            <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;"><span class="highlight">A little more about me.</span></p>
         </div>
+    <div style="height: 20px;"></div> <!--  add space -->
     </body>
         <script>
             function openChatGPT() {
@@ -1087,15 +1248,23 @@ body.dark-mode .current-page-title.expanded {
                 window.open(url, "_blank");
             }
         </script>
-        <p onclick="openChatGPT()">Hey there! I'm Rutuj, a tech enthusiast with a passion for all things AI, machine learning (ML), deep learning (DL), cloud computing, and web development. From coding algorithms in Python to designing sleek, responsive websites, I love turning complex ideas into simple, effective solutions. Right now, I'm diving deep into artificial intelligence and exploring how it, along with cloud technologies, can reshape the way we interact with and deploy technology at scale.</p>
-        <p onclick="openChatGPT()">Whether it's building machine learning models that detect real-time objects, optimizing cloud infrastructure for seamless performance, or enhancing website functionality for a smooth user experience, I'm always eager to learn and push the boundaries of what's possible. To me, technology is more than just a tool—it's an art form that can solve real-world problems in creative and innovative ways.</p>
-        <p onclick="openChatGPT()">When I'm not coding or working with cloud solutions, you'll find me exploring the latest tech trends, experimenting with new tools, or sharing my journey on social media. Let's connect and create something amazing together!</p>
+        <p>Hey there! I'm Rutuj, a tech enthusiast with a passion for all things AI, machine learning (ML), deep learning (DL), cloud computing, and web development. From coding algorithms in Python to designing sleek, responsive websites, I love turning complex ideas into simple, effective solutions. Right now, I'm diving deep into artificial intelligence and exploring how it, along with cloud technologies, can reshape the way we interact with and deploy technology at scale.</p>
+        <p>Whether it's building machine learning models that detect real-time objects, optimizing cloud infrastructure for seamless performance, or enhancing website functionality for a smooth user experience, I'm always eager to learn and push the boundaries of what's possible. To me, technology is more than just a tool—it's an art form that can solve real-world problems in creative and innovative ways.</p>
+        <p>When I'm not coding or working with cloud solutions, you'll find me exploring the latest tech trends, experimenting with new tools, or sharing my journey on social media. Let's connect and create something amazing together!</p>
     </section>
    
 
     <!-- Education Section -->
     <section id="education" class="education">
         <h3>Education</h3>
+
+        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px;">
+            <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;">
+                <span style="cursor: pointer;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">Past is history, future’s fire.</span>
+            </p>
+        </div>
+        <div style="height: 20px;"></div> <!-- add space -->
+
         <div class="education-list">
             <div class="education-item" style="width: 100%;">
                 <div class="h4-box">
@@ -1213,6 +1382,13 @@ body.dark-mode .current-page-title.expanded {
     <!-- Projects Section -->
     <section id="projects" class="projects">
         <h3>Projects</h3>
+
+        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px;">
+            <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;">
+                <span style="cursor: pointer;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">1. Get Idea; 2. Launch; 3. ???; 4. Profit.</span>
+            </p>
+        </div> 
+
         <button class="scroll-arrow left" onclick="scrollProjects('left')">&#9664;</button>
         <div class="project-list">
             <div class="project-item">
@@ -1331,6 +1507,12 @@ body.dark-mode .current-page-title.expanded {
     <!-- Footer Section -->
     <footer>
         <p>©2024-2025 Rutuj Dhodapkar Portfolio. All Rights Reserved.</p>
+        <div style="background-color: rgba(128, 128, 128, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px;">
+            <p style="margin: 0; color: rgb(128, 128, 128); font-weight: bold; padding-left: 5px; padding-right: 5px;">
+                <span style="cursor: pointer;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">Made by Rutuj Dhodapkar, Hosted with Vercel</span>
+            </p>
+        </div>    
+        <div style="height: 5px;"></div> <!-- add space -->
         <a href="#about">About</a> | 
         <a href="#education">Education</a> | 
         <a href="#skills">Skills</a> | 
