@@ -5,78 +5,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    
-<!-- right click menu -->
-    <!-- <script>
-        // Create the context menu HTML structure dynamically
-        const contextMenuHTML = `
-            <div id="context-menu">
-                <ul>
-                    <li onclick="searchOnChatGPT()">Search on ChatGPT</li>
-                    <li onclick="searchOnWeb()">Search on Web</li>
-                    <li onclick="showInsights()">Insights</li>
-                    <li onclick="saveWeb()">Save Web</li>
-                    <li onclick="copyText()">Copy Text</li>
-                </ul>
-            </div>
-        `;
-        
-        // Append the context menu to the body
-        document.body.insertAdjacentHTML('beforeend', contextMenuHTML);
-
-        // Right-click functionality
-        document.addEventListener('contextmenu', function(event) {
-            event.preventDefault();  // Prevent the default right-click menu
-            const contextMenu = document.getElementById('context-menu');
-            contextMenu.style.top = `${event.clientY}px`;
-            contextMenu.style.left = `${event.clientX}px`;
-            contextMenu.style.display = 'block';  // Show the custom context menu
-        });
-
-        // Close context menu when clicking elsewhere on the page
-        document.addEventListener('click', function() {
-            const contextMenu = document.getElementById('context-menu');
-            contextMenu.style.display = 'none';  // Hide the menu
-        });
-
-        // Function to search on ChatGPT
-        function searchOnChatGPT() {
-            window.open('https://chat.openai.com/', '_blank');
-        }
-
-        // Function to search on Web
-        function searchOnWeb() {
-            const query = prompt('Enter your search query:');
-            if (query) {
-                window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
-            }
-        }
-
-        // Placeholder function for Insights
-        function showInsights() {
-            alert('Insights feature is not yet implemented.');
-        }
-
-        // Placeholder function for Save Web
-        function saveWeb() {
-            alert('Save Web feature is not yet implemented.');
-        }
-
-        // Function to copy selected text
-        function copyText() {
-            const selectedText = window.getSelection().toString();
-            if (selectedText) {
-                navigator.clipboard.writeText(selectedText).then(() => {
-                    alert('Text copied to clipboard.');
-                }).catch(err => {
-                    alert('Failed to copy text.');
-                });
-            } else {
-                alert('No text selected.');
-            }
-        }
-    </script>  -->
-
 <head>
     <title>Rutuj Dhodapkar - Portfolio</title>
     <meta charset="UTF-8">
@@ -1220,13 +1148,9 @@ body.dark-mode .current-page-title.expanded {
 
 
             </style>
+            <div style="height: 10px;"></div>     
             <div style="height: 10px;"></div>
-            <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px;">
-                <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;">
-                    <span style="cursor: pointer;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">Say hello</span>, and keep scrolling.
-                </p>
-            </div>      
-            <p>Welcome to my Portfolio website! Here you can find information about my education, skills, projects, and how to get in touch with me.</p>
+
             <a href="#contact" class="cta-button">Get in Touch</a>
         </div>
     </section>
