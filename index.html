@@ -1307,11 +1307,23 @@ body.dark-mode .current-page-title.expanded {
     <section id="projects" class="projects">
         <h3>Projects</h3>
 
-        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px;">
+        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px; display: none;" class="responsive-message">
             <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;">
                 <span style="cursor: pointer;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">1. Get Idea; 2. Launch; 3. ???; 4. Profit.</span>
             </p>
         </div> 
+        <script>
+            function checkScreenSize() {
+                const messageDiv = document.querySelector('.responsive-message');
+                if (window.innerWidth > 600) { // Adjust the width as needed
+                    messageDiv.style.display = 'inline-flex';
+                } else {
+                    messageDiv.style.display = 'none';
+                }
+            }
+            window.addEventListener('resize', checkScreenSize);
+            window.addEventListener('load', checkScreenSize);
+        </script>
 
         <button class="scroll-arrow left" onclick="scrollProjects('left')">&#9664;</button>
         <div class="project-list">
