@@ -64,6 +64,8 @@
         --menu-text-color: white;
         --menu-hover-bg-color: #828282;
     }
+
+
 </style>
 
 <div class="context-menu" id="context-menu">
@@ -73,9 +75,6 @@
     <div class="context-menu__item" onclick="saveWeb()">Save Web</div>
     <div class="context-menu__item" onclick="copyText()">Copy Text</div>
 </div>
-
-
-
 
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -103,129 +102,71 @@
         });
     </script>
 </head>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Prevent redirection or performing click on select element
-            const selectElements = document.querySelectorAll('select');
-            selectElements.forEach(function(select) {
-                select.addEventListener('click', function(event) {
-                    event.preventDefault();
-                });
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Allow text selection and copying
-            document.addEventListener('selectstart', function(event) {
-                event.stopPropagation();
-            });
-
-            // Prevent drag and drop
-            document.addEventListener('dragstart', function(event) {
-                event.preventDefault();
-            });
-
-            // Ensure links show normal cursor
-            const links = document.querySelectorAll('a');
-            links.forEach(function(link) {
-                link.style.cursor = 'default';
-            });
-
-            // Make images non-selectable
-            const images = document.querySelectorAll('img');
-            images.forEach(function(image) {
-                image.style.userSelect = 'none';
-            });
-        });
-    </script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.addEventListener('contextmenu', function(event) {
-                event.preventDefault();
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.addEventListener('keydown', function(event) {
-                event.preventDefault();
-            });
-        });
-    </script>
-    <style>
-        /* Add some basic styling */
-        .logo {
-            width: 200px; /* Adjust the width as needed */
-            height: auto; /* Maintain the aspect ratio */
-            transition: transform 0.3s ease; /* Added transition for animations */
-        }
-
-        .logo:hover {
-            transform: scale(1.1); /* Scale up on hover */
-        }
-    </style>
-
-<style>
-    .custom-cursor {
-        width: 25px; /* Increased size */
-        height: 25px; /* Increased size */
-        border-radius: 60%; /* Made radius a little larger */
-        background-color: rgba(200, 200, 200, 0.297); /* Fixed color */
-        position: absolute;
-        pointer-events: none;
-        z-index: 1000;
-        transition: opacity 0.05s ease, transform 0.05s ease, left 0.025s ease, top 0.025s ease; /* Made the effect faster */
-        backdrop-filter: blur(2px); /* Added blur effect */
-        -webkit-backdrop-filter: blur(2px); /* Added blur effect for Safari */
-    }
-
-    @media (max-width: 600px) {
-        .custom-cursor {
-            display: none; /* Hide cursor on smaller screens */
-        }
-    }
-</style>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const cursor = document.createElement('div');
-        cursor.classList.add('custom-cursor');
-        document.body.appendChild(cursor);
-
-        let cursorX = 0;
-        let cursorY = 0;
-
-        function updateCursorPosition(e) {
-            cursorX = e.clientX;
-            cursorY = e.clientY;
-            cursor.style.left = cursorX + window.scrollX + 'px';
-            cursor.style.top = cursorY + window.scrollY + 'px';
-            cursor.style.transform = 'translate(-50%, -50%)'; /* Center the cursor */
-        }
-
-        document.addEventListener('mousemove', updateCursorPosition);
-
-        document.addEventListener('scroll', function() {
-            cursor.style.left = cursorX + window.scrollX + 'px';
-            cursor.style.top = cursorY + window.scrollY + 'px';
-        });
-
-        document.addEventListener('mouseover', function(e) {
-            if (e.target !== document.body) {
-                cursor.style.opacity = 0;
-            }
-        });
-
-        document.addEventListener('mouseout', function(e) {
-            if (e.target !== document.body) {
-                cursor.style.opacity = 1;
-            }
+        // Prevent redirection or performing click on select element
+        const selectElements = document.querySelectorAll('select');
+        selectElements.forEach(function(select) {
+            select.addEventListener('click', function(event) {
+                event.preventDefault();
+            });
         });
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Allow text selection and copying
+        document.addEventListener('selectstart', function(event) {
+            event.stopPropagation();
+        });
+
+        // Prevent drag and drop
+        document.addEventListener('dragstart', function(event) {
+            event.preventDefault();
+        });
+
+        // Ensure links show normal cursor
+        const links = document.querySelectorAll('a');
+        links.forEach(function(link) {
+            link.style.cursor = 'default';
+        });
+
+        // Make images non-selectable
+        const images = document.querySelectorAll('img');
+        images.forEach(function(image) {
+            image.style.userSelect = 'none';
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('keydown', function(event) {
+            event.preventDefault();
+        });
+    });
+</script>
+<style>
+    /* Add some basic styling */
+    .logo {
+        width: 200px; /* Adjust the width as needed */
+        height: auto; /* Maintain the aspect ratio */
+        transition: transform 0.3s ease; /* Added transition for animations */
+    }
+
+    .logo:hover {
+        transform: scale(1.1); /* Scale up on hover */
+    }
+</style>
+
  <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -403,6 +344,7 @@
             padding: 60px 20px;
             min-height: 100vh;
             text-align: center; /* Center align text */
+            position: relative; /* Added for bubble positioning */
         }
 
         body.dark-mode .hero {
@@ -1307,11 +1249,23 @@ body.dark-mode .current-page-title.expanded {
     <section id="projects" class="projects">
         <h3>Projects</h3>
 
-        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px;">
+        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px; display: none;" class="responsive-message">
             <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;">
                 <span style="cursor: pointer;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">1. Get Idea; 2. Launch; 3. ???; 4. Profit.</span>
             </p>
         </div> 
+        <script>
+            function checkScreenSize() {
+                const messageDiv = document.querySelector('.responsive-message');
+                if (window.innerWidth > 600) { // Adjust the width as needed
+                    messageDiv.style.display = 'inline-flex';
+                } else {
+                    messageDiv.style.display = 'none';
+                }
+            }
+            window.addEventListener('resize', checkScreenSize);
+            window.addEventListener('load', checkScreenSize);
+        </script>
 
         <button class="scroll-arrow left" onclick="scrollProjects('left')">&#9664;</button>
         <div class="project-list">
@@ -1431,11 +1385,7 @@ body.dark-mode .current-page-title.expanded {
     <!-- Footer Section -->
     <footer>
         <p>©2024-2025 Rutuj Dhodapkar Portfolio. All Rights Reserved.</p>
-        <div style="background-color: rgba(128, 128, 128, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px;">
-            <p style="margin: 0; color: rgb(128, 128, 128); font-weight: bold; padding-left: 5px; padding-right: 5px;">
-                <span style="cursor: pointer;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">Made by Rutuj Dhodapkar, Hosted with Vercel</span>
-            </p>
-        </div>    
+  
         <div style="height: 5px;"></div> <!-- add space -->
         <a href="#about">About</a> | 
         <a href="#education">Education</a> | 
