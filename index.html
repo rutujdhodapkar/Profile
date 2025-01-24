@@ -1530,16 +1530,16 @@
 <style>
     :root {
         --light-color: rgb(255, 255, 255); /* Light theme color */
-        --dark-color: rgba(101, 101, 101, 0.296);        /* Dark theme color */
+        --dark-color: rgba(101, 101, 101, 0.296); /* Dark theme color */
     }
 
     /* Title display for small screens */
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 770px) {
         .current-page-title {
-            display: block;
+            display: none; /* Initially hidden */
             position: fixed;
             top: 15px;
-            width: 40%;
+            width: 300px; /* Fixed width */
             backdrop-filter: blur(15px);
             z-index: 1000;
             padding: 12px;
@@ -1580,8 +1580,14 @@
         }
     }
 
-    /* Hide the title on larger screens */
-    @media screen and (min-width: 601px) {
+    /* Show the title only on screens smaller than 50% of the original size */
+    @media screen and (max-width: 99999px) {
+        .current-page-title {
+            display: none; /* Initially hidden */
+        }
+    }
+
+    @media screen and (min-width: 30000px) {
         .current-page-title {
             display: none;
         }
@@ -1640,6 +1646,12 @@
             }
         };
 
+        // Show the current-page-title when other headers are hidden
+        function showCurrentPageTitle() {
+            const currentPageTitle = document.querySelector('.current-page-title');
+            currentPageTitle.style.display = 'block';
+        }
+
         // Hide expanded title on any other activity or scroll with animation
         function hideExpandedTitle() {
             const currentPageTitle = document.querySelector('.current-page-title');
@@ -1657,6 +1669,9 @@
         });
 
         document.addEventListener('scroll', hideExpandedTitle);
+
+        // Assume other headers are hidden initially
+        showCurrentPageTitle();
     });
 </script>
 <!-- -------------end of small screen header----------- -->
