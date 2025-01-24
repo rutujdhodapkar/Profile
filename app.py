@@ -1,5 +1,5 @@
+
 import streamlit as st
-import time
 
 st.write("My portfolio is available at: [rutujdhodapkar.vercel.app](https://rutujdhodapkar.vercel.app)")
 
@@ -15,7 +15,3 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
-# Wait for 5 seconds and then show the message
-time.sleep(5)
-st.write("Taking longer than usual")
