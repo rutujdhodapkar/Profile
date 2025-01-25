@@ -900,6 +900,8 @@
         body:not(.dark-mode) .settings-menu {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
+
+
     </style>
     <script>
         // Hide the button until 50% of the 2nd page is scrolled
@@ -1596,6 +1598,12 @@
     /* Make select element transparent */
     select {
         background-color: transparent;
+    }
+
+    /* Hide focus outline and blur box for all elements */
+    *:focus {
+        outline: none;
+        box-shadow: none;
     }
 </style>
 
