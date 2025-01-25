@@ -1485,18 +1485,18 @@
     }
 
     ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #b0b0b0, #d0d0d0); /* Professional gray gradient */
+        background: linear-gradient(135deg, #81b1c3, #0196d5); /* Professional gray gradient */
         border-radius: 35px; /* More curved edges */
         transition: background 0.3s ease, border-radius 0.3s ease;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #a0a0a0, #c0c0c0); /* Slightly darker gray shades on hover */
+        background: linear-gradient(135deg, #81b1c3, #0196d5); /* Slightly darker gray shades on hover */
         border-radius: 35px; /* More curved edges on hover */
     }
 
     ::-webkit-scrollbar-thumb:active {
-        background: linear-gradient(135deg, #909090, #b0b0b0); /* Even darker gray shades when active */
+        background: linear-gradient(135deg, #81b1c3, #0196d5); /* Even darker gray shades when active */
         border-radius: 35px; /* Pronounced curve when active */
     }
 
@@ -1699,9 +1699,54 @@
     window.addEventListener('load', updateTitleOnScroll); // Update title on page load
 </script>
 
-<!-- end of title display for small screens -->
+<!-- ______________________end of title display for small screens_____________________ -->
+
+
+<style>
+    /* Loading bar styles */
+    #loadingBar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%; /* Fixed size of the bar element */
+        height: 4px;
+        background: linear-gradient(90deg, #00000000, #1d7291, #00b3ff); /* Improved multi-color gradient with better transparency */
+        z-index: 10000;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 2s ease-in-out; /* Smooth animation */
+    }
+</style>
+
+<script>
+    function showLoadingBar() {
+        const loadingBar = document.createElement('div');
+        loadingBar.id = 'loadingBar';
+        document.body.appendChild(loadingBar);
+
+        // Start the animation
+        setTimeout(() => {
+            loadingBar.style.transform = 'scaleX(1)';
+        }, 100);
+
+        // After loading completes, show animation of disappearing
+        setTimeout(() => {
+            loadingBar.style.transition = 'opacity 0.5s ease-in-out';
+            loadingBar.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(loadingBar);
+            }, 500); // Wait for the fade-out animation to complete
+        }, 2100); // Duration of the loading bar display plus a little buffer
+    }
+
+    window.addEventListener('load', () => {
+        showLoadingBar();
+    });
+</script>
+
+
+
 
 
 </html>
-
 <!-- -------------end of html----------- -->
