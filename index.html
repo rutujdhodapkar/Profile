@@ -1458,9 +1458,9 @@
         background: rgba(0, 0, 0, 0.3);
     }
 </style>
-<!-- -------------------------- -->
+<!-- ______________________end of smooth, slippery scroll_____________________ -->
 
-<!-- Professional Custom Multicolor Scrollbar -->
+<!-- ______________________start of Professional Custom Multicolor Scrollbar_____________________ -->
 <style>
     /* Modern and professional multicolor scrollbar design */
     ::-webkit-scrollbar {
@@ -1477,18 +1477,18 @@
     }
 
     ::-webkit-scrollbar-thumb {
-        background: linear-gradient(45deg, #7700ff, #004cff, #00eaff);
+        background: linear-gradient(135deg, #b0b0b0, #d0d0d0); /* Professional gray gradient */
         border-radius: 35px; /* More curved edges */
         transition: background 0.3s ease, border-radius 0.3s ease;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(45deg, #8800ff, #004cff, #00eaff);
+        background: linear-gradient(135deg, #a0a0a0, #c0c0c0); /* Slightly darker gray shades on hover */
         border-radius: 35px; /* More curved edges on hover */
     }
 
     ::-webkit-scrollbar-thumb:active {
-        background: linear-gradient(45deg, #9d00ff, #004cff, #00eaff);
+        background: linear-gradient(135deg, #909090, #b0b0b0); /* Even darker gray shades when active */
         border-radius: 35px; /* Pronounced curve when active */
     }
 
@@ -1512,21 +1512,11 @@
         opacity: 0;
         transition-delay: 1.5s; /* Delay before hiding */
     }
-
-    /* Hide scrollbar on smaller screens */
-    @media screen and (max-width: 600px) {
-        ::-webkit-scrollbar {
-            display: none;
-        }
-    }
 </style>
 <!-- ______________end of Professional Custom Multicolor Scrollbar________ -->
 
 
-
-
-
-<!-- ----------Start of small screen header----------- -->
+<!-- ______________________start of title display for small screens_____________________ -->
 <style>
     :root {
         --light-color: rgb(255, 255, 255); /* Light theme color */
@@ -1536,11 +1526,12 @@
     /* Title display for small screens */
     @media screen and (max-width: 770px) {
         .current-page-title {
-            display: none; /* Initially hidden */
+            display: block;
             position: fixed;
             top: 15px;
             width: 300px; /* Fixed width */
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             z-index: 1000;
             padding: 12px;
             text-align: center;
@@ -1548,7 +1539,6 @@
             font-size: 1.4em;
             font-weight: bold;
             cursor: pointer;
-            transition: max-height 0.3s ease, padding 0.3s ease, transform 0.3s ease;
             overflow: hidden;
             max-height: 60px;
             border-radius: 45px;
@@ -1556,6 +1546,7 @@
             transform: translateX(-50%);
             background-color: var(--light-color); /* Default Light */
             color: var(--dark-color); /* Contrast color */
+            transition: max-height 0.5s ease-in-out, background-color 0.5s ease-in-out, color 0.5s ease-in-out, transform 0.5s ease-in-out, border-radius 0.5s ease-in-out;
         }
 
         .page-titles {
@@ -1565,29 +1556,37 @@
             padding: 12px;
             width: 100%;
             border-radius: 45px;
-            transition: transform 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
         }
 
-        .current-page-title.expanded {
-            max-height: 300px;
-            padding: 12px;
-            transition: max-height 0.3s ease, padding 0.3s ease;
+        .current-page-title.active {
+            max-height: 350px;
+            transform: translateX(-50%) scale(1.1); /* More pronounced expansion on activation */
         }
 
-        .current-page-title.expanded .page-titles {
+        .current-page-title.active #pageTitle {
+            display: none; /* Hide current page title when expanded */
+        }
+
+        .current-page-title.active .page-titles {
             display: flex;
-            transition: max-height 0.3s ease, padding 0.3s ease;
+            opacity: 1;
+        }
+
+        .page-titles span {
+            cursor: pointer;
+            padding: 5px 0;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .page-titles span:hover {
+            color: #004cff; /* Change color on hover for better interaction feedback */
         }
     }
 
-    /* Show the title only on screens smaller than 50% of the original size */
-    @media screen and (max-width: 99999px) {
-        .current-page-title {
-            display: none; /* Initially hidden */
-        }
-    }
-
-    @media screen and (min-width: 30000px) {
+    /* Hide title for larger screens */
+    @media screen and (min-width: 771px) {
         .current-page-title {
             display: none;
         }
@@ -1609,72 +1608,91 @@
     }
 </style>
 
-<div class="current-page-title" onclick="toggleTitles()">
-    <span id="pageTitle">Home</span>
-    <div class="page-titles" id="pageTitlesContainer"></div>
+<div class="current-page-title" onclick="toggleMenu()">
+    <span id="pageTitle">Home</span> <!-- Show current page title -->
+    <div class="page-titles" id="pageTitlesContainer">
+        <span onclick="navigateTo('#home')">Home</span>
+        <span onclick="navigateTo('#about')">Bio</span>
+        <span onclick="navigateTo('#education')">Education</span>
+        <span onclick="navigateTo('#skills')">Skill</span>
+        <span onclick="navigateTo('#certificate')">Certificate</span>
+        <span onclick="navigateTo('#project')">Project</span>
+        <span onclick="navigateTo('#contact')">Contact</span>
+    </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const pageTitleElement = document.getElementById('pageTitle');
-        const pageTitlesContainer = document.getElementById('pageTitlesContainer');
+    function toggleMenu() {
+        const titleElement = document.querySelector('.current-page-title');
+        const pageTitles = titleElement.querySelector('.page-titles');
+
+        if (titleElement.classList.contains('active')) {
+            titleElement.style.transition = 'transform 0.5s ease-in-out, max-height 0.5s ease-in-out, border-radius 0.5s ease-in-out';
+            titleElement.style.transform = 'translateX(-50%) scale(1)'; // Revert to original scale
+            titleElement.style.maxHeight = '60px'; // Revert to original height
+            titleElement.style.borderRadius = '45px'; // Revert border-radius
+            setTimeout(() => {
+                titleElement.classList.remove('active');
+                pageTitles.style.display = 'none'; // Hide page titles when menu is closed
+            }, 500);
+        } else {
+            titleElement.classList.add('active');
+            titleElement.style.transition = 'transform 0.5s ease-in-out, max-height 0.5s ease-in-out, border-radius 0.5s ease-in-out';
+            titleElement.style.transform = 'translateX(-50%) scale(1.1)'; // Expand scale
+            titleElement.style.maxHeight = '350px'; // Expand height
+            titleElement.style.borderRadius = '45px'; // Maintain border-radius
+            pageTitles.style.display = 'flex'; // Show page titles when menu is expanded
+        }
+    }
+
+    function navigateTo(sectionId) {
+        window.location.href = sectionId;
+        closeMenu();
+    }
+
+    function updateTitleOnScroll() {
         const sections = document.querySelectorAll('section');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    pageTitleElement.textContent = entry.target.querySelector('h3') ? entry.target.querySelector('h3').textContent : 'Home';
-                }
-            });
-        }, { threshold: 0.5 });
+        const pageTitle = document.getElementById('pageTitle');
+        let currentSection = 'Home';
 
         sections.forEach(section => {
-            observer.observe(section);
-            const title = section.querySelector('h3') ? section.querySelector('h3').textContent : 'Home';
-            const titleElement = document.createElement('div');
-            titleElement.textContent = title;
-            titleElement.onclick = () => section.scrollIntoView({ behavior: 'smooth' });
-            pageTitlesContainer.appendChild(titleElement);
-        });
-
-        window.toggleTitles = function() {
-            const currentPageTitle = document.querySelector('.current-page-title');
-            currentPageTitle.classList.toggle('expanded');
-            if (currentPageTitle.classList.contains('expanded')) {
-                pageTitleElement.style.display = 'none';
-            } else {
-                pageTitleElement.style.display = 'block';
-            }
-        };
-
-        // Show the current-page-title when other headers are hidden
-        function showCurrentPageTitle() {
-            const currentPageTitle = document.querySelector('.current-page-title');
-            currentPageTitle.style.display = 'block';
-        }
-
-        // Hide expanded title on any other activity or scroll with animation
-        function hideExpandedTitle() {
-            const currentPageTitle = document.querySelector('.current-page-title');
-            if (currentPageTitle.classList.contains('expanded')) {
-                currentPageTitle.style.transition = 'max-height 0.3s ease, padding 0.3s ease';
-                currentPageTitle.classList.remove('expanded');
-                pageTitleElement.style.display = 'block';
-            }
-        }
-
-        document.addEventListener('click', function(event) {
-            if (!document.querySelector('.current-page-title').contains(event.target)) {
-                hideExpandedTitle();
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                currentSection = section.getAttribute('data-title') || section.id; // Get the title from the section's data-title or fallback to id
             }
         });
 
-        document.addEventListener('scroll', hideExpandedTitle);
+        if (currentSection !== 'Home' && window.scrollY < window.innerHeight) {
+            currentSection = 'Home'; // Show only "Home" until the second page scrolls
+        }
 
-        // Assume other headers are hidden initially
-        showCurrentPageTitle();
+        pageTitle.textContent = currentSection; // Update the page title
+    }
+
+    function closeMenu() {
+        const titleElement = document.querySelector('.current-page-title');
+        const pageTitles = titleElement.querySelector('.page-titles');
+
+        if (titleElement.classList.contains('active')) {
+            titleElement.style.transition = 'transform 0.5s ease-in-out, max-height 0.5s ease-in-out, border-radius 0.5s ease-in-out';
+            titleElement.style.transform = 'translateX(-50%) scale(1)'; // Revert to original scale
+            titleElement.style.maxHeight = '60px'; // Revert to original height
+            titleElement.style.borderRadius = '45px'; // Revert border-radius
+            setTimeout(() => {
+                titleElement.classList.remove('active');
+                pageTitles.style.display = 'none'; // Hide page titles when menu is closed
+            }, 500);
+        }
+    }
+
+    window.addEventListener('scroll', () => {
+        closeMenu();
+        updateTitleOnScroll();
     });
+    window.addEventListener('load', updateTitleOnScroll); // Update title on page load
 </script>
-<!-- -------------end of small screen header----------- -->
+
+<!-- end of title display for small screens -->
 
 
 </html>
