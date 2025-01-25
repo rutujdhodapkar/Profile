@@ -1462,11 +1462,9 @@
 
 <!-- ______________________start of Professional Custom Multicolor Scrollbar_____________________ -->
 <style>
-    /* Modern and professional multicolor scrollbar design */
     ::-webkit-scrollbar {
         width: 6px;
         margin-right: 2px; /* Floating effect with space from the side */
-        transition: opacity 0.5s ease-in-out; /* Smooth visibility transition */
     }
 
     ::-webkit-scrollbar-track {
@@ -1492,7 +1490,6 @@
         border-radius: 35px; /* Pronounced curve when active */
     }
 
-    /* Hide scrollbar when inactive for 1.5 seconds, show with animation */
     body {
         scrollbar-width: thin;
         scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
@@ -1500,17 +1497,6 @@
 
     body::-webkit-scrollbar {
         opacity: 1;
-        transition: opacity 0.5s ease-in-out; /* Smooth transition for visibility */
-    }
-
-    body:hover::-webkit-scrollbar,
-    body:active::-webkit-scrollbar {
-        opacity: 1;
-    }
-
-    body:not(:hover):not(:active)::-webkit-scrollbar {
-        opacity: 0;
-        transition-delay: 1.5s; /* Delay before hiding */
     }
 </style>
 <!-- ______________end of Professional Custom Multicolor Scrollbar________ -->
@@ -1528,7 +1514,7 @@
         .current-page-title {
             display: block;
             position: fixed;
-            top: 15px;
+            top: 25px;
             width: 300px; /* Fixed width */
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
@@ -1605,6 +1591,11 @@
             background-color: var(--light-color); /* Light theme */
             color: var(--dark-color); /* Contrast color for text */
         }
+    }
+
+    /* Make select element transparent */
+    select {
+        background-color: transparent;
     }
 </style>
 
