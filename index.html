@@ -1702,6 +1702,7 @@
 <!-- ______________________end of title display for small screens_____________________ -->
 
 
+<!-- ______________________start of loading bar_____________________ -->
 <style>
     /* Loading bar styles */
     #loadingBar {
@@ -1714,7 +1715,7 @@
         z-index: 10000;
         transform: scaleX(0);
         transform-origin: left;
-        transition: transform 0.2s ease-in-out; /* Smooth animation */
+        transition: transform 2s ease-in-out; /* Smooth animation */
     }
 </style>
 
@@ -1724,33 +1725,26 @@
         loadingBar.id = 'loadingBar';
         document.body.appendChild(loadingBar);
 
-        // Simulate real loading based on internet speed
-        let progress = 0;
-        const updateProgress = () => {
-            // Simulate progress increment based on network speed
-            const increment = navigator.connection ? navigator.connection.downlink / 100 : 0.01;
-            progress = Math.min(progress + increment, 1);
-            loadingBar.style.transform = `scaleX(${progress})`;
+        // Start the animation
+        setTimeout(() => {
+            loadingBar.style.transform = 'scaleX(1)';
+        }, 100);
 
-            if (progress < 1) {
-                requestAnimationFrame(updateProgress);
-            } else {
-                loadingBar.style.transition = 'opacity 0.5s ease-in-out';
-                loadingBar.style.opacity = '0';
-                loadingBar.addEventListener('transitionend', () => {
-                    document.body.removeChild(loadingBar);
-                });
-            }
-        };
-
-        updateProgress();
+        // After loading completes, show animation of disappearing
+        setTimeout(() => {
+            loadingBar.style.transition = 'opacity 0.5s ease-in-out';
+            loadingBar.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(loadingBar);
+            }, 500); // Wait for the fade-out animation to complete
+        }, 2100); // Duration of the loading bar display plus a little buffer
     }
 
     window.addEventListener('load', () => {
         showLoadingBar();
     });
 </script>
-
+<!-- ______________________end of loading bar_____________________ -->
 
 
 
