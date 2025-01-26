@@ -254,7 +254,7 @@
         top: 7.5%;
         left: 50%;
         transform: translateX(-50%);
-        z-index: 1002;
+        z-index: 2147483647; /* Maximum z-index value to ensure it's on top of any element */
         display: flex; /* Always show header 2 */
         flex-direction: row; /* Arrange items horizontally */
         justify-content: center;
@@ -262,7 +262,7 @@
         width: auto; /* Adjust width to fit content */
         max-width: 1200px;
         margin: 0 auto;
-        border-radius: 40px;
+        border-radius: 45px;
         backdrop-filter: blur(10px); /* Added blur effect */
         -webkit-backdrop-filter: blur(10px); /* Added blur effect for Safari */
         transition: padding 0.3s ease, max-height 0.5s ease; /* Added transition for padding and max-height */
@@ -1452,8 +1452,8 @@
 <!-- ______________________start of title display for small screens_____________________ -->
 <style>
     :root {
-        --light-color: rgb(255, 255, 255); /* Light theme color */
-        --dark-color: rgba(101, 101, 101, 0.296); /* Dark theme color */
+        --light-color: rgba(226, 226, 226, 0.478); /* Light theme color with transparency */
+        --dark-color: rgba(76, 76, 76, 0.488); /* Dark theme color with transparency */
     }
 
     /* Title display for small screens */
@@ -1681,6 +1681,321 @@
     });
 </script>
 <!-- ______________________end of loading bar_____________________ -->
+<!--______________________ start of top glow ______________________ -->
+
+<!-- -----------------------glow 1---------------------------- -->
+<style>
+    /* Glow effect styles for glow 1 */
+    .glowEffect1 {
+        position: fixed;
+        top: -250px;
+        left: -400px;
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(70, 130, 180, 0.7) 0%, rgba(0, 0, 0, 0) 70%);
+        z-index: 1;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+</style>
+
+<script>
+    function addGlowEffect1() {
+        const glowEffect1 = document.createElement('div');
+        glowEffect1.className = 'glowEffect1';
+        document.body.appendChild(glowEffect1);
+
+        window.addEventListener('scroll', () => {
+            glowEffect1.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect1();
+    });
+</script>
+
+<!-- -----------------------glow 2---------------------------- -->
+<style>
+    /* Glow effect styles for glow 2 */
+    .glowEffect2 {
+        position: fixed;
+        top: -270px;
+        right: -400px;
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(65, 105, 225, 0.7) 0%, rgba(0, 0, 0, 0) 70%);
+        z-index: 1;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+</style>
+
+<script>
+    function addGlowEffect2() {
+        const glowEffect2 = document.createElement('div');
+        glowEffect2.className = 'glowEffect2';
+        document.body.appendChild(glowEffect2);
+
+        window.addEventListener('scroll', () => {
+            glowEffect2.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect2();
+    });
+</script>
+
+<!-- -----------------------glow 3---------------------------- -->
+<style>
+    /* Glow effect styles for glow 3 */
+    .glowEffect3 {
+        position: fixed;
+        top: -250px;
+        left: 100px;
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(100, 149, 237, 0.6) 0%, rgba(0, 0, 0, 0) 70%);
+        z-index: 1;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+</style>
+
+<script>
+    function addGlowEffect3() {
+        const glowEffect3 = document.createElement('div');
+        glowEffect3.className = 'glowEffect3';
+        document.body.appendChild(glowEffect3);
+
+        window.addEventListener('scroll', () => {
+            glowEffect3.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect3();
+    });
+</script>
+
+<!-- -----------------------glow 4---------------------------- -->
+<style>
+    /* Glow effect styles for glow 4 */
+    .glowEffect4 {
+        position: fixed;
+        top: -270px;
+        right: 100px;
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(30, 144, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%);
+        z-index: 1;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+</style>
+
+<script>
+    function addGlowEffect4() {
+        const glowEffect4 = document.createElement('div');
+        glowEffect4.className = 'glowEffect4';
+        document.body.appendChild(glowEffect4);
+
+        window.addEventListener('scroll', () => {
+            glowEffect4.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect4();
+    });
+</script>
+
+<!-- -----------------------glow 5---------------------------- -->
+<style>
+    /* Glow effect styles for glow 5 */
+    .glowEffect5 {
+        position: fixed;
+        top: -250px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(0, 140, 255, 0.371) 0%, rgba(0, 0, 0, 0) 70%);
+        z-index: 1;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+</style>
+
+<script>
+    function addGlowEffect5() {
+        const glowEffect5 = document.createElement('div');
+        glowEffect5.className = 'glowEffect5';
+        document.body.appendChild(glowEffect5);
+
+        window.addEventListener('scroll', () => {
+            glowEffect5.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect5();
+    });
+</script>
+<!-- -----------------------glow 6---------------------------- -->
+<style>
+    /* Glow effect styles for glow 6 */
+    .glowEffect6 {
+        position: fixed;
+        bottom: -250px;
+        left: -250px;
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(255, 0, 225, 0.173) 0%, rgba(0, 0, 0, 0) 70%);
+        z-index: 1;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+</style>
+
+<script>
+    function addGlowEffect6() {
+        const glowEffect6 = document.createElement('div');
+        glowEffect6.className = 'glowEffect6';
+        document.body.appendChild(glowEffect6);
+
+        window.addEventListener('scroll', () => {
+            glowEffect6.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect6();
+    });
+</script>
+<!-- ______________________end of glows_____________________ -->
+
+<script>
+    function showMessages(...messages) {
+        const messageContainerId = 'messageContainer';
+        let messageContainer = document.getElementById(messageContainerId);
+
+        // Create container if it doesn't exist
+        if (!messageContainer) {
+            messageContainer = document.createElement('div');
+            messageContainer.id = messageContainerId;
+            messageContainer.style.position = 'fixed';
+            messageContainer.style.top = '10px';
+            messageContainer.style.right = '10px';
+            messageContainer.style.zIndex = '10000';
+            messageContainer.style.display = 'flex';
+            messageContainer.style.flexDirection = 'column';
+            messageContainer.style.gap = '10px'; // Adds spacing between messages
+            document.body.appendChild(messageContainer);
+        }
+
+        messages.forEach((messageText) => {
+            const message = document.createElement('div');
+            message.className = 'screenSizeMessage';
+            message.textContent = messageText;
+            message.style.position = 'relative';
+            message.style.padding = '10px 20px';
+            message.style.borderRadius = '35px';
+            message.style.backdropFilter = 'blur(5px)';
+            message.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            message.style.color = 'white';
+            message.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
+            message.style.opacity = '1';
+            message.style.transition = 'opacity 0.5s ease-in-out';
+
+            messageContainer.appendChild(message);
+
+            // Fade-out and remove message after 10 seconds
+            setTimeout(() => {
+                message.style.opacity = '0';
+                setTimeout(() => {
+                    if (message.parentElement) {
+                        messageContainer.removeChild(message);
+                        // Remove container if empty
+                        if (messageContainer.childElementCount === 0) {
+                            document.body.removeChild(messageContainer);
+                        }
+                    }
+                }, 500);
+            }, 10000);
+        });
+    }
+
+    function checkScreenSize() {
+        const isSmallScreen = window.matchMedia && window.matchMedia('(max-width: 600px)').matches;
+        if (isSmallScreen) {
+            showMessages('Switch to Larger Screen Size');
+        }
+    }
+
+    function checkDarkMode() {
+        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (!isDarkMode) {
+            showMessages('Switch to Dark Mode for better experience');
+        }
+    }
+
+    window.addEventListener('load', () => {
+        checkScreenSize();
+        checkDarkMode();
+    });
+
+    window.matchMedia('(max-width: 600px)').addEventListener('change', (e) => {
+        if (e.matches) {
+            showMessages('Switch to Larger Screen Size');
+        }
+    });
+
+    window.matchMedia('(min-width: 601px)').addEventListener('change', (e) => {
+        if (e.matches) {
+            const messages = document.querySelectorAll('.screenSizeMessage');
+            messages.forEach(message => {
+                message.style.transition = 'opacity 0.5s ease-in-out';
+                message.style.opacity = '0';
+                setTimeout(() => {
+                    if (message.parentElement) {
+                        message.parentElement.removeChild(message);
+                    }
+                }, 500);
+            });
+        }
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!e.matches) {
+            showMessages('Switch to Dark Mode for better experience');
+        }
+    });
+</script>
+
+
+
+
+
+
+<!-- start of custom cursor -->
+
+
+
+
 
 </html>
 <!-- -------------end of html----------- -->
