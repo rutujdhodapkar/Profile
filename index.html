@@ -970,7 +970,7 @@
     <!-- Hero Section -->
     <section class="hero" id="top">
         <div class="hero-text">
-            <h2>Hello There!<br>I'm <span id="name"></span></h2>
+            <h2 style="z-index: 100235;">Hello There!<br>I'm <span id="name"></span></h2>
 
             
             <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px; display: none;" id="helloDiv" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">
@@ -1652,6 +1652,7 @@
         transform: scaleX(0);
         transform-origin: left;
         transition: transform 2s ease-in-out; /* Smooth animation */
+        box-shadow: 0 0 10px rgba(0, 183, 255, 0.8), 0 0 20px rgba(29, 114, 145, 0.6); /* Glowing effect */
     }
 </style>
 
@@ -1680,24 +1681,30 @@
         showLoadingBar();
     });
 </script>
-<!-- ______________________end of loading bar_____________________ -->
-<!--______________________ start of top glow ______________________ -->
 
+<!-- ______________________end of loading bar_____________________ -->
+ 
+<!--______________________ start of top glow ______________________ -->
 <!-- -----------------------glow 1---------------------------- -->
 <style>
     /* Glow effect styles for glow 1 */
     .glowEffect1 {
         position: fixed;
         top: -250px;
-        left: -400px;
+        left: -300px; /* Adjusted for consistent x distance */
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(70, 130, 180, 0.7) 0%, rgba(0, 0, 0, 0) 70%);
-        z-index: 1;
+        background: radial-gradient(circle, rgba(0, 0, 255, 0.7) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        z-index: 10;
         pointer-events: none;
         filter: blur(20px);
         transition: opacity 0.5s ease-in-out;
         opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect1 {
+            display: none;
+        }
     }
 </style>
 
@@ -1722,16 +1729,21 @@
     /* Glow effect styles for glow 2 */
     .glowEffect2 {
         position: fixed;
-        top: -270px;
-        right: -400px;
+        top: -250px; /* Adjusted for consistent y position */
+        right: -300px; /* Adjusted for consistent x distance */
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(65, 105, 225, 0.7) 0%, rgba(0, 0, 0, 0) 70%);
-        z-index: 1;
+        background: radial-gradient(circle, rgba(0, 0, 205, 0.7) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        z-index: 10;
         pointer-events: none;
         filter: blur(20px);
         transition: opacity 0.5s ease-in-out;
         opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect2 {
+            display: none;
+        }
     }
 </style>
 
@@ -1757,15 +1769,20 @@
     .glowEffect3 {
         position: fixed;
         top: -250px;
-        left: 100px;
+        left: 0px; /* Adjusted for consistent x distance */
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(100, 149, 237, 0.6) 0%, rgba(0, 0, 0, 0) 70%);
-        z-index: 1;
+        background: radial-gradient(circle, rgba(0, 191, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        z-index: 10;
         pointer-events: none;
         filter: blur(20px);
         transition: opacity 0.5s ease-in-out;
         opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect3 {
+            display: none;
+        }
     }
 </style>
 
@@ -1790,16 +1807,21 @@
     /* Glow effect styles for glow 4 */
     .glowEffect4 {
         position: fixed;
-        top: -270px;
-        right: 100px;
+        top: -250px;
+        right: 0px; /* Adjusted for consistent x distance */
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(30, 144, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%);
-        z-index: 1;
+        background: radial-gradient(circle, rgba(30, 144, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        z-index: 10;
         pointer-events: none;
         filter: blur(20px);
         transition: opacity 0.5s ease-in-out;
         opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect4 {
+            display: none;
+        }
     }
 </style>
 
@@ -1829,12 +1851,17 @@
         transform: translateX(-50%);
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(0, 140, 255, 0.371) 0%, rgba(0, 0, 0, 0) 70%);
-        z-index: 1;
+        background: radial-gradient(circle, rgba(0, 140, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        z-index: 10;
         pointer-events: none;
         filter: blur(20px);
         transition: opacity 0.5s ease-in-out;
         opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect5 {
+            display: none;
+        }
     }
 </style>
 
@@ -1862,12 +1889,17 @@
         left: -250px;
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(255, 0, 225, 0.173) 0%, rgba(0, 0, 0, 0) 70%);
-        z-index: 1;
+        background: radial-gradient(circle, rgba(255, 0, 225, 0.214) 0%, rgba(0, 0, 0, 0) 70%);
+        z-index: 10;
         pointer-events: none;
         filter: blur(20px);
         transition: opacity 0.5s ease-in-out;
         opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect6 {
+            display: none;
+        }
     }
 </style>
 
@@ -1886,8 +1918,74 @@
         addGlowEffect6();
     });
 </script>
+
+<!-- -----------------------glow 7---------------------------- -->
+<style>
+    /* Glow effect styles for glow 7 */
+    .glowEffect7 {
+        position: fixed;
+        bottom: -250px;
+        right: -250px; /* Changed to right side */
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(0, 157, 255, 0.214) 0%, rgba(0, 0, 0, 0) 70%); /* Changed color to green */
+        z-index: 10;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect7 {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    function addGlowEffect7() {
+        const glowEffect7 = document.createElement('div');
+        glowEffect7.className = 'glowEffect7';
+        document.body.appendChild(glowEffect7);
+
+        window.addEventListener('scroll', () => {
+            glowEffect7.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect7();
+    });
+</script>
+
+<script>
+    function showRandomGlows() {
+        const glows = ['glowEffect1', 'glowEffect2', 'glowEffect3', 'glowEffect4', 'glowEffect5', 'glowEffect6', 'glowEffect7'];
+        const selectedGlows = glows.sort(() => 0.5 - Math.random()).slice(0, 3);
+
+        selectedGlows.forEach(glow => {
+            const glowElement = document.querySelector(`.${glow}`);
+            if (glowElement) {
+                glowElement.style.display = 'block';
+            }
+        });
+    }
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth <= 768) {
+            showRandomGlows();
+        }
+    });
+
+    window.addEventListener('load', () => {
+        if (window.innerWidth <= 768) {
+            showRandomGlows();
+        }
+    });
+</script>
 <!-- ______________________end of glows_____________________ -->
 
+<!--______________________ start of messages for small screens and dark mode ______________________ -->
 <script>
     function showMessages(...messages) {
         const messageContainerId = 'messageContainer';
@@ -1985,17 +2083,84 @@
         }
     });
 </script>
+<!--______________________ end of messages for small screens and dark mode ______________________ -->
 
+<!--______________________ start of custom cursor ______________________ -->
 
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: #1e1e1e;
+            overflow: auto; /* Allow scrolling */
+            cursor: none; /* Hide the default cursor */
+            scroll-behavior: smooth; /* Make scroll smooth */
+        }
 
+        .cursor {
+            position: fixed; /* Use fixed positioning to prevent lag on scroll */
+            width: 40px; /* Reduced size */
+            height: 40px; /* Reduced size */
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(255, 0, 150, 0.8), rgba(0, 204, 255, 0.8));
+            pointer-events: none;
+            box-shadow: 0 0 12px rgba(255, 0, 150, 0.6), 0 0 24px rgba(0, 204, 255, 0.6); /* Adjusted shadow for smaller size */
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease;
+            z-index: 2147483647;
+            backdrop-filter: blur(5px); /* Add blur effect to background reflection */
+        }
 
+        .cursor.active {
+            width: 70px; /* Reduced size */
+            height: 70px; /* Reduced size */
+            box-shadow: 0 0 18px rgba(255, 0, 150, 1), 0 0 36px rgba(0, 204, 255, 1); /* Adjusted shadow for smaller size */
+        }
 
+        .cursor.follow {
+            transition: all 0.1s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor" id="cursor"></div>
 
-<!-- start of custom cursor -->
+    <script>
+        const cursor = document.getElementById('cursor');
 
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
 
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX; // Use clientX and clientY for fixed positioning
+            mouseY = e.clientY;
+        });
 
+        function updateCursor() {
+            // Smoothly interpolate the cursor position to reduce lag
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(updateCursor);
+        }
 
+        document.addEventListener('mousedown', () => {
+            cursor.classList.add('active');
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.classList.remove('active');
+        });
+
+        updateCursor();
+    </script>
+</body>
+<!-- ______________________end of custom cursor_____________________ -->
 
 </html>
 <!-- -------------end of html----------- -->
