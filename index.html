@@ -367,27 +367,46 @@
         color: white; /* Light text color for page 1 text heading */
     }
 
-    .hero h2 span {
-        font-size: 3.5rem; /* Adjusted font size for better scaling */
-        background: linear-gradient(80deg, #fe00e5, #7b00ff, #00b3ff, #00c8fa); /*rutuj dhodapkar text color*/
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
 
+    /* ____________________________start of Rutuj Dhodapkar home screen text ____________________________ */
+    /* large screen */
     @media (min-width: 769px) {
+        /* large screen light mode */
         .hero h2 span {
-            background: linear-gradient(90deg, #a5a6a6, #868686, #6e6e6e, #464646); /* Blue gradient for larger screens */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: rgb(255, 255, 255);
+            background-color: rgb(0, 0, 0);
+            padding: 0 5px;
+            display: inline-block;
         }
+        /* large screen dark mode */
         body.dark-mode .hero h2 span {
-            background: linear-gradient(80deg, #fe00e5, #7b00ff, #00b3ff, #00c8fa); /*rutuj dhodapkar text color*/
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: black;
+            background-color: white;
+            padding: 0 5px;
+            display: inline-block;
         }
     }
+    /* small screen */
+    @media (max-width: 768px) {
+        /* small screen light mode */
+        .hero h2 span {
+            color: rgb(255, 255, 255);
+            background-color: rgb(0, 0, 0);
+            padding: 0 5px;
+            display: inline-block;
+        }
+        /* small screen dark mode */
+        body.dark-mode .hero h2 span {
+            color: black;
+            background-color: white;
+            padding: 0 5px;
+            display: inline-block;
+        }
+    }
+    /* ________________________________end of Rutuj Dhodapkar home screen text____________________________ */
 
-    /* for aiml student homepage description */
+
+    /* for homepage description */
     .hero .subtitle { 
         color: #112b45; /* Dark slate gray for text, improves readability */
         font-size: 1.25rem; /* Adjusted font size for better scaling */
@@ -1483,7 +1502,7 @@
             left: 50%;
             transform: translateX(-50%);
             background-color: var(--light-color); /* Default Light */
-            color: var(--dark-color); /* Contrast color */
+            color: black; /* Text color for light mode */
             transition: max-height 0.5s ease-in-out, background-color 0.5s ease-in-out, color 0.5s ease-in-out, transform 0.5s ease-in-out, border-radius 0.5s ease-in-out;
         }
 
@@ -1534,14 +1553,14 @@
     @media (prefers-color-scheme: dark) {
         .current-page-title {
             background-color: var(--dark-color); /* Dark theme */
-            color: var(--light-color); /* Contrast color for text */
+            color: white; /* Text color for dark mode */
         }
     }
 
     @media (prefers-color-scheme: light) {
         .current-page-title {
             background-color: var(--light-color); /* Light theme */
-            color: var(--dark-color); /* Contrast color for text */
+            color: black; /* Text color for light mode */
         }
     }
 
@@ -1561,8 +1580,8 @@
     <span id="pageTitle">Home</span> <!-- Show current page title -->
     <div class="page-titles" id="pageTitlesContainer">
         <span onclick="navigateTo('#home')">Home</span>
-        <span onclick="navigateTo('#about')">Bio</span>
-        <span onclick="navigateTo('#skills')">Skill</span>
+        <span onclick="navigateTo('#about')">About</span>
+        <span onclick="navigateTo('#skills')">Skills</span>
         <span onclick="navigateTo('#certificate')">Certificate</span>
         <span onclick="navigateTo('#project')">Project</span>
         <span onclick="navigateTo('#contact')">Contact</span>
@@ -2026,7 +2045,7 @@
 
             messageContainer.appendChild(message);
 
-            // Fade-out and remove message after 10 seconds
+            // Fade-out and remove message after 5 seconds
             setTimeout(() => {
                 message.style.opacity = '0';
                 setTimeout(() => {
@@ -2038,19 +2057,19 @@
                         }
                     }
                 }, 500);
-            }, 10000);
+            }, 5000); // message appearing timing
         });
     }
 
     function checkScreenSize() {
-        const isSmallScreen = window.matchMedia && window.matchMedia('(max-width: 600px)').matches;
+        const isSmallScreen = window.matchMedia('(max-width: 600px)').matches;
         if (isSmallScreen) {
-            showMessages('Switch to Larger Screen Size');
+            showMessages('Switch to Larger Screen Size for better experience');
         }
     }
 
     function checkDarkMode() {
-        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (!isDarkMode) {
             showMessages('Switch to Dark Mode for better experience');
         }
