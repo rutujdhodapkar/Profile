@@ -837,12 +837,12 @@
 
     <!-- Multi-color line at the top of the page -->
     <div class="multi-color-line"></div>
-
+    
     <!-- Dark Mode Toggle Button -->
     <div id="darkModeToggleContainer" style="position: fixed; bottom: 10px; right: 10px; z-index: 1003;">
         <button id="darkModeToggleButton" onclick="toggleSettingsMenu()" style="background: none; border: none; padding: 0; cursor: pointer;">
-            <img src="static/settings-icon-982x1024-ly8qbieh.png" alt="Settings Icon" style="width: 20px; height:20px;" class="light-mode-only">
-            <img src="static/settings_1.png" alt="Settings Icon Dark Mode" style="width: 20px; height:20px; display: none;" class="dark-mode-only">
+            <img src="https://static-00.iconduck.com/assets.00/settings-icon-1964x2048-8nigtrtt.png" alt="Settings Icon" style="width: 20px; height:20px;" class="light-mode-only">
+            <img src="https://static.vecteezy.com/system/resources/previews/011/947/143/original/silver-settings-icon-free-png.png" alt="Settings Icon Dark Mode" style="width: 20px; height:20px; display: none;" class="dark-mode-only">
         </button>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -852,10 +852,9 @@
                     document.querySelector('.dark-mode-only').style.display = isDarkMode ? 'inline' : 'none';
                 }
                 updateSettingsIcon();
-                document.body.addEventListener('classChange', updateSettingsIcon);
             });
         </script>
-        <div id="settingsMenu" style="display: none; position: absolute; bottom: 40px; right: 0; border-radius: 10px; padding: 10px; opacity: 0; transition: opacity 0.5s ease; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);" class="settings-menu light-mode">
+        <div id="settingsMenu" style="display: none; position: absolute; bottom: 40px; right: 0; border-radius: 10px; padding: 10px; transition: opacity 0.5s ease; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);" class="settings-menu light-mode">
             <div style="margin-bottom: 10px;">Theme</div>
             <label class="switch">
                 <input type="checkbox" id="themeToggleSwitch" onclick="toggleDarkMode()">
@@ -924,6 +923,15 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
+        /* Transition for theme change */
+        body {
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body * {
+            transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+        }
+
     </style>
     <script>
         // Hide the button until 50% of the 2nd page is scrolled
@@ -938,18 +946,17 @@
                 button.style.opacity = '0';
             } else {
                 // Show button once 50% of the 2nd page is scrolled
-                button.style.opacity = '0.5';
+                button.style.opacity = '1';
             }
         });
 
-        // Initial check to hide the button on page load
+        // Initial check to hide the button on page load and when scrolled
         document.addEventListener('DOMContentLoaded', function() {
             const button = document.getElementById('darkModeToggleButton');
             button.style.opacity = '0';
         });
-    </script>
-    <script>
-        // Hide settings menu when clicking outside
+
+        // Hide settings menu when clicking outside and when scrolled
         document.addEventListener('click', function(event) {
             const menu = document.getElementById('settingsMenu');
             const button = event.target.closest('button');
@@ -958,8 +965,23 @@
                 setTimeout(() => menu.style.display = 'none', 500);
             }
         });
+
+        window.addEventListener('scroll', function() {
+            const menu = document.getElementById('settingsMenu');
+            if (menu.style.display === 'block') {
+                menu.style.opacity = '0';
+                setTimeout(() => menu.style.display = 'none', 500);
+            }
+        });
     </script>
     <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            document.querySelector('.light-mode-only').style.display = isDarkMode ? 'none' : 'inline';
+            document.querySelector('.dark-mode-only').style.display = isDarkMode ? 'inline' : 'none';
+        }
+
         function toggleSettingsMenu() {
             const menu = document.getElementById('settingsMenu');
             if (menu.style.display === 'none' || menu.style.display === '') {
@@ -1268,15 +1290,21 @@
     </section>
     <hr style="border: none; height: 1.1px; background: linear-gradient(to right, #ff0000,#ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);">
     <!-- Footer Section -->
-    <footer>
-        <p>©2024-2025 Rutuj Dhodapkar Portfolio. All Rights Reserved.</p>
-  
-        <div style="height: 5px;"></div> <!-- add space -->
-        <a href="#about">About</a> | 
-        <a href="#skills">Skills</a> | 
-        <a href="#certificates">Certificates</a> | 
-        <a href="#projects">Projects</a> | 
-        <a href="#contact">Contact</a>
+    <footer style="padding: 10px 0; font-size: 12px;">
+        <div style="display: flex; align-items: center; justify-content: center; margin-top: 5px;">
+            <img src="C:\Users\rutuj\OneDrive\Desktop\451c327bbe05656f879fee8b8cac7a62.svg" alt="Made with passion and Bugs" style="width: 50px; height: 50px; margin-right: 3px; filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.6));">
+            <span style="font-size: 12px; background: linear-gradient(to right, #ff6600cb, #848484, #848484); -webkit-background-clip: text; color: transparent; z-index: 1; position: relative;">
+                Made with passion and Bugs
+            </span>
+        </div>
+        <p style="margin: 5px 0;">©2024-2025 Rutuj Dhodapkar Portfolio. All Rights Reserved.</p>
+        <div style="display: flex; justify-content: center; gap: 5px;">
+            <a href="#about">About</a> | 
+            <a href="#skills">Skills</a> | 
+            <a href="#certificates">Certificates</a> | 
+            <a href="#projects">Projects</a> | 
+            <a href="#contact">Contact</a>
+        </div>
     </footer>
 
     <!-- sliding rutuj dhodapkar button from about page -->
@@ -2080,6 +2108,7 @@
         const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (!isDarkMode) {
             showMessages('Switch to Dark Mode for better experience');
+            showMessages('To change theme, scroll and look at bottom-right corner');
         }
     }
 
@@ -2112,10 +2141,14 @@
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
         if (!e.matches) {
             showMessages('Switch to Dark Mode for better experience');
+            showMessages('To change theme, scroll and look at bottom-right corner');
+
         }
     });
 </script>
 <!--______________________ end of messages for small screens and dark mode ______________________ -->
+
+
 
 </html>
 <!-- -------------end of html----------- -->
