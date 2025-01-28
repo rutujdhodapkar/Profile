@@ -97,25 +97,6 @@
     }
 </style>
 
-<div class="context-menu" id="context-menu">
-    <div class="context-menu__item" onclick="searchOnChatGPT()">Search on ChatGPT</div>
-    <div class="context-menu__item" onclick="searchOnWeb()">Search on Web</div>
-    <div class="context-menu__item" onclick="showInsights()">Insights</div>
-    <div class="context-menu__item" onclick="saveWeb()">Save Web</div>
-    <div class="context-menu__item" onclick="copyText()">Copy Text</div>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Prevent redirection or performing click on select element
-        const selectElements = document.querySelectorAll('select');
-        selectElements.forEach(function(select) {
-            select.addEventListener('click', function(event) {
-                event.preventDefault();
-            });
-        });
-    });
-</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Allow text selection and copying
@@ -206,17 +187,7 @@
     // Detect dark mode on initial load
     document.addEventListener('DOMContentLoaded', detectDarkMode);
 
-    // Change selection color based on theme
-    function updateSelectionColor() {
-        const style = document.createElement('style');
-        style.innerHTML = `
-            ::selection {
-                background-color: ${document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000'};
-                color: ${document.body.classList.contains('dark-mode') ? '#000000' : '#ffffff'};
-            }
-        `;
-        document.head.appendChild(style);
-    }
+
 </script>
 <style>
     * {
@@ -980,6 +951,7 @@
             const isDarkMode = document.body.classList.contains('dark-mode');
             document.querySelector('.light-mode-only').style.display = isDarkMode ? 'none' : 'inline';
             document.querySelector('.dark-mode-only').style.display = isDarkMode ? 'inline' : 'none';
+            updateSelectionColor(); // Call the function to update selection color
         }
 
         function toggleSettingsMenu() {
@@ -992,6 +964,21 @@
                 setTimeout(() => menu.style.display = 'none', 500); // Match the duration of the fade-out transition
             }
         }
+
+
+        // ____________________________start of change select element color______________________________________
+        function updateSelectionColor() {
+            const style = document.createElement('style');
+            style.innerHTML = `
+                ::selection {
+                    background-color: ${document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000'};
+                    color: ${document.body.classList.contains('dark-mode') ? '#000000' : '#ffffff'};
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        // ____________________________end of change select element color______________________________________
+    
     </script>
 
     <!-- Navigation -->
