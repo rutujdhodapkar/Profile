@@ -1126,8 +1126,6 @@
     </section>
 
 
-<br>
-
     <!-- Projects Section -->
     <section id="projects" class="projects">
         <h3>Projects</h3>
@@ -1446,18 +1444,18 @@
     }
 
     ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #81b1c3, #0196d5); /* Professional gray gradient */
+        background: linear-gradient(135deg, #81b1c300, #0195d500); /* Professional gray gradient */
         border-radius: 35px; /* More curved edges */
         transition: background 0.3s ease, border-radius 0.3s ease;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #81b1c3, #0196d5); /* Slightly darker gray shades on hover */
+        background: linear-gradient(135deg, #81b1c300, #0195d500); /* Slightly darker gray shades on hover */
         border-radius: 35px; /* More curved edges on hover */
     }
 
     ::-webkit-scrollbar-thumb:active {
-        background: linear-gradient(135deg, #81b1c3, #0196d5); /* Even darker gray shades when active */
+        background: linear-gradient(135deg, #81b1c300, #0195d500); /* Even darker gray shades when active */
         border-radius: 35px; /* Pronounced curve when active */
     }
 
@@ -2108,89 +2106,6 @@
     });
 </script>
 <!--______________________ end of messages for small screens and dark mode ______________________ -->
-
-<!--______________________ start of custom cursor ______________________ -->
-
-<head>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background: #1e1e1e;
-            overflow: auto; /* Allow scrolling */
-            cursor: none; /* Hide the default cursor */
-            scroll-behavior: smooth; /* Make scroll smooth */
-        }
-
-        .cursor {
-            position: fixed; /* Use fixed positioning to prevent lag on scroll */
-            width: 40px; /* Reduced size */
-            height: 40px; /* Reduced size */
-            border-radius: 50%;
-            background: linear-gradient(45deg, rgba(255, 0, 150, 0.8), rgba(0, 204, 255, 0.8));
-            pointer-events: none;
-            box-shadow: 0 0 12px rgba(255, 0, 150, 0.6), 0 0 24px rgba(0, 204, 255, 0.6); /* Adjusted shadow for smaller size */
-            transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease;
-            z-index: 2147483647;
-            backdrop-filter: blur(5px); /* Add blur effect to background reflection */
-        }
-
-        .cursor.active {
-            width: 70px; /* Reduced size */
-            height: 70px; /* Reduced size */
-            box-shadow: 0 0 18px rgba(255, 0, 150, 1), 0 0 36px rgba(0, 204, 255, 1); /* Adjusted shadow for smaller size */
-        }
-
-        .cursor.follow {
-            transition: all 0.1s ease-out;
-        }
-
-        @media (max-width: 600px) {
-            .cursor {
-                display: none; /* Hide cursor on small screens */
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="cursor" id="cursor"></div>
-
-    <script>
-        const cursor = document.getElementById('cursor');
-
-        let mouseX = 0;
-        let mouseY = 0;
-        let cursorX = 0;
-        let cursorY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX; // Use clientX and clientY for fixed positioning
-            mouseY = e.clientY;
-        });
-
-        function updateCursor() {
-            // Smoothly interpolate the cursor position to reduce lag
-            cursorX += (mouseX - cursorX) * 0.1;
-            cursorY += (mouseY - cursorY) * 0.1;
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            requestAnimationFrame(updateCursor);
-        }
-
-        document.addEventListener('mousedown', () => {
-            cursor.classList.add('active');
-        });
-
-        document.addEventListener('mouseup', () => {
-            cursor.classList.remove('active');
-        });
-
-        updateCursor();
-    </script>
-</body>
-<!-- ______________________end of custom cursor_____________________ -->
 
 </html>
 <!-- -------------end of html----------- -->
