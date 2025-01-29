@@ -34,16 +34,30 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="static/diabetes.jpg" as="image">
-    <link rel="preload" href="static/instagram.png" as="image">
-    <link rel="preload" href="static/x com.png" as="image">
-    <link rel="preload" href="static/linkdin.png" as="image">
-    <link rel="preload" href="static/github.png" as="image">
-    <link rel="preload" href="static/mail.png" as="image">
     <link rel="stylesheet" href="styles.css">
     <script src="scripts.js" defer></script>
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+
+    <style>
+        .blur-load {
+            filter: blur(10px);
+            transition: filter 0.5s ease;
+        }
+        .blur-load.loaded {
+            filter: blur(0);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.classList.add('blur-load');
+                img.onload = () => img.classList.add('loaded');
+            });
+        });
+    </script>
     <style>
         /* Minimize render-blocking CSS */
         body {
@@ -1275,22 +1289,25 @@
                 <img src="static/mail.png" alt="Email Logo" style="width: 20px; height: 20px; margin-right: 5px;">Email</a>
         </div>
     </section>
+
+    <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
+        <img src="static/451c327bbe05656f879fee8b8cac7a62.svg" alt="Made with passion and Bugs" style="width: 70px; height: 70px; margin-right: 5px; filter: drop-shadow(0 0 25px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 35px rgba(255, 0, 0, 0.6));">
+        <span style="font-size: 16px; background: linear-gradient(to right, #ff6600cb, #848484, #848484); -webkit-background-clip: text; color: transparent; z-index: 1; position: relative;">
+            Made with passion and Bugs
+        </span>
+    </div>
+    
     <hr style="border: none; height: 1.1px; background: linear-gradient(to right, #ff0000,#ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);">
     <!-- Footer Section -->
-    <footer style="padding: 10px 0; font-size: 12px;">
-        <div style="display: flex; align-items: center; justify-content: center; margin-top: 5px;">
-            <img src="static/451c327bbe05656f879fee8b8cac7a62.svg" alt="Made with passion and Bugs" style="width: 50px; height: 50px; margin-right: 3px; filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.6));">
-            <span style="font-size: 12px; background: linear-gradient(to right, #ff6600cb, #848484, #848484); -webkit-background-clip: text; color: transparent; z-index: 1; position: relative;">
-                Made with passion and Bugs
-            </span>
-        </div>
-        <p style="margin: 5px 0;">©2024-2025 Rutuj Dhodapkar Portfolio. All Rights Reserved.</p>
-        <div style="display: flex; justify-content: center; gap: 5px;">
-            <a href="#home">Home</a> | 
-            <a href="#about">About</a> | 
-            <a href="#skills">Skills</a> | 
-            <a href="#certificates">Certificates</a> | 
-            <a href="#projects">Projects</a> | 
+    <footer style="padding: 20px 0; font-size: 16px;">
+
+        <p style="margin: 10px 0;">©2024-2025 Rutuj Dhodapkar Portfolio. All Rights Reserved.</p>
+        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <a href="#home">Home</a>|
+            <a href="#about">About</a>|
+            <a href="#skills">Skills</a>|
+            <a href="#certificates">Certificates</a>|
+            <a href="#projects">Projects</a>|
             <a href="#contact">Contact</a>
         </div>
     </footer>
