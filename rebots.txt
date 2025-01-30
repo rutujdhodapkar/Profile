@@ -1,0 +1,6 @@
+# robots.txt for rutujdhodapkar.vercel.app
+
+User-agent: *
+Allow: /
+
+Sitemap: https://rutujdhodapkar.vercel.app/sitemap.xml
