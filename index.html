@@ -2158,13 +2158,18 @@
             });
         }
     });
+
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
         if (!e.matches) {
             showMessages('Switch to Dark Mode for better experience');
             showMessages('To change theme, scroll and look at bottom-right corner');
+
         }
     });
 </script>
 <!--______________________ end of messages for small screens and dark mode ______________________ -->
+
+
+
 </html>
 <!-- -------------end of html----------- -->
