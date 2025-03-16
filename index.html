@@ -3,6 +3,7 @@
 <!--Updated History-->
 <!-- 6 FEB 2025 -->
 <!-- 16 MAR 2025 -->
+<!-- membors in team= 1: Rutuj Dhodapkar -->
 <!-- © 2024 Rutuj Dhodapkar. All rights reserved. -->
 <!-- © 2025 Rutuj Dhodapkar. All rights reserved. -->
 
@@ -1081,11 +1082,12 @@
         </div>
         <div style="height: 20px;"></div> <!--  add space -->
        
-        <p>Tech enthusiast? Nah, I’m a <span class="highlight">tech architect</span>—designing the future, one algorithm at a time. I live and breathe <span class="highlight">AI, ML, Deep Learning, Cloud Computing</span>, and <span class="highlight">Web Dev</span>. Whether I’m building <span class="highlight">real-time object detection models</span>, optimizing <span class="highlight">cloud infrastructures</span> for peak efficiency, or crafting sleek, high-performance web applications, my goal is simple: **turn complex ideas into game-changing solutions.** 💡🚀</p>
+        <p>Tech enthusiast? Nah, I’m a <span class="highlight">tech architect</span>—designing the future, one algorithm at a time. I live and breathe <span class="highlight">AI, ML, Deep Learning, Cloud Computing</span>, and <span class="highlight">Web Dev</span>. Whether I’m building <span class="highlight">real-time object detection models</span>, optimizing <span class="highlight">cloud infrastructures</span> for peak efficiency, or crafting sleek, high-performance web applications, my goal is simple: <span style="font-weight: bold; text-decoration: underline; text-decoration-color: gray;">turn complex ideas into game-changing solutions.</span> </p>
+        <br>
 
-        <p>For me, tech isn’t just about writing code—it’s an <span class="highlight">art form</span>, a way to <span class="highlight">solve real-world problems</span> with creativity and innovation. I’m obsessed with pushing the limits of what’s possible, experimenting with the latest tools, and staying ahead of the curve. When I’m not knee-deep in projects, you’ll find me geeking out over emerging tech trends or sharing my journey with the world. 🔥</p>
-    
-        <p>Let’s connect, innovate, and build something legendary. Ready to change the game? 🚀 <a href="mailto:rutujdhodapkar@gmail.com" target="_blank" rel="noopener" style="color: rgb(255, 0, 0); text-decoration: underline; text-decoration-color: rgb(255, 0, 0);">Check it out</a>.</p>
+        <p>For me, tech isn’t just about writing code—it’s an <span class="highlight">art form</span>, a way to <span class="highlight">solve real-world problems</span> with creativity and innovation. I’m obsessed with pushing the limits of what’s possible, experimenting with the latest tools, and staying ahead of the curve. When I’m not knee-deep in projects, you’ll find me geeking out over emerging tech trends or sharing my journey with the world. </p>
+    <br>
+        <p>Let’s connect, innovate, and build something legendary. Ready to change the game?  <a href="mailto:rutujdhodapkar@gmail.com" target="_blank" rel="noopener" style="color: rgb(255, 0, 0); text-decoration: underline; text-decoration-color: rgb(255, 0, 0);">Check it out</a>.</p>
     </section>
    
     <!-- Skills Section -->
@@ -1288,6 +1290,7 @@
     <section id="contact" class="contact">
         <h3>Contact Me</h3>
         <p>Let's get in touch through the following platforms:</p>
+        <br>
         <div class="contact-buttons">
 
             <a href="https://www.instagram.com/rutujdhodapkar/" class="instagram" style="display: flex; align-items: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 0 35px rgba(0, 123, 255, 0.7)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
@@ -1499,31 +1502,31 @@
     }
 
     ::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.3); /* Increased opacity for better visibility */
         -webkit-backdrop-filter: blur(5px); /* Safari support */
         backdrop-filter: blur(5px);
         border-radius: 35px; /* More curved edges */
     }
 
     ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #81b1c300, #0195d500); /* Professional gray gradient */
+        background: linear-gradient(135deg, #81b1c3, #0195d5); /* Removed transparency for visible colors */
         border-radius: 35px; /* More curved edges */
         transition: background 0.3s ease, border-radius 0.3s ease;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #81b1c300, #0195d500); /* Slightly darker gray shades on hover */
+        background: linear-gradient(135deg, #6a9bb3, #017bb5); /* More visible colors on hover */
         border-radius: 35px; /* More curved edges on hover */
     }
 
     ::-webkit-scrollbar-thumb:active {
-        background: linear-gradient(135deg, #81b1c300, #0195d500); /* Even darker gray shades when active */
+        background: linear-gradient(135deg, #517a93, #015a85); /* More visible colors when active */
         border-radius: 35px; /* Pronounced curve when active */
     }
 
     body {
         scrollbar-width: thin;
-        scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
+        scrollbar-color: rgba(0, 0, 0, 0.6) transparent; /* Increased opacity for better visibility */
     }
 
     body::-webkit-scrollbar {
@@ -1768,110 +1771,6 @@
 
 <!-- ______________________end of loading bar_____________________ -->
  
-
-
-<!--______________________ start of messages for small screens and dark mode ______________________ -->
-<script>
-    function showMessages(...messages) {
-        const messageContainerId = 'messageContainer';
-        let messageContainer = document.getElementById(messageContainerId);
-
-        // Create container if it doesn't exist
-        if (!messageContainer) {
-            messageContainer = document.createElement('div');
-            messageContainer.id = messageContainerId;
-            messageContainer.style.position = 'fixed';
-            messageContainer.style.top = '10px';
-            messageContainer.style.right = '10px';
-            messageContainer.style.zIndex = '10000';
-            messageContainer.style.display = 'flex';
-            messageContainer.style.flexDirection = 'column';
-            messageContainer.style.gap = '10px'; // Adds spacing between messages
-            document.body.appendChild(messageContainer);
-        }
-
-        messages.forEach((messageText) => {
-            const message = document.createElement('div');
-            message.className = 'screenSizeMessage';
-            message.textContent = messageText;
-            message.style.position = 'relative';
-            message.style.padding = '10px 20px';
-            message.style.borderRadius = '35px';
-            message.style.backdropFilter = 'blur(5px)';
-            message.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-            message.style.color = 'white';
-            message.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
-            message.style.opacity = '1';
-            message.style.transition = 'opacity 0.5s ease-in-out';
-
-            messageContainer.appendChild(message);
-
-            // Fade-out and remove message after 5 seconds
-            setTimeout(() => {
-                message.style.opacity = '0';
-                setTimeout(() => {
-                    if (message.parentElement) {
-                        messageContainer.removeChild(message);
-                        // Remove container if empty
-                        if (messageContainer.childElementCount === 0) {
-                            document.body.removeChild(messageContainer);
-                        }
-                    }
-                }, 500);
-            }, 5000); // message appearing timing
-        });
-    }
-
-    function checkScreenSize() {
-        const isSmallScreen = window.matchMedia('(max-width: 600px)').matches;
-        if (isSmallScreen) {
-            showMessages('Switch to Larger Screen Size for better experience');
-        }
-    }
-
-    function checkDarkMode() {
-        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (!isDarkMode) {
-            showMessages('Switch to Dark Mode for better experience');
-            showMessages('To change theme, scroll and look at bottom-right corner');
-        }
-    }
-
-    window.addEventListener('load', () => {
-        checkScreenSize();
-        checkDarkMode();
-    });
-
-    window.matchMedia('(max-width: 600px)').addEventListener('change', (e) => {
-        if (e.matches) {
-            showMessages('Switch to Larger Screen Size for better experience');
-        }
-    });
-
-    window.matchMedia('(min-width: 601px)').addEventListener('change', (e) => {
-        if (e.matches) {
-            const messages = document.querySelectorAll('.screenSizeMessage');
-            messages.forEach(message => {
-                message.style.transition = 'opacity 0.5s ease-in-out';
-                message.style.opacity = '0';
-                setTimeout(() => {
-                    if (message.parentElement) {
-                        message.parentElement.removeChild(message);
-                    }
-                }, 500);
-            });
-        }
-    });
-
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!e.matches) {
-            showMessages('Switch to Dark Mode for better experience');
-            showMessages('To change theme, scroll and look at bottom-right corner');
-
-        }
-    });
-</script>
-<!--______________________ end of messages for small screens and dark mode ______________________ -->
 
 </html>
 <!-- -------------end of html----------- -->
