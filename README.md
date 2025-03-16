@@ -9,7 +9,7 @@ I am Rutuj Dhodapkar, a passionate AI developer with a deep understanding of des
 ## Portfolio Features
 
 - **Projects**: Explore a variety of projects demonstrating my expertise in handling data storage, optimizing system performance, Developing AI/ DL large Systems.
-- **Tech Stack**: Check out the technologies I work with, including:
+- **Tech Stack**: Check out the technologies I work with.
 - Languages:  Python, Java, R, Javascript
 
 ## How to View My Portfolio
@@ -21,7 +21,7 @@ You can check out my portfolio live at:
 
 Feel free to get in touch with me through the following platforms:
 
-- LinkedIn: [Rutuj Dhodapkar](https://www.linkedin.com/in/rutuj-dhodapkar-80bb5424a/)
+- LinkedIn: [Rutuj Dhodapkar](https://www.linkedin.com/in/rutuj-dhodapkar/)
 - Email: [rutujdhodapkar@gmail.com](mailto:rutujdhodapkar@gmail.com)
 
 ## License
