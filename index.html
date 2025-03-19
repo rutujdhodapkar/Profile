@@ -1527,45 +1527,44 @@
 
 <!-- ______________________start of Professional Custom Multicolor Scrollbar_____________________ -->
 <style>
-    /* Width of the scrollbar */
     ::-webkit-scrollbar {
-        width: 8px;
-        margin-right: 4px; /* Floating effect with space from the side */
+        width: 6px;
+        margin-right: 2px; /* Floating effect with space from the side */
     }
 
-    /* Track (Background) */
     ::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.15); /* Slightly more visible */
-        -webkit-backdrop-filter: blur(8px); /* Stronger blur */
-        backdrop-filter: blur(8px);
-        border-radius: 35px; 
+        background: rgba(0, 0, 255, 0.1); /* Subtle blue track */
+        -webkit-backdrop-filter: blur(5px); /* Safari support */
+        backdrop-filter: blur(5px);
+        border-radius: 35px; /* More curved edges */
     }
 
-    /* Scrollbar handle */
     ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #ff6b6b, #ffa502, #2ed573); /* 🔥 Multicolor gradient */
-        border-radius: 35px;
-        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #009dff, #0066ff); /* Visible Blue Gradient */
+        border-radius: 35px; /* More curved edges */
+        transition: background 0.3s ease, border-radius 0.3s ease;
     }
 
-    /* On hover */
     ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #ff4757, #ff7f50, #1e90ff); /* Brighter gradient */
-        border-radius: 25px;
+        background: linear-gradient(135deg, #007bff, #004cff); /* Darker Blue on Hover */
+        border-radius: 35px; /* More curved edges on hover */
     }
 
-    /* When active */
     ::-webkit-scrollbar-thumb:active {
-        background: linear-gradient(135deg, #ff3838, #ff9f1a, #3742fa); /* Even deeper contrast */
-        border-radius: 20px;
+        background: linear-gradient(135deg, #005eff, #002aff); /* Even Darker Blue when Active */
+        border-radius: 35px; /* Pronounced curve when active */
     }
 
-    /* Firefox scrollbar */
     body {
         scrollbar-width: thin;
-        scrollbar-color: #ff6b6b #2ed573; /* Visible colors */
+        scrollbar-color: #0066ff transparent; /* Blue Scrollbar */
+    }
+
+    body::-webkit-scrollbar {
+        opacity: 1;
     }
 </style>
+
 
 <!-- ______________end of Professional Custom Multicolor Scrollbar________ -->
 
