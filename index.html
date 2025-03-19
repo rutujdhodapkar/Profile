@@ -2,8 +2,7 @@
 <!--Created on 2024-->
 <!--Updated History-->
 <!-- 6 FEB 2025 -->
-<!-- 16 MAR 2025 -->
-<!-- membors in team= 1: Rutuj Dhodapkar -->
+<!-- 19 MARCH 2025 -->
 <!-- © 2024 Rutuj Dhodapkar. All rights reserved. -->
 <!-- © 2025 Rutuj Dhodapkar. All rights reserved. -->
 
@@ -50,10 +49,6 @@
     <script src="scripts.js" defer></script>
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-
-
-
-    
     <style>
         /* Minimize render-blocking CSS */
         body {
@@ -350,7 +345,7 @@
         flex-direction: column; /* Arrange items vertically */
         align-items: center;
         justify-content: center;
-        background-color: transparent; /* Made background transparent for 1st page */
+        background-color: #ffffff;
         padding: 60px 20px;
         min-height: 100vh;
         text-align: center; /* Center align text */
@@ -358,7 +353,7 @@
     }
 
     body.dark-mode .hero {
-        background-color: transparent; /* Transparent background in dark mode as well */
+        background-color: #121212; /* Dark background color for page 1 hero section */
     }
 
     .hero h2 {
@@ -373,6 +368,7 @@
     body.dark-mode .hero h2 {
         color: white; /* Light text color for page 1 text heading */
     }
+
 
     /* ____________________________start of Rutuj Dhodapkar home screen text ____________________________ */
     /* large screen */
@@ -504,11 +500,37 @@
     body.dark-mode .about {
         background-color: #222222; /* Dark background color for about section */
     }
-    
-    /* Added new rule: make Contact page background black with white text */
-    .contact {
-        background-color: black;
-        color: white;
+
+    .about h3, .skills h3, .projects h3, .contact h3, .certificates h3 {
+        font-size: 1.75rem; /* Adjusted font size for better scaling */
+        margin-bottom: 20px;
+        color: rgb(66, 66, 66); /* Changed section headings color to black */
+        font-family: 'Roboto', sans-serif;
+    }
+
+    body.dark-mode .about h3, 
+    body.dark-mode .skills h3, 
+    body.dark-mode .projects h3, 
+    body.dark-mode .contact h3, 
+    body.dark-mode .certificates h3 {
+        color: white; /* Light text color for section headings */
+    }
+
+    .about p, .skills p, .projects p, .contact p, .certificates p {
+        font-size: 1rem; /* Adjusted font size for better scaling */
+        max-width: 800px;
+        margin: 0 auto 20px;
+        line-height: 1.8;
+        color: rgb(0, 0, 0); /* Changed content color to black */
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    body.dark-mode .about p, 
+    body.dark-mode .skills p, 
+    body.dark-mode .projects p, 
+    body.dark-mode .contact p, 
+    body.dark-mode .certificates p {
+        color: white; /* Light text color for content */
     }
 
     /* Skills Section */
@@ -975,7 +997,7 @@
         }
 
 
-        // ____________________________start of "change select element color"______________________________________
+        // ____________________________start of change select element color______________________________________
         function updateSelectionColor() {
             const style = document.createElement('style');
             style.innerHTML = `
@@ -986,7 +1008,7 @@
             `;
             document.head.appendChild(style);
         }
-        // ____________________________end of "change select element color"______________________________________
+        // ____________________________end of change select element color______________________________________
     
     </script>
 
@@ -1006,31 +1028,12 @@
 
     <!-- Hero Section -->
     <section class="hero" id="top">
-        <!-- Added home screen video -->
-        <style>
-            @media screen and (max-width: 770px) {
-                .hero-video.large-screen { display: none; }
-                .hero-video.small-screen { display: block; }
-            }
-            @media screen and (min-width: 771px) {
-                .hero-video.small-screen { display: none; }
-                .hero-video.large-screen { display: block; }
-            }
-        </style>
-        <video autoplay muted loop playsinline id="homeScreenVideo" class="hero-video large-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -1;">
-            <source src="static\ezgif-58cba7ab5d6117 (1).mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <video autoplay muted loop playsinline id="homeScreenVideoSmall" class="hero-video small-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -1;">
-            <source src="static/ezgif-42a3f603e6c542.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
         <div class="hero-text">
-            <h2 style="z-index: 100235; color: black; background-color: #ffffff99;">Hello There!<br>I'm<span id="name"></span></h2>
+            <h2 style="z-index: 100235;">Hello There!<br>I'm <span id="name"></span></h2>
 
             
-            <div style="background-color: rgba(255, 69, 1, 0.77); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px; display: none;" id="helloDiv" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">
-                <p style="margin: 0; color: rgb(255, 237, 232); font-weight: bold; padding-left: 5px; padding-right: 5px;">
+            <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px; display: none;" id="helloDiv" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">
+                <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;">
                     <span style="text-decoration: underline; cursor: pointer;">Say hello</span> or keep scrolling
                 </p>
             </div>
@@ -1048,7 +1051,7 @@
             </script>
 
 
-            <p class="learning-text" style="background-color: white; color: black; padding: 0 10px;"> Learning Artificial Intelligence and Machine Learning </p>
+            <p class="learning-text">Learning Artificial Intelligence and Machine Learning</p>
             <style>
                 .learning-text {
                     font-size: 1.7em;
@@ -1060,7 +1063,7 @@
                 }
 
                 body.dark-theme .learning-text {
-                    color: rgb(255, 255, 255); /* White color for dark theme */
+                    color: rgb(230, 230, 230); /* White color for dark theme */
                 }
             </style>
 
@@ -1069,11 +1072,11 @@
             <div style="height: 10px;"></div>     
             <div style="height: 10px;"></div>
 
-            <!-- <a href="#contact" class="cta-button" style="background-color: white; color: black;">Get in Touch</a> -->
+            <a href="#contact" class="cta-button">Get in Touch</a>
         </div>
     </section>
 
-    <!-- About Section -->
+   <!-- About Section -->
     <section id="about" class="about">
         <h3>Bio</h3>
         <br>
@@ -1082,16 +1085,16 @@
             <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;"><span class="highlight">$:/whoami</span></p>
         </div>
         <div style="height: 20px;"></div> <!--  add space -->
-                <br>
+               <br>
         <br>
-       
         <p>Tech enthusiast? Nah, I’m a <span class="highlight">tech architect</span>—designing the future, one algorithm at a time. I live and breathe <span class="highlight">AI, ML, Deep Learning, Cloud Computing</span>, and <span class="highlight">Web Dev</span>. Whether I’m building <span class="highlight">real-time object detection models</span>, optimizing <span class="highlight">cloud infrastructures</span> for peak efficiency, or crafting sleek, high-performance web applications, my goal is simple: <span style="font-weight: bold; text-decoration: underline; text-decoration-color: gray;">turn complex ideas into game-changing solutions.</span> </p>
         <br>
 
         <p>For me, tech isn’t just about writing code—it’s an <span class="highlight">art form</span>, a way to <span class="highlight">solve real-world problems</span> with creativity and innovation. I’m obsessed with pushing the limits of what’s possible, experimenting with the latest tools, and staying ahead of the curve. When I’m not knee-deep in projects, you’ll find me geeking out over emerging tech trends or sharing my journey with the world. </p>
     <br>
         <p>Let’s connect, innovate, and build something legendary. Ready to change the game?  <a href="mailto:rutujdhodapkar@gmail.com" target="_blank" rel="noopener" style="color: rgb(255, 0, 0); text-decoration: underline; text-decoration-color: rgb(255, 0, 0);">Check it out</a>.</p>
-      <br>
+    
+       <br>
     <br>
     <br>
     <br>
@@ -1110,7 +1113,7 @@
             <div class="skill-item"><a href="https://www.google.com/search?q=Cloud+Computing" target="_blank" rel="noopener" class="skill-link">Cloud Computing</a></div>
         </div>
 <br><br>
-<hr style="border: none; height: 1.1px; background: #ff0000;">
+<hr style="border: none; height: 1.1px; background: #848484;">
 <br>
 <div class="Programming-language-list">
             <p style="font-size: 1.5em; font-weight: bold;">Programming Languages which I use mostly</p>
@@ -1298,7 +1301,6 @@
     <section id="contact" class="contact">
         <h3>Contact Me</h3>
         <p>Let's get in touch through the following platforms:</p>
-        <br>
         <div class="contact-buttons">
 
             <a href="https://www.instagram.com/rutujdhodapkar/" class="instagram" style="display: flex; align-items: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 0 35px rgba(0, 123, 255, 0.7)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
@@ -1316,17 +1318,15 @@
             <a href="mailto:rutujdhodapkar@gmail.com" class="email" style="display: flex; align-items: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 0 35px rgba(0, 123, 255, 0.7)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                 <img src="static/mail.png" alt="Email Logo" style="width: 20px; height: 20px; margin-right: 5px;">Email</a>
         </div>
-        <div class="contact-signature" style="display: flex; align-items: center; justify-content: center; margin-top: 20px;">
-            <img src="static/451c327bbe05656f879fee8b8cac7a62.svg" alt="Made with passion and Bugs" style="width: 70px; height: 70px; margin-right: 5px; filter: drop-shadow(0 0 25px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 35px rgba(255, 0, 0, 0.6));">
-            <span style="font-size: 16px; background: linear-gradient(to right, #ff6600cb, #848484, #848484); -webkit-background-clip: text; color: transparent; z-index: 1; position: relative;">
-                Made with passion and Bugs
-            </span>
-        </div>
     </section>
 
-    <!-- <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
-
-     -->
+    <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
+        <img src="static/451c327bbe05656f879fee8b8cac7a62.svg" alt="Made with passion and Bugs" style="width: 70px; height: 70px; margin-right: 5px; filter: drop-shadow(0 0 25px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 35px rgba(255, 0, 0, 0.6));">
+        <span style="font-size: 16px; background: linear-gradient(to right, #ff6600cb, #848484, #848484); -webkit-background-clip: text; color: transparent; z-index: 1; position: relative;">
+            Made with passion and Bugs
+        </span>
+    </div>
+    
     <hr style="border: none; height: 1.1px; background: linear-gradient(to right, #ff0000,#ff003c, #ff00cc, #ee00ff, #6600ff, #004cff, #00eaff);">
     <!-- Footer Section -->
     <footer style="padding: 20px 0; font-size: 16px;">
@@ -1467,8 +1467,9 @@
     </script>
 </body>
 
-<!-- smooth, slippery scroll -->
+<!-- __________________start of smooth, slippery scroll___________ -->
 <style>
+    /* Smooth scrolling like butter on a hot pan */
     html {
         scroll-behavior: smooth;
     }
@@ -1477,70 +1478,95 @@
         overscroll-behavior: contain;
         scroll-snap-type: y mandatory;
         scroll-snap-stop: always;
+        transition: all 0.3s ease-out; /* Smooth transitions */
     }
 
     section {
         scroll-snap-align: start;
+        scroll-padding-top: 10px;
     }
 
+    /* Scrollbar settings */
     ::-webkit-scrollbar {
-        width: 8px;
+        width: 10px; /* Slightly thicker for a premium feel */
     }
 
     ::-webkit-scrollbar-track {
-        background: transparent;
+        background: rgba(255, 255, 255, 0.05); /* Ultra-soft background */
+        backdrop-filter: blur(5px); /* Subtle glassy effect */
+        border-radius: 50px; 
     }
 
+    /* The butter-stick scrollbar */
     ::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
+        background: linear-gradient(135deg, #ff9f43, #feca57, #ff6b6b); /* **Golden buttery gradient** */
+        border-radius: 50px; /* Ultra-rounded for a silky smooth look */
+        transition: background 0.3s ease, border-radius 0.3s ease;
     }
 
+    /* On hover - Richer butter vibes */
     ::-webkit-scrollbar-thumb:hover {
-        background: rgba(0, 0, 0, 0.3);
+        background: linear-gradient(135deg, #ff6b6b, #ff9f43, #1e90ff); /* Soft but noticeable */
+        border-radius: 30px;
+    }
+
+    /* When active - **ILLEGALLY SMOOTH** */
+    ::-webkit-scrollbar-thumb:active {
+        background: linear-gradient(135deg, #ff3838, #ff9f1a, #3742fa); /* Deepened, ultra-glide effect */
+        border-radius: 20px;
+    }
+
+    /* For Firefox */
+    body {
+        scrollbar-width: thin;
+        scrollbar-color: #feca57 #ff9f43;
     }
 </style>
+
 <!-- ______________________end of smooth, slippery scroll_____________________ -->
 
 <!-- ______________________start of Professional Custom Multicolor Scrollbar_____________________ -->
 <style>
+    /* Width of the scrollbar */
     ::-webkit-scrollbar {
-        width: 6px;
-        margin-right: 2px; /* Floating effect with space from the side */
+        width: 8px;
+        margin-right: 4px; /* Floating effect with space from the side */
     }
 
+    /* Track (Background) */
     ::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.3); /* Increased opacity for better visibility */
-        -webkit-backdrop-filter: blur(5px); /* Safari support */
-        backdrop-filter: blur(5px);
-        border-radius: 35px; /* More curved edges */
+        background: rgba(255, 255, 255, 0.15); /* Slightly more visible */
+        -webkit-backdrop-filter: blur(8px); /* Stronger blur */
+        backdrop-filter: blur(8px);
+        border-radius: 35px; 
     }
 
+    /* Scrollbar handle */
     ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #81b1c3, #0195d5); /* Removed transparency for visible colors */
-        border-radius: 35px; /* More curved edges */
-        transition: background 0.3s ease, border-radius 0.3s ease;
+        background: linear-gradient(135deg, #ff6b6b, #ffa502, #2ed573); /* 🔥 Multicolor gradient */
+        border-radius: 35px;
+        transition: all 0.3s ease;
     }
 
+    /* On hover */
     ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #6a9bb3, #017bb5); /* More visible colors on hover */
-        border-radius: 35px; /* More curved edges on hover */
+        background: linear-gradient(135deg, #ff4757, #ff7f50, #1e90ff); /* Brighter gradient */
+        border-radius: 25px;
     }
 
+    /* When active */
     ::-webkit-scrollbar-thumb:active {
-        background: linear-gradient(135deg, #517a93, #015a85); /* More visible colors when active */
-        border-radius: 35px; /* Pronounced curve when active */
+        background: linear-gradient(135deg, #ff3838, #ff9f1a, #3742fa); /* Even deeper contrast */
+        border-radius: 20px;
     }
 
+    /* Firefox scrollbar */
     body {
         scrollbar-width: thin;
-        scrollbar-color: rgba(0, 0, 0, 0.6) transparent; /* Increased opacity for better visibility */
-    }
-
-    body::-webkit-scrollbar {
-        opacity: 1;
+        scrollbar-color: #ff6b6b #2ed573; /* Visible colors */
     }
 </style>
+
 <!-- ______________end of Professional Custom Multicolor Scrollbar________ -->
 
 
@@ -1609,7 +1635,7 @@
         }
 
         .page-titles span:hover {
-            color: #ff0000a9; /* Change color on hover for better interaction feedback */
+            color: #004cff; /* Change color on hover for better interaction feedback */
         }
     }
 
@@ -1779,6 +1805,308 @@
 
 <!-- ______________________end of loading bar_____________________ -->
  
+<!--______________________ start of top glow ______________________ -->
+<!-- -----------------------glow 1---------------------------- -->
+<style>
+    /* Glow effect styles for glow 1 */
+    .glowEffect1 {
+        position: fixed;
+        top: -250px;
+        left: -300px; /* Adjusted for consistent x distance */
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(0, 0, 255, 0.7) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        z-index: 10;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect1 {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    function addGlowEffect1() {
+        const glowEffect1 = document.createElement('div');
+        glowEffect1.className = 'glowEffect1';
+        document.body.appendChild(glowEffect1);
+
+        window.addEventListener('scroll', () => {
+            glowEffect1.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect1();
+    });
+</script>
+
+<!-- -----------------------glow 2---------------------------- -->
+<style>
+    /* Glow effect styles for glow 2 */
+    .glowEffect2 {
+        position: fixed;
+        top: -250px; /* Adjusted for consistent y position */
+        right: -300px; /* Adjusted for consistent x distance */
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(0, 0, 205, 0.7) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        z-index: 10;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect2 {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    function addGlowEffect2() {
+        const glowEffect2 = document.createElement('div');
+        glowEffect2.className = 'glowEffect2';
+        document.body.appendChild(glowEffect2);
+
+        window.addEventListener('scroll', () => {
+            glowEffect2.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect2();
+    });
+</script>
+
+<!-- -----------------------glow 3---------------------------- -->
+<style>
+    /* Glow effect styles for glow 3 */
+    .glowEffect3 {
+        position: fixed;
+        top: -250px;
+        left: 0px; /* Adjusted for consistent x distance */
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(0, 191, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        z-index: 10;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect3 {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    function addGlowEffect3() {
+        const glowEffect3 = document.createElement('div');
+        glowEffect3.className = 'glowEffect3';
+        document.body.appendChild(glowEffect3);
+
+        window.addEventListener('scroll', () => {
+            glowEffect3.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect3();
+    });
+</script>
+
+<!-- -----------------------glow 4---------------------------- -->
+<style>
+    /* Glow effect styles for glow 4 */
+    .glowEffect4 {
+        position: fixed;
+        top: -250px;
+        right: 0px; /* Adjusted for consistent x distance */
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(30, 144, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        z-index: 10;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect4 {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    function addGlowEffect4() {
+        const glowEffect4 = document.createElement('div');
+        glowEffect4.className = 'glowEffect4';
+        document.body.appendChild(glowEffect4);
+
+        window.addEventListener('scroll', () => {
+            glowEffect4.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect4();
+    });
+</script>
+
+<!-- -----------------------glow 5---------------------------- -->
+<style>
+    /* Glow effect styles for glow 5 */
+    .glowEffect5 {
+        position: fixed;
+        top: -250px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(0, 140, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        z-index: 10;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect5 {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    function addGlowEffect5() {
+        const glowEffect5 = document.createElement('div');
+        glowEffect5.className = 'glowEffect5';
+        document.body.appendChild(glowEffect5);
+
+        window.addEventListener('scroll', () => {
+            glowEffect5.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect5();
+    });
+</script>
+<!-- -----------------------glow 6---------------------------- -->
+<style>
+    /* Glow effect styles for glow 6 */
+    .glowEffect6 {
+        position: fixed;
+        bottom: -250px;
+        left: -250px;
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(255, 0, 225, 0.214) 0%, rgba(0, 0, 0, 0) 70%);
+        z-index: 10;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect6 {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    function addGlowEffect6() {
+        const glowEffect6 = document.createElement('div');
+        glowEffect6.className = 'glowEffect6';
+        document.body.appendChild(glowEffect6);
+
+        window.addEventListener('scroll', () => {
+            glowEffect6.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect6();
+    });
+</script>
+
+<!-- -----------------------glow 7---------------------------- -->
+<style>
+    /* Glow effect styles for glow 7 */
+    .glowEffect7 {
+        position: fixed;
+        bottom: -250px;
+        right: -250px; /* Changed to right side */
+        width: 700px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(0, 157, 255, 0.214) 0%, rgba(0, 0, 0, 0) 70%); /* Changed color to green */
+        z-index: 10;
+        pointer-events: none;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .glowEffect7 {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    function addGlowEffect7() {
+        const glowEffect7 = document.createElement('div');
+        glowEffect7.className = 'glowEffect7';
+        document.body.appendChild(glowEffect7);
+
+        window.addEventListener('scroll', () => {
+            glowEffect7.style.opacity = window.scrollY === 0 ? '1' : '0';
+        });
+    }
+
+    window.addEventListener('load', () => {
+        addGlowEffect7();
+    });
+</script>
+
+<script>
+    function showRandomGlows() {
+        const glows = ['glowEffect1', 'glowEffect2', 'glowEffect3', 'glowEffect4', 'glowEffect5', 'glowEffect6', 'glowEffect7'];
+        const selectedGlows = glows.sort(() => 0.5 - Math.random()).slice(0, 3);
+
+        selectedGlows.forEach(glow => {
+            const glowElement = document.querySelector(`.${glow}`);
+            if (glowElement) {
+                glowElement.style.display = 'block';
+            }
+        });
+    }
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth <= 768) {
+            showRandomGlows();
+        }
+    });
+
+    window.addEventListener('load', () => {
+        if (window.innerWidth <= 768) {
+            showRandomGlows();
+        }
+    });
+</script>
+<!-- ______________________end of glows_____________________ -->
+
+
 
 </html>
 <!-- -------------end of html----------- -->
