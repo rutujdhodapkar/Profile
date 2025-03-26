@@ -247,97 +247,7 @@
         justify-content: center;
     }
 
-    /* Header 2 section */
-    header.header-2 {
-        background-color: rgba(255, 255, 255, 0.123);
-        padding: 5px 20px; /* Decreased padding for top and bottom */
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.1); /* Added shadow on top and bottom */
-        position: fixed;
-        top: 7.5%;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 2147483647; /* Maximum z-index value to ensure it's on top of any element */
-        display: flex; /* Always show header 2 */
-        flex-direction: row; /* Arrange items horizontally */
-        justify-content: center;
-        align-items: center;
-        width: auto; /* Adjust width to fit content */
-        max-width: 1200px;
-        margin: 0 auto;
-        border-radius: 45px;
-        backdrop-filter: blur(10px); /* Added blur effect */
-        -webkit-backdrop-filter: blur(10px); /* Added blur effect for Safari */
-        transition: padding 0.3s ease, max-height 0.5s ease; /* Added transition for padding and max-height */
-        overflow: visible; /* Ensure content doesn't overflow */
-        max-height: 60px; /* Initial max-height */
-    }
-
-    body.dark-mode header.header-2 {
-        background-color: rgba(125, 125, 125, 0.29); /* Dark background color for header */
-    }
-
-    .header-2 .nav ul {
-        display: flex;
-        list-style: none;
-        flex-direction: row; /* Arrange items horizontally */
-    }
-
-    .header-2 .nav ul li {
-        margin: 10px 0; /* Adjusted margin for better spacing */
-    }
-
-    .header-2 .nav ul li a {
-        text-decoration: none;
-        color: rgba(0, 0, 0, 0.9);
-        font-weight: bold;
-        font-size: 1rem; /* Adjusted font size for better scaling */
-        padding: 10px 15px;
-        border-radius: 20px;
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    body.dark-mode .header-2 .nav ul li a {
-        color: rgba(255, 255, 255, 0.9); /* Light text color for nav links */
-    }
-
-    .header-2 .nav ul li a.active {
-        background: linear-gradient(90deg, #00c6ff, #0072ff);
-        color: white;
-        box-shadow: 0 0 10px rgba(0, 51, 255, 0.7);
-    }
-
-    .header-2 .nav ul li a:hover {
-        background: rgba(0, 123, 255, 0.1);
-        box-shadow: 0 0 20px rgba(0, 123, 255, 1);
-    }
-
-    .header-2 .nav ul li:first-child {
-        display: block; /* Initially show only the first item */
-    }
-
-    .header-2 .nav ul li:not(:first-child) {
-        display: block; /* Show all items */
-    }
-
-    .header-2.expanded {
-        padding: 20px 20px; /* Increased padding for top and bottom when expanded */
-        max-height: 500px; /* Adjust as needed */
-    }
-
-    @keyframes expand {
-        from {
-            max-height: 60px;
-        }
-        to {
-            max-height: 500px; /* Adjust as needed */
-        }
-    }
-
-    @media (max-width: 768px) {
-        header.header-2 {
-            display: none; /* Hide header on small screens */
-        }
-    }
+    /* Removed larger screen header styles as per instructions */
 
     /* Hero section */
     .hero {
@@ -1011,20 +921,8 @@
         // ____________________________end of change select element color______________________________________
     
     </script>
-
-    <!-- Navigation -->
-    <header class="header-2">
-        <nav class="nav">
-            <ul>
-                <li><a href="#top" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#certificates" class="nav-link">Certificates</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+    
+    <!-- Note: The larger screen header (header.header-2) and its related scripts have been removed as per instructions. -->
 
     <!-- Hero Section -->
     <section class="hero" id="top">
@@ -1032,10 +930,11 @@
             <h2 style="z-index: 100235;">Hello There!<br>I'm <span id="name"></span></h2>
 
             
-            <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px; display: none;" id="helloDiv" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">
-                <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;">
-                    <span style="text-decoration: underline; cursor: pointer;">Say hello</span> or keep scrolling
+            <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 15px; border: 2px solid rgba(255, 69, 0, 0.5); display: inline-flex; align-items: center; justify-content: center; height: 25px; display: none;" id="helloDiv" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">
+                <p style="margin: 0; color: #ff4500; font-weight: bold; padding-left: 5px; padding-right: 5px;">
+                    <span class="highlight" style="text-decoration: underline; cursor: pointer;">Say hello</span> or keep scrolling
                 </p>
+            </div>
             </div>
             <script>
                 function checkScreenSize() {
@@ -1078,15 +977,15 @@
 
    <!-- About Section -->
     <section id="about" class="about">
-        <h3>Bio</h3>
         <br>
-
-        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px;">
-            <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;"><span class="highlight">$:/whoami</span></p>
+        <br>
+        <h3>Who am i</h3>
+        
+        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 15px; border: 2px solid rgba(255, 69, 0, 0.5); display: inline-flex; align-items: center; justify-content: center; height: 25px;">
+            <p style="margin: 0; color: #ff4500; font-weight: bold; padding-left: 5px; padding-right: 5px;"><span class="highlight">$:/whoami</span></p>
         </div>
         <div style="height: 20px;"></div> <!--  add space -->
                <br>
-        <br>
         <p>Tech enthusiast? Nah, I’m a <span class="highlight">tech architect</span>—designing the future, one algorithm at a time. I live and breathe <span class="highlight">AI, ML, Deep Learning, Cloud Computing</span>, and <span class="highlight">Web Dev</span>. Whether I’m building <span class="highlight">real-time object detection models</span>, optimizing <span class="highlight">cloud infrastructures</span> for peak efficiency, or crafting sleek, high-performance web applications, my goal is simple: <span style="font-weight: bold; text-decoration: underline; text-decoration-color: gray;">turn complex ideas into game-changing solutions.</span> </p>
         <br>
 
@@ -1113,7 +1012,7 @@
             <div class="skill-item"><a href="https://www.google.com/search?q=Cloud+Computing" target="_blank" rel="noopener" class="skill-link">Cloud Computing</a></div>
         </div>
 <br><br>
-<hr style="border: none; height: 1.1px; background: #848484;">
+<hr style="border: none; height: 1.1px; background: #848484; width: 75%; margin: 0 auto;">
 <br>
 <div class="Programming-language-list">
             <p style="font-size: 1.5em; font-weight: bold;">Programming Languages which I use mostly</p>
@@ -1183,7 +1082,7 @@
     <section id="projects" class="projects">
         <h3>Projects</h3>
 
-        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; height: 25px; display: none;" class="responsive-message">
+        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 15px; display: inline-flex; align-items: center; justify-content: center; height: 25px; display: none; border: 2px solid rgba(255, 69, 0, 0.5);" class="responsive-message">
             <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;">
                 <span style="cursor: pointer;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">1. Get Idea; 2. Launch; 3. ???; 4. Profit.</span>
             </p>
@@ -1342,19 +1241,13 @@
         </div>
     </footer>
 
-    <!-- sliding rutuj dhodapkar button from about page -->
+    <!-- Sliding Rutuj Dhodapkar Button & General Utilities -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const projectsSection = document.querySelector('.projects');
-            const header2 = document.querySelector('.header-2');
-            const currentPageTitle = document.getElementById('currentPageTitle');
-
             // Typing animation for name
             const nameElement = document.getElementById('name');
             const text = "Rutuj Dhodapkar";
             let i = 0;
-
             function typeWriter() {
                 if (i < text.length) {
                     nameElement.innerHTML += text.charAt(i);
@@ -1362,7 +1255,6 @@
                     setTimeout(typeWriter, 150); // Speed of typing
                 }
             }
-
             typeWriter();
 
             // Add click event to open Google search
@@ -1382,75 +1274,6 @@
                         top: offset,
                         behavior: 'smooth'
                     });
-                });
-            });
-
-            // Highlight active link on scroll
-            window.addEventListener('scroll', () => {
-                let scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
-                navLinks.forEach(link => {
-                    let section = document.querySelector(link.getAttribute('href'));
-                    let sectionHeight = section.offsetHeight;
-                    let sectionTop = section.offsetTop;
-                    let sectionBottom = sectionTop + sectionHeight;
-                    let viewportHeight = window.innerHeight;
-
-                    if ((sectionTop <= scrollPos + viewportHeight * 0.5) && (sectionBottom >= scrollPos + viewportHeight * 0.5)) {
-                        navLinks.forEach(nav => nav.classList.remove('active'));
-                        link.classList.add('active');
-                        currentPageTitle.textContent = link.textContent; // Update current page title
-                    }
-                });
-
-                // Collapse header if expanded
-                if (header2.classList.contains('expanded')) {
-                    header2.classList.remove('expanded');
-                }
-            });
-
-            // Expand header 2 on click
-            header2.addEventListener('click', (e) => {
-                if (!header2.contains(e.target.closest('.nav-link'))) {
-                    header2.classList.toggle('expanded');
-                }
-            });
-
-            // Collapse header if user clicks anywhere outside the header
-            document.addEventListener('click', (e) => {
-                if (!header2.contains(e.target) && header2.classList.contains('expanded')) {
-                    header2.classList.remove('expanded');
-                }
-            });
-
-            // Function to update active link and apply glow effect
-            function updateActiveLink() {
-                let scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
-                navLinks.forEach(link => {
-                    let section = document.querySelector(link.getAttribute('href'));
-                    let sectionHeight = section.offsetHeight;
-                    let sectionTop = section.offsetTop;
-                    let sectionBottom = sectionTop + sectionHeight;
-                    let viewportHeight = window.innerHeight;
-
-                    if ((sectionTop <= scrollPos + viewportHeight * 0.5) && (sectionBottom >= scrollPos + viewportHeight * 0.5)) {
-                        navLinks.forEach(nav => nav.classList.remove('active'));
-                        link.classList.add('active');
-                        link.style.boxShadow = '0 0 35px rgba(0, 123, 255, 1)'; // Apply darker glow effect and spread up to 35
-                    } else {
-                        link.style.boxShadow = 'none'; // Remove glow effect on header
-                    }
-                });
-            }
-            // Initial call to set the active link on page load
-            updateActiveLink();
-
-            // Update active link on scroll
-            window.addEventListener('scroll', updateActiveLink);
-
-            // Fix for onmouse event error
-            document.querySelectorAll('*').forEach(element => {
-                element.addEventListener('mouseover', function(event) {
-                    event.stopPropagation();
                 });
             });
         });
@@ -1767,7 +1590,7 @@
         left: 0;
         width: 100%; /* Fixed size of the bar element */
         height: 4px;
-        background: linear-gradient(90deg, #00000000, #1d7291, #00b3ff); /* Improved multi-color gradient with better transparency */
+        background: linear-gradient(90deg, #004e72, #008fc3, #00bfff); /* Improved multi-color gradient with better transparency */
         z-index: 10000;
         transform: scaleX(0);
         transform-origin: left;
@@ -1814,7 +1637,7 @@
         left: -300px; /* Adjusted for consistent x distance */
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(0, 0, 255, 0.7) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        background: radial-gradient(circle, #0000ffb3 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
         z-index: 10;
         pointer-events: none;
         filter: blur(20px);
@@ -1892,7 +1715,7 @@
         left: 0px; /* Adjusted for consistent x distance */
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(0, 191, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        background: radial-gradient(circle, rgba(0, 191, 255, 0.638) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
         z-index: 10;
         pointer-events: none;
         filter: blur(20px);
@@ -2107,5 +1930,216 @@
 
 
 
+
+
+<!-- ______________________start of large screen header_____________________ -->
+<style>
+  /* Navigation Container with smooth transition, shown only on larger screens */
+  #rectiangleNavbar {
+    position: absolute; /* Start absolute, then switch to fixed */
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    padding: 10px 20px;
+    background: rgba(181, 181, 181, 0.093);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 200px;
+    z-index: 9999; /* Increased z-index */
+  }
+
+  /* Hide navigation on small screens */
+  @media only screen and (max-width: 768px) {
+    #rectiangleNavbar {
+      display: none;
+    }
+  }
+
+  /* Navigation list */
+  #rectiangleNavbar .page-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+  }
+
+  #rectiangleNavbar .page-nav li {
+    cursor: pointer;
+    padding: 8px 15px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 50px;
+  }
+
+  /* Light theme text color */
+  body:not(.dark-mode) #rectiangleNavbar .page-nav li {
+    color: black;
+  }
+
+  /* Dark theme text color */
+  body.dark-mode #rectiangleNavbar .page-nav li {
+    color: white;
+  }
+
+  #rectiangleNavbar .page-nav li:hover {
+    background-color: #5b5b5b69;
+    color: white;
+  }
+
+  #rectiangleNavbar .page-nav li.active {
+    background: linear-gradient(45deg, #006affd4, #0084ffd4);
+    color: white;
+    border-radius: 50px;
+    box-shadow: 0 0 25px 10px rgba(0, 60, 255, 0.5);
+  }
+  
+  /* Remove underlines from navigation links and ensure text color is inherited */
+  #rectiangleNavbar a {
+    text-decoration: none;
+    color: inherit;
+  }
+</style>
+
+<!-- Navigation element displaying page headers with dynamic sizing -->
+<div id="rectiangleNavbar" class="rectriangle">
+  <nav class="page-nav">
+    <ul>
+      <li data-section="home"><a href="#home"><strong>Home</strong></a></li>
+      <li data-section="about"><a href="#about"><strong>About</strong></a></li>
+      <li data-section="skills"><a href="#skills"><strong>Skills</strong></a></li>
+      <li data-section="certificates"><a href="#certificates"><strong>Certificates</strong></a></li>
+      <li data-section="projects"><a href="#projects"><strong>Projects</strong></a></li>
+      <li data-section="contact"><a href="#contact"><strong>Contact</strong></a></li>
+    </ul>
+  </nav>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.innerWidth > 768) {
+      const navbar = document.getElementById('rectiangleNavbar');
+      const bioSection = document.getElementById('about'); // Bio section
+      const initialOffset = 50; // Navbar starts lower in Bio
+      const stickyOffset = 25; // Sticks at 25px from top
+
+      // Ensure Navbar is Visible on Load  
+      navbar.style.position = 'absolute';
+      navbar.style.top = `${bioSection.offsetTop + initialOffset}px`;
+
+      function updateNavbarPosition() {
+        const bioTop = bioSection.offsetTop + initialOffset; // Adjusted start position
+
+        if (window.scrollY >= bioTop) {
+          navbar.style.position = 'fixed';
+          navbar.style.top = `${stickyOffset}px`;
+        } else {
+          navbar.style.position = 'absolute';
+          navbar.style.top = `${bioTop}px`;
+        }
+      }
+
+      window.addEventListener('scroll', updateNavbarPosition);
+      updateNavbarPosition(); // Ensure it runs once on load
+
+      // Active Navigation Link Highlighting & Smooth Scrolling
+      const pageItems = document.querySelectorAll('#rectiangleNavbar .page-nav li');
+      const sections = Array.from(pageItems)
+        .map(item => document.getElementById(item.getAttribute('data-section')))
+        .filter(el => el);
+
+      function updateActiveHeader() {
+        let activeSectionIndex = -1;
+        const viewportHeight = window.innerHeight;
+
+        sections.forEach((section, idx) => {
+          const rect = section.getBoundingClientRect();
+          const sectionHeight = rect.bottom - rect.top;
+          const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+
+          if (visibleHeight / sectionHeight > 0.5) { // If more than 50% is visible
+            activeSectionIndex = idx;
+          }
+        });
+
+        pageItems.forEach((li, idx) => {
+          if (idx === activeSectionIndex) {
+            li.classList.add('active');
+          } else {
+            li.classList.remove('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveHeader);
+      window.addEventListener('resize', updateActiveHeader);
+      updateActiveHeader();
+
+      // Smooth Scroll on Click
+      pageItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const targetSection = document.getElementById(this.getAttribute('data-section'));
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    }
+  });
+</script>
+<!-- ______________________end of large screen header_____________________ -->
+
+
+<!-- ___________________message for new ui coming soon_____________________ -->
+
+
+<style>
+    #coming-soon-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4); /* semi-transparent dark background */
+      backdrop-filter: blur(8px); /* background blur effect */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      transition: opacity 1s ease;
+    }
+  
+    #coming-soon-overlay p {
+      font-family: 'Orbitron', sans-serif; /* better, modern font */
+      font-size: 2em;
+      color: #fff;
+      margin: 0;
+    }
+  </style>
+  
+  <div id="coming-soon-overlay">
+    <p>New UI and Features with Animation comming soon</p>
+  </div>
+  
+  <script>
+    window.addEventListener('load', function() {
+      // Wait for 5 seconds before starting the fade-out transition.
+      setTimeout(function() {
+        const overlay = document.getElementById('coming-soon-overlay');
+        overlay.style.opacity = '0';
+        overlay.addEventListener('transitionend', function() {
+          overlay.remove();
+        });
+      }, 5000);
+    });
+  </script>
+
+<!-- ___________________end of message for new ui coming soon_____________________ -->
+
+
+
+
+
 </html>
 <!-- -------------end of html----------- -->
+<!-- End of Selection
+```
