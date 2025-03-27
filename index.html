@@ -3,7 +3,7 @@
 <!--Updated History-->
 <!-- 6 FEB 2025 -->
 <!-- 19 MARCH 2025 -->
-<!-- 26 MARCH 2025 -->
+<!-- 26, 27 MARCH 2025 -->
 <!-- © 2024 Rutuj Dhodapkar. All rights reserved. -->
 <!-- © 2025 Rutuj Dhodapkar. All rights reserved. -->
 
@@ -132,46 +132,7 @@
     }
 </style>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Allow text selection and copying
-        document.addEventListener('selectstart', function(event) {
-            event.stopPropagation();
-        });
 
-        // Prevent drag and drop
-        document.addEventListener('dragstart', function(event) {
-            event.preventDefault();
-        });
-
-        // Ensure links show normal cursor
-        const links = document.querySelectorAll('a');
-        links.forEach(function(link) {
-            link.style.cursor = 'default';
-        });
-
-        // Make images non-selectable
-        const images = document.querySelectorAll('img');
-        images.forEach(function(image) {
-            image.style.userSelect = 'none';
-        });
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.addEventListener('contextmenu', function(event) {
-            event.preventDefault();
-        });
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.addEventListener('keydown', function(event) {
-            event.preventDefault();
-        });
-    });
-</script>
 <style>
     /* Add some basic styling */
     .logo {
@@ -928,80 +889,126 @@
     
     <!-- Note: The larger screen header (header.header-2) and its related scripts have been removed as per instructions. -->
 
-    <!-- Hero Section -->
-    <section class="hero" id="top">
-        <div class="hero-text">
-            <h2 style="z-index: 100235;">Hello There!<br>I'm <span id="name"></span></h2>
-
-            
-            <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 15px; border: 2px solid rgba(255, 69, 0, 0.5); display: inline-flex; align-items: center; justify-content: center; height: 25px; display: none;" id="helloDiv" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">
-                <p style="margin: 0; color: #ff4500; font-weight: bold; padding-left: 5px; padding-right: 5px;">
-                    <span class="highlight" style="text-decoration: underline; cursor: pointer;">Say hello</span> or keep scrolling
-                </p>
-            </div>
-            </div>
-            <script>
-                function checkScreenSize() {
-                    const helloDiv = document.getElementById('helloDiv');
-                    if (window.innerWidth > 450) { // Adjust the width as needed for small screens
-                        helloDiv.style.display = 'inline-flex';
-                    } else {
-                        helloDiv.style.display = 'none';
-                    }
-                }
-                window.addEventListener('resize', checkScreenSize);
-                window.addEventListener('DOMContentLoaded', checkScreenSize);
-            </script>
-
-
-            <p class="learning-text">Learning Artificial Intelligence and Machine Learning</p>
-            <style>
-                .learning-text {
-                    font-size: 1.7em;
-                    font-weight: bold;
-                }
-
-                body.light-theme .learning-text {
-                    color: black; /* Black color for light theme */
-                }
-
-                body.dark-theme .learning-text {
-                    color: rgb(230, 230, 230); /* White color for dark theme */
-                }
-            </style>
+<!-- Preloader Section "Loading animation" -->
+<div id="preloader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 100000;">
+    <h2 style="color: #000; position: relative; z-index: 100001; margin: 0; font-size: 2.5em;">Loading...</h2>
+    <div class="loading-bar" style="width: 50%; height: 4px; background: #000; animation: loadingAnimation 2s infinite; margin-top: 10px;"></div>
+</div>
+<style>
+@keyframes loadingAnimation {
+    0% { transform: scaleX(0); }
+    50% { transform: scaleX(1); }
+    100% { transform: scaleX(0); }
+}
+</style>
+<script>
+setTimeout(function() {
+    var preloader = document.getElementById('preloader');
+    if (preloader) {
+        // Change the loading bar's background color to red
+        var loadingBar = preloader.querySelector('.loading-bar');
+        if (loadingBar) {
+            loadingBar.style.background = 'red';
+        }
+        // Append a message indicating the delay
+        var delayMessage = document.createElement('p');
+        delayMessage.textContent = 'taking longer than usual';
+        delayMessage.style.color = '#000';
+        delayMessage.style.fontSize = '1.2em';
+        delayMessage.style.marginTop = '10px';
+        preloader.appendChild(delayMessage);
+    }
+}, 7000);
+</script>
 
 
-            </style>
-            <div style="height: 10px;"></div>     
-            <div style="height: 10px;"></div>
-
-            <a href="#contact" class="cta-button">Get in Touch</a>
-        </div>
-    </section>
-
-   <!-- About Section -->
-    <section id="about" class="about">
-        <br>
-        <br>
-        <h3>Who am i</h3>
+<!-- ______________ Start of HOME PAGE______________________ -->
+<section class="hero" id="top" style="opacity: 0; transition: opacity 0.5s ease;">
+    <div class="hero-text">
+        <h2 style="z-index: 1;">Hello There!<br>I'm <span id="name"></span></h2>
         
-        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 15px; border: 2px solid rgba(255, 69, 0, 0.5); display: inline-flex; align-items: center; justify-content: center; height: 25px;">
-            <p style="margin: 0; color: #ff4500; font-weight: bold; padding-left: 5px; padding-right: 5px;"><span class="highlight">$:/whoami</span></p>
+        <style>
+            .fade-in {
+                opacity: 0;
+                animation: fadeIn 0.5s forwards;
+            }
+            @keyframes fadeIn {
+                to {
+                    opacity: 1;
+                }
+            }
+        </style>
+        <div id="helloDiv" class="fade-in" style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 15px; border: 2px solid rgba(255, 69, 0, 0.5); align-items: center; justify-content: center; height: 25px; display: inline-flex; animation-delay: 0.3s;" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">
+            <p style="margin: 0; color: #ff4500; font-weight: bold; padding: 0 5px;">
+                <span class="highlight" style="text-decoration: underline; cursor: pointer;">Say hello</span> or keep scrolling
+            </p>
         </div>
-        <div style="height: 20px;"></div> <!--  add space -->
-               <br>
-        <p>Tech enthusiast? Nah, I’m a <span class="highlight">tech architect</span>—designing the future, one algorithm at a time. I live and breathe <span class="highlight">AI, ML, Deep Learning, Cloud Computing</span>, and <span class="highlight">Web Dev</span>. Whether I’m building <span class="highlight">real-time object detection models</span>, optimizing <span class="highlight">cloud infrastructures</span> for peak efficiency, or crafting sleek, high-performance web applications, my goal is simple: <span style="font-weight: bold; text-decoration: underline; text-decoration-color: gray;">turn complex ideas into game-changing solutions.</span> </p>
-        <br>
+        <script>
+            function checkScreenSize() {
+                const helloDiv = document.getElementById('helloDiv');
+                if (window.innerWidth > 450) {
+                    helloDiv.style.display = 'inline-flex';
+                } else {
+                    helloDiv.style.display = 'none';
+                }
+            }
+            window.addEventListener('resize', checkScreenSize);
+            window.addEventListener('DOMContentLoaded', checkScreenSize);
+        </script>
+        <p class="learning-text fade-in" style="animation-delay: 0.6s;">Learning Artificial Intelligence and Machine Learning</p>
+        <style>
+            .learning-text {
+                font-size: 1.7em;
+                font-weight: bold;
+            }
+            body.light-theme .learning-text {
+                color: black;
+            }
+            body.dark-theme .learning-text {
+                color: rgb(230, 230, 230);
+            }
+        </style>
+        <div class="fade-in" style="height: 10px; animation-delay: 0.9s;"></div>     
+        <div class="fade-in" style="height: 10px; animation-delay: 1.2s;"></div>
+        <a href="#contact" class="cta-button fade-in" style="animation-delay: 1.5s;">Get in Touch</a>
+    </div>
+</section>
+<script>
+    window.addEventListener('load', function() {
+        // Reveal the Hero Section
+        document.getElementById('top').style.opacity = '1';
+        // Fade out and remove the preloader
+        const preloader = document.getElementById('preloader');
+        if(preloader){
+            preloader.style.transition = 'opacity 0.5s ease';
+            preloader.style.opacity = '0';
+            setTimeout(() => preloader.remove(), 500);
+        }
+    });
+</script>
+<!-- End of HOME PAGE -->
 
-        <p>For me, tech isn’t just about writing code—it’s an <span class="highlight">art form</span>, a way to <span class="highlight">solve real-world problems</span> with creativity and innovation. I’m obsessed with pushing the limits of what’s possible, experimenting with the latest tools, and staying ahead of the curve. When I’m not knee-deep in projects, you’ll find me geeking out over emerging tech trends or sharing my journey with the world. </p>
+<!-- About Section -->
+<section id="about" class="about">
     <br>
-        <p>Let’s connect, innovate, and build something legendary. Ready to change the game?  <a href="mailto:rutujdhodapkar@gmail.com" target="_blank" rel="noopener" style="color: rgb(255, 0, 0); text-decoration: underline; text-decoration-color: rgb(255, 0, 0);">Check it out</a>.</p>
+    <br>
+    <h3>Who am i</h3>
     
-       <br>
+    <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 15px; border: (2px) solid rgba(255, 69, 0, 0.5); display: inline-flex; align-items: center; justify-content: center; height: 25px;">
+        <p style="margin: 0; color: #ff4500; font-weight: bold; padding-left: 5px; padding-right: 5px;"><span class="highlight">$:/whoami</span></p>
+    </div>
+    <div style="height: 20px;"></div> <!-- add space -->
+    <br>
+    <p>Tech enthusiast? Nah, I’m a <span class="highlight">tech architect</span>—designing the future, one algorithm at a time. I live and breathe <span class="highlight">AI, ML, Deep Learning, Cloud Computing</span>, and <span class="highlight">Web Dev</span>. Whether I’m building <span class="highlight">real-time object detection models</span>, optimizing <span class="highlight">cloud infrastructures</span> for peak efficiency, or crafting sleek, high-performance web applications, my goal is simple: <span style="font-weight: bold; text-decoration: underline; text-decoration-color: gray;">turn complex ideas into game-changing solutions.</span> </p>
+    <br>
+    <p>For me, tech isn’t just about writing code—it’s an <span class="highlight">art form</span>, a way to <span class="highlight">solve real-world problems</span> with creativity and innovation. I’m obsessed with pushing the limits of what’s possible, experimenting with the latest tools, and staying ahead of the curve. When I’m not knee-deep in projects, you’ll find me geeking out over emerging tech trends or sharing my journey with the world. </p>
+    <br>
+    <p>Let’s connect, innovate, and build something legendary. Ready to change the game?  <a href="mailto:rutujdhodapkar@gmail.com" target="_blank" rel="noopener" style="color: rgb(255, 0, 0); text-decoration: underline; text-decoration-color: rgb(255, 0, 0);">Check it out</a>.</p>
     <br>
     <br>
     <br>
-    </section>
+    <br>
+</section>
 
    
     <!-- Skills Section -->
@@ -1247,40 +1254,43 @@
 
     <!-- Sliding Rutuj Dhodapkar Button & General Utilities -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Typing animation for name
-            const nameElement = document.getElementById('name');
-            const text = "Rutuj Dhodapkar";
-            let i = 0;
-            function typeWriter() {
-                if (i < text.length) {
-                    nameElement.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 150); // Speed of typing
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                // Typing animation for name
+                const nameElement = document.getElementById('name');
+                const text = "Rutuj Dhodapkar";
+                let i = 0;
+                function typeWriter() {
+                    if (i < text.length) {
+                        nameElement.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 150); // Speed of typing
+                    }
                 }
-            }
-            typeWriter();
+                typeWriter();
 
-            // Add click event to open Google search
-            nameElement.addEventListener('click', function() {
-                window.open('https://www.google.com/search?q=Rutuj+Dhodapkar', '_blank');
-            });
+                // Add click event to open Google search
+                nameElement.addEventListener('click', function() {
+                    window.open('https://www.google.com/search?q=Rutuj+Dhodapkar', '_blank');
+                });
 
-            // Smooth scrolling for anchor links
-            const links = document.querySelectorAll('a[href^="#"]');
-            links.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    const offset = targetElement.getBoundingClientRect().top + window.scrollY - 100; // Adjust for header height
-                    window.scrollTo({
-                        top: offset,
-                        behavior: 'smooth'
+                // Smooth scrolling for anchor links
+                const links = document.querySelectorAll('a[href^="#"]');
+                links.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        const offset = targetElement.getBoundingClientRect().top + window.scrollY - 100; // Adjust for header height
+                        window.scrollTo({
+                            top: offset,
+                            behavior: 'smooth'
+                        });
                     });
                 });
-            });
+            }, 500);
         });
+    </script>
 
         function scrollProjects(direction) {
             const projectList = document.querySelector('.project-list');
@@ -2094,8 +2104,6 @@
 
 
 <!-- ___________________message for new ui coming soon_____________________ -->
-
-
 <style>
     #coming-soon-overlay {
       position: fixed;
@@ -2135,13 +2143,9 @@
         });
       }, 5000);
     });
-  </script>
+  </script> 
 
 <!-- ___________________end of message for new ui coming soon_____________________ -->
-
-
-
-
 
 </html>
 <!-- -------------end of html----------- -->
