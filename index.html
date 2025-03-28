@@ -923,9 +923,9 @@ setTimeout(function() {
 
 
 <!-- ______________ Start of HOME PAGE______________________ -->
-<section class="hero" id="top" style="opacity: 0; transition: opacity 0.5s ease;">
+<section class="hero" id="top" style="opacity: 0; transition: opacity 0.5s ease; position: relative;">
     <div class="hero-text">
-        <h2 style="z-index: 1;">Hello There!<br>I'm <span id="name"></span></h2>
+        <h2 style="z-index: 10;">Hello There!<br>I'm <span id="name"></span></h2>
         
         <style>
             .fade-in {
@@ -938,8 +938,8 @@ setTimeout(function() {
                 }
             }
         </style>
-        <div id="helloDiv" class="fade-in" style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 15px; border: 2px solid rgba(255, 69, 0, 0.5); align-items: center; justify-content: center; height: 25px; display: inline-flex; animation-delay: 0.3s;" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">
-            <p style="margin: 0; color: #ff4500; font-weight: bold; padding: 0 5px;">
+        <div id="helloDiv" class="fade-in" style="background-color: #ffffff33; padding: 10px; border-radius: 15px; border: 2px solid rgba(255, 255, 255, 0.5); align-items: center; justify-content: center; height: 25px; display: inline-flex; animation-delay: 0.3s;" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">
+            <p style="margin: 0; color: #939393; font-weight: bold; padding: 0 5px;">
                 <span class="highlight" style="text-decoration: underline; cursor: pointer;">Say hello</span> or keep scrolling
             </p>
         </div>
@@ -970,8 +970,10 @@ setTimeout(function() {
         </style>
         <div class="fade-in" style="height: 10px; animation-delay: 0.9s;"></div>     
         <div class="fade-in" style="height: 10px; animation-delay: 1.2s;"></div>
-        <a href="#contact" class="cta-button fade-in" style="animation-delay: 1.5s;">Get in Touch</a>
+        <a href="#contact" class="cta-button fade-in" style="animation-delay: 1.5s;">Get in Touch <span style="margin-left: 8px; background-color: rgba(103, 103, 103, 0.201); border-radius: 65%; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center;">&#8594;</span></a>
     </div>
+    
+    
 </section>
 <script>
     window.addEventListener('load', function() {
@@ -994,8 +996,8 @@ setTimeout(function() {
     <br>
     <h3>About Me</h3>
     
-    <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 15px; border: (2px) solid rgba(255, 69, 0, 0.5); display: inline-flex; align-items: center; justify-content: center; height: 25px;">
-        <p style="margin: 0; color: #ff4500; font-weight: bold; padding-left: 5px; padding-right: 5px;"><span class="highlight">$:/whoami</span></p>
+    <div class="fade-in" style="background-color: #ffffff33; padding: 10px; border-radius: 15px; border: 2px solid rgba(255, 255, 255, 0.5); align-items: center; justify-content: center; height: 25px; display: inline-flex; animation-delay: 0.3s;">
+        <p style="margin: 0; color: #939393; font-weight: bold; padding: 0 5px;"><span class="highlight">$:/whoami</span></p>
     </div>
     <div style="height: 20px;"></div> <!-- add space -->
     <br>
@@ -1092,12 +1094,11 @@ setTimeout(function() {
     <!-- Projects Section -->
     <section id="projects" class="projects">
         <h3>Projects</h3>
-
-        <div style="background-color: rgba(255, 69, 0, 0.2); padding: 10px; border-radius: 15px; display: inline-flex; align-items: center; justify-content: center; height: 25px; display: none; border: 2px solid rgba(255, 69, 0, 0.5);" class="responsive-message">
-            <p style="margin: 0; color: rgb(255, 69, 0); font-weight: bold; padding-left: 5px; padding-right: 5px;">
+        <div class="fade-in responsive-message" style="background-color: #ffffff33; padding: 10px; border-radius: 15px; border: 2px solid rgba(255, 255, 255, 0.5); align-items: center; justify-content: center; height: 25px; display: none; animation-delay: 0.3s;">
+            <p style="margin: 0; color: #939393; font-weight: bold; padding: 0 5px;">
                 <span style="cursor: pointer;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">1. Get Idea; 2. Launch; 3. ???; 4. Profit.</span>
             </p>
-        </div> 
+        </div>
         <script>
             function checkScreenSize() {
                 const messageDiv = document.querySelector('.responsive-message');
@@ -1933,170 +1934,198 @@ setTimeout(function() {
         }
     });
 </script>
+
 <!-- ______________________end of glows_____________________ -->
-
-
-
-
 
 <!-- ______________________start of large screen header_____________________ -->
 <style>
-  /* Navigation Container with smooth transition, shown only on larger screens */
-  #rectiangleNavbar {
-    position: absolute; /* Start absolute, then switch to fixed */
-    left: 50%;
-    transform: translateX(-50%);
-    width: fit-content;
-    padding: 10px 20px;
-    background: rgba(181, 181, 181, 0.093);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 200px;
-    z-index: 9999; /* Increased z-index */
-  }
-
-  /* Hide navigation on small screens */
-  @media only screen and (max-width: 768px) {
+    /* Navigation Container with smooth transition */
     #rectiangleNavbar {
-      display: none;
+      position: absolute; /* Start as absolute, then switch to fixed */
+      left: 50%;
+      transform: translateX(-50%);
+      width: fit-content;
+      padding: 10px 20px;
+      background: rgba(181, 181, 181, 0.093);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 200px;
+      z-index: 9999;
     }
-  }
-
-  /* Navigation list */
-  #rectiangleNavbar .page-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 10px;
-    padding: 0;
-    margin: 0;
-  }
-
-  #rectiangleNavbar .page-nav li {
-    cursor: pointer;
-    padding: 8px 15px;
-    transition: background-color 0.3s, color 0.3s;
-    border-radius: 50px;
-  }
-
-  /* Light theme text color */
-  body:not(.dark-mode) #rectiangleNavbar .page-nav li {
-    color: black;
-  }
-
-  /* Dark theme text color */
-  body.dark-mode #rectiangleNavbar .page-nav li {
-    color: white;
-  }
-
-  #rectiangleNavbar .page-nav li:hover {
-    background-color: #5b5b5b69;
-    color: white;
-  }
-
-  #rectiangleNavbar .page-nav li.active {
-    background: linear-gradient(45deg, #006affd4, #0084ffd4);
-    color: white;
-    border-radius: 50px;
-    box-shadow: 0 0 25px 10px rgba(0, 60, 255, 0.5);
-  }
   
-  /* Remove underlines from navigation links and ensure text color is inherited */
-  #rectiangleNavbar a {
-    text-decoration: none;
-    color: inherit;
-  }
-</style>
-
-<!-- Navigation element displaying page headers with dynamic sizing -->
-<div id="rectiangleNavbar" class="rectriangle">
-  <nav class="page-nav">
-    <ul>
-      <li data-section="home"><a href="#home"><strong>Home</strong></a></li>
-      <li data-section="about"><a href="#about"><strong>About</strong></a></li>
-      <li data-section="skills"><a href="#skills"><strong>Skills</strong></a></li>
-      <li data-section="certificates"><a href="#certificates"><strong>Certificates</strong></a></li>
-      <li data-section="projects"><a href="#projects"><strong>Projects</strong></a></li>
-      <li data-section="contact"><a href="#contact"><strong>Contact</strong></a></li>
-    </ul>
-  </nav>
-</div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    if (window.innerWidth > 768) {
-      const navbar = document.getElementById('rectiangleNavbar');
-      const bioSection = document.getElementById('about'); // Bio section
-      const initialOffset = 50; // Navbar starts lower in Bio
-      const stickyOffset = 25; // Sticks at 25px from top
-
-      // Ensure Navbar is Visible on Load  
-      navbar.style.position = 'absolute';
-      navbar.style.top = `${bioSection.offsetTop + initialOffset}px`;
-
-      function updateNavbarPosition() {
-        const bioTop = bioSection.offsetTop + initialOffset; // Adjusted start position
-
-        if (window.scrollY >= bioTop) {
-          navbar.style.position = 'fixed';
-          navbar.style.top = `${stickyOffset}px`;
-        } else {
-          navbar.style.position = 'absolute';
-          navbar.style.top = `${bioTop}px`;
-        }
+    /* Hide navigation on small screens */
+    @media only screen and (max-width: 768px) {
+      #rectiangleNavbar {
+        display: none;
       }
-
-      window.addEventListener('scroll', updateNavbarPosition);
-      updateNavbarPosition(); // Ensure it runs once on load
-
-      // Active Navigation Link Highlighting & Smooth Scrolling
-      const pageItems = document.querySelectorAll('#rectiangleNavbar .page-nav li');
-      const sections = Array.from(pageItems)
-        .map(item => document.getElementById(item.getAttribute('data-section')))
-        .filter(el => el);
-
-      function updateActiveHeader() {
-        let activeSectionIndex = -1;
-        const viewportHeight = window.innerHeight;
-
-        sections.forEach((section, idx) => {
-          const rect = section.getBoundingClientRect();
-          const sectionHeight = rect.bottom - rect.top;
-          const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
-
-          if (visibleHeight / sectionHeight > 0.5) { // If more than 50% is visible
-            activeSectionIndex = idx;
-          }
-        });
-
-        pageItems.forEach((li, idx) => {
-          if (idx === activeSectionIndex) {
-            li.classList.add('active');
-          } else {
-            li.classList.remove('active');
-          }
-        });
-      }
-
-      window.addEventListener('scroll', updateActiveHeader);
-      window.addEventListener('resize', updateActiveHeader);
-      updateActiveHeader();
-
-      // Smooth Scroll on Click
-      pageItems.forEach(item => {
-        item.addEventListener('click', function() {
-          const targetSection = document.getElementById(this.getAttribute('data-section'));
-          if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth' });
-          }
-        });
-      });
     }
-  });
-</script>
+  
+    /* Navigation list */
+    #rectiangleNavbar .page-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+    }
+  
+    #rectiangleNavbar .page-nav li {
+      cursor: pointer;
+      padding: 8px 15px;
+      transition: background-color 0.3s, color 0.3s;
+      border-radius: 50px;
+    }
+  
+    /* Light theme text color */
+    body:not(.dark-mode) #rectiangleNavbar .page-nav li {
+      color: black;
+    }
+  
+    /* Dark theme text color */
+    body.dark-mode #rectiangleNavbar .page-nav li {
+      color: white;
+    }
+  
+    #rectiangleNavbar .page-nav li:hover {
+      background-color: #5b5b5b69;
+      color: white;
+    }
+  
+    #rectiangleNavbar .page-nav li.active {
+      background: linear-gradient(45deg, #00d9ffbf, #008cffd1, #4778ffcd);
+      color: white;
+      border-radius: 50px;
+      box-shadow: 0 0 25px 10px rgba(104, 159, 255, 0.678);
+    }
+  
+    /* Remove underlines from navigation links */
+    #rectiangleNavbar a {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+  
+  <!-- Navigation -->
+  <div id="rectiangleNavbar" class="rectriangle">
+    <nav class="page-nav">
+      <ul>
+        <li data-section="home"><a href="#home"><strong>Home</strong></a></li>
+        <li data-section="about"><a href="#about"><strong>About</strong></a></li>
+        <li data-section="skills"><a href="#skills"><strong>Skills</strong></a></li>
+        <li data-section="certificates"><a href="#certificates"><strong>Certificates</strong></a></li>
+        <li data-section="projects"><a href="#projects"><strong>Projects</strong></a></li>
+        <li data-section="contact"><a href="#contact"><strong>Contact</strong></a></li>
+      </ul>
+    </nav>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.innerWidth > 768) {
+        const navbar = document.getElementById('rectiangleNavbar');
+        const aboutSection = document.getElementById('about'); // About section
+        const homeSection = document.getElementById('home'); // Home section
+        const sections = document.querySelectorAll("section"); // All sections
+        const navItems = document.querySelectorAll("#rectiangleNavbar .page-nav li");
+        const stickyOffset = 25; // Stick at 25px from the top
+  
+        // 🔥 **Key Fix: Setting Navbar Exactly Above About Section**
+        function getInitialOffset() {
+          return aboutSection.getBoundingClientRect().top + window.scrollY - navbar.offsetHeight - 20;
+        }
+  
+        let initialOffset = getInitialOffset(); // Set on load
+  
+        // Set navbar position correctly from the start
+        navbar.style.position = 'absolute';
+        navbar.style.top = `${initialOffset}px`;
+  
+        function updateNavbarPosition() {
+          if (window.scrollY >= initialOffset) {
+            navbar.style.position = 'fixed';
+            navbar.style.top = `${stickyOffset}px`;
+          } else {
+            navbar.style.position = 'absolute';
+            navbar.style.top = `${initialOffset}px`;
+          }
+        }
+  
+        window.addEventListener('scroll', updateNavbarPosition);
+        window.addEventListener('resize', () => {
+          initialOffset = getInitialOffset(); // Update on resize
+          updateNavbarPosition();
+        });
+  
+        updateNavbarPosition(); // Run once on load
+  
+        // 📌 **Smooth Section Highlighting**
+        const observerOptions = {
+          root: null,
+          rootMargin: "-45% 0px -55% 0px",
+          threshold: 0
+        };
+  
+        const observer = new IntersectionObserver(entries => {
+          let activeFound = false;
+          entries.forEach(entry => {
+            const targetId = entry.target.getAttribute("id");
+            if (entry.isIntersecting && !activeFound) {
+              activeFound = true;
+              navItems.forEach(item => {
+                item.classList.toggle("active", item.getAttribute("data-section") === targetId);
+              });
+            }
+          });
+  
+          // Special case: If scrolled all the way up, highlight "Home"
+          if (window.scrollY < homeSection.offsetHeight / 2) {
+            navItems.forEach(item => {
+              item.classList.toggle("active", item.getAttribute("data-section") === "home");
+            });
+          }
+        }, observerOptions);
+  
+        sections.forEach(section => observer.observe(section));
+  
+        // 🎯 **Smooth Scroll Fix**
+        navItems.forEach(item => {
+          item.addEventListener("click", function(event) {
+            event.preventDefault();
+            const targetId = this.getAttribute("data-section");
+            if (targetId === "home") {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            } else {
+              const targetSection = document.getElementById(targetId);
+              if (targetSection) {
+                targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+            }
+          });
+        });
+      }
+    });
+  </script>
+  
+  
+  
+  
 <!-- ______________________end of large screen header_____________________ -->
 
 
 <!-- ___________________message for new ui coming soon_____________________ -->
+
+<script>
+  // Immediately disable scrolling by setting the overflow of both html and body to "hidden"
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
+
+  // Once the entire page is loaded, re-enable scrolling by clearing the overflow settings
+  window.addEventListener('load', function() {
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+  });
+</script>
+
 <style>
     #coming-soon-overlay {
       position: fixed;
@@ -2137,7 +2166,6 @@ setTimeout(function() {
       }, 5000);
     });
   </script> 
-
 <!-- ___________________end of message for new ui coming soon_____________________ -->
 
 </html>
