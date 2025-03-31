@@ -31,4 +31,4 @@ Feel free to get in touch with me through the following platforms:
 
 ## License
 
-This project is open-source and available under the MIT License.
+This project is open-source and available under the AGPL 3.0 License.
