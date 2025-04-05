@@ -4,6 +4,7 @@
 <!-- 6 FEB 2025 -->
 <!-- 19 MARCH 2025 -->
 <!-- 26, 27 MARCH 2025 -->
+<!-- 4 APRIL 2025 -->
 <!-- © 2024 Rutuj Dhodapkar. All rights reserved. -->
 <!-- © 2025 Rutuj Dhodapkar. All rights reserved. -->
 
@@ -938,8 +939,8 @@ setTimeout(function() {
                 }
             }
         </style>
-        <div id="helloDiv" class="fade-in" style="background-color: #ffffff33; padding: 10px; border-radius: 15px; border: 2px solid rgba(255, 255, 255, 0.5); align-items: center; justify-content: center; height: 25px; display: inline-flex; animation-delay: 0.3s;" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">
-            <p style="margin: 0; color: #939393; font-weight: bold; padding: 0 5px;">
+        <div id="helloDiv" class="fade-in" style="background-color: #15a7cf58; padding: 10px; border-radius: 5px; border: 2px solid rgba(0, 0, 0, 0); align-items: center; justify-content: center; height: 25px; display: inline-flex; animation-delay: 0.3s;" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">
+            <p style="margin: 0; color: #00eaff; font-weight: bold; padding: 0 5px;">
                 <span class="highlight" style="text-decoration: underline; cursor: pointer;">Say hello</span> or keep scrolling
             </p>
         </div>
@@ -996,8 +997,8 @@ setTimeout(function() {
     <br>
     <h3>About Me</h3>
     
-    <div class="fade-in" style="background-color: #ffffff33; padding: 10px; border-radius: 15px; border: 2px solid rgba(255, 255, 255, 0.5); align-items: center; justify-content: center; height: 25px; display: inline-flex; animation-delay: 0.3s;">
-        <p style="margin: 0; color: #939393; font-weight: bold; padding: 0 5px;"><span class="highlight">$:/whoami</span></p>
+    <div class="fade-in" style="background-color: #15a7cf58; padding: 10px; border-radius: 5px; border: 2px solid #00000000; align-items: center; justify-content: center; height: 25px; display: inline-flex; animation-delay: 0.3s;">
+        <p style="margin: 0; color: #00eaff; font-weight: bold; padding: 0 5px;"><span class="highlight">$:/whoami</span></p>
     </div>
     <div style="height: 20px;"></div> <!-- add space -->
     <br>
@@ -1094,8 +1095,8 @@ setTimeout(function() {
     <!-- Projects Section -->
     <section id="projects" class="projects">
         <h3>Projects</h3>
-        <div class="fade-in responsive-message" style="background-color: #ffffff33; padding: 10px; border-radius: 15px; border: 2px solid rgba(255, 255, 255, 0.5); align-items: center; justify-content: center; height: 25px; display: none; animation-delay: 0.3s;">
-            <p style="margin: 0; color: #939393; font-weight: bold; padding: 0 5px;">
+        <div class="fade-in responsive-message" style="background-color: #15a7cf58; padding: 10px; border-radius: 5px; border: 2px solid #00000000; align-items: center; justify-content: center; height: 25px; display: none; animation-delay: 0.3s;">
+            <p style="margin: 0; color: #00eaff; font-weight: bold; padding: 0 5px;">
                 <span style="cursor: pointer;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';" onclick="window.location.href='mailto:rutujdhodapkar@gmail.com';">1. Get Idea; 2. Launch; 3. ???; 4. Profit.</span>
             </p>
         </div>
@@ -1187,20 +1188,15 @@ setTimeout(function() {
                     setTimeout(() => descriptionElement.style.display = 'none', 500);
                 }
             }
-        </script>
 
-        <script>
-            function showDescription(event, descriptionId) {
-                event.preventDefault();
-                const descriptionElement = document.getElementById(descriptionId);
-                if (descriptionElement.style.display === 'none' || descriptionElement.style.maxHeight === '0px') {
-                    descriptionElement.style.display = 'block';
-                    descriptionElement.style.maxHeight = descriptionElement.scrollHeight + 'px';
-                    descriptionElement.style.opacity = '1';
+            function scrollProjects(direction) {
+                const container = document.querySelector('.project-list');
+                if (!container) return;
+                const scrollAmount = container.clientWidth;
+                if (direction === 'left') {
+                    container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
                 } else {
-                    descriptionElement.style.maxHeight = '0';
-                    descriptionElement.style.opacity = '0';
-                    setTimeout(() => descriptionElement.style.display = 'none', 500);
+                    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
                 }
             }
         </script>
@@ -1208,6 +1204,8 @@ setTimeout(function() {
         </div>
         <button class="scroll-arrow right" onclick="scrollProjects('right')">&#9654;</button>
     </section>
+
+    
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <h3>Contact Me</h3>
@@ -1244,7 +1242,6 @@ setTimeout(function() {
 
         <p style="margin: 10px 0;">©2024-2025 Rutuj Dhodapkar Portfolio. All Rights Reserved.</p>
         <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-            <a href="#home">Home</a>|
             <a href="#about">About</a>|
             <a href="#skills">Skills</a>|
             <a href="#certificates">Certificates</a>|
@@ -2009,7 +2006,6 @@ setTimeout(function() {
   <div id="rectiangleNavbar" class="rectriangle">
     <nav class="page-nav">
       <ul>
-        <li data-section="home"><a href="#home"><strong>Home</strong></a></li>
         <li data-section="about"><a href="#about"><strong>About</strong></a></li>
         <li data-section="skills"><a href="#skills"><strong>Skills</strong></a></li>
         <li data-section="certificates"><a href="#certificates"><strong>Certificates</strong></a></li>
@@ -2024,7 +2020,6 @@ setTimeout(function() {
       if (window.innerWidth > 768) {
         const navbar = document.getElementById('rectiangleNavbar');
         const aboutSection = document.getElementById('about'); // About section
-        const homeSection = document.getElementById('home'); // Home section
         const sections = document.querySelectorAll("section"); // All sections
         const navItems = document.querySelectorAll("#rectiangleNavbar .page-nav li");
         const stickyOffset = 25; // Stick at 25px from the top
