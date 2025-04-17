@@ -5,6 +5,7 @@
 <!-- 19 MARCH 2025 -->
 <!-- 26, 27 MARCH 2025 -->
 <!-- 4 APRIL 2025 -->
+<!-- 17 APRIL 2025 -->
 <!-- © 2024 Rutuj Dhodapkar. All rights reserved. -->
 <!-- © 2025 Rutuj Dhodapkar. All rights reserved. -->
 
@@ -1632,16 +1633,16 @@ setTimeout(function() {
 
  
 <!--______________________ start of top glow ______________________ -->
+
 <!-- -----------------------glow 1---------------------------- -->
 <style>
-    /* Glow effect styles for glow 1 */
     .glowEffect1 {
         position: fixed;
         top: -250px;
-        left: -300px; /* Adjusted for consistent x distance */
+        left: -300px;
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, #0000ffb3 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        background: radial-gradient(circle, #0000ffb3 0%, rgba(0, 0, 0, 0) 70%);
         z-index: 10;
         pointer-events: none;
         filter: blur(20px);
@@ -1649,77 +1650,59 @@ setTimeout(function() {
         opacity: 1;
     }
     @media (max-width: 768px) {
-        .glowEffect1 {
-            display: none;
-        }
+        .glowEffect1 { display: none; }
     }
 </style>
-
 <script>
     function addGlowEffect1() {
-        const glowEffect1 = document.createElement('div');
-        glowEffect1.className = 'glowEffect1';
-        document.body.appendChild(glowEffect1);
-
+        const glow = document.createElement('div');
+        glow.className = 'glowEffect1';
+        document.body.appendChild(glow);
         window.addEventListener('scroll', () => {
-            glowEffect1.style.opacity = window.scrollY === 0 ? '1' : '0';
+            glow.style.opacity = window.scrollY === 0 ? '1' : '0';
         });
     }
-
-    window.addEventListener('load', () => {
-        addGlowEffect1();
-    });
+    window.addEventListener('load', addGlowEffect1);
 </script>
 
-<!-- -----------------------glow 2---------------------------- -->
+<!-- -----------------------glow 2 (top‐right)---------------------------- -->
 <style>
-    /* Glow effect styles for glow 2 */
     .glowEffect2 {
         position: fixed;
-        top: -250px; /* Adjusted for consistent y position */
-        right: -300px; /* Adjusted for consistent x distance */
+        top: -250px;
+        right: -300px;
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(0, 0, 205, 0.7) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        background: radial-gradient(circle, rgba(0, 0, 205, 0.7) 0%, rgba(0, 0, 0, 0) 70%);
         z-index: 10;
         pointer-events: none;
         filter: blur(20px);
         transition: opacity 0.5s ease-in-out;
         opacity: 1;
     }
-    @media (max-width: 768px) {
-        .glowEffect2 {
-            display: none;
-        }
-    }
+    /* always visible on small screens */
 </style>
-
 <script>
     function addGlowEffect2() {
-        const glowEffect2 = document.createElement('div');
-        glowEffect2.className = 'glowEffect2';
-        document.body.appendChild(glowEffect2);
-
+        const glow = document.createElement('div');
+        glow.className = 'glowEffect2';
+        document.body.appendChild(glow);
         window.addEventListener('scroll', () => {
-            glowEffect2.style.opacity = window.scrollY === 0 ? '1' : '0';
+            glow.style.opacity = window.scrollY === 0 ? '1' : '0';
         });
     }
-
-    window.addEventListener('load', () => {
-        addGlowEffect2();
-    });
+    window.addEventListener('load', addGlowEffect2);
 </script>
 
 <!-- -----------------------glow 3---------------------------- -->
 <style>
-    /* Glow effect styles for glow 3 */
     .glowEffect3 {
         position: fixed;
         top: -250px;
-        left: 0px; /* Adjusted for consistent x distance */
+        left: 0;
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(0, 191, 255, 0.638) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        background: radial-gradient(circle, rgba(0, 191, 255, 0.638) 0%, rgba(0, 0, 0, 0) 70%);
         z-index: 10;
         pointer-events: none;
         filter: blur(20px);
@@ -1727,38 +1710,30 @@ setTimeout(function() {
         opacity: 1;
     }
     @media (max-width: 768px) {
-        .glowEffect3 {
-            display: none;
-        }
+        .glowEffect3 { display: none; }
     }
 </style>
-
 <script>
     function addGlowEffect3() {
-        const glowEffect3 = document.createElement('div');
-        glowEffect3.className = 'glowEffect3';
-        document.body.appendChild(glowEffect3);
-
+        const glow = document.createElement('div');
+        glow.className = 'glowEffect3';
+        document.body.appendChild(glow);
         window.addEventListener('scroll', () => {
-            glowEffect3.style.opacity = window.scrollY === 0 ? '1' : '0';
+            glow.style.opacity = window.scrollY === 0 ? '1' : '0';
         });
     }
-
-    window.addEventListener('load', () => {
-        addGlowEffect3();
-    });
+    window.addEventListener('load', addGlowEffect3);
 </script>
 
 <!-- -----------------------glow 4---------------------------- -->
 <style>
-    /* Glow effect styles for glow 4 */
     .glowEffect4 {
         position: fixed;
         top: -250px;
-        right: 0px; /* Adjusted for consistent x distance */
+        right: 0;
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(30, 144, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        background: radial-gradient(circle, rgba(30, 144, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%);
         z-index: 10;
         pointer-events: none;
         filter: blur(20px);
@@ -1766,31 +1741,23 @@ setTimeout(function() {
         opacity: 1;
     }
     @media (max-width: 768px) {
-        .glowEffect4 {
-            display: none;
-        }
+        .glowEffect4 { display: none; }
     }
 </style>
-
 <script>
     function addGlowEffect4() {
-        const glowEffect4 = document.createElement('div');
-        glowEffect4.className = 'glowEffect4';
-        document.body.appendChild(glowEffect4);
-
+        const glow = document.createElement('div');
+        glow.className = 'glowEffect4';
+        document.body.appendChild(glow);
         window.addEventListener('scroll', () => {
-            glowEffect4.style.opacity = window.scrollY === 0 ? '1' : '0';
+            glow.style.opacity = window.scrollY === 0 ? '1' : '0';
         });
     }
-
-    window.addEventListener('load', () => {
-        addGlowEffect4();
-    });
+    window.addEventListener('load', addGlowEffect4);
 </script>
 
 <!-- -----------------------glow 5---------------------------- -->
 <style>
-    /* Glow effect styles for glow 5 */
     .glowEffect5 {
         position: fixed;
         top: -250px;
@@ -1798,7 +1765,7 @@ setTimeout(function() {
         transform: translateX(-50%);
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(0, 140, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%); /* Blue gradient */
+        background: radial-gradient(circle, rgba(0, 140, 255, 0.6) 0%, rgba(0, 0, 0, 0) 70%);
         z-index: 10;
         pointer-events: none;
         filter: blur(20px);
@@ -1806,30 +1773,23 @@ setTimeout(function() {
         opacity: 1;
     }
     @media (max-width: 768px) {
-        .glowEffect5 {
-            display: none;
-        }
+        .glowEffect5 { display: none; }
     }
 </style>
-
 <script>
     function addGlowEffect5() {
-        const glowEffect5 = document.createElement('div');
-        glowEffect5.className = 'glowEffect5';
-        document.body.appendChild(glowEffect5);
-
+        const glow = document.createElement('div');
+        glow.className = 'glowEffect5';
+        document.body.appendChild(glow);
         window.addEventListener('scroll', () => {
-            glowEffect5.style.opacity = window.scrollY === 0 ? '1' : '0';
+            glow.style.opacity = window.scrollY === 0 ? '1' : '0';
         });
     }
-
-    window.addEventListener('load', () => {
-        addGlowEffect5();
-    });
+    window.addEventListener('load', addGlowEffect5);
 </script>
-<!-- -----------------------glow 6---------------------------- -->
+
+<!-- -----------------------glow 6 (pink)---------------------------- -->
 <style>
-    /* Glow effect styles for glow 6 */
     .glowEffect6 {
         position: fixed;
         bottom: -250px;
@@ -1843,39 +1803,29 @@ setTimeout(function() {
         transition: opacity 0.5s ease-in-out;
         opacity: 1;
     }
-    @media (max-width: 768px) {
-        .glowEffect6 {
-            display: none;
-        }
-    }
+    /* always visible on small screens */
 </style>
-
 <script>
     function addGlowEffect6() {
-        const glowEffect6 = document.createElement('div');
-        glowEffect6.className = 'glowEffect6';
-        document.body.appendChild(glowEffect6);
-
+        const glow = document.createElement('div');
+        glow.className = 'glowEffect6';
+        document.body.appendChild(glow);
         window.addEventListener('scroll', () => {
-            glowEffect6.style.opacity = window.scrollY === 0 ? '1' : '0';
+            glow.style.opacity = window.scrollY === 0 ? '1' : '0';
         });
     }
-
-    window.addEventListener('load', () => {
-        addGlowEffect6();
-    });
+    window.addEventListener('load', addGlowEffect6);
 </script>
 
 <!-- -----------------------glow 7---------------------------- -->
 <style>
-    /* Glow effect styles for glow 7 */
     .glowEffect7 {
         position: fixed;
         bottom: -250px;
-        right: -250px; /* Changed to right side */
+        right: -250px;
         width: 700px;
         height: 500px;
-        background: radial-gradient(circle, rgba(0, 157, 255, 0.214) 0%, rgba(0, 0, 0, 0) 70%); /* Changed color to green */
+        background: radial-gradient(circle, rgba(0, 157, 255, 0.214) 0%, rgba(0, 0, 0, 0) 70%);
         z-index: 10;
         pointer-events: none;
         filter: blur(20px);
@@ -1883,52 +1833,19 @@ setTimeout(function() {
         opacity: 1;
     }
     @media (max-width: 768px) {
-        .glowEffect7 {
-            display: none;
-        }
+        .glowEffect7 { display: none; }
     }
 </style>
-
 <script>
     function addGlowEffect7() {
-        const glowEffect7 = document.createElement('div');
-        glowEffect7.className = 'glowEffect7';
-        document.body.appendChild(glowEffect7);
-
+        const glow = document.createElement('div');
+        glow.className = 'glowEffect7';
+        document.body.appendChild(glow);
         window.addEventListener('scroll', () => {
-            glowEffect7.style.opacity = window.scrollY === 0 ? '1' : '0';
+            glow.style.opacity = window.scrollY === 0 ? '1' : '0';
         });
     }
-
-    window.addEventListener('load', () => {
-        addGlowEffect7();
-    });
-</script>
-
-<script>
-    function showRandomGlows() {
-        const glows = ['glowEffect1', 'glowEffect2', 'glowEffect3', 'glowEffect4', 'glowEffect5', 'glowEffect6', 'glowEffect7'];
-        const selectedGlows = glows.sort(() => 0.5 - Math.random()).slice(0, 3);
-
-        selectedGlows.forEach(glow => {
-            const glowElement = document.querySelector(`.${glow}`);
-            if (glowElement) {
-                glowElement.style.display = 'block';
-            }
-        });
-    }
-
-    window.addEventListener('resize', () => {
-        if (window.innerWidth <= 768) {
-            showRandomGlows();
-        }
-    });
-
-    window.addEventListener('load', () => {
-        if (window.innerWidth <= 768) {
-            showRandomGlows();
-        }
-    });
+    window.addEventListener('load', addGlowEffect7);
 </script>
 
 <!-- ______________________end of glows_____________________ -->
