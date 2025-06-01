@@ -9,8 +9,6 @@
 <!-- 20 APRIL 2025 -->
 <!-- © 2024 Rutuj Dhodapkar. All rights reserved. -->
 <!-- © 2025 Rutuj Dhodapkar. All rights reserved. -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +19,16 @@
       height: 100%;
       margin: 0;
       padding: 0;
+      /* Hide scrollbars for all browsers */
+      overflow: hidden;
+    }
+    /* Hide scrollbars for all browsers */
+    html, body {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;     /* Firefox */
+    }
+    html::-webkit-scrollbar, body::-webkit-scrollbar {
+      display: none;             /* Chrome, Safari, Opera */
     }
     body {
       background: #000;
@@ -29,7 +37,6 @@
       height: 100vh;
       min-height: 100vh;
       min-width: 100vw;
-      overflow: hidden;
     }
     .frame-title {
       display: none;
@@ -49,6 +56,7 @@
       top: 0;
       left: 0;
       z-index: 1;
+      overflow: hidden; /* Hide scrollbars in container */
     }
     iframe {
       display: block;
@@ -60,6 +68,7 @@
       background: #fff;
       margin: 0;
       padding: 0;
+      overflow: hidden; /* Hide scrollbars in iframe (if possible) */
     }
     @media (max-width: 700px) {
       .iframe-container, iframe {
