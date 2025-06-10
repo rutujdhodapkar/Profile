@@ -1,6 +1,6 @@
 # Rutuj Dhodapkar - AI/Ml Student Portfolio
 
-Welcome to my Backend Developer Portfolio! This repository showcases my projects, technical skills, and experience in backend development.
+Welcome to my Portfolio! This repository showcases my projects, technical skills, and experience in backend development.
 
 ## About Me
 
