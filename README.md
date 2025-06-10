@@ -17,9 +17,6 @@ I am Rutuj Dhodapkar, a passionate AI developer with a deep understanding of des
 You can check out my portfolio live at:  
 [Portfolio](https://rutujdhodapkar.vercel.app)
 
-Quick preview:
-![Cool Banner](1.png)
-![Cool Banner second](2.png)
 
 
 ## Contact Me
