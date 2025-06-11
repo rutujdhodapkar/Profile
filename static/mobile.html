@@ -535,7 +535,9 @@
       box.id = 'devNotificationBox';
       box.innerHTML = `
         <div class="dev-notif-message">
-          Site still under development, if any error occur contact Admin
+          Site still under development, site can be slow on some devices.
+          <br>
+          If any error occur contact Admin.
         </div>
         <button class="dev-notif-btn" type="button">Okay</button>
       `;
@@ -547,7 +549,7 @@
       // Hide after 10 seconds
       setTimeout(function() {
         if(box && box.style.display !== 'none') box.style.display = 'none';
-      }, 10000);
+      }, 15000);
     });
   </script>
 </head>
