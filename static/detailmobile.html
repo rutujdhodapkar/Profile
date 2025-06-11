@@ -237,12 +237,18 @@
         if (currentFrame < frames.length - 1) {
           currentFrame++;
           showFrame(currentFrame);
+        } else if (currentFrame === frames.length - 1) {
+          // If at the last frame and scroll down, open contact.html
+          window.location.href = "contact.html";
         }
       } else if (e.deltaY < 0) {
         // Previous frame
         if (currentFrame > 0) {
           currentFrame--;
           showFrame(currentFrame);
+        } else if (currentFrame === 0) {
+          // If at the first frame and scroll up, open mobile.html
+          window.location.href = "mobile.html";
         }
       }
       setTimeout(() => { isScrolling = false; }, SCROLL_DELAY);
@@ -265,10 +271,16 @@
           // Swipe up: next
           currentFrame++;
           showFrame(currentFrame);
+        } else if (diff > 0 && currentFrame === frames.length - 1) {
+          // Swipe up at the last frame: open contact.html
+          window.location.href = "contact.html";
         } else if (diff < 0 && currentFrame > 0) {
           // Swipe down: prev
           currentFrame--;
           showFrame(currentFrame);
+        } else if (diff < 0 && currentFrame === 0) {
+          // Swipe down at the first frame: open mobile.html
+          window.location.href = "mobile.html";
         }
       }
       touchStartY = null;
@@ -280,12 +292,18 @@
         if (currentFrame < frames.length - 1) {
           currentFrame++;
           showFrame(currentFrame);
+        } else if (currentFrame === frames.length - 1) {
+          // If at the last frame and press down, open contact.html
+          window.location.href = "contact.html";
         }
         e.preventDefault();
       } else if (e.key === "ArrowUp" || e.key === "PageUp") {
         if (currentFrame > 0) {
           currentFrame--;
           showFrame(currentFrame);
+        } else if (currentFrame === 0) {
+          // If at the first frame and press up, open mobile.html
+          window.location.href = "mobile.html";
         }
         e.preventDefault();
       }
@@ -299,7 +317,7 @@
           overlay.classList.add('disabled');
           setTimeout(function() {
             overlay.classList.remove('disabled');
-          }, 5000);
+          }, 3500);
         }
       });
       // Also allow touchstart for mobile
@@ -308,7 +326,7 @@
           overlay.classList.add('disabled');
           setTimeout(function() {
             overlay.classList.remove('disabled');
-          }, 5000);
+          }, 3500);
         }
       }, {passive: true});
     });
@@ -340,5 +358,3 @@
     </div>
   </div>
 </div>
-
-
