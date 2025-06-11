@@ -636,7 +636,7 @@
       var blogsBtn = document.getElementById('blogs-btn');
       if (blogsBtn) {
         blogsBtn.addEventListener('click', function() {
-          window.open('https://hashnode.com/@rutujdhodapkar ', '_blank');
+          window.open('https://researchrutujdhodapkar.vercel.app/r ', '_blank');
         });
       }
 
@@ -874,43 +874,6 @@
     })();
   </script>
 
-<!-- Removed scroll up animation as per instructions -->
-<!--
-<script>
-let lastScrollY = window.scrollY;
-let elasticScrollTriggered = false;
-
-window.addEventListener('scroll', () => {
-  const currentScroll = window.scrollY;
-  if (currentScroll < lastScrollY && currentScroll === 0) {
-    if (!elasticScrollTriggered) {
-      elasticScrollTriggered = true;
-      document.body.style.transition = 'transform 0.3s ease-out';
-      document.body.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        document.body.style.transform = 'translateY(0)';
-      }, 300);
-    }
-  } else {
-    elasticScrollTriggered = false;
-  }
-  lastScrollY = currentScroll;
-});
-
-let lastScrollYForBottom = window.scrollY;
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  const viewportHeight = window.innerHeight;
-  const docHeight = Math.max(
-    document.body.scrollHeight, document.documentElement.scrollHeight,
-    document.body.offsetHeight, document.documentElement.offsetHeight,
-    document.body.clientHeight, document.documentElement.clientHeight
-  );
-  // No redirection or animation here, handled by overlay logic above
-  lastScrollYForBottom = scrollY;
-});
-</script>
--->
 </body>
 
 <style>
