@@ -1,17 +1,21 @@
-<script>
-  // Always check if screen width is more than 930px, then redirect
-  function checkAndRedirect() {
-    if (window.innerWidth > 930) {
-      window.location.href = "detail.html";
-    }
-  }
-  checkAndRedirect();
-  window.addEventListener('resize', checkAndRedirect);
-</script>
-
 <!-- Dotted lines background -->
 
 <iframe src="animations/dotted lines.html" style="width:100vw; height:100vh; border:none; position:fixed; top:0; left:0; z-index:-1; pointer-events:none;"></iframe>
+
+<script>
+  // Redirect to detail.html if screen width is greater than 930px
+  (function() {
+    function redirectIfWide() {
+      if (window.innerWidth > 930) {
+        window.location.href = "detail.html";
+      }
+    }
+    // Run on load
+    redirectIfWide();
+    // Optionally, also redirect if user resizes window to be wider
+    window.addEventListener('resize', redirectIfWide);
+  })();
+</script>
 
 <style>
   html, body {
@@ -479,4 +483,3 @@
     </div>
   </div>
 </div>
-
