@@ -1,0 +1,277 @@
+<!-- Projects Carousel Section -->
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'BitmapFont';
+    src: url('BitmapFont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  body {
+    background: #00000000 !important;
+  }
+  .projects-scroll-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+    max-width: 100vw;
+    background: transparent;
+    border: 2.5px solid #fff;
+    border-radius: 32px;
+  }
+  .projects-container {
+    display: flex;
+    gap: 40px;
+    margin: 48px 0 32px 0;
+    flex-wrap: nowrap;
+    width: max-content;
+    will-change: transform;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    background: transparent;
+  }
+  .projects-container::-webkit-scrollbar {
+    display: none;
+  }
+  .project-card {
+    background: transparent !important;
+    border: 2.5px solid #fff !important;
+    border-radius: 56px;
+    color: #fff;
+    min-width: 370px;
+    max-width: 370px;
+    width: 370px;
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    font-family: 'BitmapFont', Arial, sans-serif;
+    font-size: 1.08rem;
+    box-shadow: none;
+    transition: border-radius 0.18s, background 0.18s, color 0.18s;
+    margin-bottom: 12px;
+    padding: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  .project-image {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    border-top-left-radius: 56px;
+    border-top-right-radius: 56px;
+    background: #222;
+    display: block;
+    border-bottom: 2px solid #fff;
+  }
+  .project-content {
+    padding: 22px 22px 16px 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    justify-content: flex-start;
+    font-family: 'BitmapFont', Arial, sans-serif;
+    background: transparent;
+  }
+  .project-title {
+    font-family: 'BitmapFont', Arial, sans-serif;
+    font-size: 1.28rem;
+    margin: 0 0 10px 0;
+    color: #fff;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    text-align: left;
+    background: transparent;
+  }
+  .project-desc {
+    font-family: 'BitmapFont', Arial, sans-serif;
+    font-size: 1.08rem;
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: left;
+    flex: 1 1 auto;
+    background: transparent;
+  }
+  .project-link {
+    display: inline-block;
+    background: transparent !important;
+    color: #fff !important;
+    font-family: 'BitmapFont', Arial, sans-serif;
+    font-size: 1.08rem;
+    border-radius: 28px;
+    padding: 9px 24px;
+    text-decoration: none;
+    transition: background 0.18s, color 0.18s;
+    margin-top: auto;
+    align-self: flex-start;
+    border: 1.5px solid #fff !important;
+  }
+  @media (max-width: 700px) {
+    .projects-scroll-wrapper {
+      padding-left: 0;
+      padding-right: 0;
+      border-radius: 24px;
+    }
+    .projects-container {
+      gap: 22px;
+    }
+    .project-card {
+      min-width: 300px;
+      max-width: 300px;
+      width: 300px;
+      height: 430px;
+      border-radius: 44px;
+    }
+    .project-image {
+      height: 150px;
+      border-top-left-radius: 44px;
+      border-top-right-radius: 44px;
+    }
+    .project-content {
+      padding: 18px 16px 12px 16px;
+      font-family: 'BitmapFont', Arial, sans-serif;
+    }
+    .project-title {
+      font-size: 1.18rem;
+      margin-bottom: 9px;
+      font-family: 'BitmapFont', Arial, sans-serif;
+    }
+    .project-desc {
+      font-size: 1.01rem;
+      margin-bottom: 16px;
+      font-family: 'BitmapFont', Arial, sans-serif;
+    }
+    .project-link {
+      font-size: 1.01rem;
+      padding: 8px 20px;
+      border-radius: 26px;
+      font-family: 'BitmapFont', Arial, sans-serif;
+    }
+  }
+  .projects-title {
+    font-family: 'Krona One', Arial, sans-serif;
+    color: #ffffff;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+    font-size: 2.2rem;
+  }
+</style>
+<div style="text-align:center;">
+  <h2 class="projects-title">my projets</h2>
+  <div class="projects-scroll-wrapper">
+    <div class="projects-container" id="autoScrollProjects">
+      <!-- Example Project Card 1 -->
+      <div class="project-card">
+        <img class="project-image" src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" alt="Project 1">
+        <div class="project-content">
+          <div class="project-title">AI Chatbot</div>
+          <div class="project-desc">A conversational AI chatbot that helps users with their queries in real time using NLP and deep learning.</div>
+          <a class="project-link" href="https://github.com/yourusername/ai-chatbot" target="_blank" rel="noopener">View Project</a>
+        </div>
+      </div>
+      <!-- Example Project Card 2 -->
+      <div class="project-card">
+        <img class="project-image" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Project 2">
+        <div class="project-content">
+          <div class="project-title">Data Visualizer</div>
+          <div class="project-desc">An interactive web app for visualizing large datasets with dynamic charts and graphs.</div>
+          <a class="project-link" href="https://yourportfolio.com/datavis" target="_blank" rel="noopener">View Project</a>
+        </div>
+      </div>
+      <!-- Example Project Card 3 -->
+      <div class="project-card">
+        <img class="project-image" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Project 3">
+        <div class="project-content">
+          <div class="project-title">Vision App</div>
+          <div class="project-desc">A mobile app that uses computer vision to identify objects and provide instant feedback.</div>
+          <a class="project-link" href="https://github.com/yourusername/vision-app" target="_blank" rel="noopener">View Project</a>
+        </div>
+      </div>
+      <!-- Example Project Card 4 -->
+      <div class="project-card">
+        <img class="project-image" src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Project 4">
+        <div class="project-content">
+          <div class="project-title">Cloud Sync</div>
+          <div class="project-desc">A cloud-based file synchronization tool for seamless data backup and sharing.</div>
+          <a class="project-link" href="https://yourportfolio.com/cloudsync" target="_blank" rel="noopener">View Project</a>
+        </div>
+      </div>
+      <!-- Duplicate cards for seamless infinite scroll -->
+      <div class="project-card">
+        <img class="project-image" src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" alt="Project 1">
+        <div class="project-content">
+          <div class="project-title">AI Chatbot</div>
+          <div class="project-desc">A conversational AI chatbot that helps users with their queries in real time using NLP and deep learning.</div>
+          <a class="project-link" href="https://github.com/yourusername/ai-chatbot" target="_blank" rel="noopener">View Project</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <img class="project-image" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Project 2">
+        <div class="project-content">
+          <div class="project-title">Data Visualizer</div>
+          <div class="project-desc">An interactive web app for visualizing large datasets with dynamic charts and graphs.</div>
+          <a class="project-link" href="https://yourportfolio.com/datavis" target="_blank" rel="noopener">View Project</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <img class="project-image" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Project 3">
+        <div class="project-content">
+          <div class="project-title">Vision App</div>
+          <div class="project-desc">A mobile app that uses computer vision to identify objects and provide instant feedback.</div>
+          <a class="project-link" href="https://github.com/yourusername/vision-app" target="_blank" rel="noopener">View Project</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <img class="project-image" src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Project 4">
+        <div class="project-content">
+          <div class="project-title">Cloud Sync</div>
+          <div class="project-desc">A cloud-based file synchronization tool for seamless data backup and sharing.</div>
+          <a class="project-link" href="https://yourportfolio.com/cloudsync" target="_blank" rel="noopener">View Project</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // Auto horizontal scroll for projects-container (left to right)
+  (function() {
+    const container = document.getElementById('autoScrollProjects');
+    let scrollAmount = 0;
+    let speed = 0.25; // px per frame (slower speed)
+    let reqId;
+    let containerWidth, parentWidth;
+
+    function updateWidths() {
+      containerWidth = container.scrollWidth;
+      parentWidth = container.parentElement.offsetWidth;
+    }
+
+    function animate() {
+      scrollAmount += speed;
+      if (scrollAmount >= containerWidth / 2) {
+        scrollAmount = 0;
+      }
+      container.style.transform = `translateX(${-scrollAmount}px)`;
+      reqId = requestAnimationFrame(animate);
+    }
+
+    function onResize() {
+      updateWidths();
+    }
+
+    window.addEventListener('resize', onResize);
+    updateWidths();
+    animate();
+  })();
+</script>
+<style>
+    ::selection {
+      background: #fff;
+      color: #000;
+    }
+</style>

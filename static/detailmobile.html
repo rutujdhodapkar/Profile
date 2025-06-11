@@ -1,0 +1,331 @@
+<script>
+  // Always check if screen width is more than 930px, then redirect
+  function checkAndRedirect() {
+    if (window.innerWidth > 930) {
+      window.location.href = "detail.html";
+    }
+  }
+  checkAndRedirect();
+  window.addEventListener('resize', checkAndRedirect);
+</script>
+
+<!-- Dotted lines background -->
+<iframe src="animations/dotted lines.html" style="width:100vw; height:100vh; border:none; position:fixed; top:0; left:0; z-index:-1; pointer-events:none;"></iframe>
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent native scroll */
+  }
+  body {
+    min-height: 100vh;
+    min-width: 100vw;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .outer-padding-8px {
+    box-sizing: border-box;
+    padding: 8px;
+    width: 100vw;
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+  .frame-stack-container {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center frames vertically */
+    gap: 16px;
+    z-index: 1;
+    height: 100vh;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    /* We'll use transform for frame transitions */
+  }
+  .frame-box {
+    width: 100%;
+    max-width: 600px;
+    min-height: calc(100vh - 10vw - 16px);
+    background: rgba(255,255,255,0.10); /* Nearly fully transparent */
+    border-radius: 2.2rem;
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+    border: 2.5px solid rgba(224,224,224,0.18);
+    margin: 0 auto; /* Center horizontally */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically in frame */
+    align-items: center;     /* Center content horizontally in frame */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    /* Each frame will be positioned absolutely and shown/hidden by JS */
+    transition: opacity 0.35s, transform 0.35s;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+  }
+  .frame-box.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 10;
+    /* transform: translateY(0); -- replaced by centering transform above */
+  }
+  .frame-box.above {
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, calc(-50% - 40px)) scale(0.98);
+  }
+  .frame-box.below {
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, calc(-50% + 40px)) scale(0.98);
+  }
+  .frame-box iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    display: block;
+    overflow: hidden !important;
+    scrollbar-width: none !important;
+  }
+  .frame-box iframe::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    background: transparent !important;
+  }
+  @media (max-width: 700px) {
+    .frame-box {
+      width: 100%;
+      min-height: calc(100vh - 8vw - 16px);
+      border-radius: 1.5rem;
+      margin: 0 auto;
+      left: 50%;
+      top: 50%;
+      right: auto;
+      bottom: auto;
+      transform: translate(-50%, -50%);
+    }
+    .frame-stack-container {
+      gap: 10px;
+      padding: 0;
+      justify-content: center;
+    }
+    .outer-padding-8px {
+      padding: 8px;
+    }
+  }
+  /* Optional: show navigation dots at the bottom */
+  .frame-nav-dots {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    z-index: 100;
+    pointer-events: none;
+  }
+  .frame-nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff6;
+    border: 2px solid #fff;
+    opacity: 0.7;
+    transition: background 0.2s, opacity 0.2s;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  .frame-nav-dot.active {
+    background: #fff;
+    opacity: 1;
+  }
+</style>
+
+<script>
+  // Disable scrolling in all iframes after they load
+  function disableIframeScroll(iframe) {
+    try {
+      // For same-origin iframes only
+      iframe.contentWindow.document.body.style.overflow = 'hidden';
+      iframe.contentWindow.document.documentElement.style.overflow = 'hidden';
+      // Hide scrollbars
+      iframe.contentWindow.document.body.style['-ms-overflow-style'] = 'none';
+      iframe.contentWindow.document.body.style['scrollbar-width'] = 'none';
+      // For webkit browsers
+      var style = iframe.contentWindow.document.createElement('style');
+      style.innerHTML = '::-webkit-scrollbar{display:none!important;width:0!important;background:transparent!important;}';
+      iframe.contentWindow.document.head.appendChild(style);
+    } catch (e) {
+      // Ignore cross-origin iframes
+    }
+  }
+
+  // Frame-by-frame scroll logic
+  document.addEventListener('DOMContentLoaded', function() {
+    // Disable iframe scrollbars
+    document.querySelectorAll('.frame-box iframe').forEach(function(iframe) {
+      iframe.addEventListener('load', function() {
+        disableIframeScroll(iframe);
+      });
+    });
+
+    // Frame navigation logic
+    const frames = Array.from(document.querySelectorAll('.frame-box'));
+    let currentFrame = 0;
+
+    function showFrame(idx, direction = 0) {
+      frames.forEach((frame, i) => {
+        frame.classList.remove('active', 'above', 'below');
+        if (i === idx) {
+          frame.classList.add('active');
+        } else if (i < idx) {
+          frame.classList.add('above');
+        } else {
+          frame.classList.add('below');
+        }
+      });
+      // Update nav dots
+      document.querySelectorAll('.frame-nav-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === idx);
+      });
+    }
+
+    // Create navigation dots
+    let navDots = document.createElement('div');
+    navDots.className = 'frame-nav-dots';
+    frames.forEach((frame, i) => {
+      let dot = document.createElement('div');
+      dot.className = 'frame-nav-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', function(e) {
+        e.preventDefault();
+        currentFrame = i;
+        showFrame(currentFrame);
+      });
+      navDots.appendChild(dot);
+    });
+    document.body.appendChild(navDots);
+
+    // Initial show
+    showFrame(currentFrame);
+
+    // Scroll event handler (wheel/touch)
+    let scrollLock = false;
+    let lastTouchY = null;
+
+    function nextFrame() {
+      if (currentFrame < frames.length - 1) {
+        currentFrame++;
+        showFrame(currentFrame, 1);
+      }
+    }
+    function prevFrame() {
+      if (currentFrame > 0) {
+        currentFrame--;
+        showFrame(currentFrame, -1);
+      }
+    }
+
+    // Mouse wheel
+    window.addEventListener('wheel', function(e) {
+      if (scrollLock) return;
+      if (Math.abs(e.deltaY) < 20) return; // ignore tiny scrolls
+      scrollLock = true;
+      if (e.deltaY > 0) {
+        nextFrame();
+      } else if (e.deltaY < 0) {
+        prevFrame();
+      }
+      setTimeout(() => { scrollLock = false; }, 500);
+      e.preventDefault();
+    }, { passive: false });
+
+    // Touch swipe
+    window.addEventListener('touchstart', function(e) {
+      if (e.touches.length === 1) {
+        lastTouchY = e.touches[0].clientY;
+      }
+    }, { passive: false });
+    window.addEventListener('touchmove', function(e) {
+      if (lastTouchY === null) return;
+      let deltaY = e.touches[0].clientY - lastTouchY;
+      if (Math.abs(deltaY) > 60 && !scrollLock) {
+        scrollLock = true;
+        if (deltaY < 0) {
+          nextFrame();
+        } else {
+          prevFrame();
+        }
+        setTimeout(() => { scrollLock = false; }, 500);
+        lastTouchY = null;
+      }
+    }, { passive: false });
+    window.addEventListener('touchend', function(e) {
+      lastTouchY = null;
+    });
+
+    // Keyboard navigation (optional)
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        nextFrame();
+        e.preventDefault();
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        prevFrame();
+        e.preventDefault();
+      }
+    });
+
+    // Prevent native scroll
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+  });
+</script>
+
+<div class="outer-padding-8px" style="overflow:hidden;">
+  <div class="frame-stack-container" style="height:100vh; position:relative; justify-content:center; align-items:center;">
+    <!-- Frame 1: info.html -->
+    <div class="frame-box active" style="height:calc(100vh - 10vw - 16px); display:flex; flex-direction:column; justify-content:center; align-items:center;">
+      <iframe src="info mobile.html" title="Info"></iframe>
+    </div>
+    <!-- Frame 2: skill mobile.html and skill section mobile.html (stacked vertically, NO line between) -->
+    <div class="frame-box" style="height:calc(100vh - 10vw - 16px); display:flex; flex-direction:column; gap:0; padding:0; justify-content:center; align-items:center;">
+      <iframe src="skill mobile.html" title="Skill Squares" style="flex:1 1 50%; min-height:48%;"></iframe>
+      <iframe src="skill section mobile.html" title="Skill Circles" style="flex:1 1 50%; min-height:48%;"></iframe>
+    </div>
+    <!-- Frame 3: certificat.html -->
+    <div class="frame-box" style="height:calc(100vh - 10vw - 16px); display:flex; flex-direction:column; justify-content:center; align-items:center;">
+      <iframe src="certificate mobile.html" title="Certificates"></iframe>
+    </div>
+    <!-- Frame 4: project mobile.html -->
+    <div class="frame-box" style="height:calc(100vh - 10vw - 16px); display:flex; flex-direction:column; justify-content:center; align-items:center;">
+      <iframe src="project mobile.html" title="Projects"></iframe>
+    </div>
+  </div>
+</div>
