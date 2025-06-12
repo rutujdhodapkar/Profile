@@ -20,7 +20,7 @@
       font-style: normal;
     }
     body {
-      background: #000000;
+      background: transparent;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -29,6 +29,8 @@
       margin: 0;
       font-family: 'BitmapFont', Arial, sans-serif;
       color: #fff;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
     .cert-page-title {
       font-family: 'Krona One', Arial, sans-serif;
