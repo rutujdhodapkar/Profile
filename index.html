@@ -79,5 +79,27 @@
         style="width:100vw; height:100vh; border:none; position:fixed; top:0; left:0; z-index:1; overflow:hidden;" 
         scrolling="auto">
     </iframe>
+    <script>
+      // Disable right-click context menu
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+      }, false);
+
+      // Disable all keyboard input
+      document.addEventListener('keydown', function(e) {
+        e.preventDefault();
+        return false;
+      }, false);
+
+      document.addEventListener('keypress', function(e) {
+        e.preventDefault();
+        return false;
+      }, false);
+
+      document.addEventListener('keyup', function(e) {
+        e.preventDefault();
+        return false;
+      }, false);
+    </script>
   </head>
 </html>

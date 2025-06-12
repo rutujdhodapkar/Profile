@@ -387,27 +387,27 @@
   <div class="frame-bg-inner">
     <iframe src="animations/pattern.html" title="Pattern Background"></iframe>
     <div class="frame-buttons">
-      <button class="frame-button-link" onclick="window.location.href='static/main port frame.html'">Portfolio</button>
-      <button class="frame-button-link" onclick="window.location.href='https://researchrutujdhodapkar.vercel.app'">Research</button>
-      <button class="frame-button-link" onclick="window.location.href='https://hashnode.com/@rutujdhodapkar'">Blogs</button>
-      <button class="frame-button-link" onclick="window.location.href='https://x.com/rutujdhodapkar'">Thoughts</button>
+      <button class="frame-button-link" onclick="window.location.href='main port frame.html'">Portfolio</button>
+      <button class="frame-button-link" onclick="window.open('https://researchrutujdhodapkar.vercel.app', '_blank', 'noopener')">Research</button>
+      <button class="frame-button-link" onclick="window.open('https://hashnode.com/@rutujdhodapkar', '_blank', 'noopener')">Blogs</button>
+      <button class="frame-button-link" onclick="window.open('https://x.com/rutujdhodapkar', '_blank', 'noopener')">Thoughts</button>
     </div>
   </div>
 </div>
 <div class="container">
-  <div class="card" onclick="window.location.href='static/main port frame.html'">
+  <div class="card" onclick="window.location.href='main port frame.html'">
     <div class="card-bgbox"></div>
     <span class="label">Portfolio</span>
   </div>
-  <div class="card" onclick="window.location.href='https://researchrutujdhodapkar.vercel.app'">
+  <div class="card" onclick="window.open('https://researchrutujdhodapkar.vercel.app', '_blank', 'noopener')">
     <div class="card-bgbox"></div>
     <span class="label">Research</span>
   </div>
-  <div class="card" onclick="window.location.href='https://hashnode.com/@rutujdhodapkar'">
+  <div class="card" onclick="window.open('https://hashnode.com/@rutujdhodapkar', '_blank', 'noopener')">
     <div class="card-bgbox"></div>
     <span class="label">Blogs</span>
   </div>
-  <div class="card" onclick="window.location.href='https://x.com/rutujdhodapkar'">
+  <div class="card" onclick="window.open('https://x.com/rutujdhodapkar', '_blank', 'noopener')">
     <div class="card-bgbox"></div>
     <span class="label">Thoughts</span>
   </div>
@@ -433,39 +433,76 @@
 </div>
 <script>
   // 3D tilt effect for cards (only for desktop)
-  function enableCardTilt() {
-    document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const midX = rect.width / 2;
-        const midY = rect.height / 2;
-        const rotateY = ((x - midX) / midX) * 15;
-        const rotateX = -((y - midY) / midY) * 15;
-        card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-        card.style.boxShadow = `inset 0 0 0 1px rgba(255,255,255,0.3), ${-rotateY * 2}px ${rotateX * 2}px 25px rgba(0, 0, 0, 0.15)`;
+  // Never pause debugger at any cost
+  (function() {
+    function enableCardTilt() {
+      document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const midX = rect.width / 2;
+          const midY = rect.height / 2;
+          const rotateY = ((x - midX) / midX) * 15;
+          const rotateX = -((y - midY) / midY) * 15;
+          card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+          card.style.boxShadow = `inset 0 0 0 1px rgba(255,255,255,0.3), ${-rotateY * 2}px ${rotateX * 2}px 25px rgba(0, 0, 0, 0.15)`;
+        });
+        card.addEventListener('mouseenter', () => {
+          card.style.transition = 'transform 0.1s ease';
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transition = 'transform 0.5s ease, box-shadow 0.5s ease';
+          card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)';
+          card.style.boxShadow = 'inset 0 0 0 1px rgba(255,255,255,0.3), 0 15px 25px rgba(0, 0, 0, 0.1)';
+        });
       });
-      card.addEventListener('mouseenter', () => {
-        card.style.transition = 'transform 0.1s ease';
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transition = 'transform 0.5s ease, box-shadow 0.5s ease';
-        card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)';
-        card.style.boxShadow = 'inset 0 0 0 1px rgba(255,255,255,0.3), 0 15px 25px rgba(0, 0, 0, 0.1)';
-      });
-    });
-  }
-  // Only enable tilt on desktop
-  function handleResponsiveUI() {
-    if (window.innerWidth <= 768) {
-      // Hide cards, show frame-buttons (handled by CSS)
-    } else {
-      enableCardTilt();
     }
-  }
-  handleResponsiveUI();
-  window.addEventListener('resize', handleResponsiveUI);
+    function handleResponsiveUI() {
+      if (window.innerWidth <= 768) {
+        // Hide cards, show frame-buttons (handled by CSS)
+      } else {
+        enableCardTilt();
+      }
+    }
+    handleResponsiveUI();
+    window.addEventListener('resize', handleResponsiveUI);
+
+    // Prevent debugger from pausing at any cost
+    if (typeof window !== 'undefined') {
+      window.addEventListener('keydown', function(e) {
+        if ((e.key === 'F12') || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.shiftKey && e.key === 'J') || (e.ctrlKey && e.key === 'u')) {
+          e.preventDefault();
+        }
+      });
+      // Overwrite debugger statement
+      window.debugger = function() {};
+    }
+  })();
+</script>
+
+<script>
+  // Disable right-click context menu
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  }, false);
+
+  // Disable all keyboard input
+  document.addEventListener('keydown', function(e) {
+    e.preventDefault();
+    return false;
+  }, false);
+
+  document.addEventListener('keypress', function(e) {
+    e.preventDefault();
+    return false;
+  }, false);
+
+  document.addEventListener('keyup', function(e) {
+    e.preventDefault();
+    return false;
+  }, false);
 </script>
 </body>
+</html>
 </html>
