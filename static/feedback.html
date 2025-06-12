@@ -175,7 +175,7 @@
       window.location.href = "contact.html";
     });
 
-    // Handle feedback form submission via AJAX
+    // Handle feedback form submission: open mailto with all data
     document.getElementById('feedbackForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
@@ -185,53 +185,42 @@
       var rating = document.getElementById('rating').value.trim();
       var feedback = document.getElementById('feedback').value.trim();
 
-      // Optionally, you can add client-side validation here
+      // Get current date and time
+      var now = new Date();
+      var dateString = now.toLocaleString();
 
-      // Prepare data to send
-      var data = {
-        name: name,
-        email: email,
-        rating: rating,
-        feedback: feedback
-      };
+      // Compose email body
+      var body =
+        "Portfolio Feedback Submission\n\n" +
+        "Date: " + dateString + "\n" +
+        "Name: " + name + "\n" +
+        "Email: " + email + "\n" +
+        "Rating: " + rating + "\n" +
+        "Feedback:\n" + feedback + "\n";
 
-      // Disable submit button to prevent double submit
-      var submitBtn = document.getElementById('submitBtn');
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Submitting...";
+      // Encode subject and body for mailto
+      var subject = encodeURIComponent("Portfolio feedback");
+      var mailBody = encodeURIComponent(body);
 
-      // Clear previous message
+      // Compose mailto link
+      var mailtoLink = "mailto:rutujdhodapkar@gmai.com?subject=" + subject + "&body=" + mailBody;
+
+      // Open mailto (try to open in a new window/tab, fallback to location.href)
+      var win = window.open(mailtoLink, '_blank');
+      if (!win) {
+        window.location.href = mailtoLink;
+      }
+
+      // Show message to user
       var msgDiv = document.getElementById('feedbackMessage');
-      msgDiv.textContent = "";
+      msgDiv.style.color = "#2e7d32";
+      msgDiv.textContent = "Your email app/website should open.\nPlease send the email to submit your feedback!\nThank you for your feedback!";
+      document.getElementById('feedbackForm').reset();
 
-      fetch('/submit-feedback', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(result) {
-        if (result.success) {
-          msgDiv.style.color = "#2e7d32";
-          msgDiv.textContent = "Thank you for your feedback!";
-          document.getElementById('feedbackForm').reset();
-        } else {
-          msgDiv.style.color = "#b71c1c";
-          msgDiv.textContent = result.error || "Failed to submit feedback.";
-        }
-      })
-      .catch(function(error) {
-        msgDiv.style.color = "#b71c1c";
-        msgDiv.textContent = "An error occurred. Please try again.";
-      })
-      .finally(function() {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Submit";
-      });
+      // Optionally, re-enable submit button if you want
+      var submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit";
     });
   </script>
 
