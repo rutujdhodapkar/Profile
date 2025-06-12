@@ -76,6 +76,7 @@
       display: inline-block;
       text-decoration: none;
       pointer-events: auto;
+      position: relative;
     }
     .contact-btn:hover, .contact-btn:focus {
       background: transparent;
@@ -83,6 +84,15 @@
       border: 2px solid #fff;
       transform: translateY(-2px) scale(1.04);
       text-decoration: none;
+    }
+    .contact-btn .arrow-top-right {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 0.5em;
+      margin-bottom: 2px;
+      width: 1.1em;
+      height: 1.1em;
+      /* Make sure the arrow is not blurry on retina */
     }
     .username {
       font-family: 'BitmapFont', monospace, Arial, sans-serif;
@@ -307,10 +317,15 @@
       {
         label: 'Instagram',
         url: 'https://instagram.com/rutujdhodapkar'
+      },
+      {
+        label: 'Research',
+        url: 'https://researchrutujdhodapkar.vercel.app',
+        arrow: true
       }
     ];
 
-    function createContactButton(href, label) {
+    function createContactButton(href, label, arrow) {
       if (!href) return '';
       let btn = document.createElement('button');
       btn.className = 'contact-btn';
@@ -319,13 +334,31 @@
       btn.onclick = function(e) {
         window.open(href, '_blank');
       };
+      if (arrow) {
+        // Add arrow SVG for top-right
+        let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("class", "arrow-top-right");
+        svg.setAttribute("width", "1em");
+        svg.setAttribute("height", "1em");
+        svg.setAttribute("viewBox", "0 0 20 20");
+        svg.setAttribute("fill", "none");
+        svg.setAttribute("aria-hidden", "true");
+        let path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", "M6 14L14 6M14 6H7.5M14 6V12.5");
+        path.setAttribute("stroke", "#000");
+        path.setAttribute("stroke-width", "2");
+        path.setAttribute("stroke-linecap", "round");
+        path.setAttribute("stroke-linejoin", "round");
+        svg.appendChild(path);
+        btn.appendChild(svg);
+      }
       return btn;
     }
 
     // Populate the contact links directly
     const btnRow = document.getElementById('contact-links');
-    contacts.forEach(({url, label}) => {
-      let btn = createContactButton(url, label);
+    contacts.forEach(({url, label, arrow}) => {
+      let btn = createContactButton(url, label, arrow);
       if (btn) btnRow.appendChild(btn);
     });
 
