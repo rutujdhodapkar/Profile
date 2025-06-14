@@ -40,12 +40,11 @@
       color: #fff !important;
     }
     .project-title {
-      font-size: 3.2rem; /* Increased from 2.8rem to 5rem */
+      font-size: 3.2rem;
       font-weight: bold;
       text-align: center;
       margin-bottom: -120px;
       margin-top: 0;
-      /* Remove Doto font for project-title */
       font-family: Arial, sans-serif;
       letter-spacing: 0.04em;
       color: #fff !important;
@@ -198,6 +197,35 @@
       color: #fff !important;
     }
 
+    /* Section number vertical text */
+    .section-number {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      color: #fff !important;
+      font-family: 'BitmapFont', Arial, sans-serif;
+      font-size: 4.5rem;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 2;
+      white-space: nowrap;
+      letter-spacing: 0.08em;
+      user-select: none;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      /* Show by default, hide when not at rest */
+      /* Will be hidden by class below */
+    }
+    .vertical-rectangle.bigger .section-number,
+    .vertical-rectangle.side .section-number,
+    .vertical-rectangle.side2 .section-number,
+    .vertical-rectangle.far .section-number,
+    .vertical-rectangle.long-hover .section-number {
+      opacity: 0 !important;
+      transition: opacity 0.18s;
+    }
+
     /* Project info box INSIDE each rectangle, overlay on image */
     .project-info-box-inside {
       position: absolute;
@@ -229,7 +257,6 @@
       visibility: hidden;
       color: #fff !important;
     }
-    /* Show info box only when rectangle is both bigger and long-hover */
     .vertical-rectangle.bigger.long-hover .project-info-box-inside {
       opacity: 1;
       pointer-events: auto;
@@ -239,8 +266,6 @@
     .project-info-title {
       font-size: 1.18rem;
       font-weight: 700;
-      /* White to light gray gradient text for title */
-      /* Remove gradient, force white */
       background: none !important;
       color: #fff !important;
       font-family: 'Doto', Arial, sans-serif;
@@ -250,7 +275,6 @@
     }
     .project-info-desc {
       font-size: 1.01rem;
-      /* Remove gradient, force white */
       background: none !important;
       color: #fff !important;
       font-family: 'Doto', Arial, sans-serif;
@@ -258,7 +282,6 @@
       text-shadow: 0 2px 8px rgba(0,0,0,0.13);
     }
     .project-info-link {
-      /* Remove gradient, force white */
       background: none !important;
       color: #fff !important;
       text-decoration: underline dotted;
@@ -271,16 +294,14 @@
     }
     .project-info-date {
       font-size: 0.98rem;
-      /* Remove gradient, force white */
       background: none !important;
       color: #fff !important;
       font-family: 'Doto', Arial, sans-serif;
       text-shadow: 0 2px 8px rgba(0,0,0,0.10);
     }
-    /* Responsive adjustments */
     @media (max-width: 900px) {
       .project-title {
-        font-size: 1.3rem; /* Increased from 2rem to 3rem for mobile as well */
+        font-size: 1.3rem;
         margin-bottom: -60px;
         color: #fff !important;
       }
@@ -295,12 +316,15 @@
         font-size: 0.95rem;
         padding: 8px 14px;
       }
+      .section-number {
+        font-size: 0.9rem;
+        left: 50%;
+      }
     }
     ::selection {
       background: #fff;
       color: #000;
     }
-    /* Force all text to white in all elements, including links and inherited text */
     * {
       color: #fff !important;
       text-shadow: none;
@@ -310,7 +334,6 @@
       background: none !important;
       text-decoration: underline dotted;
     }
-    /* Style for the "Other Projects" button */
     .other-projects-button {
       position: fixed;
       bottom: 24px;
@@ -370,7 +393,6 @@
     Other Projects <span class="arrow-right"></span>
   </button>
   <script>
-    // Helper: parse a CSV line, handling quoted values
     function parseCSVLine(line) {
       const result = [];
       let current = '';
@@ -390,7 +412,6 @@
       return result;
     }
 
-    // Helper: convert Windows full path to file URL
     function windowsPathToFileUrl(path) {
       path = path.replace(/^"(.*)"$/, '$1');
       let urlPath = path.replace(/\\/g, '/');
@@ -400,9 +421,7 @@
       return urlPath;
     }
 
-    // Fetch and process project data from GitHub raw CSV
     function fetchProjectData() {
-      // Use the raw.githubusercontent.com URL for the CSV file
       const githubRawUrl = 'https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv';
       fetch(githubRawUrl)
         .then(response => {
@@ -410,13 +429,11 @@
           return response.text();
         })
         .then(csvText => {
-          // Parse CSV
           const lines = csvText.trim().split('\n');
           if (lines.length < 2) {
             showNoProjects('No project data found.');
             return;
           }
-          // Get header and find indices for required columns
           const headers = lines[0].split(',');
           const idxTitle = headers.indexOf('ptitle');
           const idxDesc = headers.indexOf('pdescriptio');
@@ -430,7 +447,6 @@
           let projects = [];
           for (let i = 1; i < lines.length; i++) {
             const row = parseCSVLine(lines[i]);
-            // Only add if image path is present
             if (idxImg !== -1 && row[idxImg] && row[idxImg].trim()) {
               projects.push({
                 ptitle: row[idxTitle] || '',
@@ -447,7 +463,6 @@
           }
           renderProjects(projects);
           updateListeners();
-          // Auto-bigger the first rectangle if present
           var first = document.querySelector('.vertical-rectangle');
           if (first) {
             highlightWithSides(first);
@@ -477,22 +492,25 @@
       container.appendChild(msg);
     }
 
-    // Helper to create a rectangle for a project
     function createProjectRectangle(project, idx) {
       const div = document.createElement('div');
       div.className = 'vertical-rectangle';
       div.setAttribute('tabindex', '0');
       div.dataset.idx = idx;
 
+      // Section number vertical text
+      const sectionNumber = document.createElement('div');
+      sectionNumber.className = 'section-number';
+      sectionNumber.textContent = "P"+ (idx + 1).toString().padStart(2, '0');
+      div.appendChild(sectionNumber);
+
       // Add image if available, else show "no path found"
       if (project.pimgpath && project.pimgpath.trim()) {
         const img = document.createElement('img');
-        // If the image path is a URL (starts with http/https), use as is, else treat as relative to GitHub repo
         let imgSrc = project.pimgpath.trim();
         if (/^https?:\/\//i.test(imgSrc)) {
           img.src = imgSrc;
         } else {
-          // Try to resolve as a GitHub raw path (assuming images are in the same repo, e.g. /images/...)
           img.src = 'https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/' + imgSrc.replace(/^\.?\/*/, '');
         }
         img.alt = 'Project image';
@@ -516,19 +534,16 @@
       // Info box INSIDE the rectangle, overlay, hidden by default
       const infoBox = document.createElement('div');
       infoBox.className = 'project-info-box-inside';
-      // Title
       const title = document.createElement('div');
       title.className = 'project-info-title';
       title.textContent = project.ptitle || '';
       infoBox.appendChild(title);
-      // Description
       if (project.pdescriptio && project.pdescriptio.trim()) {
         const desc = document.createElement('div');
         desc.className = 'project-info-desc';
         desc.textContent = project.pdescriptio;
         infoBox.appendChild(desc);
       }
-      // Link
       if (project.plinks && project.plinks.trim()) {
         const link = document.createElement('a');
         link.className = 'project-info-link';
@@ -538,7 +553,6 @@
         link.textContent = project.plinks;
         infoBox.appendChild(link);
       }
-      // Date
       if (project.pdate && project.pdate.trim()) {
         const date = document.createElement('div');
         date.className = 'project-info-date';
@@ -547,26 +561,25 @@
       }
       div.appendChild(infoBox);
 
-      // On click, go to link if present
       if (project.plinks && project.plinks.trim()) {
         div.addEventListener('click', function(e) {
-          // Only follow if not clicking the link itself
           if (!e.target.classList.contains('project-info-link')) {
             window.open(project.plinks, '_blank');
           }
         });
         div.style.cursor = 'pointer';
       } else {
+        div.addEventListener('click', function(e) {
+          console.log("not available");
+        });
         div.style.cursor = 'default';
       }
 
-      // Store project data for info box
       div._projectData = project;
 
       return div;
     }
 
-    // Render projects or show message if none
     function renderProjects(projectData) {
       const container = document.getElementById('rect-container');
       container.innerHTML = '';
@@ -580,7 +593,6 @@
       });
     }
 
-    // --- Rectangle Highlight/Interaction Logic (unchanged) ---
     function clearHighlights() {
       try {
         const rects = document.querySelectorAll('.vertical-rectangle');
@@ -730,7 +742,6 @@
       } catch (e) {}
     }
 
-    // Update event listeners to use sequentialHighlight and show info box inside rectangle
     function updateListeners() {
       try {
         const rects = document.querySelectorAll('.vertical-rectangle');
@@ -739,10 +750,8 @@
           let longHoverTimeout = null;
           let longHoverActive = false;
 
-          // Show info box on hover/focus, but only when long-hover is active and bigger
           function showInfo() {
             sequentialHighlight(rect);
-            // Only show info box when both bigger and long-hover are present
             longHoverTimeout = setTimeout(function() {
               try {
                 if (rect.classList.contains('bigger')) {
@@ -771,10 +780,10 @@
       } catch (e) {}
     }
 
-    // On DOMContentLoaded, fetch and render projects and set up listeners
     window.addEventListener('DOMContentLoaded', function() {
       fetchProjectData();
     });
   </script>
 </body>
 </html>
+
