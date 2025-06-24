@@ -1,174 +1,174 @@
-
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Skill Section</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
-  <style>
-    @font-face {
-      font-family: 'BitmapFont';
-      src: url('BitmapFont.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
+<!-- Skills Squares Section -->
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'BitmapFont';
+    src: url('BitmapFont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  body {
+    background: rgba(255, 255, 255, 0) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .expertise-scroll-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+    max-width: 100vw;
+  }
+  .expertise-container {
+    display: flex;
+    gap: 32px;
+    margin: 48px 0 32px 0;
+    flex-wrap: nowrap;
+    width: max-content;
+    will-change: transform;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .expertise-container::-webkit-scrollbar {
+    display: none;
+  }
+  .expertise-square {
+    background: #fff;
+    border: 2.5px solid #fff;
+    border-radius: 40px;
+    color: #000;
+    min-width: 160px;
+    min-height: 26px;
+    width: 200px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'BitmapFont', Arial, sans-serif;
+    font-size: 1.15rem;
+    box-shadow: 0 4px 24px 0 rgba(255,255,255,0.08);
+    transition: transform 0.18s cubic-bezier(.77,0,.18,1), box-shadow 0.18s, border-radius 0.18s, background 0.18s, color 0.18s;
+    margin-bottom: 12px;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+  .expertise-square:hover {
+    transform: scale(1.06) translateY(-4px);
+    box-shadow: 0 8px 32px 0 rgba(255,255,255,0.16);
+    border-color: #d8d8d8;
+    color: #fff;
+    background: #000;
+    border-radius: 50px;
+  }
+  @media (max-width: 700px) {
+    .expertise-scroll-wrapper {
+      padding-left: 0;
+      padding-right: 0;
     }
-    body {
-      background: transparent !important;
-      font-family: 'BitmapFont', Arial, sans-serif;
-      position: relative;
-      margin: 0;
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+    .expertise-container {
+      gap: 18px;
     }
-    .skills-container {
-      width: 100vw;
-      height: auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      font-family: 'BitmapFont', Arial, sans-serif;
-      background: #000;
-      position: absolute;
-      z-index: 1;
-      top: 0;
-      left: 0;
-      padding-top: 48px;
-      box-sizing: border-box;
-    }
-    .skill-bar-row {
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      font-family: 'BitmapFont', Arial, sans-serif;
-    }
-    .skill-label {
-      display: inline-block;
-      width: 120px;
-      color: #fff;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      font-family: 'BitmapFont', Arial, sans-serif;
-    }
-    .skill-circles-bg {
-      display: flex;
-      align-items: center;
-      margin-left: 8px;
-      gap: 6px;
-      height: 22px;
+    .expertise-square {
       min-width: 120px;
+      min-height: 50px;
+      width: 130px;
+      height: 38px;
+      font-size: 0.75rem;
+      padding: 0 2px;
+      border-radius: 28px;
+      margin-bottom: 8px;
     }
-    .skill-circle {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: #222;
-      border: 2px solid #222;
-      display: inline-block;
-      transition: background 0.3s, border 0.3s;
-      box-sizing: border-box;
-      position: relative;
+    .expertise-square:hover {
+      border-radius: 36px;
     }
-    .skill-circle.filled {
-      background: #fff;
-      border: 2px solid #fff;
+  }
+  .skills-title {
+    font-family: 'Krona One', Arial, sans-serif;
+    color: #ffffff;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+    font-size: 2.8rem; /* Updated font size */
+  }
+</style>
+<div style="text-align:center;">
+  <div class="expertise-scroll-wrapper">
+    <div class="expertise-container" id="autoScrollExpertise">
+      <div class="expertise-square">
+        Python
+      </div>
+      <div class="expertise-square">
+        R
+      </div>
+      <div class="expertise-square">
+        Java
+      </div>
+      <div class="expertise-square">
+        Data Visualization
+      </div>
+      <div class="expertise-square">
+        JavaScript
+      </div>
+      <div class="expertise-square">
+        Node.js
+      </div>
+      <!-- Duplicate for seamless infinite scroll -->
+      <div class="expertise-square">
+        Python
+      </div>
+      <div class="expertise-square">
+        R
+      </div>
+      <div class="expertise-square">
+        Java
+      </div>
+      <div class="expertise-square">
+        Data Visualization
+      </div>
+      <div class="expertise-square">
+        JavaScript
+      </div>
+      <div class="expertise-square">
+        Node.js
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // Auto horizontal scroll for expertise-container (right to left)
+  (function() {
+    const container = document.getElementById('autoScrollExpertise');
+    let scrollAmount = container.scrollWidth / 2; // Start from the last div
+    let speed = 0.25; // px per frame (slower speed)
+    let reqId;
+    let containerWidth, parentWidth;
+
+    function updateWidths() {
+      containerWidth = container.scrollWidth;
+      parentWidth = container.parentElement.offsetWidth;
     }
-    .skill-circles-bg:hover .skill-circle.filled {
-      background: #d8d8d8;
-      border: 2px solid #d8d8d8;
-    }
-    .skill-bar-percent {
-      position: relative;
-      z-index: 2;
-      padding-left: 12px;
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 600;
-      font-family: 'BitmapFont', Arial, sans-serif;
-      min-width: 38px;
-      text-align: right;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 32px;
-      color: #fff;
-      font-weight: 700;
-      letter-spacing: 1px;
-      font-family: 'Krona One', Arial, sans-serif;
-      font-size: 2.8rem !important;
-    }
-    @media (max-width: 1200px), (max-width: 900px), (max-width: 700px), (max-width: 500px) {
-      h2 {
-        font-size: 2.8rem !important;
+
+    function animate() {
+      scrollAmount -= speed;
+      if (scrollAmount <= 0) {
+        scrollAmount = containerWidth / 2;
       }
+      container.style.transform = `translateX(${-scrollAmount}px)`;
+      reqId = requestAnimationFrame(animate);
     }
-    .number {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 220px;
-      font-weight: 900;
-      color: transparent;
-      -webkit-text-stroke: 2px #ffffff;
-      opacity: 0.3;
-      position: absolute;
-      left: 0;
-      z-index: 10;
-      top: 0;
-      pointer-events: none;
-      user-select: none;
+
+    function onResize() {
+      updateWidths();
     }
+
+    window.addEventListener('resize', onResize);
+    updateWidths();
+    animate();
+  })();
+</script>
+<style>
     ::selection {
       background: #fff;
       color: #000;
     }
-  </style>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var totalCircles = 20;
-      document.querySelectorAll('.skill-circles-bg').forEach(function(bg) {
-        var percent = parseInt(bg.getAttribute('data-percent'), 10) || 0;
-        var filledCount = Math.round((percent / 100) * totalCircles);
-        bg.innerHTML = '';
-        for (var i = 0; i < totalCircles; i++) {
-          var circle = document.createElement('span');
-          circle.className = 'skill-circle' + (i < filledCount ? ' filled' : '');
-          bg.appendChild(circle);
-        }
-      });
-    });
-  </script>
-</head>
-<body>
-  <div class="skills-container">
-    <h2>Programming Languages I use most</h2>
-    <div class="skill-bar-row">
-      <span class="skill-label">Python</span>
-      <div class="skill-circles-bg" data-percent="50"></div>
-      <span class="skill-bar-percent">50%</span>
-    </div>
-    <div class="skill-bar-row">
-      <span class="skill-label">Java</span>
-      <div class="skill-circles-bg" data-percent="15"></div>
-      <span class="skill-bar-percent">15%</span>
-    </div>
-    <div class="skill-bar-row">
-      <span class="skill-label">R</span>
-      <div class="skill-circles-bg" data-percent="11"></div>
-      <span class="skill-bar-percent">11%</span>
-    </div>
-    <div class="skill-bar-row">
-      <span class="skill-label">Node.js</span>
-      <div class="skill-circles-bg" data-percent="10"></div>
-      <span class="skill-bar-percent">10%</span>
-    </div>
-    <div class="skill-bar-row">
-      <span class="skill-label">JavaScript</span>
-      <div class="skill-circles-bg" data-percent="14"></div>
-      <span class="skill-bar-percent">14%</span>
-    </div>
-  </div>
-  <div class="number">03</div>
-</body>
+</style>

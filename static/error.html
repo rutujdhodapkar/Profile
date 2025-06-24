@@ -62,8 +62,8 @@
     </style>
 </head>
 <body>
-    <div class="error-message" id="errorMessage">An error has occurred. Please try again later.</div>
-    <button class="refresh-button" onclick="checkDataAndRedirect();">
+    <div class="error-message" id="errorMessage">An error has occurred. Check You'r Internet connection.</div>
+    <button class="refresh-button" onclick="checkInternetAndRedirect();">
         <img src="svg/refresh.svg" alt="Refresh">
         Refresh
     </button>
@@ -73,17 +73,24 @@
             document.querySelector('.background-animation').style.opacity = 1;
         }, 1000);
 
-        function checkDataAndRedirect() {
-            fetch('data.csv')
+        // Checks for internet connectivity and redirects if online
+        function checkInternetAndRedirect() {
+            // First, check navigator.onLine for a quick offline check
+            if (!navigator.onLine) {
+                document.getElementById('errorMessage').textContent = "No internet connection. Please check your connection.";
+                return;
+            }
+            // Try to fetch a small resource to confirm connectivity
+            fetch("data.csv", { method: "HEAD", cache: "no-store" })
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = 'Main.html';
+                        window.location.href = "Main.html";
                     } else {
-                        document.getElementById('errorMessage').textContent = 'Try Again';
+                        document.getElementById('errorMessage').textContent = "Internet connection not available or server unreachable.";
                     }
                 })
                 .catch(() => {
-                    document.getElementById('errorMessage').textContent = 'Try Again';
+                    document.getElementById('errorMessage').textContent = "Internet connection not available or server unreachable.";
                 });
         }
     </script>
@@ -416,15 +423,15 @@
     let selectedText = window.getSelection().toString();
     if (selectedText) {
       navigator.clipboard.writeText(selectedText).then(() => {
-        consol.log('Copied: ' + selectedText);
+        console.log('Copied: ' + selectedText);
       }, () => {
-        consol.log('Copy failed.');
+        console.log('Copy failed.');
       });
     } else {
       navigator.clipboard.writeText(window.location.href).then(() => {
-        consol.log('Page URL copied!');
+        console.log('Page URL copied!');
       }, () => {
-        consol.log('Copy failed.');
+        console.log('Copy failed.');
       });
     }
     menu.style.display = 'none';
@@ -444,7 +451,7 @@
       }).catch(() => {});
     } else {
       navigator.clipboard.writeText(window.location.href).then(() => {
-        consol.log('Page URL copied! (Share not supported)');
+        console.log('Page URL copied! (Share not supported)');
       });
     }
     menu.style.display = 'none';
@@ -456,12 +463,35 @@
     sjuText.style.opacity = '0';
   }
 
+  // On right-click menu "Refresh", check internet and redirect if online
   function handleRefresh() {
-    location.reload();
+    // Use the same logic as the main refresh button
+    if (!navigator.onLine) {
+      document.getElementById('errorMessage').textContent = "No internet connection. Please check your connection.";
+      hideContextMenu();
+      return;
+    }
+    fetch("data.csv", { method: "HEAD", cache: "no-store" })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = "Main.html";
+        } else {
+          document.getElementById('errorMessage').textContent = "Internet connection not available or server unreachable.";
+        }
+        hideContextMenu();
+      })
+      .catch(() => {
+        document.getElementById('errorMessage').textContent = "Internet connection not available or server unreachable.";
+        hideContextMenu();
+      });
   }
 
   function handlePrint() {
     window.print();
+    hideContextMenu();
+  }
+
+  function hideContextMenu() {
     menu.style.display = 'none';
     menu.style.opacity = '0';
     menu.style.width = 'auto';

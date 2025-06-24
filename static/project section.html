@@ -49,6 +49,9 @@
       letter-spacing: 0.04em;
       color: #fff !important;
     }
+    .project-meta {
+      display: none;
+    }
     .main-content-wrapper {
       display: flex;
       flex-direction: row;
@@ -150,6 +153,13 @@
       transition: width 0.3s ease-out, height 0.3s ease-out;
       color: #fff !important;
     }
+    .vertical-rectangle.bigger.ultra-long-hover {
+      width: 650px !important;
+      height: 340px !important;
+      transition: width 0.3s ease-out, height 0.3s ease-out;
+      color: #fff !important;
+      z-index: 10 !important;
+    }
     .vertical-rectangle.side {
       width: 60px;
       height: 180px;
@@ -197,7 +207,6 @@
       color: #fff !important;
     }
 
-    /* Section number vertical text */
     .section-number {
       position: absolute;
       left: 50%;
@@ -214,19 +223,17 @@
       letter-spacing: 0.08em;
       user-select: none;
       text-shadow: 0 2px 8px rgba(0,0,0,0.18);
-      /* Show by default, hide when not at rest */
-      /* Will be hidden by class below */
     }
     .vertical-rectangle.bigger .section-number,
     .vertical-rectangle.side .section-number,
     .vertical-rectangle.side2 .section-number,
     .vertical-rectangle.far .section-number,
-    .vertical-rectangle.long-hover .section-number {
+    .vertical-rectangle.long-hover .section-number,
+    .vertical-rectangle.ultra-long-hover .section-number {
       opacity: 0 !important;
       transition: opacity 0.18s;
     }
 
-    /* Project info box INSIDE each rectangle, overlay on image */
     .project-info-box-inside {
       position: absolute;
       top: 0;
@@ -250,18 +257,54 @@
       gap: 0.5em;
       text-align: left;
       word-break: break-word;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: flex-start;
       box-sizing: border-box;
-      /* Hide by default, show only when .bigger.long-hover is present */
       visibility: hidden;
       color: #fff !important;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: #888 #222;
+      max-height: 100%;
     }
-    .vertical-rectangle.bigger.long-hover .project-info-box-inside {
+    .vertical-rectangle.bigger.long-hover .project-info-box-inside,
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-box-inside {
       opacity: 1;
       pointer-events: auto;
       visibility: visible;
       color: #fff !important;
+    }
+    .project-info-box-inside::-webkit-scrollbar {
+      width: 7px;
+      background: #222;
+    }
+    .project-info-box-inside::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    .project-info-label {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #fff !important;
+      opacity: 0.8;
+      margin-bottom: 0.1em;
+      margin-top: 0.2em;
+      letter-spacing: 0.01em;
+      font-family: 'Doto', Arial, sans-serif;
+      background: none !important;
+      user-select: none;
+      display: none;
+    }
+    .project-info-separator {
+      border: none;
+      border-top: 1.5px dotted #fff6;
+      width: 100%;
+      margin: 0.3em 0 0.3em 0;
+      background: none !important;
+      height: 0;
+      display: none;
     }
     .project-info-title {
       font-size: 1.18rem;
@@ -272,6 +315,51 @@
       margin-bottom: 0.2em;
       letter-spacing: 0.01em;
       text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      display: block;
+      margin-top: 0.1em;
+    }
+    .project-info-meta-box {
+      display: flex;
+      flex-direction: row;
+      gap: 1.5em;
+      margin-bottom: 0.2em;
+      margin-top: 0.1em;
+      opacity: 0.85;
+      font-size: 0.98rem;
+      font-family: 'Doto', Arial, sans-serif;
+      color: #fff;
+      background: #00000000;
+      border-radius: 25px;
+      padding: 0.25em 1em;
+      border: 1.2px solid #ffffff;
+      min-width: 120px;
+      backdrop-filter: blur(36px);
+      max-width: 95%;
+      width: fit-content;
+      pointer-events: none;
+      user-select: none;
+    }
+    .project-info-meta-box span {
+      color: #fff;
+      font-weight: 500;
+      font-size: 0.98rem;
+      background: none !important;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.13);
+      font-family: 'Doto', Arial, sans-serif;
+      opacity: 0.85;
+      pointer-events: none;
+      user-select: none;
+      border-radius: 8px;
+      padding: 0.1em 0.5em;
+    }
+    .project-info-date {
+      font-size: 0.98rem;
+      background: none !important;
+      color: #fff !important;
+      font-family: 'Doto', Arial, sans-serif;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      display: none;
+      margin-bottom: 0.1em;
     }
     .project-info-desc {
       font-size: 1.01rem;
@@ -280,6 +368,7 @@
       font-family: 'Doto', Arial, sans-serif;
       margin-bottom: 0.2em;
       text-shadow: 0 2px 8px rgba(0,0,0,0.13);
+      display: none;
     }
     .project-info-link {
       background: none !important;
@@ -291,19 +380,178 @@
       cursor: pointer;
       margin-bottom: 0.2em;
       text-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      display: none;
     }
-    .project-info-date {
+    .project-info-visit-btn {
+      display: none;
+      background: #fff;
+      color: #000 !important;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 22px;
+      font-size: 1.01rem;
+      font-family: 'Doto', Arial, sans-serif;
+      font-weight: 600;
+      /* Remove margin-bottom and margin-top for top-right placement */
+      margin: 0;
+      cursor: pointer;
+      box-shadow: 0 2px 8px 0 rgba(0,0,0,0.13);
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      text-shadow: none;
+      outline: none;
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      z-index: 101;
+      /* For smaller screens, will be overridden in media query */
+    }
+    .project-info-visit-btn:hover, .project-info-visit-btn:focus {
+      background: #e0e0e0;
+      color: #000 !important;
+      transform: scale(1.06);
+    }
+    .project-info-features {
       font-size: 0.98rem;
       background: none !important;
       color: #fff !important;
       font-family: 'Doto', Arial, sans-serif;
+      margin-bottom: 0.2em;
       text-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      display: none;
     }
+    /* Show title and date in long-hover (small expanded box) */
+    .vertical-rectangle.bigger.long-hover .project-info-title,
+    .vertical-rectangle.bigger.long-hover .project-info-date {
+      display: block;
+    }
+    /* Show all in ultra-long-hover (biggest box) */
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-title,
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-date,
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-desc,
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-link,
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-features,
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-label,
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-separator,
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-visit-btn,
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-langtools-box,
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-techtools-box {
+      display: block;
+    }
+    /* Only show labels and separators in ultra-long-hover */
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-label,
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-separator {
+      display: block;
+    }
+    /* Make info box content fit and scrollable */
+    .vertical-rectangle.bigger.long-hover .project-info-box-inside,
+    .vertical-rectangle.bigger.ultra-long-hover .project-info-box-inside {
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 100%;
+    }
+    /* Show .project-meta only when a .vertical-rectangle.bigger is present */
+    .vertical-rectangle.bigger ~ .project-meta,
+    .vertical-rectangle.bigger ~ div .project-meta,
+    .vertical-rectangle.bigger ~ + .project-meta {
+      display: flex !important;
+    }
+
+    /* Languages used box */
+    .project-info-langtools-box {
+      display: none;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: 0.1em;
+      font-family: 'Doto', Arial, sans-serif;
+      font-size: 0.98rem;
+      color: #fff !important;
+      background: none !important;
+      text-align: left;
+      align-items: flex-end;
+      justify-content: flex-start;
+      flex-direction: row;
+      gap: 0.5em;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .project-info-langtools-label {
+      font-weight: 600;
+      opacity: 0.8;
+      margin-right: 0.5em;
+      color: #fff !important;
+      background: none !important;
+      font-size: 0.98rem;
+      letter-spacing: 0.01em;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .project-info-langtools-value {
+      font-weight: 500;
+      color: #fff !important;
+      background: none !important;
+      font-size: 0.98rem;
+      letter-spacing: 0.01em;
+      user-select: text;
+      white-space: pre-line;
+      word-break: break-word;
+    }
+
+    /* Technologies used box */
+    .project-info-techtools-box {
+      display: none;
+      width: 100%;
+      margin-top: 0.1em;
+      margin-bottom: 0.1em;
+      font-family: 'Doto', Arial, sans-serif;
+      font-size: 0.98rem;
+      color: #fff !important;
+      background: none !important;
+      text-align: left;
+      align-items: flex-end;
+      justify-content: flex-start;
+      flex-direction: row;
+      gap: 0.5em;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .project-info-techtools-label {
+      font-weight: 600;
+      opacity: 0.8;
+      margin-right: 0.5em;
+      color: #fff !important;
+      background: none !important;
+      font-size: 0.98rem;
+      letter-spacing: 0.01em;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .project-info-techtools-value {
+      font-weight: 500;
+      color: #fff !important;
+      background: none !important;
+      font-size: 0.98rem;
+      letter-spacing: 0.01em;
+      user-select: text;
+      white-space: pre-line;
+      word-break: break-word;
+    }
+
     @media (max-width: 900px) {
       .project-title {
         font-size: 1.3rem;
         margin-bottom: -60px;
         color: #fff !important;
+      }
+      .project-meta {
+        font-size: 0.98rem;
+        margin-bottom: -50px;
+        gap: 1.2em;
+        padding: 0.3em 0.7em;
+      }
+      .project-info-meta-box {
+        font-size: 0.92rem;
+        padding: 0.18em 0.5em;
+        gap: 0.7em;
       }
       .project-info-box-inside {
         min-width: 120px;
@@ -319,6 +567,28 @@
       .section-number {
         font-size: 0.9rem;
         left: 50%;
+      }
+      .vertical-rectangle.bigger.ultra-long-hover {
+        width: 98vw !important;
+        height: 320px !important;
+      }
+      .project-info-langtools-box,
+      .project-info-techtools-box {
+        font-size: 0.92rem;
+      }
+      .project-info-langtools-label,
+      .project-info-techtools-label {
+        font-size: 0.92rem;
+      }
+      .project-info-langtools-value,
+      .project-info-techtools-value {
+        font-size: 0.92rem;
+      }
+      .project-info-visit-btn {
+        top: 12px;
+        right: 10px;
+        padding: 6px 14px;
+        font-size: 0.95rem;
       }
     }
     ::selection {
@@ -383,6 +653,10 @@
 <body>
   <div class="center-content-outer">
     <div class="project-title">Projects</div>
+    <div class="project-meta" id="project-meta" style="display:none;">
+      <!-- Removed language meta -->
+      <span id="meta-cat"><span id="meta-cat-value">-</span></span>
+    </div>
     <div class="main-content-wrapper">
       <div class="rectangle-container" id="rect-container">
         <!-- Project rectangles will be injected here -->
@@ -440,6 +714,10 @@
           const idxLink = headers.indexOf('plinks');
           const idxDate = headers.indexOf('pdate');
           const idxImg = headers.indexOf('pimgpath');
+          const idxFeatures = headers.indexOf('pfeatures');
+          const idxCat = headers.indexOf('pcat');
+          const idxLang = headers.indexOf('plang');
+          const idxTech = headers.indexOf('ptech');
           if ([idxTitle, idxDesc, idxLink, idxDate, idxImg].some(idx => idx === -1)) {
             showNoProjects('Required columns not found in data.csv.');
             return;
@@ -453,7 +731,11 @@
                 pdescriptio: row[idxDesc] || '',
                 plinks: row[idxLink] || '',
                 pdate: row[idxDate] || '',
-                pimgpath: row[idxImg] || ''
+                pimgpath: row[idxImg] || '',
+                pfeatures: idxFeatures !== -1 ? (row[idxFeatures] || '') : '',
+                pcat: idxCat !== -1 ? (row[idxCat] || '') : '',
+                plang: idxLang !== -1 ? (row[idxLang] || '') : '',
+                ptech: idxTech !== -1 ? (row[idxTech] || '') : ''
               });
             }
           }
@@ -471,6 +753,8 @@
                 resetAll();
               } catch (e) {}
             }, 700);
+            setProjectMeta(first._projectData);
+            showProjectMetaForBigger();
           }
         })
         .catch(err => {
@@ -490,6 +774,23 @@
       msg.style.fontFamily = "'Doto', Arial, sans-serif";
       msg.textContent = message || 'No projects found.';
       container.appendChild(msg);
+      setProjectMeta(null);
+      document.getElementById('project-meta').style.display = 'none';
+    }
+
+    function setProjectMeta(project) {
+      var cat = project && project.pcat ? project.pcat : '-';
+      document.getElementById('meta-cat-value').textContent = cat;
+    }
+
+    function showProjectMetaForBigger() {
+      var anyBigger = document.querySelector('.vertical-rectangle.bigger');
+      var meta = document.getElementById('project-meta');
+      if (anyBigger) {
+        meta.style.display = 'flex';
+      } else {
+        meta.style.display = 'none';
+      }
     }
 
     function createProjectRectangle(project, idx) {
@@ -498,13 +799,11 @@
       div.setAttribute('tabindex', '0');
       div.dataset.idx = idx;
 
-      // Section number vertical text
       const sectionNumber = document.createElement('div');
       sectionNumber.className = 'section-number';
       sectionNumber.textContent = "P"+ (idx + 1).toString().padStart(2, '0');
       div.appendChild(sectionNumber);
 
-      // Add image if available, else show "no path found"
       if (project.pimgpath && project.pimgpath.trim()) {
         const img = document.createElement('img');
         let imgSrc = project.pimgpath.trim();
@@ -531,49 +830,122 @@
         div.appendChild(noimg);
       }
 
-      // Info box INSIDE the rectangle, overlay, hidden by default
       const infoBox = document.createElement('div');
       infoBox.className = 'project-info-box-inside';
+
+      // Visit button at top-right
+      const visitBtn = document.createElement('button');
+      visitBtn.className = 'project-info-visit-btn';
+      visitBtn.type = 'button';
+      visitBtn.textContent = 'Visit';
+      if (project.plinks && project.plinks.trim()) {
+        visitBtn.onclick = function(e) {
+          e.stopPropagation();
+          window.open(project.plinks, '_blank', 'noopener');
+        };
+        visitBtn.disabled = false;
+      } else {
+        visitBtn.disabled = true;
+        visitBtn.style.opacity = '0.5';
+        visitBtn.style.cursor = 'not-allowed';
+      }
+      infoBox.appendChild(visitBtn);
+
       const title = document.createElement('div');
       title.className = 'project-info-title';
       title.textContent = project.ptitle || '';
       infoBox.appendChild(title);
-      if (project.pdescriptio && project.pdescriptio.trim()) {
-        const desc = document.createElement('div');
-        desc.className = 'project-info-desc';
-        desc.textContent = project.pdescriptio;
-        infoBox.appendChild(desc);
-      }
-      if (project.plinks && project.plinks.trim()) {
-        const link = document.createElement('a');
-        link.className = 'project-info-link';
-        link.href = project.plinks;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.textContent = project.plinks;
-        infoBox.appendChild(link);
-      }
-      if (project.pdate && project.pdate.trim()) {
-        const date = document.createElement('div');
-        date.className = 'project-info-date';
-        date.textContent = project.pdate;
-        infoBox.appendChild(date);
-      }
+
+      const metaBox = document.createElement('div');
+      metaBox.className = 'project-info-meta-box';
+      const catSpan = document.createElement('span');
+      catSpan.textContent = (project.pcat ? '' + project.pcat : ' -');
+      metaBox.appendChild(catSpan);
+      infoBox.appendChild(metaBox);
+
+      const dateWrapper = document.createElement('div');
+      dateWrapper.className = 'project-info-date-wrapper';
+      const dateLabelForBigger = document.createElement('span');
+      dateLabelForBigger.className = 'project-info-label-date-bigger';
+      dateLabelForBigger.textContent = '';
+      dateWrapper.appendChild(dateLabelForBigger);
+      const date = document.createElement('span');
+      date.className = 'project-info-date';
+      date.textContent = project.pdate || '';
+      dateWrapper.appendChild(date);
+      infoBox.appendChild(dateWrapper);
+
+      // Add separator above description (always present, but only visible in ultra-long-hover)
+      const descAboveSep = document.createElement('hr');
+      descAboveSep.className = 'project-info-separator';
+      infoBox.appendChild(descAboveSep);
+
+      const descLabel = document.createElement('div');
+      descLabel.className = 'project-info-label';
+      descLabel.textContent = '';
+      infoBox.appendChild(descLabel);
+
+      const desc = document.createElement('div');
+      desc.className = 'project-info-desc';
+      desc.textContent = project.pdescriptio || '';
+      infoBox.appendChild(desc);
+
+      const descSep = document.createElement('hr');
+      descSep.className = 'project-info-separator';
+      infoBox.appendChild(descSep);
+
+      const featuresLabel = document.createElement('div');
+      featuresLabel.className = 'project-info-label';
+      featuresLabel.textContent = 'Features:';
+      infoBox.appendChild(featuresLabel);
+
+      const features = document.createElement('div');
+      features.className = 'project-info-features';
+      features.textContent = project.pfeatures || '';
+      infoBox.appendChild(features);
+
+      const featuresSep = document.createElement('hr');
+      featuresSep.className = 'project-info-separator';
+      infoBox.appendChild(featuresSep);
+
+      // Link label and link replaced with Visit button (already at top-right)
+      const linkLabel = document.createElement('div');
+      linkLabel.className = 'project-info-label';
+      linkLabel.textContent = '';
+      infoBox.appendChild(linkLabel);
+
+      // Languages used (plang) - show only on biggest box, at bottom, left side
+      const langToolsBox = document.createElement('div');
+      langToolsBox.className = 'project-info-langtools-box';
+      const langToolsLabel = document.createElement('span');
+      langToolsLabel.className = 'project-info-langtools-label';
+      langToolsLabel.textContent = 'Languages used:';
+      langToolsBox.appendChild(langToolsLabel);
+      const langToolsValue = document.createElement('span');
+      langToolsValue.className = 'project-info-langtools-value';
+      langToolsValue.textContent = project.plang || '-';
+      langToolsBox.appendChild(langToolsValue);
+      infoBox.appendChild(langToolsBox);
+
+      // Technologies used (ptech) - show only on biggest box, below languages
+      const techToolsBox = document.createElement('div');
+      techToolsBox.className = 'project-info-techtools-box';
+      const techToolsLabel = document.createElement('span');
+      techToolsLabel.className = 'project-info-techtools-label';
+      techToolsLabel.textContent = 'Technologies used:';
+      techToolsBox.appendChild(techToolsLabel);
+      const techToolsValue = document.createElement('span');
+      techToolsValue.className = 'project-info-techtools-value';
+      techToolsValue.textContent = project.ptech || '';
+      techToolsBox.appendChild(techToolsValue);
+      infoBox.appendChild(techToolsBox);
+
       div.appendChild(infoBox);
 
-      if (project.plinks && project.plinks.trim()) {
-        div.addEventListener('click', function(e) {
-          if (!e.target.classList.contains('project-info-link')) {
-            window.open(project.plinks, '_blank');
-          }
-        });
-        div.style.cursor = 'pointer';
-      } else {
-        div.addEventListener('click', function(e) {
-          console.log("not available");
-        });
-        div.style.cursor = 'default';
-      }
+      div.addEventListener('click', function(e) {
+        // No action
+      });
+      div.style.cursor = 'default';
 
       div._projectData = project;
 
@@ -593,17 +965,16 @@
       });
     }
 
-    function clearHighlights() {
+    function clearHighlights(fast) {
       try {
         const rects = document.querySelectorAll('.vertical-rectangle');
         rects.forEach(function(rect) {
           if (!rect) return;
-          rect.classList.remove('bigger', 'side', 'side2', 'far', 'long-hover', 'show-info');
+          rect.classList.remove('bigger', 'side', 'side2', 'far', 'long-hover', 'ultra-long-hover', 'show-info');
           rect.style.transform = '';
           rect.style.zIndex = '';
           rect.style.marginLeft = '';
           rect.style.marginRight = '';
-          rect.style.transitionDelay = '';
           rect.style.background = '';
           rect.style.filter = '';
           rect.style.boxShadow = '';
@@ -611,6 +982,21 @@
           imgs.forEach(function(img) {
             img.style.filter = '';
           });
+          if (fast) {
+            rect.style.transitionDelay = '0s';
+            rect.style.transitionDuration = '0.05s';
+            var imgs = rect.querySelectorAll('img');
+            imgs.forEach(function(img) {
+              img.style.transitionDuration = '0.05s';
+            });
+          } else {
+            rect.style.transitionDelay = '';
+            rect.style.transitionDuration = '';
+            var imgs = rect.querySelectorAll('img');
+            imgs.forEach(function(img) {
+              img.style.transitionDuration = '';
+            });
+          }
         });
       } catch (e) {}
     }
@@ -651,7 +1037,7 @@
           rect.style.zIndex = 1;
           rect.style.marginLeft = '';
           rect.style.marginRight = '';
-          rect.classList.remove('bigger', 'side', 'side2', 'far', 'long-hover', 'show-info');
+          rect.classList.remove('bigger', 'side', 'side2', 'far', 'long-hover', 'ultra-long-hover', 'show-info');
           rect.style.transitionDelay = (Math.abs(i - idx) * 0.02) + 's';
           rect.style.background = '';
           rect.style.filter = '';
@@ -659,6 +1045,10 @@
           var imgs = rect.querySelectorAll('img');
           imgs.forEach(function(img) {
             img.style.filter = '';
+          });
+          rect.style.transitionDuration = '';
+          imgs.forEach(function(img) {
+            img.style.transitionDuration = '';
           });
         });
         rects.forEach((rect, i) => {
@@ -681,6 +1071,7 @@
               if (rects[i + 1]) {
                 rects[i + 1].style.marginLeft = expandedGap + 'px';
               }
+              setProjectMeta(rect._projectData);
             } else if (i === idx - 1 || i === idx + 1) {
               rect.classList.add('side');
               rect.style.zIndex = 3;
@@ -717,20 +1108,20 @@
             }
           } catch (e) {}
         });
+        showProjectMetaForBigger();
       } catch (e) {}
     }
 
-    function resetAll() {
+    function resetAll(fast) {
       try {
         const rects = document.querySelectorAll('.vertical-rectangle');
         rects.forEach(function(rect) {
           if (!rect) return;
-          rect.classList.remove('bigger', 'side', 'side2', 'far', 'long-hover', 'show-info');
+          rect.classList.remove('bigger', 'side', 'side2', 'far', 'long-hover', 'ultra-long-hover', 'show-info');
           rect.style.transform = '';
           rect.style.zIndex = '';
           rect.style.marginLeft = '';
           rect.style.marginRight = '';
-          rect.style.transitionDelay = '';
           rect.style.background = '';
           rect.style.filter = '';
           rect.style.boxShadow = '';
@@ -738,20 +1129,53 @@
           imgs.forEach(function(img) {
             img.style.filter = '';
           });
+          if (fast) {
+            rect.style.transitionDelay = '0s';
+            rect.style.transitionDuration = '0.05s';
+            imgs.forEach(function(img) {
+              img.style.transitionDuration = '0.05s';
+            });
+          } else {
+            rect.style.transitionDelay = '';
+            rect.style.transitionDuration = '';
+            imgs.forEach(function(img) {
+              img.style.transitionDuration = '';
+            });
+          }
         });
+        showProjectMetaForBigger();
       } catch (e) {}
     }
 
     function updateListeners() {
       try {
         const rects = document.querySelectorAll('.vertical-rectangle');
+        let lastHoveredRect = null;
+        let lastLongHoverTimeout = null;
+        let lastUltraLongHoverTimeout = null;
+
         rects.forEach(function(rect) {
           if (!rect) return;
           let longHoverTimeout = null;
+          let ultraLongHoverTimeout = null;
           let longHoverActive = false;
+          let ultraLongHoverActive = false;
 
-          function showInfo() {
+          function showInfo(e) {
+            if (lastHoveredRect && lastHoveredRect !== rect) {
+              resetAll(true);
+              if (lastLongHoverTimeout) {
+                clearTimeout(lastLongHoverTimeout);
+                lastLongHoverTimeout = null;
+              }
+              if (lastUltraLongHoverTimeout) {
+                clearTimeout(lastUltraLongHoverTimeout);
+                lastUltraLongHoverTimeout = null;
+              }
+            }
+            lastHoveredRect = rect;
             sequentialHighlight(rect);
+
             longHoverTimeout = setTimeout(function() {
               try {
                 if (rect.classList.contains('bigger')) {
@@ -760,17 +1184,48 @@
                 }
               } catch (e) {}
             }, 700);
+            lastLongHoverTimeout = longHoverTimeout;
+
+            ultraLongHoverTimeout = setTimeout(function() {
+              try {
+                if (rect.classList.contains('bigger')) {
+                  rect.classList.add('ultra-long-hover');
+                  ultraLongHoverActive = true;
+                }
+              } catch (e) {}
+            }, 2000);
+            lastUltraLongHoverTimeout = ultraLongHoverTimeout;
           }
-          function hideInfo() {
+          function hideInfo(e) {
             rect.classList.remove('long-hover');
-            resetAll();
+            rect.classList.remove('ultra-long-hover');
+            resetAll(true);
             if (longHoverTimeout) {
               clearTimeout(longHoverTimeout);
               longHoverTimeout = null;
             }
+            if (ultraLongHoverTimeout) {
+              clearTimeout(ultraLongHoverTimeout);
+              ultraLongHoverTimeout = null;
+            }
+            if (lastLongHoverTimeout) {
+              clearTimeout(lastLongHoverTimeout);
+              lastLongHoverTimeout = null;
+            }
+            if (lastUltraLongHoverTimeout) {
+              clearTimeout(lastUltraLongHoverTimeout);
+              lastUltraLongHoverTimeout = null;
+            }
             if (longHoverActive) {
               longHoverActive = false;
             }
+            if (ultraLongHoverActive) {
+              ultraLongHoverActive = false;
+            }
+            if (lastHoveredRect === rect) {
+              lastHoveredRect = null;
+            }
+            showProjectMetaForBigger();
           }
           rect.addEventListener('mouseenter', showInfo);
           rect.addEventListener('mouseleave', hideInfo);
@@ -786,4 +1241,3 @@
   </script>
 </body>
 </html>
-

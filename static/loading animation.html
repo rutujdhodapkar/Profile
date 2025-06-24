@@ -265,29 +265,8 @@
 
   }, 3500);
 </script>
-<script>
 
-// Show a black blur effect before redirecting to Main.html
-// 1. Create the blur overlay
-var blurOverlay = document.createElement('div');
-blurOverlay.style.position = 'fixed';
-blurOverlay.style.left = '0';
-blurOverlay.style.top = '0';
-blurOverlay.style.width = '100vw';
-blurOverlay.style.height = '100vh';
-blurOverlay.style.background = '#000';
-blurOverlay.style.opacity = '0';
-blurOverlay.style.zIndex = '99999';
-blurOverlay.style.pointerEvents = 'none';
-blurOverlay.style.transition = 'opacity 0.7s cubic-bezier(.4,1.2,.6,1)';
-blurOverlay.style.backdropFilter = 'blur(32px)';
-document.body.appendChild(blurOverlay);
 
-// 2. Fade in the blur effect, then redirect
-setTimeout(function() {
-  blurOverlay.style.opacity = '1';
-  setTimeout(function() {
-    window.location.href = "Main.html";
-  }, 700); // Wait for blur to finish before redirect
-}, 5000);
-</script>
+
+
+
