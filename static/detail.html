@@ -448,6 +448,61 @@
 </div>
 
 
+<script>
+  function checkAspectRatioAndShowError() {
+    if (window.innerWidth < window.innerHeight) {
+      // Create overlay if not already present
+      if (!document.getElementById('aspect-ratio-error-overlay')) {
+        var overlay = document.createElement('div');
+        overlay.id = 'aspect-ratio-error-overlay';
+        overlay.style.position = 'fixed';
+        overlay.style.top = 0;
+        overlay.style.left = 0;
+        overlay.style.width = '100vw';
+        overlay.style.height = '100vh';
+        overlay.style.background = 'rgba(0,0,0,0.92)';
+        overlay.style.color = '#fff';
+        overlay.style.display = 'flex';
+        overlay.style.flexDirection = 'column';
+        overlay.style.justifyContent = 'center';
+        overlay.style.alignItems = 'center';
+        overlay.style.zIndex = 99999;
+        overlay.style.fontFamily = "'Krona One', Arial, sans-serif";
+        overlay.innerHTML = `
+          <div style="text-align: center;">
+            <div style="font-size: 2.1rem; font-weight: bold; margin-bottom: 18px;">Screen Orientation Error</div>
+            <div style="font-size: 1.15rem; margin-bottom: 24px;">
+              This page is best viewed in landscape mode.<br>
+              Please rotate your device or expand your browser window horizontally.
+            </div>
+            <div style="font-size: 1.05rem; margin-bottom: 32px; color: #ffd700;">
+              If you are on a mobile device, please also turn off "Desktop site" in your browser settings.
+            </div>
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 12px;">
+              <rect x="2" y="7" width="20" height="10" rx="2" />
+              <polyline points="16 3 21 7.5 16 12" />
+            </svg>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+      }
+    } else {
+      // Remove overlay if present
+      var overlay = document.getElementById('aspect-ratio-error-overlay');
+      if (overlay) {
+        overlay.parentNode.removeChild(overlay);
+      }
+    }
+  }
+
+  // Initial check
+  checkAspectRatioAndShowError();
+  // Listen for resize/orientation changes
+  window.addEventListener('resize', checkAspectRatioAndShowError);
+  window.addEventListener('orientationchange', checkAspectRatioAndShowError);
+</script>
+
+
 
 
 

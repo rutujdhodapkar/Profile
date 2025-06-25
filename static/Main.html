@@ -234,6 +234,22 @@
       line-height: 1.1;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
     }
+    .mdesc1, .mdesc2 {
+      font-size: 1.25rem;
+      font-family: 'Doto', Arial, sans-serif;
+      color: #fff;
+      margin-bottom: 0.2em;
+      margin-top: 0.2em;
+      line-height: 1.4;
+      max-width: 700px;
+      /* Responsive font size for mobile */
+    }
+    @media (max-width: 600px) {
+      .mdesc1, .mdesc2 {
+        font-size: 1.02rem;
+        max-width: 95vw;
+      }
+    }
     .name-box {
       background: #ffffffdb;
       color: #000;
@@ -273,7 +289,6 @@
       0%, 49% { opacity: 1; }
       50%, 100% { opacity: 0; }
     }
-
     .get-connected-container {
       margin-top: 2.2rem;
       pointer-events: auto;
@@ -727,6 +742,9 @@
       <div style="font-size: 3.2rem; font-weight: bold; font-family: 'Krona One', 'Doto', Arial, sans-serif;">
         I'm <span class="name-box"><b id="typed-name"></b><span class="typing-caret"></span></span>
       </div>
+      <!-- Insert mdesc1 and mdesc2 here -->
+      <div id="mdesc1" class="mdesc1" style="display:none;"></div>
+      <div id="mdesc2" class="mdesc2" style="display:none;"></div>
       <div class="get-connected-container">
         <button class="get-connected-btn" onclick="window.location.href='contact.html'">
           <span class="light-effect"></span>
@@ -858,7 +876,7 @@
       }, 2200);
     });
 
-    // Fetch name from GitHub raw CSV and use it for typing animation
+    // Fetch name, mdesc1, mdesc2 from GitHub raw CSV and use for typing animation and description
     fetch('https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv', {cache: "no-store"})
       .then(response => {
         if (!response.ok) {
@@ -872,16 +890,26 @@
         const rows = data.split('\n').filter(row => row.trim().length > 0);
         const headers = rows[0].split(',');
         const nameIndex = headers.indexOf('name');
+        const mdesc1Index = headers.indexOf('mdesc1');
+        const mdesc2Index = headers.indexOf('mdesc2');
         if (nameIndex === -1 || rows.length < 2) {
           // If data is not as expected, redirect to error.html
           window.location.href = "error.html";
           return;
         }
         let nameToType = "";
+        let mdesc1 = "";
+        let mdesc2 = "";
         for (let i = 1; i < rows.length; ++i) {
           const cols = rows[i].split(',');
           if (cols.length > nameIndex) {
             nameToType = cols[nameIndex].trim();
+            if (mdesc1Index !== -1 && cols.length > mdesc1Index) {
+              mdesc1 = cols[mdesc1Index].trim();
+            }
+            if (mdesc2Index !== -1 && cols.length > mdesc2Index) {
+              mdesc2 = cols[mdesc2Index].trim();
+            }
             break;
           }
         }
@@ -891,6 +919,7 @@
           return;
         }
 
+        // Typing animation for name
         const typedNameElem = document.getElementById('typed-name');
         const caretElem = document.querySelector('.typing-caret');
         let idx = 0;
@@ -931,6 +960,18 @@
           }
         }
         setTimeout(typeName, 700);
+
+        // Show mdesc1 and mdesc2
+        if (mdesc1) {
+          const mdesc1Elem = document.getElementById('mdesc1');
+          mdesc1Elem.textContent = mdesc1;
+          mdesc1Elem.style.display = '';
+        }
+        if (mdesc2) {
+          const mdesc2Elem = document.getElementById('mdesc2');
+          mdesc2Elem.textContent = mdesc2;
+          mdesc2Elem.style.display = '';
+        }
       })
       .catch(error => {
         // On any error (network, parsing, etc), redirect to error.html
@@ -1035,6 +1076,3 @@
     50%, 100% { opacity: 0; }
   }
 </style>
-
-
-</script>
