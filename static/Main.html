@@ -234,7 +234,7 @@
       line-height: 1.1;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
     }
-    .mdesc1, .mdesc2 {
+    .mdesc1 {
       font-size: 1.25rem;
       font-family: 'Doto', Arial, sans-serif;
       color: #fff;
@@ -245,7 +245,7 @@
       /* Responsive font size for mobile */
     }
     @media (max-width: 600px) {
-      .mdesc1, .mdesc2 {
+      .mdesc1 {
         font-size: 1.02rem;
         max-width: 95vw;
       }
@@ -314,7 +314,8 @@
       outline: none;
       position: relative;
       z-index: 2;
-      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
+      box-shadow: 0 2px 16px 0 #00000011;
+      backdrop-filter: blur(5px);
       user-select: none;
       overflow: hidden;
     }
@@ -325,7 +326,7 @@
       left: -60%;
       width: 60%;
       height: 100%;
-      background: linear-gradient(90deg, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.0) 100%);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.151) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.195) 100%);
       opacity: 0.85;
       pointer-events: none;
       z-index: 1;
@@ -508,56 +509,7 @@
       position: relative;
     }
 
-    .scroll-prompt {
-      position: fixed;
-      bottom: 5%;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      color: #fff;
-      font-family: 'Doto', Arial, sans-serif;
-      font-size: 1rem;
-      opacity: 0;
-      transition: opacity 0.5s;
-      z-index: 1001;
-    }
-    .scroll-prompt.active {
-      opacity: 1;
-    }
-    .scroll-prompt .circle {
-      width: 40px;
-      height: 40px;
-      border: 2px solid rgba(255, 255, 255, 0.5);
-      border-radius: 50%;
-      margin: 0 auto;
-      position: relative;
-      animation: pulse 2s infinite;
-    }
-    .scroll-prompt .arrow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 12px;
-      height: 12px;
-      animation: bounce 1s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-    }
-    @keyframes bounce {
-      0%, 100% {
-        transform: translate(-50%, -50%) translateY(0);
-      }
-      50% {
-        transform: translate(-50%, -50%) translateY(5px);
-      }
-    }
+    /* Removed .scroll-prompt and related styles */
 
     .black-fade-overlay {
       position: fixed;
@@ -645,6 +597,37 @@
     @media (max-width: 1139px) {
       .right-image-container {
         display: none !important;
+      }
+    }
+
+    /* Bottom center prompt style */
+    .bottom-center-prompt {
+      position: fixed;
+      left: 50%;
+      bottom: 3.5vh;
+      transform: translateX(-50%);
+      z-index: 10020;
+      background: #00000011;
+      backdrop-filter: blur(8px);
+      border: 1px solid #ffffff3c;
+      color: #fff;
+      font-family: 'Doto', Arial, sans-serif;
+      font-size: 1.15rem;
+      padding: 0.7em 1.7em;
+      border-radius: 2em;
+      box-shadow: 0 2px 16px 0 #00000011;
+      letter-spacing: 0.01em;
+      text-align: center;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.97;
+      transition: opacity 0.3s;
+    }
+    @media (max-width: 600px) {
+      .bottom-center-prompt {
+        font-size: 0.98rem;
+        padding: 0.5em 1.1em;
+        bottom: 1.5vh;
       }
     }
   </style>
@@ -742,9 +725,11 @@
       <div style="font-size: 3.2rem; font-weight: bold; font-family: 'Krona One', 'Doto', Arial, sans-serif;">
         I'm <span class="name-box"><b id="typed-name"></b><span class="typing-caret"></span></span>
       </div>
-      <!-- Insert mdesc1 and mdesc2 here -->
+      <!-- Insert mdesc1 here -->
       <div id="mdesc1" class="mdesc1" style="display:none;"></div>
-      <div id="mdesc2" class="mdesc2" style="display:none;"></div>
+      <div style="font-size: 1.1rem; color: #fff; margin-top: 0.2em; margin-bottom: 0.2em; font-family: 'Doto', Arial, sans-serif;">
+        Building systems that can talk think and improve itself.
+      </div>
       <div class="get-connected-container">
         <button class="get-connected-btn" onclick="window.location.href='contact.html'">
           <span class="light-effect"></span>
@@ -779,14 +764,11 @@
     <div style="font-size:1.2rem; margin-top:2em;"></div>
   </div>
   <div class="number"></div>
-  <div class="scroll-prompt" id="scrollPrompt">
-    <div class="circle">
-      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </div>
-    <div>Scroll for more</div>
+  <!-- Bottom center prompt -->
+  <div class="bottom-center-prompt">
+    Scroll</b> to get started
   </div>
+  <!-- Removed scroll-prompt and its content -->
   <script>
     // 3-dot menu logic
     (function() {
@@ -876,7 +858,7 @@
       }, 2200);
     });
 
-    // Fetch name, mdesc1, mdesc2 from GitHub raw CSV and use for typing animation and description
+    // Fetch name, mdesc1 from GitHub raw CSV and use for typing animation and description
     fetch('https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv', {cache: "no-store"})
       .then(response => {
         if (!response.ok) {
@@ -891,7 +873,6 @@
         const headers = rows[0].split(',');
         const nameIndex = headers.indexOf('name');
         const mdesc1Index = headers.indexOf('mdesc1');
-        const mdesc2Index = headers.indexOf('mdesc2');
         if (nameIndex === -1 || rows.length < 2) {
           // If data is not as expected, redirect to error.html
           window.location.href = "error.html";
@@ -899,16 +880,12 @@
         }
         let nameToType = "";
         let mdesc1 = "";
-        let mdesc2 = "";
         for (let i = 1; i < rows.length; ++i) {
           const cols = rows[i].split(',');
           if (cols.length > nameIndex) {
             nameToType = cols[nameIndex].trim();
             if (mdesc1Index !== -1 && cols.length > mdesc1Index) {
               mdesc1 = cols[mdesc1Index].trim();
-            }
-            if (mdesc2Index !== -1 && cols.length > mdesc2Index) {
-              mdesc2 = cols[mdesc2Index].trim();
             }
             break;
           }
@@ -961,16 +938,11 @@
         }
         setTimeout(typeName, 700);
 
-        // Show mdesc1 and mdesc2
+        // Show mdesc1
         if (mdesc1) {
           const mdesc1Elem = document.getElementById('mdesc1');
           mdesc1Elem.textContent = mdesc1;
           mdesc1Elem.style.display = '';
-        }
-        if (mdesc2) {
-          const mdesc2Elem = document.getElementById('mdesc2');
-          mdesc2Elem.textContent = mdesc2;
-          mdesc2Elem.style.display = '';
         }
       })
       .catch(error => {
@@ -982,13 +954,11 @@
 
     // Circle reveal scroll logic
     const circle = document.getElementById('circleReveal');
-    const scrollPrompt = document.getElementById('scrollPrompt');
+    // Removed scrollPrompt and its logic
     let revealed = false;
     let aboutRedirected = false;
 
-    setTimeout(() => {
-      scrollPrompt.classList.add('active');
-    }, 5000);
+    // Removed setTimeout for scrollPrompt
 
     function handleScroll() {
       const scrollY = window.scrollY || window.pageYOffset;
@@ -1076,3 +1046,30 @@
     50%, 100% { opacity: 0; }
   }
 </style>
+
+<script>
+  // Listen for user typing "help" anywhere on the page
+  (function() {
+    let buffer = '';
+    let timeout = null;
+
+    document.addEventListener('keydown', function(e) {
+      // Only consider a-z, ignore modifier keys
+      if (e.key.length === 1 && /^[a-zA-Z]$/.test(e.key)) {
+        buffer += e.key.toLowerCase();
+        // Keep buffer at max length 4
+        if (buffer.length > 4) buffer = buffer.slice(-4);
+
+        // If "help" is typed, open cmd.html in the same tab
+        if (buffer === 'help') {
+          window.location.href = 'cmd.html';
+          buffer = '';
+        }
+
+        // Reset buffer if user pauses for more than 2 seconds
+        clearTimeout(timeout);
+        timeout = setTimeout(() => { buffer = ''; }, 2000);
+      }
+    });
+  })();
+</script>
