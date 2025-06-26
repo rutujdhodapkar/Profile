@@ -194,3 +194,36 @@
 
   }, 100 + 1100 + 2300);
 </script>
+<script>
+// Function to preload all files in the working directory (static folder)
+function preloadAllFiles() {
+  // Try to fetch a list of files from the server (requires server-side support)
+  fetch('./')
+    .then(response => response.text())
+    .then(html => {
+      // Parse the HTML to find links to files
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(html, 'text/html');
+      var links = Array.from(doc.querySelectorAll('a'));
+      // Filter out parent directory and only get files (not folders)
+      var fileLinks = links
+        .map(a => a.getAttribute('href'))
+        .filter(href => href && !href.startsWith('?') && !href.startsWith('/'))
+        .filter(href => !href.endsWith('/')); // skip directories
+
+      // Preload each file in the background
+      fileLinks.forEach(file => {
+        // Only preload if not this HTML file
+        if (!window.location.pathname.endsWith(file)) {
+          fetch(file).catch(()=>{});
+        }
+      });
+    })
+    .catch(err => {
+      // Directory listing not available, do nothing
+    });
+}
+
+// Start preloading as soon as possible
+window.addEventListener('DOMContentLoaded', preloadAllFiles);
+</script>
