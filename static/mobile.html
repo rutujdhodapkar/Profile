@@ -7,11 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Doto:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
   <style>
-    @font-face {
-      font-family: 'DotoPixel';
-      src: url('https://github.com/rutujdhodapkar/Font/blob/main/DotoPixel.woff') format('woff');
-      font-display: swap;
-    }
     html, body {
       height: 100%;
       margin: 0;
@@ -19,12 +14,12 @@
       overflow-x: hidden;
     }
     body {
-      background: #000;
+      background: #0f0f0f;
       color: #fff;
       min-height: 200vh;
       margin: 0;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
-      font-size: 2rem;
+      font-size: 2.1rem; /* smaller than 2.8rem */
       letter-spacing: 0.01em;
       position: relative;
       overflow: hidden;
@@ -32,6 +27,173 @@
       align-items: center;
       justify-content: flex-start;
     }
+    /* --- 3-dot menu styles --- */
+    .menu-dot-social-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.1em;
+    }
+    .menu-dot-container {
+      position: fixed;
+      top: 28px;
+      left: 32px;
+      z-index: 10002;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      user-select: none;
+      gap: 0.7em;
+    }
+    .menu-dot-btn {
+      background: #fff; /* Changed to white */
+      border: none;
+      outline: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
+      transition: background 0.18s;
+      z-index: 10003;
+    }
+    .menu-dot-btn:hover, .menu-dot-btn:focus {
+      background: rgb(255, 255, 255);
+    }
+    .menu-dot-svg {
+      width: 28px;
+      height: 28px;
+      display: block;
+    }
+    .menu-dot-svg circle {
+      fill: #000 !important; /* Make the dots black for contrast on white button */
+    }
+    .menu-dropdown {
+      display: none;
+      position: absolute;
+      top: 56px;
+      left: 0;
+      min-width: 170px;
+      background: #fff;
+      color: #111;
+      border-radius: 1em;
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
+      padding: 0.7em 0.2em;
+      z-index: 10004;
+      font-family: 'Doto', 'Krona One', Arial, sans-serif;
+      font-size: 1.1rem;
+      animation: menuFadeIn 0.18s;
+    }
+    .menu-dropdown.active {
+      display: block;
+      animation: menuFadeIn 0.18s;
+    }
+    @keyframes menuFadeIn {
+      from { opacity: 0; transform: translateY(-10px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .menu-dropdown-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .menu-dropdown-list li {
+      margin: 0;
+      padding: 0;
+    }
+    .menu-dropdown-list button {
+      width: 100%;
+      background: none;
+      border: none;
+      outline: none;
+      color: #111;
+      font-family: inherit;
+      font-size: 1.1rem;
+      text-align: left;
+      padding: 0.7em 1.5em;
+      border-radius: 0.7em;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      margin-bottom: 0.1em;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .menu-dropdown-list button:last-child {
+      margin-bottom: 0;
+    }
+    .menu-dropdown-list button:hover, .menu-dropdown-list button:focus {
+      background: #f0f0f0;
+      color: #000;
+    }
+    /* Social buttons */
+    .social-btns-bar {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5em;
+      margin-left: 1.2em;
+    }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      transition: box-shadow 0.18s, background 0.18s;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+      padding: 0;
+      outline: none;
+      z-index: 10003;
+    }
+    .social-btn:hover, .social-btn:focus {
+      background: #f0f0f0;
+      box-shadow: 0 4px 18px 0 rgba(0,0,0,0.18);
+    }
+    .social-btn svg,
+    .social-btn img {
+      width: 26px;
+      height: 26px;
+      display: block;
+    }
+    @media (max-width: 600px) {
+      .menu-dot-container {
+        top: 12px;
+        left: 10px;
+        gap: 0.3em;
+      }
+      .menu-dot-btn {
+        width: 38px;
+        height: 38px;
+      }
+      .menu-dot-svg {
+        width: 20px;
+        height: 20px;
+      }
+      .menu-dropdown {
+        min-width: 120px;
+        font-size: 0.95rem;
+      }
+      .social-btn {
+        width: 34px;
+        height: 34px;
+      }
+      .social-btn svg,
+      .social-btn img {
+        width: 18px;
+        height: 18px;
+      }
+    }
+    /* Rain pattern overlay styles */
     #rain-pattern-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -43,118 +205,6 @@
     #rain-pattern-overlay.active {
       opacity: 1;
       pointer-events: none;
-    }
-    /* Notification box styles */
-    .dev-notification-box {
-      position: fixed;
-      left: 5vw;
-      right: 5vw;
-      bottom: 5vw;
-      width: auto;
-      max-width: 600px;
-      min-width: 0;
-      min-height: 0;
-      height: auto;
-      min-height: 120px;
-      max-height: 40vh;
-      /* Liquid glass effect: */
-      background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(200,220,255,0.18) 100%);
-      -webkit-backdrop-filter: blur(22px) saturate(180%);
-      backdrop-filter: blur(22px) saturate(180%);
-      border-radius: 2em;
-      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18), 0 1.5px 8px 0 rgba(255,255,255,0.18) inset;
-      border: 1.5px solid rgba(255,255,255,0.25);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 99999;
-      padding: 2.2em 1.2em 1.2em 1.2em;
-      box-sizing: border-box;
-      font-family: 'DotoPixel', Arial, sans-serif;
-      color: #ffffff;
-      font-size: 1.05rem;
-      text-align: center;
-      animation: devnotif-fadein 0.5s;
-      /* Add a subtle border for glass edge */
-      /* Add a subtle highlight for glass shine */
-      overflow: hidden;
-    }
-    .dev-notification-box::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      border-radius: 2em;
-      pointer-events: none;
-      z-index: 0;
-      background: linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 100%);
-      /* subtle glass shine overlay */
-    }
-    @keyframes devnotif-fadein {
-      from { opacity: 0; transform: translateY(40px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    .dev-notification-box .dev-notif-message {
-      flex: 1 1 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      font-family: 'DotoPixel', Arial, sans-serif;
-      color: #000000;
-      font-size: 1.25rem;
-      line-height: 1.4;
-      word-break: break-word;
-      margin-bottom: 1.2em;
-      position: relative;
-      z-index: 1;
-    }
-    .dev-notification-box .dev-notif-btn {
-      display: block;
-      margin: 0 auto 0.2em auto;
-      padding: 0.9em 4.5em;
-      background: rgba(17,17,17,0.85);
-      color: #fff;
-      border: none;
-      border-radius: 1.5em;
-      font-family: 'DotoPixel', Arial, sans-serif;
-      font-size: 1.35rem;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
-      transition: background 0.18s, color 0.18s;
-      outline: none;
-      min-width: 220px;
-      min-height: 2.8em;
-      letter-spacing: 0.01em;
-      color: #ffffff;
-      position: relative;
-      z-index: 1;
-    }
-    .dev-notification-box .dev-notif-btn:active {
-      background: #ffffff;
-      color: #111;
-    }
-    @media (max-width: 600px) {
-      .dev-notification-box {
-        left: 3vw;
-        right: 3vw;
-        bottom: 3vw;
-        width: auto;
-        max-width: 98vw;
-        height: auto;
-        min-height: 110px;
-        padding: 1.2em 0.7em 0.7em 0.7em;
-        font-size: 0.98rem;
-      }
-      .dev-notification-box .dev-notif-btn {
-        font-size: 1.15rem;
-        padding: 0.8em 2.8em;
-        min-width: 150px;
-      }
-      .dev-notification-box .dev-notif-message {
-        font-size: 1.1rem;
-      }
     }
     .main-center-container {
       display: flex;
@@ -177,37 +227,45 @@
       z-index: 2;
       pointer-events: auto;
       margin-left: 6vw;
-      width: 88vw;
-      max-width: 100vw;
-      box-sizing: border-box;
-      font-size: 2rem;
     }
     .hello {
-      font-size: 2rem;
+      font-size: 2.2rem; /* smaller than 3.2rem */
       margin-bottom: 1.2rem;
       line-height: 1.1;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
-      word-break: break-word;
-      max-width: 100%;
+    }
+    .mdesc1 {
+      font-size: 1.05rem; /* smaller than 1.25rem */
+      font-family: 'Doto', Arial, sans-serif;
+      color: #fff;
+      margin-bottom: 0.2em;
+      margin-top: 0.2em;
+      line-height: 1.4;
+      max-width: 700px;
+      /* Responsive font size for mobile */
+    }
+    @media (max-width: 600px) {
+      .mdesc1 {
+        font-size: 0.92rem;
+        max-width: 95vw;
+      }
     }
     .name-box {
-      background: #ffffff;
+      background: #ffffffdb;
       color: #000;
       -webkit-backdrop-filter: blur(5px);
       backdrop-filter: blur(5px);
-      padding: 0.4em 0.4em 0.4em 1em;
+      padding: 0.5em 0.5em 0.5em 1.2em;
       border-radius: 0.45em;
-      font-size: 2rem;
+      font-size: 2.2rem; /* smaller than 3.2rem */
       font-weight: bold;
       display: inline-block;
       box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
       min-width: 2ch;
       position: relative;
-      white-space: pre-wrap;
-      max-width: 80vw;
+      white-space: pre;
+      max-width: fit-content;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
-      overflow-wrap: break-word;
-      word-break: break-word;
     }
     .typing-caret {
       display: inline-block;
@@ -232,33 +290,32 @@
       50%, 100% { opacity: 0; }
     }
     .get-connected-container {
-      margin-top: 1.5rem;
+      margin-top: 2.2rem;
       pointer-events: auto;
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 0.7em;
-      flex-wrap: wrap;
-      font-size: 2rem;
     }
     .get-connected-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.7em;
       font-family: 'Doto', 'Krona One', Arial, sans-serif;
-      font-size: 0.95rem;
+      font-size: 1.05rem; /* smaller than 1.25rem */
       font-weight: bold;
       color: #fff;
       background: transparent;
       border: 2px solid #fff;
       border-radius: 2em;
-      padding: 0.45em 1.1em 0.45em 1em;
+      padding: 0.55em 1.5em 0.55em 1.2em;
       cursor: pointer;
       transition: background 0.18s, color 0.18s, border-color 0.18s;
       outline: none;
       position: relative;
       z-index: 2;
-      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
+      box-shadow: 0 2px 16px 0 #00000011;
+      backdrop-filter: blur(5px);
       user-select: none;
       overflow: hidden;
     }
@@ -269,7 +326,7 @@
       left: -60%;
       width: 60%;
       height: 100%;
-      background: linear-gradient(90deg, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.0) 100%);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.151) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.195) 100%);
       opacity: 0.85;
       pointer-events: none;
       z-index: 1;
@@ -299,13 +356,13 @@
       align-items: center;
       gap: 0.6em;
       font-family: 'Doto', 'Krona One', Arial, sans-serif;
-      font-size: 1.13rem;
+      font-size: 0.98rem; /* smaller than 1.13rem */
       font-weight: bold;
       color: #000;
       background: #fff;
       border: 2px solid #fff;
       border-radius: 2em;
-      padding: 0.38em 1em 0.38em 0.8em;
+      padding: 0.48em 1.3em 0.48em 1.1em;
       cursor: pointer;
       transition: background 0.18s, color 0.18s, border-color 0.18s;
       outline: none;
@@ -322,46 +379,54 @@
     }
     .arrow-topright-btn {
       display: inline-block;
-      width: 0.9em;
-      height: 0.9em;
+      width: 1.1em;
+      height: 1.1em;
       vertical-align: middle;
       z-index: 2;
       position: relative;
     }
     @media (max-width: 600px) {
-      body {
-        font-size: 2rem;
+      .menu-dot-container {
+        top: 12px;
+        left: 10px;
+        gap: 0.3em;
       }
-      .main-message {
-        margin-left: 3vw;
-        width: 94vw;
-        font-size: 2rem;
+      .menu-dot-btn {
+        width: 38px;
+        height: 38px;
       }
-      .hello {
-        font-size: 2rem;
+      .menu-dot-svg {
+        width: 20px;
+        height: 20px;
       }
-      .name-box {
-        font-size: 2rem;
-        max-width: 90vw;
-        padding: 0.3em 0.3em 0.3em 0.7em;
+      .menu-dropdown {
+        min-width: 120px;
+        font-size: 0.95rem;
       }
       .get-connected-btn {
         font-size: 0.85rem;
-        padding: 0.35em 0.8em 0.35em 0.7em;
+        padding: 0.45em 1.1em 0.45em 1em;
       }
       .arrow-inside-btn {
-        width: 0.8em;
-        height: 0.8em;
+        width: 1em;
+        height: 1em;
       }
       .blogs-btn {
-        font-size: 0.8rem;
-        padding: 0.28em 0.7em 0.28em 0.5em;
+        font-size: 0.85rem;
+        padding: 0.38em 1em 0.38em 0.8em;
       }
       .arrow-topright-btn {
-        width: 0.7em;
-        height: 0.7em;
+        width: 0.9em;
+        height: 0.9em;
+      }
+      .hello {
+        font-size: 1.4rem;
+      }
+      .name-box {
+        font-size: 1.4rem;
       }
     }
+
     .circle-reveal {
       position: fixed;
       left: 50%;
@@ -391,7 +456,7 @@
       z-index: 2;
       color: #111;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
-      font-size: 2rem;
+      font-size: 1.7rem; /* smaller than 2.5rem */
       text-align: center;
       margin-top: 40vh;
       transition: color 0.5s;
@@ -401,30 +466,33 @@
       color: #fff;
       transition: color 0.5s;
     }
+
     .number {
       position: fixed;
       right: 10%;
       top: 50%;
       transform: translateY(-50%);
       font-family: 'Orbitron', sans-serif;
-      font-size: 120px;
+      font-size: 180px; /* smaller than 220px */
       font-weight: 900;
       color: transparent;
       -webkit-text-stroke: 2px #ffff;
       opacity: 0.3;
+      z-index: 2002;
     }
+
     .sign-up-btn {
       position: fixed;
       top: 20px;
       right: 20px;
       font-family: 'Doto', Arial, sans-serif;
-      font-size: 0.9rem;
+      font-size: 1rem;
       font-weight: bold;
       color: #fff;
       background: transparent;
       border: 2px solid #fff;
       border-radius: 2em;
-      padding: 0.4em 1em;
+      padding: 0.5em 1.2em;
       cursor: pointer;
       transition: background 0.18s, color 0.18s, border-color 0.18s;
       outline: none;
@@ -440,62 +508,31 @@
     }
     .arrow-topright-signup {
       display: inline-block;
-      width: 0.8em;
-      height: 0.8em;
+      width: 1em;
+      height: 1em;
       vertical-align: middle;
       z-index: 2;
       position: relative;
     }
-    .scroll-prompt {
+
+    /* Removed .scroll-prompt and related styles */
+
+    .black-fade-overlay {
       position: fixed;
-      bottom: 5%;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      color: #fff;
-      font-family: 'Doto', Arial, sans-serif;
-      font-size: 0.9rem;
-      opacity: 0;
-      transition: opacity 0.5s;
-      z-index: 1001;
-    }
-    .scroll-prompt.active {
+      z-index: 10000;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
       opacity: 1;
+      pointer-events: none;
+      transition: opacity 1s linear;
     }
-    .scroll-prompt .circle {
-      width: 32px;
-      height: 32px;
-      border: 2px solid rgba(255, 255, 255, 0.5);
-      border-radius: 50%;
-      margin: 0 auto;
-      position: relative;
-      animation: pulse 2s infinite;
+    .black-fade-overlay.transparent {
+      opacity: 0;
+      transition: opacity 1s linear;
     }
-    .scroll-prompt .arrow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 10px;
-      height: 10px;
-      animation: bounce 1s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-    }
-    @keyframes bounce {
-      0%, 100% {
-        transform: translate(-50%, -50%) translateY(0);
-      }
-      50% {
-        transform: translate(-50%, -50%) translateY(5px);
-      }
-    }
+
     .blur-overlay {
       position: fixed;
       z-index: 9999;
@@ -515,47 +552,170 @@
       pointer-events: none;
       transition: opacity 1.2s cubic-bezier(.4,1.2,.6,1);
     }
+    .project-transition-overlay {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: -150px;
+      height: 0;
+      background: #fff;
+      z-index: 10010;
+      transition: height 0.6s cubic-bezier(.4,1.2,.6,1), bottom 0.6s cubic-bezier(.4,1.2,.6,1);
+      pointer-events: none;
+    }
+    .project-transition-overlay.active {
+      height: 100vh;
+      bottom: 0;
+      transition: height 0.6s cubic-bezier(.4,1.2,.6,1), bottom 0.6s cubic-bezier(.4,1.2,.6,1);
+    }
+
+    /* --- Right-side image styles --- */
+    .right-image-container {
+      position: fixed;
+      right: 0;
+      bottom: -10px;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      z-index: 10;
+      pointer-events: none;
+      /* No background */
+    }
+    .right-image-container img {
+      max-height: 80vh;
+      max-width: 38vw;
+      width: auto;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      /* No background */
+      box-shadow: none;
+      border: none;
+      background: none;
+      margin-right: 3vw;
+      margin-left: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+    @media (max-width: 1139px) {
+      .right-image-container {
+        display: none !important;
+      }
+    }
+
+    /* Bottom center prompt style */
+    .bottom-center-prompt {
+      position: fixed;
+      left: 50%;
+      bottom: 3.5vh;
+      transform: translateX(-50%);
+      z-index: 10020;
+      background: #00000011;
+      backdrop-filter: blur(8px);
+      border: 1px solid #ffffff3c;
+      color: #fff;
+      font-family: 'Doto', Arial, sans-serif;
+      font-size: 1.05rem; /* smaller than 1.15rem */
+      padding: 0.7em 1.7em;
+      border-radius: 2em;
+      box-shadow: 0 2px 16px 0 #00000011;
+      letter-spacing: 0.01em;
+      text-align: center;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.97;
+      transition: opacity 0.3s;
+    }
+    @media (max-width: 600px) {
+      .bottom-center-prompt {
+        font-size: 0.88rem;
+        padding: 0.5em 1.1em;
+        bottom: 1.5vh;
+      }
+    }
   </style>
   <script>
+    // Always open page at top
+    window.addEventListener('beforeunload', function () {
+      window.scrollTo(0, 0);
+    });
+    window.addEventListener('DOMContentLoaded', function () {
+      setTimeout(function() {
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }, 0);
+    });
+
+    // Redirect to mobile.html if width is less than 930
     (function() {
-      function redirectIfWideScreen() {
+      function redirectIfMobile() {
         if (window.innerWidth > 730) {
           window.location.href = "Main.html";
         }
       }
-      redirectIfWideScreen();
-      window.addEventListener('resize', redirectIfWideScreen);
+      redirectIfMobile();
+      window.addEventListener('resize', redirectIfMobile);
     })();
-    // Show dev notification box for 10 seconds on load
-    window.addEventListener('DOMContentLoaded', function() {
-      // Remove if already present
-      if(document.getElementById('devNotificationBox')) return;
-      var box = document.createElement('div');
-      box.className = 'dev-notification-box';
-      box.id = 'devNotificationBox';
-      box.innerHTML = `
-        <div class="dev-notif-message">
-          Site still under development, site can be slow on some devices.
-          <br>
-          If any error occur contact Admin.
-        </div>
-        <button class="dev-notif-btn" type="button">Okay</button>
-      `;
-      document.body.appendChild(box);
-      // Hide on button click
-      box.querySelector('.dev-notif-btn').onclick = function() {
-        box.style.display = 'none';
-      };
-      // Hide after 10 seconds
-      setTimeout(function() {
-        if(box && box.style.display !== 'none') box.style.display = 'none';
-      }, 15000);
-    });
   </script>
 </head>
 <body>
+  <!-- 3-dot menu in top left, social buttons to right -->
+  <div class="menu-dot-container">
+    <div class="menu-dot-social-row">
+      <button class="menu-dot-btn" id="menuDotBtn" aria-label="Open menu">
+        <svg class="menu-dot-svg" viewBox="0 0 32 32" fill="none">
+          <circle cx="6" cy="16" r="3.2"/>
+          <circle cx="16" cy="16" r="3.2"/>
+          <circle cx="26" cy="16" r="3.2"/>
+        </svg>
+      </button>
+      <div class="social-btns-bar">
+        <!-- GitHub -->
+        <a class="social-btn" href="https://github.com/rutujdhodapkar" target="_blank" aria-label="GitHub">
+          <img src="svg/github.svg" alt="GitHub" style="width: 24px; height: 24px;"/>
+        </a>
+        <!-- LinkedIn -->
+        <a class="social-btn" href="https://www.linkedin.com/in/rutujdhodapkar" target="_blank" aria-label="LinkedIn">
+          <img src="svg/linkedin.svg" alt="LinkedIn" style="width: 24px; height: 24px;"/>
+        </a>
+        <!-- X.com (Twitter X) -->
+        <a class="social-btn" href="https://x.com/rutujdhodapkar" target="_blank" aria-label="X.com">
+          <img src="svg/x.jpg" alt="X.com" style="width: 24px; height: 24px;"/>
+        </a>
+        <!-- Email -->
+        <a class="social-btn" href="mailto:rutujdhodapkar@gmail.com" aria-label="Email">
+          <img src="svg/email.svg" alt="Email" style="width: 24px; height: 24px;"/>
+        </a>
+      </div>
+    </div>
+    <div class="menu-dropdown" id="menuDropdown">
+      <ul class="menu-dropdown-list">
+        <li>
+          <button type="button" id="menuHomeBtn">Home</button>
+        </li>
+        <li>
+          <button type="button" id="menuAboutBtn">About</button>
+        </li>
+        <li>
+          <button type="button" id="menuProjectsBtn">Projects</button>
+        </li>
+        <li>
+          <button type="button" id="menuContactBtn">Contact</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- Black fade overlay for 1s fade out -->
+  <div class="black-fade-overlay" id="blackFadeOverlay"></div>
+  <!-- Rain pattern overlay (hidden initially) -->
   <div id="rain-pattern-overlay"></div>
   <div class="blur-overlay" id="blurOverlay"></div>
+  <!-- Project transition overlay for Projects menu click -->
+  <div class="project-transition-overlay" id="projectTransitionOverlay"></div>
   <!-- <button class="sign-up-btn" onclick="window.location.href='signup.html'">
     Sign Up
     <span class="arrow-topright-signup">
@@ -567,15 +727,21 @@
   </button> -->
   <div class="main-center-container">
     <div class="main-message">
-      <div class="hello" style="text-align: left; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); padding: 10px; border-radius: 8px; margin: 10px 0;">Hello There!!!</div>
-      <div style="font-size: 2rem; font-weight: bold; font-family: 'Krona One', 'Doto', Arial, sans-serif; max-width: 100vw; word-break: break-word; text-align: left; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); padding: 10px; border-radius: 8px;">
+      <div class="hello">Hello There!!!</div>
+      <div style="font-size: 2.2rem; font-weight: bold; font-family: 'Krona One', 'Doto', Arial, sans-serif;">
         I'm <span class="name-box"><b id="typed-name"></b><span class="typing-caret"></span></span>
+      </div>
+      <!-- Insert mdesc1 here -->
+      <div id="mdesc1" class="mdesc1" style="display:none;"></div>
+      <div style="font-size: 0.95rem; color: #fff; margin-top: 0.2em; margin-bottom: 0.2em; font-family: 'Doto', Arial, sans-serif;">
+        Building systems that can talk think and improve itself.
       </div>
       <div class="get-connected-container">
         <button class="get-connected-btn" onclick="window.location.href='contact.html'">
           <span class="light-effect"></span>
           Get connected
           <span class="arrow-inside-btn">
+            <!-- SVG arrow down-right -->
             <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M7 7 L17 17"/>
               <polyline points="10 17 17 17 17 10"/>
@@ -585,6 +751,7 @@
         <button class="blogs-btn" onclick="window.open('https://researchrutujdhodapkar.vercel.app ', '_blank')">
           Research
           <span class="arrow-topright-btn">
+            <!-- SVG arrow top-right -->
             <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="7 17 17 7"/>
               <polyline points="9 7 17 7 17 15"/>
@@ -594,20 +761,99 @@
       </div>
     </div>
   </div>
+  <!-- Right-side image, only visible if width >= 1140px -->
+  <div class="right-image-container">
+    <img src="svg/img.png" alt="Profile Illustration" draggable="false" />
+  </div>
   <div class="circle-reveal" id="circleReveal"></div>
   <div class="content">
-    <div style="font-size: 2rem; margin-top:2em;"></div>
+    <div style="font-size:1rem; margin-top:2em;"></div>
   </div>
-  <div class="number">01</div>
-  <div class="scroll-prompt" id="scrollPrompt">
-    <div class="circle">
-      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </div>
-    <div>Scroll for more</div>
+  <div class="number"></div>
+  <!-- Bottom center prompt -->
+  <div class="bottom-center-prompt">
+    Scroll</b> to get started
   </div>
+  <!-- Removed scroll-prompt and its content -->
   <script>
+    // 3-dot menu logic
+    (function() {
+      const menuBtn = document.getElementById('menuDotBtn');
+      const menuDropdown = document.getElementById('menuDropdown');
+      let menuOpen = false;
+
+      function openMenu() {
+        menuDropdown.classList.add('active');
+        menuOpen = true;
+        // Trap focus inside menu for accessibility
+        const firstBtn = menuDropdown.querySelector('button');
+        if (firstBtn) firstBtn.focus();
+      }
+      function closeMenu() {
+        menuDropdown.classList.remove('active');
+        menuOpen = false;
+      }
+      menuBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (menuOpen) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+      // Close menu on click outside
+      document.addEventListener('mousedown', function(e) {
+        if (menuOpen && !menuDropdown.contains(e.target) && e.target !== menuBtn) {
+          closeMenu();
+        }
+      });
+      // Close menu on Escape
+      document.addEventListener('keydown', function(e) {
+        if (menuOpen && e.key === 'Escape') {
+          closeMenu();
+        }
+      });
+
+      // Menu item actions
+      document.getElementById('menuHomeBtn').onclick = function(e) {
+        closeMenu();
+        // Do nothing (stay on home)
+      };
+      document.getElementById('menuAboutBtn').onclick = function(e) {
+        closeMenu();
+        window.location.href = "detail.html";
+      };
+      document.getElementById('menuProjectsBtn').onclick = function(e) {
+        closeMenu();
+        // Custom transition: reveal from bottom 150px, then redirect
+        var overlay = document.getElementById('projectTransitionOverlay');
+        if (overlay) {
+          overlay.classList.add('active');
+          setTimeout(function() {
+            window.location.href = "detail.html";
+          }, 650);
+        } else {
+          window.location.href = "detail.html";
+        }
+      };
+      document.getElementById('menuContactBtn').onclick = function(e) {
+        closeMenu();
+        window.location.href = "contact.html";
+      };
+    })();
+
+    // Black overlay fade out for 1s on load
+    window.addEventListener('DOMContentLoaded', function() {
+      const blackFade = document.getElementById('blackFadeOverlay');
+      setTimeout(() => {
+        blackFade.classList.add('transparent');
+      }, 10);
+      setTimeout(() => {
+        blackFade.style.display = 'none';
+      }, 1010);
+    });
+
+    // Blur out animation on load
     window.addEventListener('DOMContentLoaded', function() {
       const blur = document.getElementById('blurOverlay');
       setTimeout(() => {
@@ -618,68 +864,51 @@
       }, 2200);
     });
 
-    // Typing animation with name fitting logic
-    // Use the raw.githubusercontent.com link for direct CSV access
-    fetch('https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv')
+    // Fetch name, mdesc1 from GitHub raw CSV and use for typing animation and description
+    fetch('https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv', {cache: "no-store"})
       .then(response => {
         if (!response.ok) {
+          // If response is not ok, redirect to error.html
+          window.location.href = "error.html";
           throw new Error('Network response was not ok');
         }
         return response.text();
       })
       .then(data => {
-        const rows = data.split('\n');
+        const rows = data.split('\n').filter(row => row.trim().length > 0);
         const headers = rows[0].split(',');
         const nameIndex = headers.indexOf('name');
+        const mdesc1Index = headers.indexOf('mdesc1');
         if (nameIndex === -1 || rows.length < 2) {
-          // window.location.href = "error.html";
+          // If data is not as expected, redirect to error.html
+          window.location.href = "error.html";
           return;
         }
-        // Handle possible quoted CSV values and commas in values
-        function parseCSVRow(row) {
-          const result = [];
-          let current = '';
-          let inQuotes = false;
-          for (let i = 0; i < row.length; i++) {
-            const char = row[i];
-            if (char === '"' && (i === 0 || row[i - 1] !== '\\')) {
-              inQuotes = !inQuotes;
-            } else if (char === ',' && !inQuotes) {
-              result.push(current);
-              current = '';
-            } else {
-              current += char;
+        let nameToType = "";
+        let mdesc1 = "";
+        for (let i = 1; i < rows.length; ++i) {
+          const cols = rows[i].split(',');
+          if (cols.length > nameIndex) {
+            nameToType = cols[nameIndex].trim();
+            if (mdesc1Index !== -1 && cols.length > mdesc1Index) {
+              mdesc1 = cols[mdesc1Index].trim();
             }
+            break;
           }
-          result.push(current);
-          return result;
         }
-        const dataRow = parseCSVRow(rows[1]);
-        const nameToType = (dataRow[nameIndex] || '').replace(/^"|"$/g, '').trim();
+        if (!nameToType) {
+          // If name is not found, redirect to error.html
+          window.location.href = "error.html";
+          return;
+        }
 
+        // Typing animation for name
         const typedNameElem = document.getElementById('typed-name');
         const caretElem = document.querySelector('.typing-caret');
         let idx = 0;
         let caretStableTimeout = null;
         let caretHideTimeout = null;
 
-        // Responsive font size for name-box to always fit
-        function fitNameBoxFont() {
-          const nameBox = document.querySelector('.name-box');
-          if (!nameBox) return;
-          let fontSize = parseFloat(window.getComputedStyle(nameBox).fontSize);
-          nameBox.style.fontSize = '';
-          nameBox.style.maxWidth = '80vw';
-          nameBox.style.whiteSpace = 'pre-wrap';
-          nameBox.style.wordBreak = 'break-word';
-          // Shrink font size until it fits
-          while (nameBox.scrollWidth > nameBox.offsetWidth && fontSize > 0.7) {
-            fontSize -= 0.05;
-            nameBox.style.fontSize = fontSize + 'rem';
-          }
-        }
-
-        // Delays for typing
         const baseDelays = Array.from(nameToType).map(char => char === ' ' ? 920 : 300);
 
         function setCaretStable() {
@@ -698,7 +927,6 @@
         function typeName() {
           if (idx <= nameToType.length) {
             typedNameElem.textContent = nameToType.slice(0, idx);
-            fitNameBoxFont();
             if (idx < nameToType.length) {
               setCaretStable();
               if (caretStableTimeout) clearTimeout(caretStableTimeout);
@@ -716,41 +944,50 @@
         }
         setTimeout(typeName, 700);
 
-        // Also refit on window resize
-        window.addEventListener('resize', fitNameBoxFont);
+        // Show mdesc1
+        if (mdesc1) {
+          const mdesc1Elem = document.getElementById('mdesc1');
+          mdesc1Elem.textContent = mdesc1;
+          mdesc1Elem.style.display = '';
+        }
       })
       .catch(error => {
-        console.error('Error fetching the name:', error);
-        // window.location.href = "error.html";
+        // On any error (network, parsing, etc), redirect to error.html
+        window.location.href = "error.html";
+        // Optionally log error for debugging
+        // console.error('Error fetching the name:', error);
       });
 
+    // Circle reveal scroll logic
     const circle = document.getElementById('circleReveal');
-    const scrollPrompt = document.getElementById('scrollPrompt');
+    // Removed scrollPrompt and its logic
     let revealed = false;
     let aboutRedirected = false;
 
-    setTimeout(() => {
-      scrollPrompt.classList.add('active');
-    }, 5000);
+    // Removed setTimeout for scrollPrompt
 
     function handleScroll() {
       const scrollY = window.scrollY || window.pageYOffset;
       const triggerPoint = window.innerHeight * 0.2;
+
       if (scrollY > triggerPoint && !revealed) {
         circle.classList.add('active');
         revealed = true;
+
         if (!aboutRedirected) {
           aboutRedirected = true;
           setTimeout(function() {
-            window.location.href = "detailmobile.html";
+            window.location.href = "detail.html";
           }, 950);
         }
+
       } else if (scrollY <= triggerPoint && revealed) {
         circle.classList.remove('active');
         revealed = false;
         aboutRedirected = false;
       }
     }
+
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     setTimeout(function() {
@@ -759,7 +996,7 @@
         if (!overlay.hasChildNodes()) {
           var obj = document.createElement('object');
           obj.type = 'text/html';
-          obj.data = 'animations/random onoff.html';
+          obj.data = 'animations/rain pattern.html';
           obj.style.width = '100vw';
           obj.style.height = '100vh';
           obj.style.pointerEvents = 'none';
@@ -775,3 +1012,70 @@
   </script>
 </body>
 
+
+
+
+<style>
+  /* Custom typing cursor animation */
+  .custom-cursor {
+    position: relative;
+    display: inline-block;
+    width: 350px; /* Broader width */
+  }
+  .custom-cursor input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    outline: none;
+    width: 100%;
+    font-family: 'Doto', Arial, sans-serif;
+    font-size: 1.1rem; /* smaller than 1.4rem */
+    margin-left: 5px;
+    caret-color: transparent; /* Hide default caret */
+    position: relative;
+    z-index: 1;
+  }
+  .typing-cursor {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1.1em; /* smaller than 1.4em */
+    width: 2px;
+    background: #fff;
+    animation: blink-cursor 1s steps(1) infinite;
+    pointer-events: none;
+    z-index: 2;
+  }
+  @keyframes blink-cursor {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+</style>
+
+<script>
+  // Listen for user typing "help" anywhere on the page
+  (function() {
+    let buffer = '';
+    let timeout = null;
+
+    document.addEventListener('keydown', function(e) {
+      // Only consider a-z, ignore modifier keys
+      if (e.key.length === 1 && /^[a-zA-Z]$/.test(e.key)) {
+        buffer += e.key.toLowerCase();
+        // Keep buffer at max length 4
+        if (buffer.length > 4) buffer = buffer.slice(-4);
+
+        // If "help" is typed, open cmd.html in the same tab
+        if (buffer === 'help') {
+          window.location.href = 'cmd.html';
+          buffer = '';
+        }
+
+        // Reset buffer if user pauses for more than 2 seconds
+        clearTimeout(timeout);
+        timeout = setTimeout(() => { buffer = ''; }, 2000);
+      }
+    });
+  })();
+</script>

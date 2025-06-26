@@ -1,4 +1,3 @@
-<!-- Start of Selection -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -17,16 +16,18 @@
       margin: 0;
       padding: 0;
       font-family: 'Krona One', Arial, sans-serif;
-      background: #00000000;
-      color: #fff;
+      background: transparent !important;
+      color: #000;
       min-height: 100vh;
       overflow-y: auto;
-      text-align: center; /* Center all text in body */
+      text-align: center;
+      /* Remove any blur or background effect for full transparency */
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
     }
-    /* 02 number top-right style */
     .number-02-topright {
       position: fixed;
-      top: 0;
+      top: 20px;
       right: 0;
       z-index: 1000;
       pointer-events: none;
@@ -35,7 +36,7 @@
       margin: 0;
       padding: 0;
       width: 100vw;
-      text-align: right; /* Align the number to the right */
+      text-align: right;
     }
     .number-02-topright .number {
       font-family: 'Orbitron', sans-serif;
@@ -52,14 +53,27 @@
       width: 100vw;
       display: block;
     }
-    .about-container {
-      max-width: 800px;
+    .main-flex-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 48px 24px 48px 24px;
       position: relative;
-      /* Add enough bottom padding to prevent overlap with fixed sections */
-      padding-bottom: 1200px;
-      text-align: center; /* Center all text in about-container */
+      min-height: 600px;
+      gap: 40px;
+      background: transparent !important;
+    }
+    .about-container {
+      max-width: 800px;
+      flex: 2 1 0;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      text-align: center;
+      background: transparent !important;
     }
     h1, h2 {
       font-family: 'Krona One', Arial, sans-serif !important;
@@ -68,6 +82,7 @@
       margin-bottom: 0.5em;
       text-align: center;
       width: 100%;
+      background: transparent !important;
     }
     h1 {
       font-size: 2.8rem;
@@ -80,30 +95,14 @@
     }
     p {
       font-family: 'BitmapFont', Arial, sans-serif;
-      font-size: 0.89rem;
+      font-size: 1.08rem;
       line-height: 1.7;
       margin-bottom: 1.2em;
       color: #fff;
-      text-align: center;
+      text-align: left;
       width: 100%;
       display: block;
-    }
-    li {
-      font-size: 0.93rem;
-      line-height: 1.7;
-      margin-bottom: 1.2em;
-      color: #fff;
-      text-align: center;
-      width: 100%;
-      display: list-item;
-    }
-    ul {
-      margin-left: 0;
-      margin-bottom: 2em;
-      padding-left: 0;
-      text-align: center;
-      display: inline-block;
-      width: auto;
+      background: transparent !important;
     }
     .profile-pic {
       float: none;
@@ -117,49 +116,64 @@
       object-fit: cover;
       border: 3px solid #fff;
       box-shadow: 0 4px 24px #fff2;
-      background: #111;
+      background: transparent !important;
     }
     a {
+      font-family: 'Krona One', Arial, sans-serif;
       color: #fff;
       text-decoration: underline;
       text-align: center;
       display: inline-block;
+      background: transparent !important;
     }
-    /* Fixed sections for skills, contact */
     .section-fixed {
       position: absolute;
       left: 0;
       right: 0;
       width: 100%;
       margin: 0 auto;
-      background: transparent;
+      background: transparent !important;
       z-index: 2;
       padding: 0 0 0 0;
       text-align: center;
     }
     #skills-section { top: 700px; }
-    /* #contact-section { top: 1300px; } -- removed contact section */
-    @media (max-width: 600px) {
-      .about-container {
+    @media (max-width: 900px) {
+      .main-flex-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
         padding: 18px 6vw 400px 6vw;
+        background: transparent !important;
+      }
+      .about-container {
+        padding-bottom: 0;
+        background: transparent !important;
+      }
+    }
+    @media (max-width: 600px) {
+      .main-flex-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        padding: 8px 2vw 200px 2vw;
+        background: transparent !important;
+      }
+      .about-container {
+        padding: 0;
+        background: transparent !important;
       }
       .section-fixed {
         position: static !important;
         margin-top: 32px;
         padding: 0;
+        background: transparent !important;
       }
       .number-02-topright .number {
-        font-size: 160px;
+        font-size: 220px; /* Keep the size consistent across all screen sizes */
         -webkit-text-stroke: 2px #ffffff;
       }
     }
-    @media (max-width: 400px) {
-      .number-02-topright .number {
-        font-size: 22vw;
-        -webkit-text-stroke: 2.5px #ffffff;
-      }
-    }
-    /* Typing animation styles */
     .typing {
       position: relative;
       white-space: pre-wrap;
@@ -167,9 +181,10 @@
       min-height: 1.2em;
       display: inline-block;
       font-family: 'BitmapFont', Arial, sans-serif;
-      text-align: center;
+      text-align: left;
       width: 100%;
-      font-size: 0.89rem;
+      font-size: 1.08rem;
+      background: transparent !important;
     }
     .typing-caret {
       display: inline-block;
@@ -179,6 +194,7 @@
       margin-left: 2px;
       margin-right: 0;
       position: relative;
+      background: transparent !important;
     }
     .typing-caret-circle {
       width: 0.55em;
@@ -195,6 +211,31 @@
     .typing-caret-blink {
       animation: caret-blink 0.8s steps(1) infinite;
     }
+    #shared-typing-caret {
+      display: inline-block;
+      width: 0.95em;
+      height: 1.1em;
+      vertical-align: -0.1em;
+      margin-left: 2px;
+      margin-right: 0;
+      position: relative;
+      background: transparent !important;
+    }
+    #shared-typing-caret .typing-caret-circle {
+      width: 0.55em;
+      height: 0.55em;
+      border-radius: 50%;
+      background: #fff;
+      display: inline-block;
+      position: absolute;
+      left: 0.18em;
+      top: 0.22em;
+      box-shadow: 0 0 4px 1px #fff8;
+      transition: background 0.2s;
+    }
+    #shared-typing-caret .typing-caret-blink {
+      animation: caret-blink 0.8s steps(1) infinite;
+    }
     @keyframes caret-blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
@@ -206,95 +247,110 @@
   <div class="number-02-topright">
     <div class="number">02</div>
   </div>
-  <div class="about-container">
-    <img src="profile.jpg" alt="Rutuj Dhodapkar" class="profile-pic" onerror="this.style.display='none'">
-    <h1 style="font-family: 'Krona One', Arial, sans-serif; text-align:center;">About Me</h1>
-    <div id="about-paragraphs" style="text-align:center;">
-      <!-- About paragraphs will be loaded here -->
+  <div class="main-flex-container">
+    <div class="about-container">
+      <img src="profile.jpg" alt="Rutuj Dhodapkar" class="profile-pic" onerror="this.style.display='none'">
+      <h1 style="font-family: 'Krona One', Arial, sans-serif; text-align:center; background:transparent !important;">About Me</h1>
+      <div id="about-paragraphs" style="text-align:left; background:transparent !important;">
+        <!-- About paragraphs will be loaded here -->
+      </div>
     </div>
-    <!-- Skill section removed as per instructions -->
   </div>
-  <!-- Removed contact section as per instructions -->
   <script>
-    // Typing animation function for multiple paragraphs
-    function typeParagraphs(paragraphs, containerId, typingClass = "typing", typingSpeed = 18, paragraphDelay = 400) {
+    // Typing animation function for multiple paragraphs with a single shared typing dot
+    function typeParagraphsWithSharedCaret(paragraphs, containerId, typingClass = "typing", typingSpeed = 18, paragraphDelay = 400) {
       const container = document.getElementById(containerId);
       container.innerHTML = ""; // Clear previous content
-      let pIndex = 0;
 
-      function typeOneParagraph(text, cb) {
+      // Create paragraph elements and text spans
+      const pElements = [];
+      const textSpans = [];
+      for (let i = 0; i < paragraphs.length; i++) {
         const p = document.createElement("p");
         p.className = typingClass;
-        // Ensure BitmapFont is used for all about paragraphs
         p.style.fontFamily = "'BitmapFont', Arial, sans-serif";
-        p.style.textAlign = "center";
-        p.style.fontSize = "0.89rem";
-        container.appendChild(p);
-
-        // Create span for text and caret
+        p.style.textAlign = "left";
+        p.style.fontSize = "1.08rem";
+        p.style.background = "transparent";
         const textSpan = document.createElement("span");
         textSpan.style.fontFamily = "'BitmapFont', Arial, sans-serif";
-        textSpan.style.textAlign = "center";
-        textSpan.style.fontSize = "0.89rem";
+        textSpan.style.textAlign = "left";
+        textSpan.style.fontSize = "1.08rem";
+        textSpan.style.background = "transparent";
         p.appendChild(textSpan);
+        container.appendChild(p);
+        pElements.push(p);
+        textSpans.push(textSpan);
+      }
 
-        // Caret: white circle, stable while typing, then blinking
-        const caretSpan = document.createElement("span");
-        caretSpan.className = "typing-caret";
-        const caretCircle = document.createElement("span");
-        caretCircle.className = "typing-caret-circle";
-        caretSpan.appendChild(caretCircle);
-        p.appendChild(caretSpan);
+      // Create the shared typing caret
+      const sharedCaret = document.createElement("span");
+      sharedCaret.id = "shared-typing-caret";
+      sharedCaret.style.background = "transparent";
+      const caretCircle = document.createElement("span");
+      caretCircle.className = "typing-caret-circle";
+      sharedCaret.appendChild(caretCircle);
 
+      // Helper to move caret to the end of a textSpan
+      function moveCaretTo(span) {
+        // Remove caret from current parent
+        if (sharedCaret.parentNode) {
+          sharedCaret.parentNode.removeChild(sharedCaret);
+        }
+        // Insert caret after the span
+        span.parentNode.appendChild(sharedCaret);
+      }
+
+      // Caret blink control
+      function startCaretBlink() {
+        caretCircle.classList.add("typing-caret-blink");
+      }
+      function stopCaretBlink() {
+        caretCircle.classList.remove("typing-caret-blink");
+      }
+
+      // Typing logic
+      let pIndex = 0;
+      function typeNextParagraph() {
+        if (pIndex >= paragraphs.length) {
+          // After all, keep caret blinking at the end of last paragraph
+          startCaretBlink();
+          return;
+        }
+        const text = paragraphs[pIndex];
+        const span = textSpans[pIndex];
         let i = 0;
-        let typingDone = false;
-        let caretBlinkTimeout = null;
-
-        function startCaretBlink() {
-          caretCircle.classList.add("typing-caret-blink");
-        }
-        function stopCaretBlink() {
-          caretCircle.classList.remove("typing-caret-blink");
-        }
+        stopCaretBlink();
+        moveCaretTo(span);
 
         function typeChar() {
           if (i <= text.length) {
-            textSpan.textContent = text.slice(0, i);
+            span.textContent = text.slice(0, i);
+            moveCaretTo(span);
             i++;
-            // While typing, caret is always visible and not blinking
-            stopCaretBlink();
-            caretCircle.style.opacity = "1";
             if (i <= text.length) {
               setTimeout(typeChar, typingSpeed + Math.random()*30);
             } else {
-              // After typing, keep caret stable for 0.5s, then start blinking
+              // After typing, keep caret stable for 0.5s, then start blinking, then move to next paragraph
               setTimeout(() => {
                 startCaretBlink();
-                // Remove caret after a short while if you want, or keep blinking
-                // Optionally, remove caret after a while:
-                // setTimeout(() => { caretSpan.remove(); }, 1200);
-                p.classList.remove(typingClass); // Remove typing class (for legacy caret)
-                if (cb) setTimeout(cb, paragraphDelay);
+                setTimeout(() => {
+                  stopCaretBlink();
+                  pIndex++;
+                  typeNextParagraph();
+                }, paragraphDelay);
               }, 500);
             }
           }
         }
         typeChar();
       }
-
-      function typeNext() {
-        if (pIndex < paragraphs.length) {
-          typeOneParagraph(paragraphs[pIndex], () => {
-            pIndex++;
-            typeNext();
-          });
-        }
+      if (paragraphs.length > 0) {
+        typeNextParagraph();
       }
-      typeNext();
     }
 
     // Fetch data.csv from GitHub and extract "apara1" and "apara2" columns for about paragraphs
-    // Use the raw.githubusercontent.com link for direct CSV access
     fetch('https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv')
       .then(response => {
         if (!response.ok) throw new Error('not found');
@@ -348,11 +404,11 @@
         if ((!apara1 && !apara2) || (typeof apara1 === "undefined" && typeof apara2 === "undefined")) {
           // window.location.href = "error.html";
         } else {
-          // Typing animation for about paragraphs
+          // Typing animation for about paragraphs with shared caret
           const paragraphs = [];
           if (apara1) paragraphs.push(apara1);
           if (apara2) paragraphs.push(apara2);
-          typeParagraphs(paragraphs, "about-paragraphs");
+          typeParagraphsWithSharedCaret(paragraphs, "about-paragraphs");
         }
       })
       .catch(err => {

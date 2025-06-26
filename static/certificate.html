@@ -11,7 +11,7 @@
   <style>
     ::selection {
       background: #fff;
-      color: #000;
+      color: #0f0f0f;
     }
     @font-face {
       font-family: 'BitmapFont';
@@ -20,7 +20,7 @@
       font-style: normal;
     }
     body {
-      background: transparent;
+      background: #0f0f0f;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -40,7 +40,7 @@
       margin-bottom: 36px;
       letter-spacing: 0.04em;
       text-align: center;
-      text-shadow: 0 2px 12px #0008, 0 0 2px #fff2;
+      text-shadow: 0 2px 12px #0f0f0f8, 0 0 2px #fff2;
     }
     .cert-scroll-wrapper {
       position: relative;
@@ -64,10 +64,10 @@
       display: none; /* Chrome/Safari/Webkit */
     }
     .white-box {
-      background: rgba(255, 255, 255, 0); /* transparent box */
-      border: 2.5px solid #fff;           /* white border */
-      border-radius: 55px; /* More curve */
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0);
+      background: rgba(255, 255, 255, 0.1); /* Slightly visible box */
+      border: 2px solid #606060;
+      border-radius: 1.5em; /* More curve */
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2); /* Slight shadow */
       width: 340px;
       height: 420px;
       display: flex;
@@ -85,8 +85,8 @@
       cursor: pointer; /* Indicate clickable */
     }
     .white-box:hover {
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0);
-      background: rgba(255, 255, 255, 0);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.2);
       border-color: #fff;
       filter: brightness(1.08);
     }
@@ -95,7 +95,7 @@
       max-height: 200px;
       object-fit: contain;
       border-radius: 45px; /* More curve for image */
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       margin-top: 24px;
       margin-bottom: 18px;
     }
@@ -151,7 +151,7 @@
     }
     .scroll-arrow:active {
       background: #eee;
-      color: #000;
+      color: #0f0f0f;
     }
     .scroll-arrow.left {
       left: 8px;

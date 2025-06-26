@@ -76,7 +76,7 @@
       margin: 0;
       padding: 0;
       overflow-x: hidden;
-      background-color: black;
+      background-color: #0f0f0f;
     }
     ::selection {
       background: #fff;
@@ -503,6 +503,58 @@
 </script>
 
 
+
+
+
+
+<script>
+// Slippery smooth scrolling with elastic effect
+document.documentElement.style.scrollBehavior = "smooth";
+
+// Custom slippery scroll with elastic bounce and extra scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const targetId = this.getAttribute('href').slice(1);
+    const target = document.getElementById(targetId);
+    if (target) {
+      e.preventDefault();
+      const start = window.scrollY;
+      const end = target.getBoundingClientRect().top + start;
+      const overshoot = 80; // Slippery overshoot for bounce effect
+      const extraScroll = 30; // Additional scroll for slippery effect
+      const duration = 2200; // Longer duration for maximum smoothness
+      let startTime = null;
+
+      // Slippery elastic easing function
+      function elasticEase(t) {
+        return t === 0 ? 0 : t === 1 ? 1 : 
+          Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * (2 * Math.PI) / 3) + 1;
+      }
+
+      function animateScroll(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = elasticEase(progress);
+        
+        // Dynamic overshoot that reduces as we approach target
+        const currentOvershoot = progress < 0.9 ? overshoot * (1 - progress / 0.9) : 0;
+        const scrollPos = start + (end - start + currentOvershoot + extraScroll) * eased;
+        
+        window.scrollTo(0, scrollPos);
+        
+        if (progress < 1) {
+          requestAnimationFrame(animateScroll);
+        } else {
+          window.scrollTo(0, end + extraScroll); // Final precise positioning with extra scroll
+        }
+      }
+      
+      requestAnimationFrame(animateScroll);
+    }
+  });
+});
+</script>
 
 
 
