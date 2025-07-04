@@ -5,18 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio</title>
   <style>
+    @font-face {
+      font-family: 'BitmapFont';
+      src: url('BItmapFont.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
     #rectiangleNavbar {
-      position: absolute;
+      position: fixed;
+      top: 25px;
       left: 50%;
       transform: translateX(-50%);
       width: fit-content;
-      padding: 9px 20px; /* Smaller header height */
-      background: #fff;   /* Full white */
+      padding: 9px 20px;
+      background: #fff;
       backdrop-filter: blur(30px);
       -webkit-backdrop-filter: blur(20px);
       border-radius: 200px;
       z-index: 9999;
-      /* Removed transition for header appearance animation */
+      transition: background-color 0.3s;
+      font-family: 'BitmapFont', monospace !important;
+      /* Added shadow to header */
+      box-shadow: 0 6px 32px 0 rgba(0,0,0,0.18), 0 1.5px 8px 0 rgba(0,0,0,0.10);
+    }
+    #rectiangleNavbar:hover {
+      background: #ffffffae !important;
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(20px);
     }
     @media only screen and (max-width: 768px) {
       #rectiangleNavbar {
@@ -33,10 +48,11 @@
     }
     #rectiangleNavbar .page-nav li {
       cursor: pointer;
-      padding: 5px 12px; /* Smaller nav item height */
+      padding: 5px 12px;
       transition: background-color 0.3s, color 0.3s, transform 0.3s;
       border-radius: 50px;
       position: relative;
+      font-family: 'BitmapFont', monospace !important;
     }
     body:not(.dark-mode) #rectiangleNavbar .page-nav li {
       color: black;
@@ -44,12 +60,10 @@
     body.dark-mode #rectiangleNavbar .page-nav li {
       color: white;
     }
-    /* Default highlight for active nav item */
     #rectiangleNavbar .page-nav li.active {
       background-color: #000000 !important;
       color: #fff !important;
     }
-    /* Different color on hover */
     #rectiangleNavbar .page-nav li:hover {
       background-color: #f0f0f0 !important;
       color: #111 !important;
@@ -61,7 +75,6 @@
       left: 0;
       height: 100%;
       background-color: #000000;
-      /* Removed transition for highlight bar movement */
       border-radius: 50px;
       z-index: -1;
       transition: left 0.3s, width 0.3s, height 0.3s, background-color 0.3s;
@@ -70,6 +83,7 @@
     #rectiangleNavbar a {
       text-decoration: none;
       color: inherit;
+      font-family: 'BitmapFont', monospace !important;
     }
     body {
       font-family: Arial, sans-serif;
@@ -82,7 +96,6 @@
       background: #fff;
       color: #000;
     }
-    /* Hide the scroll anchor elements */
     .scroll-anchor {
       display: block;
       position: relative;
@@ -91,20 +104,93 @@
       margin: 0;
       padding: 0;
     }
-    /* Add more spacing above first frame and below last frame */
     .frame-spacer-top {
-      height: 180px; /* Increased from 32px to 120px */
+      height: 180px;
       width: 100%;
       display: block;
     }
     .frame-spacer-bottom {
-      height: 232px; /* Changed from 32px to 232px (32+200) */
+      height: 232px;
       width: 100%;
       display: block;
+    }
+
+    /* --- GRID LINES OVERLAY --- */
+    .grid-lines-overlay {
+      pointer-events: none;
+      position: fixed;
+      top: 0; left: -5vw;
+      width: 110vw;
+      height: 100vh;
+      z-index: 1111;
+      opacity:  0.5;
+      mix-blend-mode: lighten;
+    }
+    @media (max-width: 768px) {
+      .grid-lines-overlay { display: none; }
     }
   </style>
 </head>
 <body>
+  <!-- Grid Lines Overlay -->
+  <div class="grid-lines-overlay">
+    <svg width="100%" height="100%" style="display:block;" xmlns="http://www.w3.org/2000/svg">
+      <g id="grid-lines"></g>
+      <g id="grid-dots"></g>
+      <script type="application/ecmascript"><![CDATA[
+        // Parameters for grid
+        var vLines = 9; // number of vertical lines (excluding 0% and 100%)
+        var hLines = 9; // number of horizontal lines (excluding 0% and 100%)
+        var width = 100;
+        var height = 100;
+        var vPercents = [];
+        var hPercents = [];
+        for (var i = 1; i <= vLines; i++) vPercents.push(i * 10);
+        for (var i = 1; i <= hLines; i++) hPercents.push(i * 10);
+
+        // Draw vertical lines (transparent)
+        var gridLines = document.getElementById('grid-lines');
+        for (var i = 0; i < vPercents.length; i++) {
+          var x = vPercents[i];
+          var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', x + '%');
+          line.setAttribute('x2', x + '%');
+          line.setAttribute('y1', '0');
+          line.setAttribute('y2', '100%');
+          line.setAttribute('stroke', 'transparent');
+          line.setAttribute('stroke-width', '1');
+          gridLines.appendChild(line);
+        }
+        // Draw horizontal lines (transparent)
+        for (var i = 0; i < hPercents.length; i++) {
+          var y = hPercents[i];
+          var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('y1', y + '%');
+          line.setAttribute('y2', y + '%');
+          line.setAttribute('x1', '0');
+          line.setAttribute('x2', '100%');
+          line.setAttribute('stroke', 'transparent');
+          line.setAttribute('stroke-width', '1');
+          gridLines.appendChild(line);
+        }
+        // Draw dots at intersections (proper white)
+        var gridDots = document.getElementById('grid-dots');
+        for (var i = 0; i < vPercents.length; i++) {
+          for (var j = 0; j < hPercents.length; j++) {
+            var cx = vPercents[i] + '%';
+            var cy = hPercents[j] + '%';
+            var dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            dot.setAttribute('cx', cx);
+            dot.setAttribute('cy', cy);
+            dot.setAttribute('r', '2.5');
+            dot.setAttribute('fill', '#ffffff'); // Use full white, not semi-transparent
+            dot.setAttribute('opacity', '1');
+            gridDots.appendChild(dot);
+          }
+        }
+      ]]></script>
+    </svg>
+  </div>
   <!-- Navigation -->
   <div id="rectiangleNavbar" class="rectriangle">
     <nav class="page-nav">
@@ -121,16 +207,8 @@
   </div>
 
   <script>
-    // Mobile redirect
-    function checkAndRedirect() {
-      if (window.innerWidth < 930) {
-        window.location.href = "detailmobile.html";
-      }
-    }
-    checkAndRedirect();
-    window.addEventListener('resize', checkAndRedirect);
+    // Removed mobile redirect
 
-    // --- Highlight header sections as per scroll ---
     document.addEventListener('DOMContentLoaded', function() {
       // Home nav click: redirect to Main.html
       var homeNavLink = document.getElementById('home-nav-link');
@@ -154,9 +232,9 @@
         const navbar = document.getElementById('rectiangleNavbar');
         const navItems = document.querySelectorAll("#rectiangleNavbar .page-nav li");
         const highlight = document.querySelector("#rectiangleNavbar .highlight");
-        const stickyOffset = 25;
+        // const stickyOffset = 25; // No longer needed, navbar is always fixed
 
-        // Create scroll anchors for each section
+        // Section map
         const sectionMap = [
           { id: "home", label: "Home" },
           { id: "about", label: "About" },
@@ -214,39 +292,8 @@
         // Get all anchors as sections
         const sections = sectionMap.map(s => document.getElementById(s.id));
 
-        // Navbar sticky logic
-        function getInitialOffset() {
-          const aboutAnchor = document.getElementById('about');
-          if (aboutAnchor) {
-            return aboutAnchor.getBoundingClientRect().top + window.scrollY - navbar.offsetHeight - 20;
-          }
-          return 0;
-        }
-        let initialOffset = getInitialOffset();
-        navbar.style.position = 'absolute';
-        navbar.style.top = `${initialOffset}px`;
-
-        function updateNavbarPosition() {
-          if (window.scrollY >= initialOffset) {
-            navbar.style.position = 'fixed';
-            navbar.style.top = `${stickyOffset}px`;
-            navbar.style.opacity = '1';
-          } else {
-            navbar.style.position = 'absolute';
-            navbar.style.top = `${initialOffset}px`;
-            navbar.style.opacity = '0.8';
-          }
-        }
-        window.addEventListener('scroll', updateNavbarPosition);
-        window.addEventListener('resize', () => {
-          initialOffset = getInitialOffset();
-          updateNavbarPosition();
-        });
-        updateNavbarPosition();
-
-        // Smooth scroll and highlight on click
+        // --- Fix: Smooth scroll to section so that section is centered in viewport ---
         navItems.forEach(item => {
-          // Don't override Home and Contact click (handled above)
           const section = item.getAttribute("data-section");
           if (section === "home" || section === "contact") return;
           item.addEventListener("click", function(event) {
@@ -254,36 +301,69 @@
             const targetId = this.getAttribute("data-section");
             const targetAnchor = document.getElementById(targetId);
             if (targetAnchor) {
-              const y = targetAnchor.getBoundingClientRect().top + window.scrollY - (navbar.offsetHeight + 20);
-              window.scrollTo({ top: y, behavior: "smooth" });
+              // Find the next anchor or end of page to determine section height
+              let sectionIndex = sectionMap.findIndex(s => s.id === targetId);
+              let nextAnchor = null;
+              if (sectionIndex !== -1 && sectionIndex + 1 < sectionMap.length) {
+                nextAnchor = document.getElementById(sectionMap[sectionIndex + 1].id);
+              }
+              let sectionTop = targetAnchor.getBoundingClientRect().top + window.scrollY;
+              let sectionBottom = nextAnchor
+                ? nextAnchor.getBoundingClientRect().top + window.scrollY
+                : document.body.scrollHeight;
+              let sectionHeight = sectionBottom - sectionTop;
+
+              // Center the section in the viewport if possible
+              let scrollTo = sectionTop - document.getElementById('rectiangleNavbar').offsetHeight - 20;
+              let viewportHeight = window.innerHeight;
+              if (sectionHeight < viewportHeight) {
+                scrollTo = sectionTop - document.getElementById('rectiangleNavbar').offsetHeight - 20 - (viewportHeight - sectionHeight) / 2;
+                if (scrollTo < 0) scrollTo = 0;
+              }
+              window.scrollTo({ top: scrollTo, behavior: "smooth" });
             }
-            navItems.forEach(nav => nav.classList.remove('active'));
-            this.classList.add('active');
-            updateHighlight();
           });
         });
 
-        // Highlight nav as per scroll
+        // --- Highlight nav as per scroll: highlight if section covers >50% of viewport ---
         function highlightNavOnScroll() {
           let currentSection = sectionMap[0].id; // Default to home
+          let maxVisible = 0;
+          let maxSection = currentSection;
           for (let i = 0; i < sections.length; i++) {
             const section = sections[i];
-            if (section) {
-              const sectionTop = section.getBoundingClientRect().top + window.scrollY - (navbar.offsetHeight + 30);
-              if (window.scrollY >= sectionTop) {
-                currentSection = section.id;
-              }
+            if (!section) continue;
+            // Find the next anchor or end of page to determine section height
+            let sectionTop = section.getBoundingClientRect().top + window.scrollY;
+            let nextAnchor = (i + 1 < sections.length) ? sections[i + 1] : null;
+            let sectionBottom = nextAnchor
+              ? nextAnchor.getBoundingClientRect().top + window.scrollY
+              : document.body.scrollHeight;
+            let sectionHeight = sectionBottom - sectionTop;
+
+            // Calculate visible part of section in viewport
+            let viewportTop = window.scrollY;
+            let viewportBottom = window.scrollY + window.innerHeight;
+            let visibleTop = Math.max(sectionTop, viewportTop);
+            let visibleBottom = Math.min(sectionBottom, viewportBottom);
+            let visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+            let visibleRatio = visibleHeight / window.innerHeight;
+            if (visibleRatio > 0.5 && visibleRatio > maxVisible) {
+              maxVisible = visibleRatio;
+              maxSection = section.id;
             }
           }
           navItems.forEach(item => {
             item.classList.remove('active');
-            if (item.getAttribute('data-section') === currentSection) {
+            if (item.getAttribute('data-section') === maxSection) {
               item.classList.add('active');
             }
           });
           updateHighlight();
         }
         window.addEventListener('scroll', highlightNavOnScroll);
+        window.addEventListener('resize', highlightNavOnScroll);
 
         // Highlight bar movement
         function updateHighlight() {
@@ -293,12 +373,7 @@
             highlight.style.left = offsetLeft + "px";
             highlight.style.width = offsetWidth + "px";
             highlight.style.height = offsetHeight + "px";
-            // Set highlight color to match active or hover
-            if (activeItem.matches(':hover')) {
-              highlight.style.backgroundColor = "#ffbe0b";
-            } else {
-              highlight.style.backgroundColor = "#000000";
-            }
+            highlight.style.backgroundColor = "#000000";
           }
         }
 
@@ -306,7 +381,7 @@
         navItems.forEach(item => {
           item.addEventListener('mouseenter', function() {
             if (this.classList.contains('active')) {
-              highlight.style.backgroundColor = "#ffbe0b";
+              highlight.style.backgroundColor = "#000000";
             }
           });
           item.addEventListener('mouseleave', function() {
@@ -320,13 +395,22 @@
         highlightNavOnScroll();
 
         // --- Always show page from 1st frame (scroll to first frame on load) ---
-        // Wait for anchors and first frame to be in DOM
         setTimeout(function() {
           var aboutAnchor = document.getElementById('about');
           if (aboutAnchor) {
-            // Scroll so that the about anchor is at the top (with navbar offset)
-            const y = aboutAnchor.getBoundingClientRect().top + window.scrollY - (navbar.offsetHeight + 20);
-            window.scrollTo({ top: y, behavior: "auto" });
+            let sectionTop = aboutAnchor.getBoundingClientRect().top + window.scrollY;
+            let nextAnchor = document.getElementById('skills');
+            let sectionBottom = nextAnchor
+              ? nextAnchor.getBoundingClientRect().top + window.scrollY
+              : document.body.scrollHeight;
+            let sectionHeight = sectionBottom - sectionTop;
+            let scrollTo = sectionTop - document.getElementById('rectiangleNavbar').offsetHeight - 20;
+            let viewportHeight = window.innerHeight;
+            if (sectionHeight < viewportHeight) {
+              scrollTo = sectionTop - document.getElementById('rectiangleNavbar').offsetHeight - 20 - (viewportHeight - sectionHeight) / 2;
+              if (scrollTo < 0) scrollTo = 0;
+            }
+            window.scrollTo({ top: scrollTo, behavior: "auto" });
           }
         }, 0);
       }
@@ -334,13 +418,9 @@
 
     // Redirect to Main.html when user scrolls to the very top of the page
     window.addEventListener('scroll', function() {
-      // Allow a small threshold for floating point errors
       if (window.scrollY <= 0) {
         window.location.href = "Main.html";
       }
-
-      // Redirect to contact.html when user scrolls to the very bottom of the page
-      // Allow a small threshold for floating point errors
       if ((window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 2)) {
         window.location.href = "contact.html";
       }
@@ -350,17 +430,47 @@
   <!-- Main content iframes -->
   <div class="frame-spacer-top"></div>
   <iframe src="info.html" style="width:100%; height:650px; border:none; overflow:hidden;" scrolling="no"></iframe>
+  <style>
+    .edge-tech-line {
+      font-family: 'BitmapFont', monospace;
+      width: 100%;
+      text-align: center;
+      font-size: 1em;
+      font-weight: 500;
+      margin: 32px 0 18px 0;
+      letter-spacing: 1px;
+      color: #ffffff;
+    }
+  </style>
+  <div class="edge-tech-line">
+    I don’t just code — I build sht that pushes the edge of tech*.
+  </div>
   <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb;">......................................................................................................................................................</div>
   <iframe src="skill.html" style="width:100%; height:400px; border:none; overflow:hidden;" scrolling="no"></iframe>
   <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb;">......................................................................................................................................................</div>
   <iframe src="Education.html" style="width:100%; height:450px; border:none; overflow:hidden;" scrolling="no"></iframe>
   <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb;">......................................................................................................................................................</div>
-  <iframe src="certificate.html" style="width:100%; height:650px; border:none; overflow:hidden;" scrolling="no"></iframe>
+  <iframe src="certificate.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no"></iframe>  
+  <style>
+    .edge-tech-line {
+      font-family: 'BitmapFont', monospace;
+      width: 100%;
+      text-align: center;
+      font-size: 1em;
+      font-weight: 500;
+      margin: 32px 0 18px 0;
+      letter-spacing: 1px;
+      color: #ffffffa3;
+    }
+  </style>
+  <div class="edge-tech-line">
+    I love these two certificates more than others.
+  </div>
+  
   <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb;">......................................................................................................................................................</div>
   <iframe src="project section.html" style="width:100%; height:500px; border:none; overflow:hidden;" scrolling="no"></iframe>
   <div class="frame-spacer-bottom"></div>
 </body>
-
 
 <style>
   .top-left-socials {
@@ -388,7 +498,7 @@
     outline: none;
   }
   .top-left-socials .social-btn:hover {
-    box-shadow: 0 4px 18px 0 rgba(0,0,0,0.18);
+    box-shadow: 0 4px 18px 0 #0000002e;
     transform: translateY(-2px) scale(1.07);
   }
   .top-left-socials .social-btn svg {
@@ -432,13 +542,11 @@
   </a>
 </div>
 
-
 <div style="position: fixed; top: 24px; right: 32px; z-index: 100;">
   <button onclick="window.open('https://researchrutujdhodapkar.vercel.app', '_blank')" 
-          style="display: flex; align-items: center; gap: 8px; background: #fff; color: #000; border: none; border-radius: 22px; font-family: 'Krona One', Arial, sans-serif; font-size: 1.08rem; font-weight: bold; padding: 10px 22px 10px 18px; box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10); cursor: pointer; transition: box-shadow 0.18s, transform 0.18s;">
+          style="display: flex; align-items: center; gap: 8px; background: #fff; color: #000; border: none; border-radius: 22px; font-family: 'BitmapFont', monospace; font-size: 1.08rem; font-weight: bold; padding: 10px 22px 10px 18px; box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10); cursor: pointer; transition: box-shadow 0.18s, transform 0.18s;">
     Research
     <span style="display: flex; align-items: center;">
-      <!-- SVG arrow top-right -->
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="7 17 17 7"/>
         <polyline points="9 7 17 7 17 15"/>
@@ -447,117 +555,33 @@
   </button>
 </div>
 
+<!-- Removed screen orientation error script -->
 
 <script>
-  function checkAspectRatioAndShowError() {
-    if (window.innerWidth < window.innerHeight) {
-      // Create overlay if not already present
-      if (!document.getElementById('aspect-ratio-error-overlay')) {
-        var overlay = document.createElement('div');
-        overlay.id = 'aspect-ratio-error-overlay';
-        overlay.style.position = 'fixed';
-        overlay.style.top = 0;
-        overlay.style.left = 0;
-        overlay.style.width = '100vw';
-        overlay.style.height = '100vh';
-        overlay.style.background = 'rgba(0,0,0,0.92)';
-        overlay.style.color = '#fff';
-        overlay.style.display = 'flex';
-        overlay.style.flexDirection = 'column';
-        overlay.style.justifyContent = 'center';
-        overlay.style.alignItems = 'center';
-        overlay.style.zIndex = 99999;
-        overlay.style.fontFamily = "'Krona One', Arial, sans-serif";
-        overlay.innerHTML = `
-          <div style="text-align: center;">
-            <div style="font-size: 2.1rem; font-weight: bold; margin-bottom: 18px;">Screen Orientation Error</div>
-            <div style="font-size: 1.15rem; margin-bottom: 24px;">
-              This page is best viewed in landscape mode.<br>
-              Please rotate your device or expand your browser window horizontally.
-            </div>
-            <div style="font-size: 1.05rem; margin-bottom: 32px; color: #ffd700;">
-              If you are on a mobile device, please also turn off "Desktop site" in your browser settings.
-            </div>
-            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 12px;">
-              <rect x="2" y="7" width="20" height="10" rx="2" />
-              <polyline points="16 3 21 7.5 16 12" />
-            </svg>
-          </div>
-        `;
-        document.body.appendChild(overlay);
-      }
-    } else {
-      // Remove overlay if present
-      var overlay = document.getElementById('aspect-ratio-error-overlay');
-      if (overlay) {
-        overlay.parentNode.removeChild(overlay);
-      }
-    }
-  }
-
-  // Initial check
-  checkAspectRatioAndShowError();
-  // Listen for resize/orientation changes
-  window.addEventListener('resize', checkAspectRatioAndShowError);
-  window.addEventListener('orientationchange', checkAspectRatioAndShowError);
-</script>
-
-
-
-
-
-
-<script>
-// Slippery smooth scrolling with elastic effect
 document.documentElement.style.scrollBehavior = "smooth";
-
-// Custom slippery scroll with elastic bounce and extra scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    const targetId = this.getAttribute('href').slice(1);
-    const target = document.getElementById(targetId);
-    if (target) {
-      e.preventDefault();
-      const start = window.scrollY;
-      const end = target.getBoundingClientRect().top + start;
-      const overshoot = 80; // Slippery overshoot for bounce effect
-      const extraScroll = 30; // Additional scroll for slippery effect
-      const duration = 2200; // Longer duration for maximum smoothness
-      let startTime = null;
-
-      // Slippery elastic easing function
-      function elasticEase(t) {
-        return t === 0 ? 0 : t === 1 ? 1 : 
-          Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * (2 * Math.PI) / 3) + 1;
-      }
-
-      function animateScroll(timestamp) {
-        if (!startTime) startTime = timestamp;
-        const elapsed = timestamp - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = elasticEase(progress);
-        
-        // Dynamic overshoot that reduces as we approach target
-        const currentOvershoot = progress < 0.9 ? overshoot * (1 - progress / 0.9) : 0;
-        const scrollPos = start + (end - start + currentOvershoot + extraScroll) * eased;
-        
-        window.scrollTo(0, scrollPos);
-        
-        if (progress < 1) {
-          requestAnimationFrame(animateScroll);
-        } else {
-          window.scrollTo(0, end + extraScroll); // Final precise positioning with extra scroll
-        }
-      }
-      
-      requestAnimationFrame(animateScroll);
-    }
-  });
-});
 </script>
 
-
-
+<style>
+::-webkit-scrollbar {
+  width: 10px;
+  background: #00000000;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ffffff 60%, #555 100%);
+  border-radius: 8px;
+  border: 2px solid #00000000;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ffffff 60%, #333 100%);
+}
+::-webkit-scrollbar-track {
+  background: #00000000;
+  border-radius: 8px;
+}
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #ededed #00000000;
+}
+</style>
 
 </html>
-

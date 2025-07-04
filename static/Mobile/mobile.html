@@ -19,7 +19,7 @@
       min-height: 200vh;
       margin: 0;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
-      font-size: 2.8rem;
+      font-size: 2.1rem; /* smaller than 2.8rem */
       letter-spacing: 0.01em;
       position: relative;
       overflow: hidden;
@@ -229,13 +229,13 @@
       margin-left: 6vw;
     }
     .hello {
-      font-size: 3.2rem;
+      font-size: 2.2rem; /* smaller than 3.2rem */
       margin-bottom: 1.2rem;
       line-height: 1.1;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
     }
     .mdesc1 {
-      font-size: 1.25rem;
+      font-size: 1.05rem; /* smaller than 1.25rem */
       font-family: 'Doto', Arial, sans-serif;
       color: #fff;
       margin-bottom: 0.2em;
@@ -246,7 +246,7 @@
     }
     @media (max-width: 600px) {
       .mdesc1 {
-        font-size: 1.02rem;
+        font-size: 0.92rem;
         max-width: 95vw;
       }
     }
@@ -257,7 +257,7 @@
       backdrop-filter: blur(5px);
       padding: 0.5em 0.5em 0.5em 1.2em;
       border-radius: 0.45em;
-      font-size: 3.2rem;
+      font-size: 2.2rem; /* smaller than 3.2rem */
       font-weight: bold;
       display: inline-block;
       box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
@@ -302,7 +302,7 @@
       align-items: center;
       gap: 0.7em;
       font-family: 'Doto', 'Krona One', Arial, sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.05rem; /* smaller than 1.25rem */
       font-weight: bold;
       color: #fff;
       background: transparent;
@@ -356,7 +356,7 @@
       align-items: center;
       gap: 0.6em;
       font-family: 'Doto', 'Krona One', Arial, sans-serif;
-      font-size: 1.13rem;
+      font-size: 0.98rem; /* smaller than 1.13rem */
       font-weight: bold;
       color: #000;
       background: #fff;
@@ -404,7 +404,7 @@
         font-size: 0.95rem;
       }
       .get-connected-btn {
-        font-size: 1rem;
+        font-size: 0.85rem;
         padding: 0.45em 1.1em 0.45em 1em;
       }
       .arrow-inside-btn {
@@ -412,12 +412,18 @@
         height: 1em;
       }
       .blogs-btn {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
         padding: 0.38em 1em 0.38em 0.8em;
       }
       .arrow-topright-btn {
         width: 0.9em;
         height: 0.9em;
+      }
+      .hello {
+        font-size: 1.4rem;
+      }
+      .name-box {
+        font-size: 1.4rem;
       }
     }
 
@@ -450,7 +456,7 @@
       z-index: 2;
       color: #111;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
-      font-size: 2.5rem;
+      font-size: 1.7rem; /* smaller than 2.5rem */
       text-align: center;
       margin-top: 40vh;
       transition: color 0.5s;
@@ -467,7 +473,7 @@
       top: 50%;
       transform: translateY(-50%);
       font-family: 'Orbitron', sans-serif;
-      font-size: 220px;
+      font-size: 180px; /* smaller than 220px */
       font-weight: 900;
       color: transparent;
       -webkit-text-stroke: 2px #ffff;
@@ -612,7 +618,7 @@
       border: 1px solid #ffffff3c;
       color: #fff;
       font-family: 'Doto', Arial, sans-serif;
-      font-size: 1.15rem;
+      font-size: 1.05rem; /* smaller than 1.15rem */
       padding: 0.7em 1.7em;
       border-radius: 2em;
       box-shadow: 0 2px 16px 0 #00000011;
@@ -625,7 +631,7 @@
     }
     @media (max-width: 600px) {
       .bottom-center-prompt {
-        font-size: 0.98rem;
+        font-size: 0.88rem;
         padding: 0.5em 1.1em;
         bottom: 1.5vh;
       }
@@ -644,16 +650,16 @@
       }, 0);
     });
 
-    // Removed mobile.html redirection
-    // (function() {
-    //   function redirectIfMobile() {
-    //     if (window.innerWidth < 730) {
-    //       window.location.href = "mobile.html";
-    //     }
-    //   }
-    //   redirectIfMobile();
-    //   window.addEventListener('resize', redirectIfMobile);
-    // })();
+    // Redirect to mobile.html if width is less than 930
+    (function() {
+      function redirectIfMobile() {
+        if (window.innerWidth > 730) {
+          window.location.href = "Main.html";
+        }
+      }
+      redirectIfMobile();
+      window.addEventListener('resize', redirectIfMobile);
+    })();
   </script>
 </head>
 <body>
@@ -722,12 +728,12 @@
   <div class="main-center-container">
     <div class="main-message">
       <div class="hello">Hello There!!!</div>
-      <div style="font-size: 3.2rem; font-weight: bold; font-family: 'Krona One', 'Doto', Arial, sans-serif;">
+      <div style="font-size: 2.2rem; font-weight: bold; font-family: 'Krona One', 'Doto', Arial, sans-serif;">
         I'm <span class="name-box"><b id="typed-name"></b><span class="typing-caret"></span></span>
       </div>
       <!-- Insert mdesc1 here -->
       <div id="mdesc1" class="mdesc1" style="display:none;"></div>
-      <div style="font-size: 1.1rem; color: #fff; margin-top: 0.2em; margin-bottom: 0.2em; font-family: 'Doto', Arial, sans-serif;">
+      <div style="font-size: 0.95rem; color: #fff; margin-top: 0.2em; margin-bottom: 0.2em; font-family: 'Doto', Arial, sans-serif;">
         Building systems that can talk think and improve itself.
       </div>
       <div class="get-connected-container">
@@ -761,12 +767,12 @@
   </div>
   <div class="circle-reveal" id="circleReveal"></div>
   <div class="content">
-    <div style="font-size:1.2rem; margin-top:2em;"></div>
+    <div style="font-size:1rem; margin-top:2em;"></div>
   </div>
   <div class="number"></div>
   <!-- Bottom center prompt -->
   <div class="bottom-center-prompt">
-    Scroll or type "<b>HELP</b>" to get started
+    Scroll</b> to get started
   </div>
   <!-- Removed scroll-prompt and its content -->
   <script>
@@ -1023,7 +1029,7 @@
     outline: none;
     width: 100%;
     font-family: 'Doto', Arial, sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.1rem; /* smaller than 1.4rem */
     margin-left: 5px;
     caret-color: transparent; /* Hide default caret */
     position: relative;
@@ -1034,7 +1040,7 @@
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    height: 1.4em;
+    height: 1.1em; /* smaller than 1.4em */
     width: 2px;
     background: #fff;
     animation: blink-cursor 1s steps(1) infinite;
@@ -1060,9 +1066,9 @@
         // Keep buffer at max length 4
         if (buffer.length > 4) buffer = buffer.slice(-4);
 
-        // If "help" is typed, open resume.html in the same tab
+        // If "help" is typed, open cmd.html in the same tab
         if (buffer === 'help') {
-          window.location.href = 'resume.html';
+          window.location.href = 'cmd.html';
           buffer = '';
         }
 
@@ -1073,37 +1079,3 @@
     });
   })();
 </script>
-
-
-
-<!-- custom scrollbar -->
-<style>
-  /* Custom Scrollbar Styles */
-  ::-webkit-scrollbar {
-    width: 10px;
-    background: #00000000;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #ffffff 60%, #555 100%);
-    border-radius: 8px;
-    border: 2px solid #00000000;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #ffffff 60%, #333 100%);
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: #00000000;
-    border-radius: 8px;
-  }
-  
-  /* Firefox */
-  html {
-    scrollbar-width: thin;
-    scrollbar-color: #ededed #00000000;
-  }
-  </style>
-  
-  </html>

@@ -15,7 +15,6 @@
     opacity: 0.15;
     box-shadow: none;
     z-index: 1;
-    transition: opacity 0.06s cubic-bezier(.6,0,.4,1);
   }
   .rain-dot.on {
     opacity: 1;
@@ -24,11 +23,12 @@
   }
 </style>
 <script>
-  // Fixed grid and spacing for all screen sizes
+  // Keep grid density the same, but reduce the number of rain drops (less rain, same grid)
   const SPACING_X = 12;
   const SPACING_Y = 12;
   const DOT_SIZE = 8;
-  const DROPS_PER_COLUMN = 3; // You can adjust this for more/less rain
+  const DROPS_PER_COLUMN = 1; // Reduced from 3 to 1: less rain
+  const LAGGY_FPS = 10; // Intentionally low FPS for visible lag
 
   let rainDots = [];
   let cols = 0, rows = 0;
@@ -36,7 +36,7 @@
   let currentDropSpeed = 0.25; // Default speed
 
   function getDropSpeed() {
-    // Optionally, you can make speed a little slower on small screens
+    // For low hardware, keep speed reasonable for smoothness, but pattern will look laggy due to low FPS
     const w = window.innerWidth;
     if (w < 500) {
       return 0.07;
@@ -83,7 +83,7 @@
     // Set drop speed based on screen size
     currentDropSpeed = getDropSpeed();
 
-    // Initialize multiple drops for each column
+    // Initialize fewer drops for each column (just one per column)
     drops = [];
     for (let col = 0; col < cols; col++) {
       for (let d = 0; d < DROPS_PER_COLUMN; d++) {
@@ -96,8 +96,8 @@
     }
   }
 
-  // Animate rain pattern: multiple white dots drop per column, no tail, no shadow
-  function animateRain() {
+  // Animate rain pattern: intentionally laggy (low FPS), but smooth for low hardware (no heavy computation per frame)
+  function animateRainLaggy() {
     if (!rainDots.length) return;
     // Clear all dots
     for (let i = 0; i < rainDots.length; i++) {
@@ -130,18 +130,14 @@
       }
     }
 
-    requestAnimationFrame(animateRain);
+    setTimeout(animateRainLaggy, 1000 / LAGGY_FPS);
   }
 
   window.addEventListener('DOMContentLoaded', () => {
     placeGridDots();
-    animateRain();
+    animateRainLaggy();
   });
 
-  window.addEventListener('resize', () => {
-    placeGridDots();
-  });
-</script>
   window.addEventListener('resize', () => {
     placeGridDots();
   });
