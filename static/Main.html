@@ -643,17 +643,6 @@
         document.documentElement.scrollTop = 0;
       }, 0);
     });
-
-    // Removed mobile.html redirection
-    // (function() {
-    //   function redirectIfMobile() {
-    //     if (window.innerWidth < 730) {
-    //       window.location.href = "mobile.html";
-    //     }
-    //   }
-    //   redirectIfMobile();
-    //   window.addEventListener('resize', redirectIfMobile);
-    // })();
   </script>
 </head>
 <body>
@@ -1104,6 +1093,13 @@
     scrollbar-width: thin;
     scrollbar-color: #ededed #00000000;
   }
+
+  ::selection {
+      background: #fff;
+      color: #000;
+    }
   </style>
+  
+
   
   </html>

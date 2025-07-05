@@ -93,6 +93,24 @@
 </style>
 <div style="text-align:center;">
   <h2 class="skills-title">Skills/Languages</h2>
+
+  <style>
+    .edge-tech-line {
+      font-family:'BitmapFont', sans-serif;
+      width: 100%;
+      text-align: center;
+      font-size: 1em;
+      font-weight: 500;
+      margin: 32px 0 18px 0;
+      letter-spacing: 1px;
+      color: #ffffffa3;
+    }
+  </style>
+  <div class="edge-tech-line">
+    something i can show and use.
+  </div>
+
+
   <div class="expertise-scroll-wrapper">
     <div class="expertise-container" id="autoScrollExpertiseLeftToRight">
       <div class="expertise-square">
@@ -321,6 +339,11 @@
     </div>
   </div>
 </div>
+
+<div class="edge-tech-line">
+  I have more skills than this but just dont wanna show.
+</div>
+
 <script>
   // Auto horizontal scroll for expertise-container (right to left)
   (function() {
@@ -390,42 +413,7 @@
       padding: 7px 8px;
     }
   }
+
+  
 </style>
-<!-- <script>
-(function() {
-  const line1 = "Looking  for  soft-skills  or  Tools  i  can  use??";
-  const line2 = "--You  know  what??  I  can  use  much  tools  and  have  much  soft-skills  that  listing  here  will  make  long  paragraphs.";
-  const el1 = document.getElementById('softskills-line1');
-  const el2 = document.getElementById('softskills-line2');
-  let delay = 22, pause = 900;
 
-  // Helper to wrap text in a span with increased letter-spacing
-  function wrapWithLetterSpacing(text) {
-    return `<span style="letter-spacing:0.20em; display:inline-block;">${text}</span>`;
-  }
-
-  function typeLine(element, text, cb) {
-    let i = 0;
-    function type() {
-      if (i <= text.length) {
-        // Apply letter-spacing to the currently typed substring
-        element.innerHTML = wrapWithLetterSpacing(text.slice(0, i)) + '<span style="opacity:0.5;letter-spacing:0.18em;">|</span>';
-        i++;
-        setTimeout(type, delay);
-      } else {
-        element.innerHTML = wrapWithLetterSpacing(text);
-        if (cb) setTimeout(cb, pause);
-      }
-    }
-    type();
-  }
-
-  function startTyping() {
-    typeLine(el1, line1, function() {
-      typeLine(el2, line2);
-    });
-  }
-
-  startTyping();
-})();
-</script> -->
