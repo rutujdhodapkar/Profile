@@ -23,7 +23,7 @@ You can check out my portfolio live at:
 
 Feel free to get in touch with me through the following platforms:
 
-- [LinkedIn:](https://www.linkedin.com/in/rutuj-dhodapkar/)
+- [LinkedIn:](https://www.linkedin.com/in/rutujdhodapkar)
 - [X:](https://x.com/rutujdhodapkar)
 - [Instagram:](https://instagram.com/rutujdhodapkar)
 - [Email:](mailto:rutujdhodapkar@gmail.com)
