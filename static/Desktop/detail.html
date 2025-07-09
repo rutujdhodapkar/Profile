@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio</title>
-  <link href="https://fonts.googleapis.com/css?family=Krona+One&display=swap" rel="stylesheet">
+  <!-- Removed Krona One font, only BitmapFont is used -->
   <style>
     @font-face {
       font-family: 'BitmapFont';
@@ -13,7 +13,7 @@
       font-style: normal;
     }
     body {
-      font-family: 'Krona One', 'BitmapFont', sans-serif;
+      font-family: 'BitmapFont', monospace, sans-serif;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
@@ -32,7 +32,7 @@
       border-radius: 200px;
       z-index: 9999;
       transition: background-color 0.3s;
-      font-family: 'BitmapFont', 'Krona One', monospace !important;
+      font-family: 'BitmapFont', monospace !important;
       /* Added shadow to header */
       box-shadow: 0 6px 32px 0 rgba(0,0,0,0.18), 0 1.5px 8px 0 rgba(0,0,0,0.10);
     }
@@ -60,7 +60,7 @@
       transition: background-color 0.3s, color 0.3s, transform 0.3s;
       border-radius: 50px;
       position: relative;
-      font-family: 'BitmapFont', 'Krona One', monospace !important;
+      font-family: 'BitmapFont', monospace !important;
     }
     body:not(.dark-mode) #rectiangleNavbar .page-nav li {
       color: black;
@@ -91,7 +91,7 @@
     #rectiangleNavbar a {
       text-decoration: none;
       color: inherit;
-      font-family: 'BitmapFont', 'Krona One', monospace !important;
+      font-family: 'BitmapFont', monospace !important;
     }
 
     .scroll-anchor {
