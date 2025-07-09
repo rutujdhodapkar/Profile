@@ -1,0 +1,796 @@
+ 
+
+<!-- Load Krona One font from Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+
+<iframe src="animations/dotted lines.html" style="width:100vw; height:100vh; border:none; position:fixed; top:0; left:0; z-index:-1; pointer-events:none;"></iframe>
+
+<!-- Removed redirection to detail.html for wide screens -->
+
+<style>
+  /* ... (no changes to CSS, omitted for brevity) ... */
+  :root {
+    --main-accent: rgba(255,255,255,0.10);
+    --main-accent-blur: blur(18px) saturate(180%);
+    --main-border: rgba(255,255,255,0.18);
+    --main-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+    --main-btn-border: rgba(255,255,255,0.18);
+    --main-btn-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    --main-btn-hover: rgba(255,255,255,0.18);
+    --main-curve-radius: 2.2rem;
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: none;
+  }
+  body {
+    min-height: 100vh;
+    min-width: 100vw;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .outer-padding-8px {
+    box-sizing: border-box;
+    padding: 8px;
+    width: 100vw;
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+  .frame-stack-container {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    z-index: 1;
+    scroll-behavior: smooth;
+  }
+  .frame-box {
+    width: 100%;
+    max-width: 600px;
+    height: calc(100vh - 8vw - 70px);
+    background: var(--main-accent);
+    border-radius: var(--main-curve-radius);
+    box-shadow: var(--main-shadow);
+    border: 2.5px solid var(--main-border);
+    margin: 0 auto 24px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, 0);
+    transition: opacity 0.35s, transform 0.35s;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+    backdrop-filter: var(--main-accent-blur);
+    -webkit-backdrop-filter: var(--main-accent-blur);
+    overflow: hidden;
+  }
+  .frame-box.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 3;
+    transform: translate(-50%, 0) scale(1);
+  }
+  .frame-box.above,
+  .frame-box.below {
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+    transform: translate(-50%, 0) scale(0.98);
+  }
+  .frame-box iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    display: block;
+    flex: 1 1 0;
+  }
+  .frame-box.double-frame {
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+  .frame-box.double-frame iframe {
+    height: 50%;
+    min-height: 0;
+    flex: 1 1 50%;
+  }
+  .frame-nav-dots {
+    position: fixed;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: auto;
+    bottom: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 12px;
+    z-index: 100;
+    pointer-events: none;
+  }
+  .frame-nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff6;
+    border: 2px solid #fff;
+    opacity: 0.7;
+    transition: background 0.2s, opacity 0.2s;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  .frame-nav-dot.active {
+    background: #fff;
+    opacity: 1;
+  }
+  .bottom-bar-container {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 100vw;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    background: none;
+    pointer-events: none;
+  }
+  .bottom-round-button {
+    background: var(--main-accent);
+    color: #fff;
+    border: 2.5px solid var(--main-btn-border);
+    border-radius: var(--main-curve-radius);
+    padding: 12px 78px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: var(--main-btn-shadow);
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    min-width: 400px;
+    min-height: 48px;
+    transition: background 0.2s, border 0.2s;
+    user-select: none;
+    max-width: 93vw;
+    backdrop-filter: var(--main-accent-blur);
+    -webkit-backdrop-filter: var(--main-accent-blur);
+    margin: 0 16px;
+    pointer-events: auto;
+    position: relative;
+    font-family: 'Krona One', Arial, sans-serif;
+  }
+  .bottom-round-button:active,
+  .bottom-round-button:focus {
+    background: var(--main-btn-hover);
+    outline: none;
+    border-color: var(--main-btn-hover);
+  }
+  .bottom-round-button .left-icon,
+  .bottom-round-button .right-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 48px;
+    width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+  .bottom-round-button .left-icon {
+    left: 15px;
+  }
+  .bottom-round-button .right-icon {
+    right: 15px;
+  }
+  .bottom-round-button .frame-title {
+    flex: 1 1 auto;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.03em;
+    pointer-events: none;
+    margin: 0 0.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Krona One', Arial, sans-serif;
+    transition: color 0.2s;
+  }
+  .bottom-round-button .expand-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.5em;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.2s;
+    vertical-align: middle;
+  }
+  .bottom-round-button.expanded .expand-arrow {
+    transform: rotate(180deg);
+  }
+  .bottom-round-button .frame-titles-list {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0.5em 0 0.5em 0;
+    background: var(--main-accent);
+    border-radius: var(--main-curve-radius) var(--main-curve-radius) 0 0;
+    box-shadow: 0 -4px 24px 0 rgba(31,38,135,0.10);
+    z-index: 1000;
+    font-family: 'Krona One', Arial, sans-serif;
+    text-align: center;
+    list-style: none;
+    border-bottom: 2.5px solid var(--main-border);
+    border-left: 2.5px solid var(--main-border);
+    border-right: 2.5px solid var(--main-border);
+    border-top: none;
+    max-height: 60vh;
+    overflow-y: auto;
+    animation: slideDownTitles 0.25s cubic-bezier(.4,0,.2,1);
+  }
+  .bottom-round-button.expanded .frame-titles-list {
+    display: block;
+  }
+  @keyframes slideDownTitles {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+  .frame-titles-list li {
+    padding: 0.7em 0.5em;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1.08em;
+    border-radius: 0.7em;
+    margin: 0.1em 1em;
+    transition: background 0.15s, color 0.15s;
+    font-family: 'Krona One', Arial, sans-serif;
+    user-select: none;
+  }
+  .frame-titles-list li.active {
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+    font-weight: bold;
+  }
+  .frame-titles-list li:hover {
+    background: rgba(255,255,255,0.10);
+    color: #fff;
+  }
+  .arrow-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2.5em;
+    padding: 0 24px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    width: 64px;
+    position: relative;
+    z-index: 11;
+    pointer-events: auto;
+  }
+  .arrow-btn:active,
+  .arrow-btn:focus {
+    background: rgba(255,255,255,0.10);
+    outline: none;
+  }
+  .arrow-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+  .frame-index {
+    font-size: 1.1em;
+    font-weight: 600;
+    min-width: 56px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    pointer-events: none;
+    display: none;
+    font-family: 'Krona One', Arial, sans-serif;
+  }
+  .arrow-btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+  }
+  .arrow-btn svg.arrow-icon,
+  .bottom-round-button .left-icon svg,
+  .bottom-round-button .right-icon svg {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    vertical-align: middle;
+    pointer-events: none;
+    user-select: none;
+  }
+  .arrow-btn .arrow-label {
+    display: none;
+  }
+  .arrow-btn-left,
+  .arrow-btn-right {
+    position: static;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    z-index: 11;
+    margin: 0 8px;
+  }
+  @media (max-width: 500px) {
+    .bottom-round-button {
+      padding: 10px 12px;
+      min-width: 93vw;
+      font-size: 1em;
+      gap: 24px;
+      max-width: 93vw;
+      font-family: 'Krona One', Arial, sans-serif;
+    }
+    .arrow-btn-left, .arrow-btn-right {
+      height: 48px;
+      width: 48px;
+    }
+    .arrow-btn svg.arrow-icon,
+    .bottom-round-button .left-icon svg,
+    .bottom-round-button .right-icon svg {
+      width: 36px;
+      height: 36px;
+    }
+    .bottom-bar-container {
+      padding-bottom: 8px;
+    }
+    .bottom-round-button .left-icon {
+      height: 36px;
+      width: 36px;
+      left: 10px;
+    }
+    .bottom-round-button .right-icon {
+      height: 36px;
+      width: 36px;
+      right: 10px;
+    }
+    .bottom-round-button .frame-title {
+      font-size: 1em;
+      font-family: 'Krona One', Arial, sans-serif;
+    }
+    .bottom-round-button .frame-titles-list {
+      font-size: 0.98em;
+    }
+  }
+  .bottom-round-button .left-icon svg,
+  .bottom-round-button .right-icon svg {
+    cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s;
+    border-radius: 50%;
+    padding: 2px;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+  }
+  .bottom-round-button .left-icon svg:active,
+  .bottom-round-button .right-icon svg:active {
+    background: rgba(255,255,255,0.10);
+    box-shadow: 0 0 4px #fff3;
+  }
+</style>
+
+<script>
+  // Frame-by-frame scroll logic: only one frame visible, scroll switches frame
+  document.addEventListener('DOMContentLoaded', function() {
+    const frames = Array.from(document.querySelectorAll('.frame-box'));
+    let currentFrame = 0;
+    let isScrolling = false;
+    let lastScrollTime = 0;
+    const SCROLL_DELAY = 400;
+
+    window.frameTitles = [
+      "Info",
+      "Skills & Education",
+      "Certificates",
+      "Projects"
+    ];
+
+    function showFrame(idx) {
+      frames.forEach((frame, i) => {
+        frame.classList.remove('active', 'above', 'below');
+        if (i === idx) {
+          frame.classList.add('active');
+        } else if (i < idx) {
+          frame.classList.add('above');
+        } else {
+          frame.classList.add('below');
+        }
+      });
+      document.querySelectorAll('.frame-nav-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === idx);
+      });
+      if (typeof updateNavButtonBar === "function") updateNavButtonBar();
+      // Update expanded titles highlight
+      updateTitlesListActive(idx);
+    }
+
+    window.showFrame = showFrame;
+
+    // Create navigation dots
+    let navDots = document.createElement('div');
+    navDots.className = 'frame-nav-dots';
+    frames.forEach((frame, i) => {
+      let dot = document.createElement('div');
+      dot.className = 'frame-nav-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (currentFrame !== i) {
+          currentFrame = i;
+          showFrame(currentFrame);
+        }
+      });
+      navDots.appendChild(dot);
+    });
+    document.body.appendChild(navDots);
+
+    // Initial show
+    showFrame(currentFrame);
+
+    // Wheel event for desktop
+    window.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      const now = Date.now();
+      if (isScrolling || now - lastScrollTime < SCROLL_DELAY) return;
+      isScrolling = true;
+      lastScrollTime = now;
+      if (e.deltaY > 0) {
+        if (currentFrame < frames.length - 1) {
+          currentFrame++;
+          showFrame(currentFrame);
+        } else if (currentFrame === frames.length - 1) {
+          window.location.href = "contact.html";
+        }
+      } else if (e.deltaY < 0) {
+        if (currentFrame > 0) {
+          currentFrame--;
+          showFrame(currentFrame);
+        } else if (currentFrame === 0) {
+          window.location.href = "mobile.html";
+        }
+      }
+      setTimeout(() => { isScrolling = false; }, SCROLL_DELAY);
+    }, { passive: false });
+
+    // Touch event for mobile
+    let touchStartY = null;
+    window.addEventListener('touchstart', function(e) {
+      if (e.touches.length === 1) {
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: false });
+    window.addEventListener('touchend', function(e) {
+      if (touchStartY === null) return;
+      let touchEndY = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientY : null;
+      if (touchEndY === null) return;
+      let diff = touchStartY - touchEndY;
+      if (Math.abs(diff) > 40) {
+        if (diff > 0 && currentFrame < frames.length - 1) {
+          currentFrame++;
+          showFrame(currentFrame);
+        } else if (diff > 0 && currentFrame === frames.length - 1) {
+          window.location.href = "contact.html";
+        } else if (diff < 0 && currentFrame > 0) {
+          currentFrame--;
+          showFrame(currentFrame);
+        } else if (diff < 0 && currentFrame === 0) {
+          window.location.href = "mobile.html";
+        }
+      }
+      touchStartY = null;
+    }, { passive: false });
+
+    // Keyboard navigation (optional)
+    window.addEventListener('keydown', function(e) {
+      if (e.key === "ArrowDown" || e.key === "PageDown") {
+        if (currentFrame < frames.length - 1) {
+          currentFrame++;
+          showFrame(currentFrame);
+        } else if (currentFrame === frames.length - 1) {
+          window.location.href = "contact.html";
+        }
+        e.preventDefault();
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        if (currentFrame > 0) {
+          currentFrame--;
+          showFrame(currentFrame);
+        } else if (currentFrame === 0) {
+          window.location.href = "mobile.html";
+        }
+        e.preventDefault();
+      }
+    });
+
+    // Expose currentFrame globally for nav bar
+    window.currentFrame = currentFrame;
+
+    // SVG button handlers for nav bar
+    function goPrevFrame() {
+      if (window.currentFrame > 0) {
+        window.currentFrame--;
+        if (typeof window.showFrame === "function") window.showFrame(window.currentFrame);
+        if (typeof updateNavButtonBar === "function") updateNavButtonBar();
+      } else if (window.currentFrame === 0) {
+        window.location.href = "mobile.html";
+      }
+    }
+    function goNextFrame() {
+      if (window.currentFrame < frames.length - 1) {
+        window.currentFrame++;
+        if (typeof window.showFrame === "function") window.showFrame(window.currentFrame);
+        if (typeof updateNavButtonBar === "function") updateNavButtonBar();
+      } else if (window.currentFrame === frames.length - 1) {
+        window.location.href = "contact.html";
+      }
+    }
+    // Attach SVG button events after DOM is ready
+    setTimeout(function() {
+      var leftSvg = document.querySelector('.bottom-round-button .left-icon svg');
+      var rightSvg = document.querySelector('.bottom-round-button .right-icon svg');
+      if (leftSvg) leftSvg.addEventListener('click', goPrevFrame);
+      if (rightSvg) rightSvg.addEventListener('click', goNextFrame);
+      var leftBtn = document.getElementById('arrowLeft');
+      var rightBtn = document.getElementById('arrowRight');
+      if (leftBtn) leftBtn.addEventListener('click', goPrevFrame);
+      if (rightBtn) rightBtn.addEventListener('click', goNextFrame);
+    }, 0);
+
+    // --- Expandable Titles Dropdown Logic ---
+    const navButtonBar = document.getElementById('navButtonBar');
+    const frameTitleSpan = document.getElementById('frameTitle');
+    // Add expand arrow and titles list
+    if (navButtonBar && frameTitleSpan) {
+      // Create expand arrow
+      const expandArrow = document.createElement('span');
+      expandArrow.className = 'expand-arrow';
+      expandArrow.innerHTML = `
+        <svg width="24" height="24" viewBox="0 0 24 24" style="display:block;">
+          <path d="M7 10l5 5 5-5" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      `;
+      expandArrow.setAttribute('tabindex', '0');
+      expandArrow.setAttribute('aria-label', 'Show all sections');
+      expandArrow.setAttribute('role', 'button');
+      expandArrow.style.marginLeft = "0.5em";
+      frameTitleSpan.after(expandArrow);
+
+      // Create titles list
+      const titlesList = document.createElement('ul');
+      titlesList.className = 'frame-titles-list';
+      window.frameTitles.forEach((title, idx) => {
+        const li = document.createElement('li');
+        li.textContent = title;
+        li.dataset.idx = idx;
+        if (idx === window.currentFrame) li.classList.add('active');
+        li.addEventListener('click', function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          if (window.currentFrame !== idx) {
+            window.currentFrame = idx;
+            if (typeof window.showFrame === "function") window.showFrame(idx);
+            if (typeof updateNavButtonBar === "function") updateNavButtonBar();
+          }
+          navButtonBar.classList.remove('expanded');
+        });
+        titlesList.appendChild(li);
+      });
+      navButtonBar.appendChild(titlesList);
+
+      // Toggle expand/collapse
+      function toggleExpand(e) {
+        e.stopPropagation();
+        navButtonBar.classList.toggle('expanded');
+        if (navButtonBar.classList.contains('expanded')) {
+          // Scroll to active item if needed
+          setTimeout(() => {
+            const activeLi = titlesList.querySelector('li.active');
+            if (activeLi) activeLi.scrollIntoView({block: 'nearest', behavior: 'smooth'});
+          }, 10);
+        }
+      }
+      expandArrow.addEventListener('click', toggleExpand);
+      expandArrow.addEventListener('keydown', function(e) {
+        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+          toggleExpand(e);
+        }
+      });
+
+      // Collapse on outside click
+      document.addEventListener('click', function(e) {
+        if (navButtonBar.classList.contains('expanded') && !navButtonBar.contains(e.target)) {
+          navButtonBar.classList.remove('expanded');
+        }
+      });
+      // Collapse on scroll/navigation
+      window.addEventListener('scroll', function() {
+        navButtonBar.classList.remove('expanded');
+      });
+      // Helper to update highlight
+      window.updateTitlesListActive = function(idx) {
+        Array.from(titlesList.children).forEach((li, i) => {
+          if (i === idx) li.classList.add('active');
+          else li.classList.remove('active');
+        });
+      };
+    }
+  });
+</script>
+
+<div class="outer-padding-8px">
+  <div class="frame-stack-container" style="position:relative; min-height:100vh;">
+    <!-- Frame 1: info.html -->
+    <div class="frame-box">
+      <iframe src="info mobile.html" title="Info" tabindex="-1"></iframe>
+    </div>
+    <!-- Frame 2: skill mobile.html and skill section mobile.html (stacked vertically, NO line between) -->
+     <div class="frame-box double-frame" style="display: flex; flex-direction: column; gap: 0; padding: 0;">
+      <iframe src="skill mobile.html" title="Skill Squares" tabindex="-1" style="height:60%; flex: 0 0 60%;"></iframe>
+      <iframe src="Education mobile.html" title="Skill Circles" tabindex="-1" style="height:40%; flex: 0 0 40%;"></iframe>
+    </div>
+    <!-- Frame 3: certificat.html -->
+    <div class="frame-box">
+      <iframe src="certificate mobile.html" title="Certificates" tabindex="-1"></iframe>
+    </div>
+    <!-- Frame 4: project mobile.html -->
+    <div class="frame-box">
+      <iframe src="project mobile.html" title="Projects" tabindex="-1"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom bar with SVG arrow buttons and frame title, fixed at the bottom -->
+<div class="bottom-bar-container">
+  <button class="arrow-btn arrow-btn-left" id="arrowLeft" aria-label="Previous" tabindex="0">
+    <span class="arrow-btn-content">
+      <!-- SVG Backward Button (bigger, from svg folder) -->
+      <!-- Inline SVG for backward arrow -->
+      <svg class="arrow-icon" width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="#fff" stroke-width="2"/>
+        <polyline points="28,16 20,24 28,32" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </button>
+  <div class="bottom-round-button" id="navButtonBar">
+    <span class="left-icon">
+      <!-- Inline SVG for backward arrow -->
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="#fff" stroke-width="2"/>
+        <polyline points="28,16 20,24 28,32" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <span class="frame-title" id="frameTitle">Info</span>
+    <span class="frame-index" id="frameIndex" style="display:none;">1/4</span>
+    <span class="right-icon">
+      <!-- Inline SVG for forward arrow -->
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="#fff" stroke-width="2"/>
+        <polyline points="20,16 28,24 20,32" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <!-- The expand arrow and titles list will be injected by JS -->
+  </div>
+  <button class="arrow-btn arrow-btn-right" id="arrowRight" aria-label="Next" tabindex="0">
+    <span class="arrow-btn-content">
+      <!-- Inline SVG for forward arrow -->
+      <svg class="arrow-icon" width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="#fff" stroke-width="2"/>
+        <polyline points="20,16 28,24 20,32" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </button>
+</div>
+
+<script>
+  const totalFrames = 4;
+  if (typeof window.currentFrame === "undefined") {
+    window.currentFrame = 0;
+  }
+  const frameTitles = [
+    "Info",
+    "Skills & Education",
+    "Certificates",
+    "Projects"
+  ];
+  function updateNavButtonBar() {
+    const titleElem = document.getElementById('frameTitle');
+    if (titleElem) {
+      titleElem.textContent = frameTitles[window.currentFrame] || "";
+    }
+    document.getElementById('frameIndex').textContent = (window.currentFrame + 1) + '/' + totalFrames;
+    // Update expanded titles highlight if open
+    if (typeof window.updateTitlesListActive === "function") {
+      window.updateTitlesListActive(window.currentFrame);
+    }
+  }
+  document.addEventListener('DOMContentLoaded', updateNavButtonBar);
+
+  // Patch showFrame to always update nav bar and currentFrame
+  if (typeof window.showFrame === "function") {
+    const origShowFrame = window.showFrame;
+    window.showFrame = function(idx) {
+      origShowFrame(idx);
+      window.currentFrame = idx;
+      updateNavButtonBar();
+    }
+  }
+
+  // Add click handlers for the big arrow buttons and nav SVGs
+  document.addEventListener('DOMContentLoaded', function() {
+    function goPrevFrame() {
+      if (window.currentFrame > 0) {
+        window.currentFrame--;
+        if (typeof window.showFrame === "function") window.showFrame(window.currentFrame);
+        if (typeof updateNavButtonBar === "function") updateNavButtonBar();
+      } else if (window.currentFrame === 0) {
+        window.location.href = "mobile.html";
+      }
+    }
+    function goNextFrame() {
+      if (window.currentFrame < totalFrames - 1) {
+        window.currentFrame++;
+        if (typeof window.showFrame === "function") window.showFrame(window.currentFrame);
+        if (typeof updateNavButtonBar === "function") updateNavButtonBar();
+      } else if (window.currentFrame === totalFrames - 1) {
+        window.location.href = "contact.html";
+      }
+    }
+    var leftSvg = document.querySelector('.bottom-round-button .left-icon svg');
+    var rightSvg = document.querySelector('.bottom-round-button .right-icon svg');
+    var leftBtn = document.getElementById('arrowLeft');
+    var rightBtn = document.getElementById('arrowRight');
+    if (leftSvg) leftSvg.addEventListener('click', goPrevFrame);
+    if (rightSvg) rightSvg.addEventListener('click', goNextFrame);
+    if (leftBtn) leftBtn.addEventListener('click', goPrevFrame);
+    if (rightBtn) rightBtn.addEventListener('click', goNextFrame);
+  });
+</script>
+
