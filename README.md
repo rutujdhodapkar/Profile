@@ -31,3 +31,7 @@ Feel free to get in touch with me through the following platforms:
 ## License
 
 This project is open-source and available under the AGPL 3.0 License.
+---
+- [Bye me coffee](https://coff.ee/rutujdhodapkar)
+- [Fiverr](https://www.fiverr.com/s/yva4vkz)
+
