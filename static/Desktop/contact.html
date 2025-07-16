@@ -36,7 +36,7 @@
       pointer-events: none;
     }
     .contact-title {
-      font-family: 'Krona One', Arial, sans-serif;
+      font-family: 'krona one', Arial, sans-serif;
       font-size: 2.8rem;
       color: #fff;
       margin-bottom: 2.5rem;
@@ -194,7 +194,7 @@
       vertical-align: middle;
     }
     .back-btn-text {
-      font-family: 'BitmapFont', 'Krona One', Arial, sans-serif;
+      font-family: 'BitmapFont', 'inter', Arial, sans-serif;
       font-size: 1.18rem;
       color: #e3e3e3;
       letter-spacing: 0.04em;
@@ -239,10 +239,13 @@
   <div class="contact-content">
     <div class="contact-title">Contact Me</div>
     <div class="button-row" id="contact-links">
+
       <!-- Contact buttons will be inserted here by JS -->
     </div>
     <div class="feedback-link">
-      <span id="giveFeedbackText" style="text-decoration:underline dotted; opacity:0.9; cursor:pointer;">Give Feedback</span>
+       <span style="display: inline-block; backdrop-filter: blur(8px); background: rgba(30,30,30,0.32); border-radius: 0.7em; padding: 0.18em 0.95em 0.18em 0.95em; box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);">
+         <span id="giveFeedbackText" style="text-decoration:underline dotted; opacity:0.9; cursor:pointer; background: none;">Give Feedback</span>
+       </span>
     </div>
   </div>
   <script>
@@ -402,8 +405,6 @@
   }
 </style>
 
-
-
 <style>
   @font-face {
     font-family: 'BitmapFont';
@@ -411,32 +412,112 @@
     font-weight: normal;
     font-style: normal;
   }
+  .footer-blur-box-separate {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 0.5em;
+    margin: 0 auto;
+    background: transparent;
+    border: none;
+    width: fit-content;
+    min-width: 0;
+    margin-bottom: 1.1em;
+    margin-top: 0.5em;
+  }
+  .footer-blur-line-box {
+    padding: 0.4em 1.2em 0.4em 1.2em; /* Reduced height */
+    background: rgba(30,30,30,0.32);
+    border-radius: 12px;
+    border: 1.5px solid rgba(60,60,60,0.22);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    margin: 0 auto;
+    width: fit-content;
+    min-width: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .footer-blur-line {
+    color: #aaa;
+    font-family: 'BitmapFont', 'inter', Arial, sans-serif;
+    font-size: 0.95em;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+    background: transparent;
+    width: fit-content;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .footer-link {
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+    color: #aaa;
+    font-family: inherit;
+    font-size: inherit;
+    margin: 0 0.2em;
+    padding: 0 0.2em;
+    border-radius: 3px;
+  }
+  .footer-link:hover {
+    border-bottom: 2px dotted #aaa;
+    background: rgba(255,255,255,0.04);
+  }
+  .footer-links-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2em;
+    width: fit-content;
+  }
 </style>
-<div style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #aaa; font-size: 0.85rem; font-family: 'BitmapFont', 'Krona One', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.5rem; line-height: 1.7;">
-  Made with passion and Bugs<br>
-  ©2024-2025 Rutuj Dhodapkar Portfolio. All Rights Reserved.<br>
-  <style>
-    .footer-link {
-      cursor: pointer;
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-      transition: border-color 0.2s;
-    }
-    .footer-link:hover {
-      border-bottom: 2px dotted #aaa;
-    }
-  </style>
-  <span class="footer-link" onclick="window.location.href='Main.html'">Home</span>
-  &nbsp;|&nbsp;
-  <span class="footer-link" onclick="window.location.href='detail.html'">About</span>
-  &nbsp;|&nbsp;
-  <span class="footer-link" onclick="window.location.href='detail.html'">Skills</span>
-  &nbsp;|&nbsp;
-  <span class="footer-link" onclick="window.location.href='detail.html'">Certificates</span>
-  &nbsp;|&nbsp;
-  <span class="footer-link" onclick="window.location.href='detail.html'">Projects</span>
+  <div style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #aaa; font-size: 0.85rem; font-family: 'BitmapFont', 'inter', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.5rem; line-height: 1.7;">
+  <div class="footer-blur-box-separate">
+    <div class="footer-blur-line-box">
+      <div class="footer-blur-line">
+        Made with passion and Bugs
+      </div>
+    </div>
+    <div class="footer-blur-line-box">
+      <div class="footer-blur-line" id="footer-copyright">
+        ©2024-<span id="current-year"></span> . Rutuj Dhodapkar Portfolio. All Rights Reserved.
+
+      </div>
+    </div>
+    <script>
+      // Fetch current year from an online source (WorldTimeAPI as an example)
+      fetch('https://worldtimeapi.org/api/ip')
+        .then(response => response.json())
+        .then(data => {
+          const year = new Date(data.datetime).getFullYear();
+          document.getElementById('current-year').textContent = year;
+        })
+        .catch(() => {
+          // Fallback to local year if API fails
+          document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
+    <div class="footer-blur-line-box">
+      <div class="footer-blur-line footer-links-group">
+        <span class="footer-link" onclick="window.location.href='Main.html'">Home</span>
+        <span style="color:#555;">|</span>
+        <span class="footer-link" onclick="window.location.href='detail.html'">About</span>
+        <span style="color:#555;">|</span>
+        <span class="footer-link" onclick="window.location.href='detail.html'">Skills</span>
+        <span style="color:#555;">|</span>
+        <span class="footer-link" onclick="window.location.href='detail.html'">Certificates</span>
+        <span style="color:#555;">|</span>
+        <span class="footer-link" onclick="window.location.href='detail.html'">Projects</span>
+      </div>
+    </div>
+  </div>
 </div>
 
-
-
-</body>

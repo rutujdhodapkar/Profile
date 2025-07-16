@@ -1,14 +1,9 @@
- 
-
 <!-- Load Krona One font from Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
 
-<iframe src="animations/dotted lines.html" style="width:100vw; height:100vh; border:none; position:fixed; top:0; left:0; z-index:-1; pointer-events:none;"></iframe>
-
-<!-- Removed redirection to detail.html for wide screens -->
+<iframe src="animations/dotted lines.html" style="width:100vw; height:100dvh; border:none; position:fixed; top:0; left:0; z-index:-1; pointer-events:none;"></iframe>
 
 <style>
-  /* ... (no changes to CSS, omitted for brevity) ... */
   :root {
     --main-accent: rgba(255,255,255,0.10);
     --main-accent-blur: blur(18px) saturate(180%);
@@ -20,7 +15,8 @@
     --main-curve-radius: 2.2rem;
   }
   html, body {
-    height: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -29,19 +25,20 @@
     touch-action: none;
   }
   body {
-    min-height: 100vh;
+    min-height: 100dvh;
     min-width: 100vw;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     overflow: hidden;
+    height: 100dvh;
   }
   .outer-padding-8px {
     box-sizing: border-box;
     padding: 8px;
     width: 100vw;
-    min-height: 100vh;
-    height: 100%;
+    min-height: 100dvh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -50,7 +47,8 @@
   .frame-stack-container {
     position: relative;
     width: 100%;
-    min-height: 100%;
+    min-height: 100dvh;
+    height: 100dvh;
     box-sizing: border-box;
     padding: 0;
     display: flex;
@@ -64,7 +62,8 @@
   .frame-box {
     width: 100%;
     max-width: 600px;
-    height: calc(100vh - 8vw - 70px);
+    height: calc(100dvh - 8vw - 70px);
+    min-height: 0;
     background: var(--main-accent);
     border-radius: var(--main-curve-radius);
     box-shadow: var(--main-shadow);
@@ -663,10 +662,26 @@
       };
     }
   });
+
+  // Ensure the main containers always fill the viewport height, even on resize/orientation change
+  function setFullScreenHeight() {
+    const dvh = window.innerHeight;
+    document.documentElement.style.setProperty('--vh', `${dvh}px`);
+    // For all main containers
+    document.body.style.height = `${dvh}px`;
+    document.body.style.minHeight = `${dvh}px`;
+    document.querySelectorAll('.outer-padding-8px, .frame-stack-container').forEach(el => {
+      el.style.height = `${dvh}px`;
+      el.style.minHeight = `${dvh}px`;
+    });
+  }
+  window.addEventListener('resize', setFullScreenHeight);
+  window.addEventListener('orientationchange', setFullScreenHeight);
+  document.addEventListener('DOMContentLoaded', setFullScreenHeight);
 </script>
 
 <div class="outer-padding-8px">
-  <div class="frame-stack-container" style="position:relative; min-height:100vh;">
+  <div class="frame-stack-container" style="position:relative; min-height:100dvh; height:100dvh;">
     <!-- Frame 1: info.html -->
     <div class="frame-box">
       <iframe src="info mobile.html" title="Info" tabindex="-1"></iframe>
@@ -791,6 +806,43 @@
     if (rightSvg) rightSvg.addEventListener('click', goNextFrame);
     if (leftBtn) leftBtn.addEventListener('click', goPrevFrame);
     if (rightBtn) rightBtn.addEventListener('click', goNextFrame);
+  });
+</script>
+
+
+<style>
+  /* Fullscreen white blur overlay */
+  #startupWhiteBlurOverlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255,255,255,1);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    z-index: 99999;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 1.1s cubic-bezier(.4,1.4,.6,1);
+  }
+  #startupWhiteBlurOverlay.hide {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.1s cubic-bezier(.4,1.4,.6,1);
+  }
+</style>
+<div id="startupWhiteBlurOverlay"></div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      var overlay = document.getElementById('startupWhiteBlurOverlay');
+      if (overlay) {
+        overlay.classList.add('hide');
+        setTimeout(function() {
+          if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        }, 1200);
+      }
+    }, 80); // show for a short moment before fading
   });
 </script>
 

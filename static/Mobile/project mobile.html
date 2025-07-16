@@ -279,7 +279,7 @@
   <div class="number">05</div>
 </div>
 <script>
-  // Auto horizontal scroll for projects-container (left to right)
+  // Projects carousel with manual navigation (no auto scroll)
   (function() {
     const container = document.getElementById('autoScrollProjects');
     
@@ -337,72 +337,34 @@
           container.appendChild(card);
         });
 
-        // Duplicate cards for infinite scroll
-        const originalCards = Array.from(container.children);
-        originalCards.forEach(card => container.appendChild(card.cloneNode(true)));
-
-        // Animation and navigation logic (unchanged)
-        let scrollAmount = 0;
-        let speed = getSpeed();
-        let reqId;
-        let containerWidth, parentWidth;
-
-        // Make speed faster for small screens
-        function getSpeed() {
-          return window.innerWidth <= 700 ? 2.0 : 0.5;
-        }
-
-        function updateWidths() {
-          containerWidth = container.scrollWidth;
-          parentWidth = container.parentElement.offsetWidth;
-        }
-
-        function animate() {
-          speed = getSpeed();
-          scrollAmount += speed;
-          if (scrollAmount >= containerWidth / 2) {
-            scrollAmount = 0;
-          }
-          container.style.transform = `translateX(${-scrollAmount}px)`;
-          reqId = requestAnimationFrame(animate);
-        }
-
-        function onResize() {
-          updateWidths();
-          speed = getSpeed();
-        }
-
-        window.addEventListener('resize', onResize);
-        updateWidths();
-        animate();
-
-        // Navigation logic
-        const cards = Array.from(container.children).slice(0, projects.length);
+        // No duplication for infinite scroll, just show the original cards
+        const cards = Array.from(container.children);
         const cardWidth = () => cards[0].offsetWidth + parseInt(getComputedStyle(container).gap || 0, 10) || 40;
-        let manualScroll = false;
-        let manualScrollTimeout = null;
+        let currentIndex = 0;
 
         function scrollToProject(index) {
-          scrollAmount = index * cardWidth();
-          container.style.transform = `translateX(${-scrollAmount}px)`;
-          manualScroll = true;
-          if (manualScrollTimeout) clearTimeout(manualScrollTimeout);
-          manualScrollTimeout = setTimeout(() => { manualScroll = false; }, 800);
-        }
-
-        function getCurrentProjectIndex() {
-          return Math.round(scrollAmount / cardWidth()) % projects.length;
+          // Clamp index
+          if (index < 0) index = projects.length - 1;
+          if (index >= projects.length) index = 0;
+          currentIndex = index;
+          container.style.transform = `translateX(${-index * cardWidth()}px)`;
         }
 
         document.getElementById('projectNextBtn').addEventListener('click', () => {
-          let idx = getCurrentProjectIndex();
-          scrollToProject((idx + 1) % projects.length);
+          scrollToProject(currentIndex + 1);
         });
 
         document.getElementById('projectPrevBtn').addEventListener('click', () => {
-          let idx = getCurrentProjectIndex();
-          scrollToProject((idx - 1 + projects.length) % projects.length);
+          scrollToProject(currentIndex - 1);
         });
+
+        // Responsive: update transform on resize
+        window.addEventListener('resize', () => {
+          scrollToProject(currentIndex);
+        });
+
+        // Start at first project
+        scrollToProject(0);
       }).catch(error => console.error('Error loading projects:', error));
   })();
 </script>

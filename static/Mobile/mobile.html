@@ -20,7 +20,7 @@
       min-height: 100vh;
       margin: 0;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
-      font-size: 1.35rem;
+      font-size: 1.1rem;
       letter-spacing: 0.01em;
       position: relative;
       overflow: hidden;
@@ -35,7 +35,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 0.7em;
+      gap: 0.8em; /* slightly larger gap */
       justify-content: flex-start;
       width: 100%;
     }
@@ -50,7 +50,7 @@
       flex-direction: row;
       align-items: center;
       user-select: none;
-      gap: 0.5em;
+      gap: 0.6em; /* slightly larger gap */
       justify-content: flex-start;
       width: auto;
       max-width: 100vw;
@@ -60,8 +60,8 @@
       border: none;
       outline: none;
       border-radius: 50%;
-      width: 32px;
-      height: 32px;
+      width: 36px;   /* was 32px */
+      height: 36px;  /* was 32px */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -74,8 +74,8 @@
       background: rgb(255, 255, 255);
     }
     .menu-dot-svg {
-      width: 16px;
-      height: 16px;
+      width: 18px;  /* was 16px */
+      height: 18px; /* was 16px */
       display: block;
     }
     .menu-dot-svg circle {
@@ -84,18 +84,18 @@
     .menu-dropdown {
       display: none;
       position: absolute;
-      top: 40px;
+      top: 44px; /* was 40px */
       left: 0;
       transform: none;
-      min-width: 100px;
+      min-width: 110px; /* was 100px */
       background: #fff;
       color: #111;
       border-radius: 1em;
       box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
-      padding: 0.5em 0.1em;
+      padding: 0.6em 0.1em; /* slightly larger */
       z-index: 10004;
       font-family: 'Doto', 'Krona One', Arial, sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.1rem; /* match subtitle size */
       animation: menuFadeIn 0.18s;
       text-align: center;
       margin-left: 0;
@@ -125,9 +125,9 @@
       outline: none;
       color: #111;
       font-family: inherit;
-      font-size: 1.25rem;
+      font-size: 1.1rem; /* match subtitle size */
       text-align: center;
-      padding: 0.7em 1em;
+      padding: 0.8em 1.1em; /* was 0.7em 1em */
       border-radius: 0.7em;
       cursor: pointer;
       transition: background 0.15s, color 0.15s;
@@ -137,7 +137,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5em;
+      gap: 0.6em; /* was 0.5em */
     }
     .menu-dropdown-list button:last-child {
       margin-bottom: 0;
@@ -151,7 +151,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 0.2em;
+      gap: 0.25em; /* was 0.2em */
       margin-left: 0;
       justify-content: flex-start;
     }
@@ -162,8 +162,8 @@
       background: #fff;
       border: none;
       border-radius: 50%;
-      width: 30px;
-      height: 30px;
+      width: 32px;  /* was 30px */
+      height: 32px; /* was 30px */
       cursor: pointer;
       transition: box-shadow 0.18s, background 0.18s;
       box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
@@ -177,8 +177,8 @@
     }
     .social-btn svg,
     .social-btn img {
-      width: 17px;
-      height: 17px;
+      width: 19px;  /* was 17px */
+      height: 19px; /* was 17px */
       display: block;
     }
     /* Rain pattern overlay styles */
@@ -220,15 +220,16 @@
       max-width: 400px;
     }
     .hello {
-      font-size: 1.6rem;
+      font-size: 2.2rem; /* Title: bigger */
       margin-bottom: 0.7rem;
       line-height: 1.1;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
       text-align: center;
       width: 100%;
+      font-weight: bold;
     }
     .mdesc1 {
-      font-size: 1.25rem;
+      font-size: 1.1rem; /* Subtitle: smaller */
       font-family: 'Doto', Arial, sans-serif;
       color: #fff;
       margin-bottom: 0.18em;
@@ -238,6 +239,7 @@
       text-align: center;
       margin-left: auto;
       margin-right: auto;
+      font-weight: 500;
     }
     .name-box {
       background: #ffffffdb;
@@ -246,7 +248,7 @@
       backdrop-filter: blur(5px);
       padding: 0.4em 0.7em;
       border-radius: 0.45em;
-      font-size: 1.6rem;
+      font-size: 2.2rem; /* Title: bigger */
       font-weight: bold;
       display: inline-block;
       box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
@@ -293,7 +295,7 @@
       align-items: center;
       gap: 0.7em;
       font-family: 'Doto', 'Krona One', Arial, sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.1rem; /* Button: same as subtitle */
       font-weight: bold;
       color: #fff;
       background: transparent;
@@ -351,7 +353,7 @@
       align-items: center;
       gap: 0.7em;
       font-family: 'Doto', 'Krona One', Arial, sans-serif;
-      font-size: 1.15rem;
+      font-size: 1.1rem; /* Button: same as subtitle */
       font-weight: bold;
       color: #000;
       background: #fff;
@@ -389,7 +391,7 @@
       z-index: 2;
       color: #111;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       text-align: center;
       margin-top: 10vh;
       transition: color 0.5s;
@@ -600,6 +602,42 @@
         padding: 0.6em 1.5em;
         min-width: 90px;
       }
+      .hello {
+        font-size: 2rem;
+      }
+      .name-box {
+        font-size: 2rem;
+      }
+      .mdesc1, .get-connected-btn, .blogs-btn, .content {
+        font-size: 1rem;
+      }
+      /* Make top menu and social buttons a little bigger on mobile too */
+      .menu-dot-btn {
+        width: 40px;
+        height: 40px;
+      }
+      .menu-dot-svg {
+        width: 20px;
+        height: 20px;
+      }
+      .social-btn {
+        width: 36px;
+        height: 36px;
+      }
+      .social-btn svg,
+      .social-btn img {
+        width: 22px;
+        height: 22px;
+      }
+      .menu-dropdown {
+        font-size: 1.1rem;
+        min-width: 120px;
+        top: 48px;
+      }
+      .menu-dropdown-list button {
+        font-size: 1.1rem;
+        padding: 0.9em 1.2em;
+      }
     }
     ::selection {
       background: #fff;
@@ -697,12 +735,12 @@
   <div class="main-center-container">
     <div class="main-message">
       <div class="hello">Hello There!!!</div>
-      <div style="font-size: 1.6rem; font-weight: bold; font-family: 'Krona One', 'Doto', Arial, sans-serif; text-align:center;">
+      <div style="font-size: 2.2rem; font-weight: bold; font-family: 'Krona One', 'Doto', Arial, sans-serif; text-align:center;">
         I'm <span class="name-box"><b id="typed-name"></b><span class="typing-caret"></span></span>
       </div>
       <!-- Insert mdesc1 here -->
       <div id="mdesc1" class="mdesc1" style="display:none;"></div>
-      <div style="font-size: 1.25rem; color: #fff; margin-top: 0.18em; margin-bottom: 0.18em; font-family: 'Doto', Arial, sans-serif; text-align:center;">
+      <div style="font-size: 1.1rem; color: #fff; margin-top: 0.18em; margin-bottom: 0.18em; font-family: 'Doto', Arial, sans-serif; text-align:center; font-weight: 500;">
         Building systems that can talk think and improve itself.
       </div>
       <div class="get-connected-container">
@@ -731,7 +769,7 @@
     </div>
   </div>
   <div class="content">
-    <div style="font-size:1.25rem; margin-top:2em;"></div>
+    <div style="font-size:1.1rem; margin-top:2em;"></div>
   </div>
   <div class="number"></div>
   <!-- Bottom scroll box with draggable circle only (Scroll Down button removed) -->
