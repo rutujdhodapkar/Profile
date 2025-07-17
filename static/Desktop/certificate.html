@@ -6,8 +6,7 @@
   <title>Certificates</title>
   <!-- inter font for certificate titles -->
   <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-  <!-- Orbitron font for 01 Style number -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+
   <style>
     ::selection {
       background: #fff;
@@ -259,42 +258,7 @@
       }
     }
 
-    /* --- 01 Style number at right-center --- */
-    .number-01-style {
-      position: fixed;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      z-index: 1000;
-      pointer-events: none;
-      /* Responsive tweaks for smaller screens */
-    }
-    @media (max-width: 900px) {
-      .number-01-style {
-        font-size: 120px !important;
-        right: 0;
-      }
-    }
-    @media (max-width: 600px) {
-      .number-01-style {
-        font-size: 70px !important;
-        right: 0;
-      }
-    }
-    .number-01-style .number {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 220px;
-      font-weight: 900;
-      color: transparent;
-      -webkit-text-stroke: 2px #ffffff;
-      opacity: 0.3;
-      margin: 0;
-      padding: 0 10px 0 0;
-      line-height: 1;
-      user-select: none;
-      pointer-events: none;
-    }
-
+    
     /* Other Certificates Button Styles */
     .other-certs-btn {
       margin-top: 40px;
@@ -339,10 +303,7 @@
     </div>
     <button class="scroll-arrow right" id="scrollRight" aria-label="Scroll right" hidden>&#8594;</button>
   </div>
-  <!-- 01 Style number at right-center, as requested -->
-  <div class="number-01-style">
-    <div class="number">04</div>
-  </div>
+
   <!-- Other Certificates Button at the bottom -->
   <button class="other-certs-btn" id="otherCertsBtn" type="button">Other Certificates</button>
   <script>

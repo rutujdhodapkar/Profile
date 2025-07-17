@@ -17,11 +17,10 @@
       padding: 0;
       font-family: 'Krona One', Arial, sans-serif;
       background: transparent !important;
-      color: #000;
+      color: #000000;
       min-height: 100vh;
       overflow-y: auto;
       text-align: center;
-      /* Remove any blur or background effect for full transparency */
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
     }
@@ -29,7 +28,7 @@
       position: fixed;
       top: 20px;
       right: 0;
-      z-index: 1000;
+      z-index: 0;
       pointer-events: none;
       user-select: none;
       -webkit-user-select: none;
@@ -42,9 +41,10 @@
       font-family: 'Orbitron', sans-serif;
       font-size: 220px;
       font-weight: 900;
-      color: transparent;
-      -webkit-text-stroke: 2px #ffffff;
-      opacity: 0.3;
+      color: #00000000; /* Make text white */
+      background: #00000000; /* Black background for the element */
+      -webkit-text-stroke: 2px #00000000;
+      opacity: 1;
       line-height: 0.85;
       letter-spacing: -0.04em;
       margin: 0;
@@ -77,7 +77,7 @@
     }
     h1, h2 {
       font-family: 'Krona One', Arial, sans-serif !important;
-      color: #fff;
+      color: #000; /* Black text */
       letter-spacing: 2px;
       margin-bottom: 0.5em;
       text-align: center;
@@ -98,7 +98,7 @@
       font-size: 1.08rem;
       line-height: 1.7;
       margin-bottom: 1.2em;
-      color: #fff;
+      color: #000; /* Black text */
       text-align: left;
       width: 100%;
       display: block;
@@ -114,13 +114,13 @@
       height: 140px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #fff;
-      box-shadow: 0 4px 24px #fff2;
+      border: 3px solid #000; /* Black border */
+      box-shadow: 0 4px 24px #0002;
       background: transparent !important;
     }
     a {
       font-family: 'Krona One', Arial, sans-serif;
-      color: #fff;
+      color: #000; /* Black text */
       text-decoration: underline;
       text-align: center;
       display: inline-block;
@@ -170,8 +170,8 @@
         background: transparent !important;
       }
       .number-02-topright .number {
-        font-size: 220px; /* Keep the size consistent across all screen sizes */
-        -webkit-text-stroke: 2px #ffffff;
+        font-size: 220px;
+        -webkit-text-stroke: 2px #000000;
       }
     }
     .typing {
@@ -185,6 +185,7 @@
       width: 100%;
       font-size: 1.08rem;
       background: transparent !important;
+      color: #000; /* Black text */
     }
     .typing-caret {
       display: inline-block;
@@ -200,12 +201,12 @@
       width: 0.55em;
       height: 0.55em;
       border-radius: 50%;
-      background: #fff;
+      background: #000; /* Black caret dot */
       display: inline-block;
       position: absolute;
       left: 0.18em;
       top: 0.22em;
-      box-shadow: 0 0 4px 1px #fff8;
+      box-shadow: 0 0 4px 1px #0008;
       transition: background 0.2s;
     }
     .typing-caret-blink {
@@ -225,12 +226,12 @@
       width: 0.55em;
       height: 0.55em;
       border-radius: 50%;
-      background: #fff;
+      background: #000; /* Black caret dot */
       display: inline-block;
       position: absolute;
       left: 0.18em;
       top: 0.22em;
-      box-shadow: 0 0 4px 1px #fff8;
+      box-shadow: 0 0 4px 1px #0008;
       transition: background 0.2s;
     }
     #shared-typing-caret .typing-caret-blink {
@@ -250,7 +251,7 @@
   <div class="main-flex-container">
     <div class="about-container">
       <img src="profile.jpg" alt="Rutuj Dhodapkar" class="profile-pic" onerror="this.style.display='none'">
-      <h1 style="font-family: 'Krona One', Arial, sans-serif; text-align:center; background:transparent !important;">About Me</h1>
+      <h1 style="font-family: 'Krona One', Arial, sans-serif; text-align:center; background:transparent !important; color:#000;">About Me</h1>
       <div id="about-paragraphs" style="text-align:left; background:transparent !important;">
         <!-- About paragraphs will be loaded here -->
       </div>
@@ -272,11 +273,13 @@
         p.style.textAlign = "left";
         p.style.fontSize = "1.08rem";
         p.style.background = "transparent";
+        p.style.color = "#000";
         const textSpan = document.createElement("span");
         textSpan.style.fontFamily = "'BitmapFont', Arial, sans-serif";
         textSpan.style.textAlign = "left";
         textSpan.style.fontSize = "1.08rem";
         textSpan.style.background = "transparent";
+        textSpan.style.color = "#000";
         p.appendChild(textSpan);
         container.appendChild(p);
         pElements.push(p);
@@ -289,15 +292,14 @@
       sharedCaret.style.background = "transparent";
       const caretCircle = document.createElement("span");
       caretCircle.className = "typing-caret-circle";
+      caretCircle.style.background = "#000";
       sharedCaret.appendChild(caretCircle);
 
       // Helper to move caret to the end of a textSpan
       function moveCaretTo(span) {
-        // Remove caret from current parent
         if (sharedCaret.parentNode) {
           sharedCaret.parentNode.removeChild(sharedCaret);
         }
-        // Insert caret after the span
         span.parentNode.appendChild(sharedCaret);
       }
 
@@ -313,7 +315,6 @@
       let pIndex = 0;
       function typeNextParagraph() {
         if (pIndex >= paragraphs.length) {
-          // After all, keep caret blinking at the end of last paragraph
           startCaretBlink();
           return;
         }
@@ -331,7 +332,6 @@
             if (i <= text.length) {
               setTimeout(typeChar, typingSpeed + Math.random()*30);
             } else {
-              // After typing, keep caret stable for 0.5s, then start blinking, then move to next paragraph
               setTimeout(() => {
                 startCaretBlink();
                 setTimeout(() => {
@@ -357,18 +357,15 @@
         return response.text();
       })
       .then(csvText => {
-        // Parse CSV
         function parseCSV(text) {
           const lines = text.trim().split('\n');
           if (lines.length < 2) return {headers: [], data: []};
-          // Handle possible BOM
           let firstLine = lines[0];
           if (firstLine.charCodeAt(0) === 0xFEFF) {
             firstLine = firstLine.slice(1);
           }
           const headers = firstLine.split(',');
           const data = lines.slice(1).map(line => {
-            // Handle quoted fields and commas inside quotes
             const values = [];
             let current = '';
             let inQuotes = false;
@@ -393,18 +390,15 @@
 
         const {headers, data} = parseCSV(csvText);
 
-        // Find the first row with apara1 or apara2
         let apara1 = '', apara2 = '';
         if (data.length > 0) {
           apara1 = data[0]['apara1'] || '';
           apara2 = data[0]['apara2'] || '';
         }
 
-        // If both are empty, redirect to "error.html"
         if ((!apara1 && !apara2) || (typeof apara1 === "undefined" && typeof apara2 === "undefined")) {
           // window.location.href = "error.html";
         } else {
-          // Typing animation for about paragraphs with shared caret
           const paragraphs = [];
           if (apara1) paragraphs.push(apara1);
           if (apara2) paragraphs.push(apara2);
@@ -412,7 +406,6 @@
         }
       })
       .catch(err => {
-        // Fallback if fetch fails or no data
         // window.location.href = "error.html";
       });
   </script>
@@ -420,8 +413,8 @@
 
 <style>
   ::selection {
-    background: #fff;
-    color: #000;
+    background: #000;
+    color: #fff;
   }
 </style>
 </html>

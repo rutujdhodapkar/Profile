@@ -15,8 +15,8 @@
       overflow-x: hidden;
     }
     body {
-      background: #0f0f0f;
-      color: #fff;
+      background: #00000000;
+      color: #000;
       min-height: 100vh;
       margin: 0;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
@@ -56,7 +56,7 @@
       max-width: 100vw;
     }
     .menu-dot-btn {
-      background: #fff;
+      background: #000;
       border: none;
       outline: none;
       border-radius: 50%;
@@ -71,7 +71,7 @@
       z-index: 10003;
     }
     .menu-dot-btn:hover, .menu-dot-btn:focus {
-      background: rgb(255, 255, 255);
+      background: #000;
     }
     .menu-dot-svg {
       width: 18px;  /* was 16px */
@@ -79,7 +79,7 @@
       display: block;
     }
     .menu-dot-svg circle {
-      fill: #000 !important;
+      fill: #fff !important;
     }
     .menu-dropdown {
       display: none;
@@ -88,8 +88,8 @@
       left: 0;
       transform: none;
       min-width: 110px; /* was 100px */
-      background: #fff;
-      color: #111;
+      background: #000;
+      color: #fff;
       border-radius: 1em;
       box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
       padding: 0.6em 0.1em; /* slightly larger */
@@ -123,7 +123,7 @@
       background: none;
       border: none;
       outline: none;
-      color: #111;
+      color: #fff;
       font-family: inherit;
       font-size: 1.1rem; /* match subtitle size */
       text-align: center;
@@ -143,8 +143,8 @@
       margin-bottom: 0;
     }
     .menu-dropdown-list button:hover, .menu-dropdown-list button:focus {
-      background: #f0f0f0;
-      color: #000;
+      background: #222;
+      color: #fff;
     }
     /* Social buttons */
     .social-btns-bar {
@@ -159,7 +159,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #fff;
+      background: #000;
       border: none;
       border-radius: 50%;
       width: 32px;  /* was 30px */
@@ -172,7 +172,7 @@
       z-index: 10003;
     }
     .social-btn:hover, .social-btn:focus {
-      background: #f0f0f0;
+      background: #222;
       box-shadow: 0 4px 18px 0 rgba(0,0,0,0.18);
     }
     .social-btn svg,
@@ -180,6 +180,7 @@
       width: 19px;  /* was 17px */
       height: 19px; /* was 17px */
       display: block;
+      filter: invert(1);
     }
     /* Rain pattern overlay styles */
     #rain-pattern-overlay {
@@ -227,11 +228,12 @@
       text-align: center;
       width: 100%;
       font-weight: bold;
+      color: #000;
     }
     .mdesc1 {
       font-size: 1.1rem; /* Subtitle: smaller */
       font-family: 'Doto', Arial, sans-serif;
-      color: #fff;
+      color: #000;
       margin-bottom: 0.18em;
       margin-top: 0.18em;
       line-height: 1.4;
@@ -242,8 +244,8 @@
       font-weight: 500;
     }
     .name-box {
-      background: #ffffffdb;
-      color: #000;
+      background: #000;
+      color: #fff;
       -webkit-backdrop-filter: blur(5px);
       backdrop-filter: blur(5px);
       padding: 0.4em 0.7em;
@@ -264,8 +266,8 @@
       width: 0.7em;
       height: 0.7em;
       border-radius: 50%;
-      background: #000;
-      color: #000;
+      background: #fff;
+      color: #fff;
       margin-left: 0.15em;
       margin-bottom: 0.25em;
       animation: blink-caret 1s steps(1) infinite;
@@ -297,9 +299,9 @@
       font-family: 'Doto', 'Krona One', Arial, sans-serif;
       font-size: 1.1rem; /* Button: same as subtitle */
       font-weight: bold;
-      color: #fff;
+      color: #000;
       background: transparent;
-      border: 2px solid #fff;
+      border: 2px solid #000;
       border-radius: 2em;
       padding: 0.5em 1.1em 0.5em 1em;
       cursor: pointer;
@@ -323,7 +325,7 @@
       left: -60%;
       width: 60%;
       height: 100%;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.151) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.195) 100%);
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.151) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.195) 100%);
       opacity: 0.85;
       pointer-events: none;
       z-index: 1;
@@ -336,9 +338,9 @@
       transition: left 0.45s cubic-bezier(.4,1.2,.6,1);
     }
     .get-connected-btn:hover, .get-connected-btn:focus {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      border-color: #fff;
+      background: rgba(0,0,0,0.08);
+      color: #000;
+      border-color: #000;
     }
     .arrow-inside-btn {
       display: inline-block;
@@ -355,9 +357,9 @@
       font-family: 'Doto', 'Krona One', Arial, sans-serif;
       font-size: 1.1rem; /* Button: same as subtitle */
       font-weight: bold;
-      color: #000;
-      background: #fff;
-      border: 2px solid #fff;
+      color: #fff;
+      background: #000;
+      border: 2px solid #000;
       border-radius: 2em;
       padding: 0.45em 1.1em 0.45em 1em;
       cursor: pointer;
@@ -374,9 +376,9 @@
       text-align: center;
     }
     .blogs-btn:hover, .blogs-btn:focus {
-      background: #f5f5f5;
-      color: #000;
-      border-color: #fff;
+      background: #222;
+      color: #fff;
+      border-color: #000;
     }
     .arrow-topright-btn {
       display: inline-block;
@@ -389,7 +391,7 @@
     .content {
       position: relative;
       z-index: 2;
-      color: #111;
+      color: #000;
       font-family: 'Krona One', 'Doto', Arial, sans-serif;
       font-size: 1.1rem;
       text-align: center;
@@ -446,7 +448,7 @@
       right: 0;
       bottom: -100px;
       height: 0;
-      background: #fff;
+      background: #000;
       z-index: 10010;
       transition: height 0.6s cubic-bezier(.4,1.2,.6,1), bottom 0.6s cubic-bezier(.4,1.2,.6,1);
       pointer-events: none;
@@ -456,32 +458,14 @@
       bottom: 0;
       transition: height 0.6s cubic-bezier(.4,1.2,.6,1), bottom 0.6s cubic-bezier(.4,1.2,.6,1);
     }
-    /* --- Bottom scroll box with draggable circle styles --- */
-    .bottom-scroll-container {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      /* bottom: 24px;  -- replaced below */
-      bottom: 10%;
-      z-index: 10030;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 1em;
-      pointer-events: auto;
-      user-select: none;
-      width: 340px;
-      max-width: 340px;
-      min-width: 340px;
-      /* Centered at bottom, fixed size */
-    }
+    
     .acc-scroll-box {
       width: 300px;
       min-width: 300px;
       max-width: 300px;
       height: 48px;
       border-radius: 32px;
-      background: #fff;
+      background: #000;
       box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
       display: flex;
       align-items: center;
@@ -489,7 +473,7 @@
       cursor: pointer;
       transition: box-shadow 0.18s, background 0.18s;
       overflow: hidden;
-      border: 2px solid #eee;
+      border: 2px solid #222;
       touch-action: pan-x;
       user-select: none;
       flex-shrink: 0;
@@ -499,14 +483,14 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: #222;
+      background: #fff;
       position: absolute;
       left: 4px;
       top: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
+      color: #000;
       font-size: 1.3rem;
       font-family: 'Orbitron', Arial, sans-serif;
       user-select: none;
@@ -517,11 +501,11 @@
       touch-action: pan-x;
     }
     .acc-scroll-box.dragging .acc-scroll-circle {
-      background: #444;
+      background: #ededed;
       cursor: grabbing;
     }
     .acc-scroll-box.completed .acc-scroll-circle {
-      background: #0f0f0f;
+      background: #ededed;
     }
     .acc-scroll-box .acc-scroll-label {
       position: absolute;
@@ -532,7 +516,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #000;
+      color: #fff;
       font-size: 1.05rem;
       font-family: 'Doto', Arial, sans-serif;
       pointer-events: none;
@@ -541,14 +525,14 @@
       user-select: none;
     }
     .acc-scroll-box.completed .acc-scroll-label {
-      color: #000;
+      color: #fff;
       opacity: 1;
       z-index: 100;
     }
     /* .scroll-btn-bottom styles remain but element will be removed */
     .scroll-btn-bottom {
-      background: #fff;
-      color: #000;
+      background: #000;
+      color: #fff;
       border: none;
       border-radius: 2em;
       font-family: 'Doto', 'Krona One', Arial, sans-serif;
@@ -569,8 +553,8 @@
       justify-content: center;
     }
     .scroll-btn-bottom:hover, .scroll-btn-bottom:focus {
-      background: #f0f0f0;
-      color: #000;
+      background: #222;
+      color: #fff;
     }
     /* Remove all responsive resizing for bottom scroll on small screens */
     @media (max-width: 500px) {
@@ -628,6 +612,7 @@
       .social-btn img {
         width: 22px;
         height: 22px;
+        filter: invert(1);
       }
       .menu-dropdown {
         font-size: 1.1rem;
@@ -640,20 +625,20 @@
       }
     }
     ::selection {
-      background: #fff;
-      color: #000;
+      background: #000;
+      color: #fff;
     }
     ::-webkit-scrollbar {
       width: 10px;
       background: #00000000;
     }
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(135deg, #ffffff 100%, #1c1c1c 100%);
+      background: linear-gradient(135deg, #000 100%, #1c1c1c 100%);
       border-radius: 8px;
       border: 2px solid #00000000;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(135deg, #ffffff 100%, #2b2b2b 100%);
+      background: linear-gradient(135deg, #000 100%, #2b2b2b 100%);
     }
     ::-webkit-scrollbar-track {
       background: #00000000;
@@ -661,7 +646,7 @@
     }
     html {
       scrollbar-width: thin;
-      scrollbar-color: #ededed #00000000;
+      scrollbar-color: #000 #00000000;
     }
   </style>
   <script>
@@ -728,19 +713,18 @@
   <!-- Black fade overlay for 1s fade out -->
   <div class="black-fade-overlay" id="blackFadeOverlay"></div>
   <!-- Rain pattern overlay (hidden initially) -->
-  <div id="rain-pattern-overlay"></div>
   <div class="blur-overlay" id="blurOverlay"></div>
   <!-- Project transition overlay for Projects menu click -->
   <div class="project-transition-overlay" id="projectTransitionOverlay"></div>
   <div class="main-center-container">
     <div class="main-message">
       <div class="hello">Hello There!!!</div>
-      <div style="font-size: 2.2rem; font-weight: bold; font-family: 'Krona One', 'Doto', Arial, sans-serif; text-align:center;">
+      <div style="font-size: 2.2rem; font-weight: bold; font-family: 'Krona One', 'Doto', Arial, sans-serif; text-align:center; color:#000;">
         I'm <span class="name-box"><b id="typed-name"></b><span class="typing-caret"></span></span>
       </div>
       <!-- Insert mdesc1 here -->
       <div id="mdesc1" class="mdesc1" style="display:none;"></div>
-      <div style="font-size: 1.1rem; color: #fff; margin-top: 0.18em; margin-bottom: 0.18em; font-family: 'Doto', Arial, sans-serif; text-align:center; font-weight: 500;">
+      <div style="font-size: 1.1rem; color: #000; margin-top: 0.18em; margin-bottom: 0.18em; font-family: 'Doto', Arial, sans-serif; text-align:center; font-weight: 500;">
         Building systems that can talk think and improve itself.
       </div>
       <div class="get-connected-container">
@@ -749,41 +733,21 @@
           Get connected
           <span class="arrow-inside-btn">
             <!-- SVG arrow down-right -->
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M7 7 L17 17"/>
               <polyline points="10 17 17 17 17 10"/>
             </svg>
           </span>
         </button>
-        <button class="blogs-btn" onclick="window.open('https://researchrutujdhodapkar.vercel.app ', '_blank')">
-          Research
-          <span class="arrow-topright-btn">
-            <!-- SVG arrow top-right -->
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="7 17 17 7"/>
-              <polyline points="9 7 17 7 17 15"/>
-            </svg>
-          </span>
-        </button>
+        
       </div>
     </div>
   </div>
   <div class="content">
-    <div style="font-size:1.1rem; margin-top:2em;"></div>
+    <div style="font-size:1.1rem; margin-top:2em; color:#000;"></div>
   </div>
   <div class="number"></div>
-  <!-- Bottom scroll box with draggable circle only (Scroll Down button removed) -->
-  <div class="bottom-scroll-container" id="bottomScrollContainer">
-    <div class="acc-scroll-box" id="accScrollBox">
-      <div class="acc-scroll-label" style="color:#000;">Slide to Next</div>
-      <div class="acc-scroll-circle" id="accScrollCircle">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="9" stroke="#222" stroke-width="2.2" fill="none"/>
-          <polyline points="10 8 14 12 10 16" stroke="#fff" stroke-width="2.2" fill="none"/>
-        </svg>
-      </div>
-    </div>
-  </div>
+
   <script>
     // 3-dot menu logic
     (function() {
@@ -961,7 +925,6 @@
         if (!overlay.hasChildNodes()) {
           var obj = document.createElement('object');
           obj.type = 'text/html';
-          obj.data = 'animations/rain pattern.html';
           obj.style.width = '100vw';
           obj.style.height = '100vh';
           obj.style.pointerEvents = 'none';
@@ -1097,3 +1060,4 @@
   </script>
 </body>
 </html>
+

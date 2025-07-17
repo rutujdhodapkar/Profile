@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio</title>
-  <!-- Removed inter font, only BitmapFont is used -->
+  <!-- Added Inter font for header -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  
   <style>
     @font-face {
       font-family: 'BitmapFont';
@@ -32,7 +34,7 @@
       border-radius: 200px;
       z-index: 9999;
       transition: background-color 0.3s;
-      font-family: 'BitmapFont', monospace !important;
+      font-family: 'Inter', monospace, sans-serif !important;
       /* Added shadow to header */
       box-shadow: 0 6px 32px 0 rgba(0,0,0,0.18), 0 1.5px 8px 0 rgba(0,0,0,0.10);
     }
@@ -60,7 +62,7 @@
       transition: background-color 0.3s, color 0.3s, transform 0.3s;
       border-radius: 50px;
       position: relative;
-      font-family: 'BitmapFont', monospace !important;
+      font-family: 'Inter', monospace, sans-serif !important;
     }
     body:not(.dark-mode) #rectiangleNavbar .page-nav li {
       color: black;
@@ -91,7 +93,7 @@
     #rectiangleNavbar a {
       text-decoration: none;
       color: inherit;
-      font-family: 'BitmapFont', monospace !important;
+      font-family: 'Inter', monospace, sans-serif !important;
     }
 
     .scroll-anchor {
@@ -114,7 +116,7 @@
     }
 
     /* --- GRID LINES OVERLAY --- */
-    .grid-lines-overlay {
+    /* .grid-lines-overlay {
       pointer-events: none;
       position: fixed;
       top: 0; left: -5vw;
@@ -126,7 +128,7 @@
     }
     @media (max-width: 768px) {
       .grid-lines-overlay { display: none; }
-    }
+    } */
 
     ::selection {
       background: #fff;
@@ -135,65 +137,8 @@
   </style>
 </head>
 <body>
-  <!-- Grid Lines Overlay -->
-  <div class="grid-lines-overlay">
-    <svg width="100%" height="100%" style="display:block;" xmlns="http://www.w3.org/2000/svg">
-      <g id="grid-lines"></g>
-      <g id="grid-dots"></g>
-      <script type="application/ecmascript"><![CDATA[
-        // Parameters for grid
-        var vLines = 9; // number of vertical lines (excluding 0% and 100%)
-        var hLines = 9; // number of horizontal lines (excluding 0% and 100%)
-        var width = 100;
-        var height = 100;
-        var vPercents = [];
-        var hPercents = [];
-        for (var i = 1; i <= vLines; i++) vPercents.push(i * 10);
-        for (var i = 1; i <= hLines; i++) hPercents.push(i * 10);
+  <!-- Grid Lines Overlay removed -->
 
-        // Draw vertical lines (transparent)
-        var gridLines = document.getElementById('grid-lines');
-        for (var i = 0; i < vPercents.length; i++) {
-          var x = vPercents[i];
-          var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-          line.setAttribute('x1', x + '%');
-          line.setAttribute('x2', x + '%');
-          line.setAttribute('y1', '0');
-          line.setAttribute('y2', '100%');
-          line.setAttribute('stroke', 'transparent');
-          line.setAttribute('stroke-width', '1');
-          gridLines.appendChild(line);
-        }
-        // Draw horizontal lines (transparent)
-        for (var i = 0; i < hPercents.length; i++) {
-          var y = hPercents[i];
-          var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-          line.setAttribute('y1', y + '%');
-          line.setAttribute('y2', y + '%');
-          line.setAttribute('x1', '0');
-          line.setAttribute('x2', '100%');
-          line.setAttribute('stroke', 'transparent');
-          line.setAttribute('stroke-width', '1');
-          gridLines.appendChild(line);
-        }
-        // Draw dots at intersections (proper white)
-        var gridDots = document.getElementById('grid-dots');
-        for (var i = 0; i < vPercents.length; i++) {
-          for (var j = 0; j < hPercents.length; j++) {
-            var cx = vPercents[i] + '%';
-            var cy = hPercents[j] + '%';
-            var dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            dot.setAttribute('cx', cx);
-            dot.setAttribute('cy', cy);
-            dot.setAttribute('r', '2.5');
-            dot.setAttribute('fill', '#ffffff'); // Use full white, not semi-transparent
-            dot.setAttribute('opacity', '1');
-            gridDots.appendChild(dot);
-          }
-        }
-      ]]></script>
-    </svg>
-  </div>
   <!-- Navigation -->
   <div id="rectiangleNavbar" class="rectriangle">
     <nav class="page-nav">
@@ -475,88 +420,7 @@
   <div class="frame-spacer-bottom"></div>
 </body>
 
-<style>
-  .top-left-socials {
-    position: fixed;
-    top: 22px;
-    left: 22px;
-    z-index: 99999;
-    display: flex;
-    flex-direction: row;
-    gap: 14px;
-  }
-  .top-left-socials .social-btn {
-    background: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
-    transition: box-shadow 0.18s, transform 0.18s;
-    cursor: pointer;
-    padding: 0;
-    outline: none;
-  }
-  .top-left-socials .social-btn:hover {
-    box-shadow: 0 4px 18px 0 #0000002e;
-    transform: translateY(-2px) scale(1.07);
-  }
-  .top-left-socials .social-btn svg {
-    width: 24px;
-    height: 24px;
-    display: block;
-    fill: #000;
-  }
-  @media (max-width: 600px) {
-    .top-left-socials {
-      top: 10px;
-      left: 8px;
-      gap: 8px;
-    }
-    .top-left-socials .social-btn {
-      width: 36px;
-      height: 36px;
-    }
-    .top-left-socials .social-btn svg {
-      width: 18px;
-      height: 18px;
-    }
-  }
-</style>
-<div class="top-left-socials">
-  <!-- GitHub -->
-  <a class="social-btn" href="https://github.com/rutujdhodapkar" target="_blank" aria-label="GitHub">
-    <img src="svg/github.svg" alt="GitHub" style="width: 24px; height: 24px;"/>
-  </a>
-  <!-- LinkedIn -->
-  <a class="social-btn" href="https://www.linkedin.com/in/rutujdhodapkar" target="_blank" aria-label="LinkedIn">
-    <img src="svg/linkedin.svg" alt="LinkedIn" style="width: 24px; height: 24px;"/>
-  </a>
-  <!-- X.com (Twitter X) -->
-  <a class="social-btn" href="https://x.com/rutujdhodapkar" target="_blank" aria-label="X.com">
-    <img src="svg/x.jpg" alt="X.com" style="width: 24px; height: 24px;"/>
-  </a>
-  <!-- Email -->
-  <a class="social-btn" href="mailto:rutujdhodapkar@gmail.com" aria-label="Email">
-    <img src="svg/email.svg" alt="Email" style="width: 24px; height: 24px;"/>
-  </a>
-</div>
-
-<div style="position: fixed; top: 24px; right: 32px; z-index: 100;">
-  <button onclick="window.open('https://researchrutujdhodapkar.vercel.app', '_blank')" 
-          style="display: flex; align-items: center; gap: 8px; background: #fff; color: #000; border: none; border-radius: 22px; font-family: 'BitmapFont', 'inter', monospace; font-size: 1.08rem; font-weight: bold; padding: 10px 22px 10px 18px; box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10); cursor: pointer; transition: box-shadow 0.18s, transform 0.18s;">
-    Research
-    <span style="display: flex; align-items: center;">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="7 17 17 7"/>
-        <polyline points="9 7 17 7 17 15"/>
-      </svg>
-    </span>
-  </button>
-</div>
+<!-- Removed left side social buttons and research button -->
 
 <!-- Removed screen orientation error script -->
 
