@@ -8,6 +8,37 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   
   <style>
+    #startup-blur-overlay {
+      position: fixed;
+      z-index: 99999;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255,255,255,1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: background 1.2s cubic-bezier(.4,0,.2,1), backdrop-filter 1.2s cubic-bezier(.4,0,.2,1);
+      pointer-events: none;
+    }
+  </style>
+  <div id="startup-blur-overlay"></div>
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        const overlay = document.getElementById('startup-blur-overlay');
+        if (overlay) {
+          overlay.style.background = 'rgba(255,255,255,0)';
+          overlay.style.backdropFilter = 'blur(0px)';
+          overlay.style.webkitBackdropFilter = 'blur(0px)';
+          setTimeout(function() {
+            overlay.parentNode && overlay.parentNode.removeChild(overlay);
+          }, 1300);
+        }
+      }, 100); // slight delay for effect
+    });
+  </script>
+
+  <style>
     @font-face {
       font-family: 'BitmapFont';
       src: url('BItmapFont.ttf') format('truetype');
@@ -28,8 +59,8 @@
       transform: translateX(-50%);
       width: fit-content;
       padding: 9px 20px;
-      background: #fff;
-      backdrop-filter: blur(30px);
+      background: rgba(255,255,255,0.08); /* transparent blur */
+      backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-radius: 200px;
       z-index: 9999;
@@ -37,10 +68,11 @@
       font-family: 'Inter', monospace, sans-serif !important;
       /* Added shadow to header */
       box-shadow: 0 6px 32px 0 rgba(0,0,0,0.18), 0 1.5px 8px 0 rgba(0,0,0,0.10);
+      border: 1px solid rgba(255,255,255,0.35); /* 1px border */
     }
     #rectiangleNavbar:hover {
-      background: #ffffffae !important;
-      backdrop-filter: blur(30px);
+      background: rgba(255,255,255,0.16) !important;
+      backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
     @media only screen and (max-width: 768px) {
@@ -63,20 +95,15 @@
       border-radius: 50px;
       position: relative;
       font-family: 'Inter', monospace, sans-serif !important;
-    }
-    body:not(.dark-mode) #rectiangleNavbar .page-nav li {
-      color: black;
-    }
-    body.dark-mode #rectiangleNavbar .page-nav li {
-      color: white;
+      color: #fff !important; /* Make text white on header */
     }
     #rectiangleNavbar .page-nav li.active {
-      background-color: #000000 !important;
-      color: #fff !important;
+      background-color: #fff !important; /* selection box white */
+      color: #000 !important; /* text inside selection black */
     }
-    #rectiangleNavbar .page-nav li:hover {
-      background-color: #f0f0f0 !important;
-      color: #111 !important;
+    #rectiangleNavbar .page-nav li:hover:not(.active) {
+      background-color: rgba(255,255,255,0.18) !important;
+      color: #fff !important;
       transform: scale(1.1);
     }
     .highlight {
@@ -84,7 +111,7 @@
       top: 0;
       left: 0;
       height: 100%;
-      background-color: #000000;
+      background-color: #fff !important; /* selection box white */
       border-radius: 50px;
       z-index: -1;
       transition: left 0.3s, width 0.3s, height 0.3s, background-color 0.3s;
@@ -115,30 +142,40 @@
       display: block;
     }
 
-    /* --- GRID LINES OVERLAY --- */
-    /* .grid-lines-overlay {
-      pointer-events: none;
-      position: fixed;
-      top: 0; left: -5vw;
-      width: 110vw;
-      height: 100vh;
-      z-index: 1111;
-      opacity:  0.5;
-      mix-blend-mode: lighten;
-    }
-    @media (max-width: 768px) {
-      .grid-lines-overlay { display: none; }
-    } */
-
     ::selection {
       background: #fff;
       color: #000;
     }
+
+    /* New styles for full-screen black overlay with AI text */
+    #ai-fullscreen-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      z-index: 9999;
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease;
+      justify-content: center;
+      align-items: center;
+    }
+    #ai-text {
+      color: white;
+      font-family: 'BitmapFont', sans-serif;
+      font-weight: 100;
+      font-size: 3rem;
+      text-align: center;
+      max-width: 80%;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
   </style>
 </head>
 <body>
-  <!-- Grid Lines Overlay removed -->
-
   <!-- Navigation -->
   <div id="rectiangleNavbar" class="rectriangle">
     <nav class="page-nav">
@@ -154,9 +191,12 @@
     </nav>
   </div>
 
-  <script>
-    // Removed mobile redirect
+  <!-- New full-screen overlay for AI text -->
+  <div id="ai-fullscreen-overlay">
+    <div id="ai-text">Wanna Build Big & Dangerous Artificial Intelligence Systems</div>
+  </div>
 
+  <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Home nav click: redirect to Main.html
       var homeNavLink = document.getElementById('home-nav-link');
@@ -180,7 +220,6 @@
         const navbar = document.getElementById('rectiangleNavbar');
         const navItems = document.querySelectorAll("#rectiangleNavbar .page-nav li");
         const highlight = document.querySelector("#rectiangleNavbar .highlight");
-        // const stickyOffset = 25; // No longer needed, navbar is always fixed
 
         // Section map
         const sectionMap = [
@@ -321,7 +360,7 @@
             highlight.style.left = offsetLeft + "px";
             highlight.style.width = offsetWidth + "px";
             highlight.style.height = offsetHeight + "px";
-            highlight.style.backgroundColor = "#000000";
+            highlight.style.backgroundColor = "#fff";
           }
         }
 
@@ -329,12 +368,12 @@
         navItems.forEach(item => {
           item.addEventListener('mouseenter', function() {
             if (this.classList.contains('active')) {
-              highlight.style.backgroundColor = "#000000";
+              highlight.style.backgroundColor = "#fff";
             }
           });
           item.addEventListener('mouseleave', function() {
             if (this.classList.contains('active')) {
-              highlight.style.backgroundColor = "#000000";
+              highlight.style.backgroundColor = "#fff";
             }
           });
         });
@@ -362,15 +401,42 @@
           }
         }, 0);
       }
+
+      // Scroll event for AI text and redirection
+      window.addEventListener('scroll', function() {
+        const overlay = document.getElementById('ai-fullscreen-overlay');
+        const aiText = document.getElementById('ai-text');
+        
+        // Calculate scroll progress
+        const scrollProgress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+        
+        // When near bottom of page
+        if ((window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 2)) {
+          // Show full-screen overlay
+          overlay.style.display = 'flex';
+          
+          // Fade in overlay
+          setTimeout(() => {
+            overlay.style.opacity = '1';
+          }, 100);
+          
+          // Fade in text based on scroll progress
+          setTimeout(() => {
+            aiText.style.opacity = scrollProgress.toFixed(2);
+          }, 500);
+          
+          // Redirect to contact page after a delay
+          setTimeout(() => {
+            window.location.href = "contact.html";
+          }, 2000);
+        }
+      });
     });
 
     // Redirect to Main.html when user scrolls to the very top of the page
     window.addEventListener('scroll', function() {
       if (window.scrollY <= 0) {
         window.location.href = "Main.html";
-      }
-      if ((window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 2)) {
-        window.location.href = "contact.html";
       }
     });
   </script>
@@ -391,13 +457,127 @@
     }
   </style>
   <div class="edge-tech-line">
-    I don’t just code — I build sht that pushes the edge of tech*.
+    I don't just code — I build sht that pushes the edge of tech*.
   </div>
-  <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;">......................................................................................................................................................</div>
-  <iframe src="skill.html" style="width:100%; height:500px; border:none; overflow:hidden;" scrolling="no"></iframe>
-  <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;">......................................................................................................................................................</div>
-  <iframe src="Education.html" style="width:100%; height:450px; border:none; overflow:hidden;" scrolling="no"></iframe>
-  <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;">......................................................................................................................................................</div>
+<br>
+<br>
+  
+<style>
+  @font-face {
+    font-family: 'OutlineFont';
+    src: url('OutlineFont-Regular.ttf') format('truetype');
+  }
+  .scroll-move-text-container {
+    position: relative;
+    width: 100vw;
+    height: 320px;
+    overflow: hidden;
+    margin: 40px 0 30px 0;
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    justify-content: center;
+  }
+  .scroll-move-text {
+    position: absolute;
+    left: 0;
+    white-space: nowrap;
+    font-size: 4.5rem;
+    font-family: 'OutlineFont', sans-serif;
+    font-weight: 600;
+    color: transparent;
+   -webkit-text-stroke: 0.5px #ffffff84;
+    text-shadow: none;
+    transition: color 0.2s;
+    user-select: none;
+    pointer-events: none;
+    width: 100vw;
+  }
+  /* Remove outline font and stroke for .intern-text */
+  .scroll-move-text .intern-text {
+    font-family: 'Inter', sans-serif !important;
+    color: #fff !important;
+    -webkit-text-stroke: 0 !important;
+    text-shadow: none !important;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    background: none;
+    padding: 0;
+    display: inline;
+  }
+  .scroll-move-text.line1 { top: 20%; }
+  .scroll-move-text.line2 { top: 50%; }
+  .scroll-move-text.line3 { top: 80%; }
+  @media (max-width: 700px) {
+    .scroll-move-text {
+      font-size: 2.2rem;
+    }
+    .scroll-move-text-container {
+      height: 160px;
+    }
+    .scroll-move-text.line1 { top: 20%; }
+    .scroll-move-text.line2 { top: 50%; }
+    .scroll-move-text.line3 { top: 80%; }
+  }
+</style>
+<div class="scroll-move-text-container">
+  <div class="scroll-move-text line1" id="scrollMoveText1">
+    Building <span class="intern-text">Artificial Intelligence</span> Systems
+  </div>
+  <div class="scroll-move-text line2" id="scrollMoveText2">
+    To Help <span class="intern-text">Next Generation</span> of <span class="intern-text">Humanity</span>
+  </div>
+  <div class="scroll-move-text line3" id="scrollMoveText3">
+    With <span class="intern-text">Creativity</span> and <span class="intern-text">Precision</span>
+  </div>
+</div>
+<script>
+  // 1st line: right to left, 2nd: left to right, 3rd: right to left
+  (function() {
+    const text1 = document.getElementById('scrollMoveText1');
+    const text2 = document.getElementById('scrollMoveText2');
+    const text3 = document.getElementById('scrollMoveText3');
+    const container = document.querySelector('.scroll-move-text-container');
+    function updateTextPosition() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+      // Make speed even faster: multiply progress by 2.5, clamp to 1
+      let fastProgress = Math.min(progress * 2.5, 1);
+
+      // 1st line: right to left
+      const text1Width = text1.offsetWidth;
+      const maxTranslate1 = container.offsetWidth + text1Width + 40;
+      const translateX1 = maxTranslate1 * (1 - fastProgress) - text1Width;
+      text1.style.transform = `translateY(-50%) translateX(${translateX1}px)`;
+
+      // 2nd line: left to right
+      const text2Width = text2.offsetWidth;
+      const maxTranslate2 = container.offsetWidth + text2Width + 40;
+      // For left to right, progress goes from -textWidth to maxTranslate2 - textWidth
+      const translateX2 = -text2Width + maxTranslate2 * fastProgress;
+      text2.style.transform = `translateY(-50%) translateX(${translateX2}px)`;
+
+      // 3rd line: right to left
+      const text3Width = text3.offsetWidth;
+      const maxTranslate3 = container.offsetWidth + text3Width + 40;
+      const translateX3 = maxTranslate3 * (1 - fastProgress) - text3Width;
+      text3.style.transform = `translateY(-50%) translateX(${translateX3}px)`;
+    }
+    window.addEventListener('scroll', updateTextPosition);
+    window.addEventListener('resize', updateTextPosition);
+    setTimeout(updateTextPosition, 100);
+  })();
+</script>
+
+  
+  <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
+  <iframe src="skill.html" style="width:100%; height:350px; border:none; overflow:hidden;" scrolling="no"></iframe>
+  <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
+  <iframe src="Education.html" style="width:100%; height:350px; border:none; overflow:hidden;" scrolling="no"></iframe>
+  <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
   <iframe src="certificate.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no"></iframe>  
   <style>
     .edge-tech-line {
@@ -415,14 +595,10 @@
     I love these two certificates more than others.
   </div>
   
-  <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;">......................................................................................................................................................</div>
-  <iframe src="project section.html" style="width:100%; height:500px; border:none; overflow:hidden;" scrolling="no"></iframe>
+   <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;">......</div>
+  <iframe src="project section.html" style="width:100%; height:1200px; border:none; overflow:hidden;" scrolling="no"></iframe>
   <div class="frame-spacer-bottom"></div>
 </body>
-
-<!-- Removed left side social buttons and research button -->
-
-<!-- Removed screen orientation error script -->
 
 <script>
 document.documentElement.style.scrollBehavior = "smooth";
@@ -430,25 +606,225 @@ document.documentElement.style.scrollBehavior = "smooth";
 
 <style>
 ::-webkit-scrollbar {
-  width: 10px;
-  background: #00000000;
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #ffffff 60%, #555 100%);
-  border-radius: 8px;
-  border: 2px solid #00000000;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #ffffff 60%, #333 100%);
-}
-::-webkit-scrollbar-track {
-  background: #00000000;
-  border-radius: 8px;
+  display: none;
 }
 html {
-  scrollbar-width: thin;
-  scrollbar-color: #ededed #00000000;
+  scrollbar-width: none;
 }
 </style>
 
 </html>
+
+<style>
+  #left-vertical-black-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70px;
+    height: 100vh;
+    background: #0f0f0f00;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 10000;
+    border-right: 1px solid #ffffff5e;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  #left-vertical-black-box-white-line {
+    position: fixed;
+    left: 35px; /* center of 70px box */
+    /* Start 30% from bottom, so top = 70% */
+    top: 57vh;
+    width: 2.5px;
+    height: 50vh;
+    background: #fff;
+    border-radius: 2px;
+    z-index: 10001;
+    pointer-events: none;
+  }
+  #left-vertical-black-box-name {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: 'BitmapFont', Arial, sans-serif;
+    font-size: 2.1rem;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: 0.14em;
+    margin-top: 24px;
+    margin-bottom: 0;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.97;
+    text-shadow: 0 2px 8px #0008, 0 0 2px #fff2;
+  }
+</style>
+<div id="left-vertical-black-box">
+  <div id="left-vertical-black-box-name" data-github-name></div>
+</div>
+<div id="left-vertical-black-box-white-line"></div>
+<script>
+  // Fetch GitHub user data and set the "name" column
+  // Replace 'rutujdhodapkar' with your actual GitHub username if needed
+  fetch('https://api.github.com/users/rutujdhodapkar')
+    .then(response => response.json())
+    .then(data => {
+      const name = data.name || data.login || "Unknown";
+      document.querySelector('[data-github-name]').textContent = name;
+    })
+    .catch(() => {
+      document.querySelector('[data-github-name]').textContent = "Unknown";
+    });
+</script>
+
+
+
+<style>
+  #right-vertical-scrollbar-container {
+    position: fixed;
+    right: 35px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100px;
+    width: 24px;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* Prevent accidental interaction on container */
+  }
+  #right-vertical-scrollbar-track {
+    position: relative;
+    width: 2px;
+    height: 100px;
+    background: #ffffff80;
+    border-radius: 2px;
+    box-shadow: 0 0 6px #0004;
+  }
+  #right-vertical-scrollbar-thumb {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border: 2.5px solid #000;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px #0004, 0 0 2px #fff2;
+    transition: background 0.18s;
+    top: 0;
+    cursor: pointer;
+    pointer-events: auto;
+    touch-action: none;
+    user-select: none;
+  }
+</style>
+<div id="right-vertical-scrollbar-container">
+  <div id="right-vertical-scrollbar-track">
+    <div id="right-vertical-scrollbar-thumb"></div>
+  </div>
+</div>
+<script>
+  // Custom vertical scrollbar logic with draggable thumb
+  (function() {
+    const track = document.getElementById('right-vertical-scrollbar-track');
+    const thumb = document.getElementById('right-vertical-scrollbar-thumb');
+    const trackHeight = 100; // px
+    const thumbHeight = 18; // px
+    let isDragging = false;
+    let dragStartY = 0;
+    let thumbStartTop = 0;
+
+    function getMaxThumbTop() {
+      return trackHeight - thumbHeight;
+    }
+
+    function getScrollMax() {
+      return document.documentElement.scrollHeight - window.innerHeight;
+    }
+
+    function updateThumbPosition() {
+      const docHeight = getScrollMax();
+      const scrollY = window.scrollY;
+      let progress = docHeight > 0 ? Math.min(Math.max(scrollY / docHeight, 0), 1) : 0;
+      const maxThumbTop = getMaxThumbTop();
+      const thumbTop = progress * maxThumbTop;
+      thumb.style.top = `${thumbTop}px`;
+    }
+
+    function scrollToThumbPosition(thumbTop) {
+      const maxThumbTop = getMaxThumbTop();
+      let progress = maxThumbTop > 0 ? Math.min(Math.max(thumbTop / maxThumbTop, 0), 1) : 0;
+      const docHeight = getScrollMax();
+      const targetScroll = progress * docHeight;
+      window.scrollTo({ top: targetScroll, behavior: "auto" });
+    }
+
+    // Mouse events
+    thumb.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      dragStartY = e.clientY;
+      thumbStartTop = parseFloat(thumb.style.top) || 0;
+      document.body.style.userSelect = "none";
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      const deltaY = e.clientY - dragStartY;
+      let newTop = thumbStartTop + deltaY;
+      const maxThumbTop = getMaxThumbTop();
+      newTop = Math.max(0, Math.min(newTop, maxThumbTop));
+      thumb.style.top = `${newTop}px`;
+      scrollToThumbPosition(newTop);
+    });
+
+    document.addEventListener('mouseup', function() {
+      if (isDragging) {
+        isDragging = false;
+        document.body.style.userSelect = "";
+      }
+    });
+
+    // Touch events
+    thumb.addEventListener('touchstart', function(e) {
+      if (e.touches.length !== 1) return;
+      isDragging = true;
+      dragStartY = e.touches[0].clientY;
+      thumbStartTop = parseFloat(thumb.style.top) || 0;
+    }, {passive: false});
+
+    document.addEventListener('touchmove', function(e) {
+      if (!isDragging || e.touches.length !== 1) return;
+      const deltaY = e.touches[0].clientY - dragStartY;
+      let newTop = thumbStartTop + deltaY;
+      const maxThumbTop = getMaxThumbTop();
+      newTop = Math.max(0, Math.min(newTop, maxThumbTop));
+      thumb.style.top = `${newTop}px`;
+      scrollToThumbPosition(newTop);
+      e.preventDefault();
+    }, {passive: false});
+
+    document.addEventListener('touchend', function(e) {
+      if (isDragging) {
+        isDragging = false;
+
+      }
+    });
+
+    window.addEventListener('scroll', function() {
+      if (!isDragging) updateThumbPosition();
+    });
+    window.addEventListener('resize', function() {
+      if (!isDragging) updateThumbPosition();
+    });
+
+    // Initial position
+    updateThumbPosition();
+  })();
+</script>
+

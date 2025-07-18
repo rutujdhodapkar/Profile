@@ -9,7 +9,7 @@
     @font-face {
       font-family: 'BitmapFont';
       src: url('BitmapFont.ttf') format('truetype');
-      font-weight: normal;
+      font-weight: 300;
       font-style: normal;
     }
     body {
@@ -45,6 +45,7 @@
       box-sizing: border-box;
       z-index: 11;
       padding: 0 18px;
+      font-weight: 300;
     }
     /* Layout for about + experience box */
     .main-flex-container {
@@ -87,6 +88,7 @@
       align-items: flex-start;
       font-family: 'BitmapFont', Arial, sans-serif;
       font-size: 1.04rem;
+      font-weight: 300;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       width: 100%;
@@ -111,12 +113,15 @@
       color: #fff;
       font-family: 'BitmapFont', Arial, sans-serif;
       font-size: 1.04rem;
+      font-weight: 300;
     }
     .experience-list li {
       margin-bottom: 0.7em;
       line-height: 1.6;
       text-align: left;
       padding-left: 0.2em;
+      font-family: 'BitmapFont', Arial, sans-serif;
+      font-weight: 300;
     }
     h1, h2 {
       font-family: 'inter', Arial, sans-serif !important;
@@ -144,6 +149,7 @@
       text-align: left;
       width: 100%;
       display: block;
+      font-weight: 300;
     }
     li {
       font-family: 'BitmapFont', Arial, sans-serif;
@@ -154,6 +160,7 @@
       text-align: center;
       width: 100%;
       display: list-item;
+      font-weight: 300;
     }
     ul {
       margin-left: 0;
@@ -267,6 +274,7 @@
       text-align: left;
       width: 100%;
       font-size: 1.08rem;
+      font-weight: 300;
     }
     .typing-caret {
       display: inline-block;
@@ -336,7 +344,7 @@
           width: 100%;
           text-align: center;
           font-size: 1em;
-          font-weight: 500;
+          font-weight: 300;
           margin: 32px 0 18px 0;
           letter-spacing: 1px;
           color: #ffffffa3;
@@ -353,7 +361,7 @@
     </div>
     <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 0; width: 100%; max-width: 350px; min-width: 280px; box-sizing: border-box;">
       <!-- New box of height 130px above experience box with required text, left aligned, BitmapFont, smaller font -->
-      <div class="above-experience-box" style="font-family: 'BitmapFont', Arial, sans-serif; text-align: left; font-size: 0.98rem; background: #1e1e1e; box-shadow: 0 4px 32px 0 #2424242e; border: 2px solid #606060;">
+      <div class="above-experience-box" style="font-family: 'BitmapFont', Arial, sans-serif; text-align: left; font-size: 0.98rem; background: #1e1e1e; box-shadow: 0 4px 32px 0 #2424242e; border: 2px solid #606060; font-weight: 300;">
         AI/ML Student | Specializing in Deep Learning, Advanced Algorithms and Emerging Technologies.
       </div>
       <div style="height:10px;"></div>
@@ -387,10 +395,12 @@
         p.style.fontFamily = "'BitmapFont', Arial, sans-serif";
         p.style.textAlign = "left";
         p.style.fontSize = "1.08rem";
+        p.style.fontWeight = "300";
         const textSpan = document.createElement("span");
         textSpan.style.fontFamily = "'BitmapFont', Arial, sans-serif";
         textSpan.style.textAlign = "left";
         textSpan.style.fontSize = "1.08rem";
+        textSpan.style.fontWeight = "300";
         p.appendChild(textSpan);
         container.appendChild(p);
         pElements.push(p);

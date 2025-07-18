@@ -1,284 +1,408 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projects</title>
-  <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-  <style>
-    html, body {
-      width: 100%;
-      min-width: 100vw;
-      box-sizing: border-box;
-    }
-    body {
-      background: #0f0f0f;
-      min-height: 100vh;
-      margin: 0;
-      font-family: 'BitmapFont', Arial, sans-serif;
-      color: #0f0f0f;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      width: 100vw;
-      max-width: 100vw;
-      box-sizing: border-box;
-      overflow-x: hidden;
-    }
-    .project-page-title {
-      font-family: 'intern', Arial, sans-serif;
-      font-size: 2.5rem;
-
-      color: #fff;
-      margin-top: 48px;
-      margin-bottom: 36px;
-      letter-spacing: 0.04em;
-      text-align: center;
-      /* Removed text-shadow */
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .projects-container {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      gap: 32px;
-      justify-content: center;
-      margin-bottom: 48px;
-      margin-top: 24px;
-      width: 100vw;
-      max-width: 100vw;
-      overflow-x: auto;
-      box-sizing: border-box;
-      padding-left: 0;
-      padding-right: 0;
-    }
-    .project-box {
-      background: #222;
-      /* border: 3.5px solid #fff;  border removed */
-      border-radius: 1.5em;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-      width: 340px;
-      height: 420px;         /* Increased height */
-      min-height: 420px;     /* Increased min-height */
-      min-width: 220px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-      font-family: 'intern', Arial, sans-serif;
-      color: #fff;
-      font-size: 2rem;
-      transition: box-shadow 0.2s, background 0.2s, border-color 0.2s;
-      cursor: pointer;
-      flex: 0 0 auto;
-      box-sizing: border-box;
-      overflow: hidden;
-      position: relative;
-      /* Only box has shadow, not title */
-    }
-    .project-title {
-      position: absolute;
-      top: 0.7em;
-      left: 1.1em;
-      font-family: 'intern', Arial, sans-serif;
-      font-size: 2rem;
-      color: #fff;
-      z-index: 2;
-      pointer-events: none;
-      max-width: 85%;
-      /* Allow multi-line titles */
-      white-space: normal;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      letter-spacing: 0.01em;
-      font-weight: 700;
-      /* No background, no box, no shadow */
-      text-shadow: none;
-      line-height: 1.18;
-      word-break: break-word;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      text-align: left;
-    }
-    .project-arrow {
-      position: absolute;
-      bottom: 0.9em;
-      right: 1.1em;
-      z-index: 3;
-      width: 1.4em;
-      height: 1.4em;
-      pointer-events: none;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      border-radius: 50%;
-      border: 2.5px solid #fff;
-      /* No background */
-      background: none;
-      padding: 0.08em;
-      box-shadow: none;
-    }
-    .project-arrow svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-      /* Arrow color: white with slight shadow for visibility */
-      filter: drop-shadow(0 1px 2px #0008);
-    }
-    .project-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 1.5em;
-      display: block;
-      background: #222;
-      transition: filter 0.2s;
-    }
-    .project-box:hover .project-image {
-      filter: brightness(1.08) contrast(1.05);
-    }
-    /* Optional: Hide scrollbar for a cleaner look */
-    .projects-container::-webkit-scrollbar {
-      display: none;
-    }
-    .projects-container {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-    }
-    @media (max-width: 700px) {
-      .projects-container {
-        gap: 16px;
-        padding-left: 0;
-        padding-right: 0;
-      }
-      .project-box {
-        width: 90vw;
-        min-width: 120px;
-        max-width: 98vw;
-        height: 240px;         /* Increased height for mobile */
-        min-height: 240px;     /* Increased min-height for mobile */
-        font-size: 1.2rem;
-      }
-      .project-image {
-        height: 100%;
-      }
-      .project-page-title {
-        font-size: 2rem;
-        margin-top: 24px;
-        margin-bottom: 18px;
-      }
-      .project-title {
-        font-size: 1.2rem;
-        top: 0.4em;
-        left: 0.7em;
-        right: unset;
-        bottom: unset;
-        /* Allow multi-line titles on mobile too */
-        white-space: normal;
-        -webkit-line-clamp: 2;
-        text-align: left;
-      }
-      .project-arrow {
-        bottom: 0.4em;
-        right: 0.7em;
-        width: 0.9em;
-        height: 0.9em;
-        padding: 0.04em;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Project Section</title>
+    <!-- Fix font: Use Google Fonts for Roboto and fallback, and ensure Intern is loaded properly -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Intern';
+            src: url('Intern.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            background: #0f0f0f;
+            color: #fff;
+            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Only apply 100px left margin to the project list, not the header */
+        .projects-wrapper {
+            /* Remove margin-left here */
+        }
+        .projects-list {
+            padding: 32px 40px;
+            margin-left: 100px; /* Move the 100px left margin here */
+        }
+        .project-item {
+            margin-bottom: 32px;
+            border-bottom: 1px solid #ffffff63;
+            font-weight: 300;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.15s;
+            position: relative;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+        }
+        .project-item:last-child {
+            border-bottom: none;
+        }
+        .project-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .project-title {
+            font-size: 2.8rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 4px;
+            flex: 1 1 auto;
+            min-width: 0;
+            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+        }
+        .project-date {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #fff;
+            margin-left: 24px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            align-self: flex-start;
+            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+        }
+        .project-bottom-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .project-bottom-title {
+            display: block;
+            font-size: 2rem;
+            color: #fff;
+            font-weight: 300;
+            padding: 12px 0 4px 0;
+            text-align: left;
+            width: 100%;
+            letter-spacing: 0.01em;
+            flex: 1 1 auto;
+            min-width: 0;
+            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+        }
+        .project-bottom-date {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #fff;
+            margin-left: 24px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            align-self: flex-start;
+            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+        }
+        .project-category {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 8px;
+            opacity: 0;
+            max-height: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+            transition: 
+                opacity 0.3s cubic-bezier(.4,0,.2,1),
+                max-height 0.3s cubic-bezier(.4,0,.2,1),
+                transform 0.3s cubic-bezier(.4,0,.2,1);
+            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+        }
+        .project-item:hover:not(.expanded) .project-category {
+            opacity: 1;
+            max-height: 40px;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .project-item.expanded .project-category {
+            opacity: 1;
+            max-height: 40px;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .project-details {
+            overflow: hidden;
+            max-height: 0;
+            margin-top: 0;
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #fff;
+            opacity: 0;
+            transition: max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.3s, margin-top 0.3s;
+            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+        }
+        .project-details a {
+            color: #fff;
+            text-decoration: underline;
+            word-break: break-all;
+            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+        }
+        .project-item.expanded .project-details {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 12px;
+        }
+        .project-item.expanded {
+            background: #111;
+            transition: background 0.2s;
+        }
+        .projects-top {
+            padding: 32px 40px 0 40px;
+            background: #0f0f0f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .projects-top-title {
+            font-size: 2.5rem;
+            font-family: 'Intern', 'Roboto', monospace, sans-serif;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: #fff;
+            letter-spacing: 0.04em;
+            text-align: center;
+            width: 100%;
+        }
+        .projects-top-other {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 16px;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.2s;
+            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+            border: none;
+            background: none;
+            padding: 0;
+            outline: none;
+        }
+        .projects-top-other:hover, .projects-top-other:focus {
+            color: #aaf;
+        }
+        .project-item .project-header {
+            display: none;
+        }
+        .project-item .project-bottom-row {
+            display: flex;
+        }
+        .project-item.expanded .project-header {
+            display: flex;
+        }
+        .project-item.expanded .project-bottom-row {
+            display: none;
+        }
+        @media (max-width: 700px) {
+            .projects-wrapper {
+                /* margin-left: 0; -- not needed anymore */
+            }
+            .projects-list, .projects-top {
+                padding: 16px 8px 0 8px;
+            }
+            .projects-list {
+                margin-left: 0;
+            }
+            .project-title {
+                font-size: 2rem;
+            }
+            .projects-top-title {
+                font-size: 1.5rem;
+            }
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .project-date {
+                margin-left: 0;
+                margin-top: 2px;
+            }
+            .project-bottom-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .project-bottom-title {
+                font-size: 1.3rem;
+            }
+            .project-bottom-date {
+                margin-left: 0;
+                margin-top: 2px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="project-page-title">Projects</div>
-  <div class="projects-container" id="projectsContainer">
-    <!-- Project boxes will be loaded here -->
-  </div>
-  <script>
-    // Utility to fetch and parse CSV
-    function parseCSV(text) {
-      const lines = text.trim().split('\n');
-      const headers = lines[0].split(',');
-      return lines.slice(1).map(line => {
-        // Handle quoted fields and commas inside quotes
-        const values = [];
-        let current = '';
-        let inQuotes = false;
-        for (let i = 0; i < line.length; i++) {
-          const char = line[i];
-          if (char === '"' && (i === 0 || line[i-1] !== '\\')) {
-            inQuotes = !inQuotes;
-          } else if (char === ',' && !inQuotes) {
-            values.push(current.replace(/^"|"$/g, '').replace(/\\"/g, '"'));
-            current = '';
-          } else {
-            current += char;
-          }
-        }
-        values.push(current.replace(/^"|"$/g, '').replace(/\\"/g, '"'));
-        const obj = {};
-        headers.forEach((h, idx) => obj[h.trim()] = (values[idx]||'').trim());
-        return obj;
-      });
-    }
-
-    // Fetch CSV and render projects (image, title top-left, arrow at bottom-right)
-    fetch('https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv')
-      .then(res => res.text())
-      .then(csvText => {
-        const projects = parseCSV(csvText);
-        const container = document.getElementById('projectsContainer');
-        projects.forEach(project => {
-          const img = project.pimgpath || '';
-          const title = project.ptitle || '';
-          if (!img) return; // skip if no image
-
-          // Create project box
-          const box = document.createElement('div');
-          box.className = 'project-box';
-
-          // Project image
-          const imgElem = document.createElement('img');
-          imgElem.className = 'project-image';
-          imgElem.src = img;
-          imgElem.alt = title;
-          imgElem.onerror = function() {
-            this.style.display = 'none';
-          };
-          box.appendChild(imgElem);
-
-          // Project title (top-left, no background, bigger font, multi-line)
-          if (title) {
-            const titleElem = document.createElement('div');
-            titleElem.className = 'project-title';
-            titleElem.textContent = title;
-            box.appendChild(titleElem);
-          }
-
-          // Arrow (top-right direction, placed at bottom-right, with round border, smaller, no background)
-          const arrowElem = document.createElement('div');
-          arrowElem.className = 'project-arrow';
-          // SVG arrow: points from bottom-left to top-right (diagonal up-right)
-          arrowElem.innerHTML = `
-            <svg viewBox="0 0 32 32" fill="none">
-              <g>
-                <path d="M8 24 L24 8" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M16 8 H24 V16" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
-              </g>
-            </svg>
-          `;
-          box.appendChild(arrowElem);
-
-          container.appendChild(box);
+    <div class="projects-wrapper">
+        <div class="projects-top">
+            <div class="projects-top-title" id="projects-top-title" style="font-family: 'Intern', 'Roboto', monospace, sans-serif; text-align: center;">Project</div>
+            <button class="projects-top-other" id="projects-top-other">other projects</button>
+        </div>
+        <div class="projects-list" id="projects-list"></div>
+    </div>
+    <script>
+        // Open otherprojects.html on click
+        document.getElementById('projects-top-other').addEventListener('click', function() {
+            window.open('otherprojects.html', '_blank');
         });
-      })
-      .catch(err => {
-        document.getElementById('projectsContainer').innerHTML = '<div style="color:#fff;padding:32px;">Failed to load projects.</div>';
-      });
-  </script>
+
+        // Helper function to parse CSV
+        function parseCSV(text, delimiter) {
+            const lines = text.trim().split('\n');
+            const headers = lines[0].split(delimiter).map(h => h.trim());
+            return lines.slice(1).map(line => {
+                // Handle quoted fields and delimiter inside quotes
+                const values = [];
+                let current = '';
+                let inQuotes = false;
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    if (char === '"' && (i === 0 || line[i-1] !== '\\')) {
+                        inQuotes = !inQuotes;
+                    } else if (char === delimiter && !inQuotes) {
+                        values.push(current.replace(/^"|"$/g, '').replace(/\\"/g, '"').trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                values.push(current.replace(/^"|"$/g, '').replace(/\\"/g, '"').trim());
+                const obj = {};
+                headers.forEach((h, idx) => obj[h] = values[idx] || '');
+                return obj;
+            });
+        }
+
+        // Fetch CSV from GitHub and show only project title and category, expand on click
+        fetch('https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv')
+            .then(response => response.text())
+            .then(csvText => {
+                // Try to detect delimiter: tab or comma
+                let delimiter = '\t';
+                if (csvText.indexOf('\t') === -1 && csvText.indexOf(',') !== -1) {
+                    delimiter = ',';
+                }
+                const data = parseCSV(csvText, delimiter);
+
+                // Show all project titles and categories, expandable
+                const list = document.getElementById('projects-list');
+                data.forEach((project, idx) => {
+                    if (!project['project title'] && !project['project category']) return;
+                    const item = document.createElement('div');
+                    item.className = 'project-item';
+
+                    // Header: Title (left), Date (right) (only visible when expanded)
+                    const headerDiv = document.createElement('div');
+                    headerDiv.className = 'project-header';
+
+                    // Title
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'project-title';
+                    titleDiv.textContent = project['project title'] || '';
+
+                    // Date (right side)
+                    let dateDiv = null;
+                    if (project['project date']) {
+                        dateDiv = document.createElement('div');
+                        dateDiv.className = 'project-date';
+                        dateDiv.textContent = project['project date'];
+                    }
+
+                    headerDiv.appendChild(titleDiv);
+                    if (dateDiv) headerDiv.appendChild(dateDiv);
+
+                    item.appendChild(headerDiv);
+
+                    // Bottom row: Title (left), Date (right) (always visible when not expanded)
+                    const bottomRow = document.createElement('div');
+                    bottomRow.className = 'project-bottom-row';
+
+                    const bottomTitle = document.createElement('div');
+                    bottomTitle.className = 'project-bottom-title';
+                    bottomTitle.textContent = project['project title'] || '';
+                    bottomRow.appendChild(bottomTitle);
+
+                    // Date at right side in bottom row
+                    if (project['project date']) {
+                        const bottomDate = document.createElement('div');
+                        bottomDate.className = 'project-bottom-date';
+                        bottomDate.textContent = project['project date'];
+                        bottomRow.appendChild(bottomDate);
+                    }
+
+                    item.appendChild(bottomRow);
+
+                    // Category (hidden by default, shown on hover or expanded)
+                    const catDiv = document.createElement('div');
+                    catDiv.className = 'project-category';
+                    catDiv.textContent = project['project category'] || '';
+                    if (catDiv.textContent) item.appendChild(catDiv);
+
+                    // Details (hidden by default, smooth expand)
+                    const detailsDiv = document.createElement('div');
+                    detailsDiv.className = 'project-details';
+
+                    // Description
+                    if (project['project description']) {
+                        const desc = document.createElement('div');
+                        desc.textContent = "Description: " + project['project description'];
+                        detailsDiv.appendChild(desc);
+                    }
+                    // Link
+                    if (project['project link']) {
+                        const link = document.createElement('div');
+                        link.innerHTML = 'Link: <a href="' + project['project link'] + '" target="_blank">' + project['project link'] + '</a>';
+                        detailsDiv.appendChild(link);
+                    }
+                    // Feature
+                    if (project['project feature']) {
+                        const feat = document.createElement('div');
+                        feat.textContent = "Feature: " + project['project feature'];
+                        detailsDiv.appendChild(feat);
+                    }
+                    // Lang
+                    if (project['project lang']) {
+                        const lang = document.createElement('div');
+                        lang.textContent = "Language: " + project['project lang'];
+                        detailsDiv.appendChild(lang);
+                    }
+                    // Category (again, for completeness)
+                    if (project['project category']) {
+                        const cat = document.createElement('div');
+                        cat.textContent = "Category: " + project['project category'];
+                        detailsDiv.appendChild(cat);
+                    }
+
+                    item.appendChild(detailsDiv);
+
+                    // Accordion: Only one open at a time
+                    item.addEventListener('click', function(e) {
+                        // Only expand/collapse if not clicking a link
+                        if (e.target.tagName.toLowerCase() === 'a') return;
+
+                        // Find currently expanded item (if any)
+                        const expanded = document.querySelector('.project-item.expanded');
+                        if (expanded && expanded !== item) {
+                            expanded.classList.remove('expanded');
+                        }
+                        // Toggle this item
+                        item.classList.toggle('expanded');
+                    });
+
+                    list.appendChild(item);
+                });
+            })
+            .catch(err => {
+                document.getElementById('projects-top-title').textContent = 'Failed to load project data.';
+                document.getElementById('projects-list').innerHTML = '';
+                console.error(err);
+            });
+    </script>
 </body>
+</html>
+
+
+

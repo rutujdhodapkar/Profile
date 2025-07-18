@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -7,6 +7,7 @@
   
   <style>
     html, body {
+
       height: 100%;
       margin: 0;
       padding: 0;
@@ -224,6 +225,48 @@
         font-size: 1.01rem;
       }
     }
+    /* --- Custom styles for support links above feedback --- */
+    .support-links-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7em;
+      margin-top: 2.2rem;
+      margin-bottom: 0.2rem;
+      pointer-events: auto;
+    }
+    .support-link {
+      display: inline-flex;
+      align-items: center;
+      font-family: 'BitmapFont', monospace, Arial, sans-serif;
+      font-size: 1.08rem;
+      color: #fff;
+      background: rgba(30,30,30,0.32);
+      border-radius: 0.7em;
+      padding: 0.18em 0.95em;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      backdrop-filter: blur(8px);
+      margin: 0;
+      border: none;
+      outline: none;
+      pointer-events: auto;
+    }
+    .support-link:hover, .support-link:focus {
+      background: rgba(60,60,60,0.38);
+      color: #fff;
+      text-decoration: none;
+    }
+    .support-link .arrow-top-right {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 0.5em;
+      margin-bottom: 2px;
+      width: 1.1em;
+      height: 1.1em;
+    }
   </style>
 </head>
 <body>
@@ -242,6 +285,21 @@
     <div class="button-row" id="contact-links">
 
       <!-- Contact buttons will be inserted here by JS -->
+    </div>
+    <!-- Support links above feedback -->
+    <div class="support-links-container">
+      <a class="support-link" href="https://www.fiverr.com/s/2K9b4Vk" target="_blank" rel="noopener noreferrer">
+        Buy me coffee
+        <svg class="arrow-top-right" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M6 14L14 6M14 6H7.5M14 6V12.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a class="support-link" href="https://www.fiverr.com/s/ZmkbG7l" target="_blank" rel="noopener noreferrer">
+        Fiverr
+        <svg class="arrow-top-right" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M6 14L14 6M14 6H7.5M14 6V12.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
     </div>
     <div class="feedback-link">
        <span style="display: inline-block; backdrop-filter: blur(8px); background: rgba(30,30,30,0.32); border-radius: 0.7em; padding: 0.18em 0.95em 0.18em 0.95em; box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);">
@@ -480,7 +538,7 @@
     width: fit-content;
   }
 </style>
-  <div style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #aaa; font-size: 0.85rem; font-family: 'BitmapFont', 'inter', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.5rem; line-height: 1.7;">
+  <div style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #aaa; font-size: 1.05rem; font-family: 'BitmapFont', 'inter', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.5rem; line-height: 1.7;">
   <div class="footer-blur-box-separate">
     <div class="footer-blur-line-box">
       <div class="footer-blur-line">
