@@ -95,9 +95,6 @@
 </style>
 <div style="text-align:center;">
 
-
-
-
   <div class="expertise-scroll-wrapper">
     <div class="expertise-container" id="autoScrollExpertiseLeftToRight">
       <div class="expertise-square">
@@ -145,7 +142,7 @@
   (function() {
     const container = document.getElementById('autoScrollExpertiseLeftToRight');
     let scrollAmount = 0;
-    let speed = 0.25; // px per frame (slower speed)
+    let speed = 1; // px per frame (faster speed)
     let reqId;
     let containerWidth, parentWidth;
 
@@ -338,7 +335,7 @@
   (function() {
     const container = document.getElementById('autoScrollExpertiseRightToLeft');
     let scrollAmount = container.scrollWidth / 2; // Start from the last div
-    let speed = 0.25; // px per frame (slower speed)
+    let speed = 1; // px per frame (faster speed)
     let reqId;
     let containerWidth, parentWidth;
 

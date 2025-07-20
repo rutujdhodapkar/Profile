@@ -3,29 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Project Section</title>
-    <!-- Fix font: Use Google Fonts for Roboto and fallback, and ensure Intern is loaded properly -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <!-- Add Inter font for modern best practice -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         @font-face {
-            font-family: 'Intern';
-            src: url('Intern.ttf') format('truetype');
+            font-family: 'BitmapFont';
+            src: url('bitmapFont.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
         body {
             background: #0f0f0f;
             color: #fff;
-            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+            font-family: 'BitmapFont', monospace, sans-serif;
             margin: 0;
             padding: 0;
         }
-        /* Only apply 100px left margin to the project list, not the header */
         .projects-wrapper {
-            /* Remove margin-left here */
         }
         .projects-list {
             padding: 32px 40px;
-            margin-left: 100px; /* Move the 100px left margin here */
+            margin-left: 100px;
         }
         .project-item {
             margin-bottom: 32px;
@@ -39,7 +37,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+            font-family: 'BitmapFont', monospace, sans-serif;
         }
         .project-item:last-child {
             border-bottom: none;
@@ -51,13 +49,13 @@
             width: 100%;
         }
         .project-title {
-            font-size: 2.8rem;
+            font-size: 1.3rem;
             font-weight: 300;
             color: #fff;
             margin-bottom: 4px;
             flex: 1 1 auto;
             min-width: 0;
-            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+            font-family: 'BitmapFont', monospace, sans-serif;
         }
         .project-date {
             font-size: 1.1rem;
@@ -67,36 +65,7 @@
             white-space: nowrap;
             flex-shrink: 0;
             align-self: flex-start;
-            font-family: 'Roboto', 'Intern', monospace, sans-serif;
-        }
-        .project-bottom-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-        }
-        .project-bottom-title {
-            display: block;
-            font-size: 2rem;
-            color: #fff;
-            font-weight: 300;
-            padding: 12px 0 4px 0;
-            text-align: left;
-            width: 100%;
-            letter-spacing: 0.01em;
-            flex: 1 1 auto;
-            min-width: 0;
-            font-family: 'Roboto', 'Intern', monospace, sans-serif;
-        }
-        .project-bottom-date {
-            font-size: 1.1rem;
-            font-weight: 300;
-            color: #fff;
-            margin-left: 24px;
-            white-space: nowrap;
-            flex-shrink: 0;
-            align-self: flex-start;
-            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+            font-family: 'BitmapFont', monospace, sans-serif;
         }
         .project-category {
             font-size: 1.1rem;
@@ -111,14 +80,9 @@
                 opacity 0.3s cubic-bezier(.4,0,.2,1),
                 max-height 0.3s cubic-bezier(.4,0,.2,1),
                 transform 0.3s cubic-bezier(.4,0,.2,1);
-            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+            font-family: 'BitmapFont', monospace, sans-serif;
         }
-        .project-item:hover:not(.expanded) .project-category {
-            opacity: 1;
-            max-height: 40px;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
+        .project-item:hover:not(.expanded) .project-category,
         .project-item.expanded .project-category {
             opacity: 1;
             max-height: 40px;
@@ -134,13 +98,13 @@
             color: #fff;
             opacity: 0;
             transition: max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.3s, margin-top 0.3s;
-            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+            font-family: 'BitmapFont', monospace, sans-serif;
         }
         .project-details a {
             color: #fff;
             text-decoration: underline;
             word-break: break-all;
-            font-family: 'Roboto', 'Intern', monospace, sans-serif;
+            font-family: 'BitmapFont', monospace, sans-serif;
         }
         .project-item.expanded .project-details {
             max-height: 500px;
@@ -160,8 +124,8 @@
         }
         .projects-top-title {
             font-size: 2.5rem;
-            font-family: 'Intern', 'Roboto', monospace, sans-serif;
-            font-weight: 400;
+            font-family: 'Inter', sans-serif !important;
+            font-weight: 700;
             margin-bottom: 8px;
             color: #fff;
             letter-spacing: 0.04em;
@@ -175,16 +139,55 @@
             margin-bottom: 16px;
             cursor: pointer;
             text-decoration: underline;
-            transition: color 0.2s;
-            font-family: 'Roboto', 'Intern', monospace, sans-serif;
-            border: none;
-            background: none;
-            padding: 0;
+            transition: 
+                color 0.2s,
+                background 0.2s,
+                border-color 0.2s;
+            font-family: 'BitmapFont', monospace, sans-serif;
+            border: 1.5px solid #fff;
+            background: transparent;
+            padding: 8px 22px;
             outline: none;
+            border-radius: 999px;
+            /* pill/round button */
+            box-sizing: border-box;
         }
         .projects-top-other:hover, .projects-top-other:focus {
-            color: #aaf;
+            color: #d2d2d2;
+            background: rgba(255,255,255,0.08);
+            border-color: #d2d2d2;
         }
+        /* Always show the project title in the same size, both collapsed and expanded */
+        .project-bottom-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .project-bottom-title {
+            display: block;
+            font-size: 1.3rem;
+            color: #fff;
+            font-weight: 300;
+            padding: 12px 0 4px 0;
+            text-align: left;
+            width: 100%;
+            letter-spacing: 0.01em;
+            flex: 1 1 auto;
+            min-width: 0;
+            font-family: 'BitmapFont', monospace, sans-serif;
+        }
+        .project-bottom-date {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #fff;
+            margin-left: 24px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            align-self: flex-start;
+            font-family: 'BitmapFont', monospace, sans-serif;
+        }
+        /* Show both header and bottom row, but only one title is visible at a time */
         .project-item .project-header {
             display: none;
         }
@@ -197,10 +200,48 @@
         .project-item.expanded .project-bottom-row {
             display: none;
         }
+        .github-more-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0 32px 0;
+        }
+        .github-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-family: 'BitmapFont', sans-serif;
+            font-weight: 500;
+            color: #fff;
+            background: #181818;
+            border: 2px solid #fff;
+            border-radius: 999px;
+            padding: 12px 32px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 
+                background 0.2s,
+                color 0.2s,
+                border-color 0.2s,
+                box-shadow 0.2s;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .github-more-btn:hover, .github-more-btn:focus {
+            background: #24292f;
+            color: #f5f5f5;
+            border-color: #f5f5f5;
+            box-shadow: 0 4px 24px 0 rgba(36,41,47,0.12);
+            text-decoration: none;
+        }
+        .github-icon {
+            width: 1.5em;
+            height: 1.5em;
+            display: inline-block;
+            vertical-align: middle;
+            fill: currentColor;
+        }
         @media (max-width: 700px) {
-            .projects-wrapper {
-                /* margin-left: 0; -- not needed anymore */
-            }
             .projects-list, .projects-top {
                 padding: 16px 8px 0 8px;
             }
@@ -208,7 +249,10 @@
                 margin-left: 0;
             }
             .project-title {
-                font-size: 2rem;
+                font-size: 1rem;
+            }
+            .project-bottom-title {
+                font-size: 1rem;
             }
             .projects-top-title {
                 font-size: 1.5rem;
@@ -225,12 +269,20 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
-            .project-bottom-title {
-                font-size: 1.3rem;
-            }
             .project-bottom-date {
                 margin-left: 0;
                 margin-top: 2px;
+            }
+            .projects-top-other {
+                padding: 6px 14px;
+                font-size: 1rem;
+            }
+            .github-more-btn {
+                font-size: 1rem;
+                padding: 10px 18px;
+            }
+            .github-more-btn-wrapper {
+                margin: 28px 0 20px 0;
             }
         }
     </style>
@@ -238,10 +290,25 @@
 <body>
     <div class="projects-wrapper">
         <div class="projects-top">
-            <div class="projects-top-title" id="projects-top-title" style="font-family: 'Intern', 'Roboto', monospace, sans-serif; text-align: center;">Project</div>
+            <div class="projects-top-title" id="projects-top-title">Projects</div>
             <button class="projects-top-other" id="projects-top-other">other projects</button>
         </div>
         <div class="projects-list" id="projects-list"></div>
+        <div class="github-more-btn-wrapper">
+            <a
+                class="github-more-btn"
+                href="https://github.com/rutujdhodapkar"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit my GitHub for more"
+            >
+                <!-- GitHub SVG icon, modern and accessible -->
+                <svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 0.297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387 0.6 0.113 0.82-0.258 0.82-0.577 0-0.285-0.011-1.04-0.017-2.04-3.338 0.726-4.042-1.61-4.042-1.61-0.546-1.387-1.333-1.756-1.333-1.756-1.089-0.745 0.083-0.729 0.083-0.729 1.205 0.084 1.84 1.237 1.84 1.237 1.07 1.834 2.809 1.304 3.495 0.997 0.108-0.775 0.418-1.305 0.762-1.605-2.665-0.304-5.466-1.332-5.466-5.931 0-1.31 0.469-2.381 1.236-3.221-0.124-0.303-0.535-1.523 0.117-3.176 0 0 1.008-0.322 3.301 1.23 0.957-0.266 1.984-0.399 3.003-0.404 1.018 0.005 2.046 0.138 3.006 0.404 2.291-1.553 3.297-1.23 3.297-1.23 0.653 1.653 0.242 2.873 0.119 3.176 0.77 0.84 1.235 1.911 1.235 3.221 0 4.609-2.804 5.625-5.475 5.921 0.43 0.372 0.823 1.104 0.823 2.226 0 1.606-0.015 2.898-0.015 3.293 0 0.322 0.216 0.694 0.825 0.576 4.765-1.589 8.199-6.085 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                Visit my GitHub for more
+            </a>
+        </div>
     </div>
     <script>
         // Open otherprojects.html on click
@@ -403,6 +470,3 @@
     </script>
 </body>
 </html>
-
-
-
