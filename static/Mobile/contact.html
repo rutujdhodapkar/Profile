@@ -20,8 +20,8 @@
       padding: 0;
       position: relative;
       overflow: hidden;
-      color: #000;
-      background: #fff;
+      color: #fff;
+      background: #000;
     }
     .contact-content {
       position: absolute;
@@ -38,7 +38,7 @@
     .contact-title {
       font-family: 'krona one', Arial, sans-serif;
       font-size: 2.8rem;
-      color: #000;
+      color: #fff;
       margin-bottom: 2.5rem;
       letter-spacing: 0.04em;
       text-align: center;
@@ -61,8 +61,8 @@
     }
     .contact-btn {
       font-family: 'BitmapFont', monospace, Arial, sans-serif;
-      background: #000;
-      color: #fff;
+      background: #fff;
+      color: #000;
       border: none;
       outline: none;
       padding: 0.65rem 2.2rem;
@@ -70,7 +70,7 @@
       border-radius: 999px;
       cursor: pointer;
       transition: background 0.18s, color 0.18s, transform 0.12s, border 0.18s;
-      box-shadow: 0 2px 12px #0001;
+      box-shadow: 0 2px 12px #fff1;
       letter-spacing: 0.03em;
       margin: 0;
       display: inline-block;
@@ -79,9 +79,9 @@
       position: relative;
     }
     .contact-btn:hover, .contact-btn:focus {
-      background: #fff;
-      color: #000;
-      border: 2px solid #000;
+      background: #000;
+      color: #fff;
+      border: 2px solid #fff;
       transform: translateY(-2px) scale(1.04);
       text-decoration: none;
     }
@@ -95,7 +95,7 @@
     }
     .username {
       font-family: 'BitmapFont', monospace, Arial, sans-serif;
-      color: #000;
+      color: #fff;
       font-size: 1.1rem;
       margin-top: 2.5rem;
       opacity: 0.7;
@@ -112,10 +112,10 @@
       font-family: 'BitmapFont', monospace, Arial, sans-serif;
       font-size: 1.08rem;
       pointer-events: auto;
-      color: #000;
+      color: #fff;
     }
     .feedback-link a {
-      color: #000;
+      color: #fff;
       text-decoration: underline;
       opacity: 0.9;
       cursor: pointer;
@@ -124,7 +124,7 @@
       text-decoration: underline dotted;
       opacity: 0.9;
       cursor: pointer;
-      color: #000;
+      color: #fff;
     }
     .contact-content {
       z-index: 2;
@@ -144,8 +144,8 @@
       <!-- Contact buttons will be inserted here by JS -->
     </div>
     <div class="feedback-link">
-       <span style="display: inline-block; backdrop-filter: blur(8px); background: rgba(220,220,220,0.32); border-radius: 0.7em; padding: 0.18em 0.95em 0.18em 0.95em; box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);">
-         <span id="giveFeedbackText" style="text-decoration:underline dotted; opacity:0.9; cursor:pointer; background: none; color: #000;">Give Feedback</span>
+       <span style="display: inline-block; backdrop-filter: blur(8px); background: rgba(40,40,40,0.32); border-radius: 0.7em; padding: 0.18em 0.95em 0.18em 0.95em; box-shadow: 0 2px 12px 0 rgba(255,255,255,0.10);">
+         <span id="giveFeedbackText" style="text-decoration:underline dotted; opacity:0.9; cursor:pointer; background: none; color: #fff;">Give Feedback</span>
        </span>
     </div>
   </div>
@@ -209,7 +209,7 @@
         svg.setAttribute("aria-hidden", "true");
         let path = document.createElementNS("http://www.w3.org/2000/svg", "path");
         path.setAttribute("d", "M6 14L14 6M14 6H7.5M14 6V12.5");
-        path.setAttribute("stroke", "#fff");
+        path.setAttribute("stroke", "#000");
         path.setAttribute("stroke-width", "2");
         path.setAttribute("stroke-linecap", "round");
         path.setAttribute("stroke-linejoin", "round");
@@ -229,8 +229,8 @@
 
 <style>
   ::selection {
-    background: #000;
-    color: #fff;
+    background: #fff;
+    color: #000;
   }
 </style>
 
@@ -257,9 +257,9 @@
   }
   .footer-blur-line-box {
     padding: 0.4em 1.2em 0.4em 1.2em;
-    background: rgba(220,220,220,0.32);
+    background: rgba(40,40,40,0.32);
     border-radius: 12px;
-    border: 1.5px solid rgba(60,60,60,0.12);
+    border: 1.5px solid rgba(200,200,200,0.12);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     margin: 0 auto;
@@ -271,7 +271,7 @@
     align-items: center;
   }
   .footer-blur-line {
-    color: #222;
+    color: #fff;
     font-family: 'BitmapFont', 'inter', Arial, sans-serif;
     font-size: 0.95em;
     letter-spacing: 0.04em;
@@ -288,7 +288,7 @@
     text-decoration: none;
     border-bottom: 2px solid transparent;
     transition: border-color 0.2s;
-    color: #222;
+    color: #fff;
     font-family: inherit;
     font-size: inherit;
     margin: 0 0.2em;
@@ -296,8 +296,8 @@
     border-radius: 3px;
   }
   .footer-link:hover {
-    border-bottom: 2px dotted #222;
-    background: rgba(0,0,0,0.04);
+    border-bottom: 2px dotted #fff;
+    background: rgba(255,255,255,0.04);
   }
   .footer-links-group {
     display: flex;
@@ -308,7 +308,7 @@
     width: fit-content;
   }
 </style>
-  <div style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #222; font-size: 0.85rem; font-family: 'BitmapFont', 'inter', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.5rem; line-height: 1.7;">
+  <div style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #fff; font-size: 0.85rem; font-family: 'BitmapFont', 'inter', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.5rem; line-height: 1.7;">
   <div class="footer-blur-box-separate">
     <div class="footer-blur-line-box">
       <div class="footer-blur-line">
@@ -336,16 +336,15 @@
     <div class="footer-blur-line-box">
       <div class="footer-blur-line footer-links-group">
         <span class="footer-link" onclick="window.location.href='Main.html'">Home</span>
-        <span style="color:#bbb;">|</span>
+        <span style="color:#eee;">|</span>
         <span class="footer-link" onclick="window.location.href='detail.html'">About</span>
-        <span style="color:#bbb;">|</span>
+        <span style="color:#eee;">|</span>
         <span class="footer-link" onclick="window.location.href='detail.html'">Skills</span>
-        <span style="color:#bbb;">|</span>
+        <span style="color:#eee;">|</span>
         <span class="footer-link" onclick="window.location.href='detail.html'">Certificates</span>
-        <span style="color:#bbb;">|</span>
+        <span style="color:#eee;">|</span>
         <span class="footer-link" onclick="window.location.href='detail.html'">Projects</span>
       </div>
     </div>
   </div>
 </div>
-

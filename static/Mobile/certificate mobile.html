@@ -11,7 +11,7 @@
   <style>
     ::selection {
       background: #00000000;
-      color: #000000;
+      color: #000;
     }
     @font-face {
       font-family: 'BitmapFont';
@@ -20,7 +20,7 @@
       font-style: normal;
     }
     body {
-      background: #00000000;
+      background: #000;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -28,17 +28,17 @@
       align-items: flex-start;
       margin: 0;
       font-family: 'BitmapFont', Arial, sans-serif;
-      color: #000;
+      color: #fff;
     }
     .cert-page-title {
       font-family: 'Krona One', Arial, sans-serif;
       font-size: 3.2rem;
-      color: #000;
+      color: #fff;
       margin-top: 56px;
       margin-bottom: 44px;
       letter-spacing: 0.04em;
       text-align: center;
-      text-shadow: 0 2px 12px #0002, 0 0 2px #fff2;
+      text-shadow: 0 2px 12px #fff2, 0 0 2px #0002;
       width: 100vw;
     }
     .cert-scroll-wrapper {
@@ -53,7 +53,7 @@
       display: flex;
       gap: 48px;
       transition: scroll-left 0.3s;
-      color: #000;
+      color: #fff;
       scrollbar-width: none;
       -ms-overflow-style: none;
       overflow-x: auto;
@@ -63,10 +63,10 @@
       display: none;
     }
     .white-box {
-      background: rgba(255, 255, 255, 0);
-      border: 3px solid #000;           /* 03 border color black */
+      background: rgba(255, 255, 255, 0.12);
+      border: 3px solid #fff;           /* 03 border color white */
       border-radius: 65px;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0);
+      box-shadow: 0 4px 24px rgba(255, 255, 255, 0.08);
       width: 400px;
       height: 700px;
       display: flex;
@@ -80,13 +80,13 @@
       flex-shrink: 0;
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
-      color: #000;
+      color: #fff;
       cursor: pointer;
     }
     .white-box:hover {
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0);
-      background: rgba(255, 255, 255, 0);
-      border-color: #000;
+      box-shadow: 0 8px 32px rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.18);
+      border-color: #fff;
       filter: brightness(1.08);
     }
     .white-box img {
@@ -94,22 +94,23 @@
       max-height: 260px;
       object-fit: contain;
       border-radius: 55px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0);
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.08);
       margin-top: 32px;
       margin-bottom: 24px;
+      background: #fff;
     }
     .cert-title {
       font-family: 'Krona One', 'BitmapFont', Arial, sans-serif;
       font-size: 1.35rem;
       font-weight: bold;
-      color: #000;
+      color: #fff;
       margin-bottom: 12px;
       text-align: center;
       letter-spacing: 0.01em;
     }
     .cert-desc {
       font-size: 1.08rem;
-      color: #000;
+      color: #fff;
       margin-bottom: 16px;
       text-align: center;
       padding: 0 18px;
@@ -117,7 +118,7 @@
     }
     .cert-issued {
       font-size: 1.03rem;
-      color: #000;
+      color: #fff;
       text-align: center;
       margin-top: auto;
       margin-bottom: 0;
@@ -130,7 +131,7 @@
       top: 50%;
       transform: translateY(-50%);
       z-index: 10;
-      background: rgba(255,255,255,0.85);
+      background: rgba(0,0,0,0.85);
       border: none;
       border-radius: 50%;
       width: 44px;
@@ -139,8 +140,8 @@
       align-items: center;
       justify-content: center;
       font-size: 2rem;
-      color: #222;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.08);
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
       opacity: 0.85;
@@ -149,7 +150,7 @@
       -webkit-user-select: none;
     }
     .scroll-arrow:active {
-      background: #eee;
+      background: #fff;
       color: #000;
     }
     .scroll-arrow.left {
@@ -199,13 +200,13 @@
         overflow-x: auto;
         overflow-y: hidden;
         scroll-behavior: smooth;
-        color: #000;
+        color: #fff;
       }
       .white-box {
         width: 88vw;
         max-width: 400px;
         min-width: 260px;
-        color: #000;
+        color: #fff;
         border-radius: 55px;
         height: 520px;
       }
@@ -222,13 +223,13 @@
       .container {
         gap: 16px;
         padding: 0 8px;
-        color: #000;
+        color: #fff;
       }
       .white-box {
         width: 98vw;
         max-width: 350px;
         min-width: 180px;
-        color: #000;
+        color: #fff;
         border-radius: 38px;
         height: 420px;
         padding-bottom: 16px;
@@ -284,7 +285,7 @@
       font-size: 160px;
       font-weight: 900;
       color: transparent;
-      -webkit-text-stroke: 3px #000000; /* 03 border color black */
+      -webkit-text-stroke: 3px #fff; /* 03 border color white */
       opacity: 0.3;
       margin: 0;
       padding: 0 10px 0 0;

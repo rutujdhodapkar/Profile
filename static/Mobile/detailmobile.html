@@ -1,31 +1,736 @@
-
-
-</style>
- <div class="outer-padding-8px">
-  <div class="frame-stack-container" style="position:relative; min-height:100dvh; height:100dvh;">
-    <!-- Frame 1: info.html -->
-    <div class="frame-box" style="height: 900px; margin-bottom: 2vh;">
-      <iframe src="mobile.html" title="Info" tabindex="-1" style="width:100vw; height:100%; border:none;"></iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'BitmapFont';
+      src: url('BItmapFont.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      font-family: 'BitmapFont', monospace, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background-color: #000;
+      color: #fff;
+    }
+    #startup-blur-overlay {
+      position: fixed;
+      z-index: 99999;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: background 1.2s cubic-bezier(.4,0,.2,1), backdrop-filter 1.2s cubic-bezier(.4,0,.2,1);
+      pointer-events: none;
+    }
+    /* Layout for left box and main content */
+    .main-layout {
+      display: flex;
+      flex-direction: row;
+      min-height: 100vh;
+      width: 100vw;
+      background: #000;
+    }
+    .left-vertical-black-box {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 70px;
+      height: 100vh;
+      background: #0000;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 10000;
+      border-right: 1px solid #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      color: #fff;
+      pointer-events: none;
+    }
+    .left-vertical-black-box-white-line {
+      position: fixed;
+      left: 35px;
+      top: 57vh;
+      width: 2.5px;
+      height: 50vh;
+      background: #fff;
+      border-radius: 2px;
+      z-index: 10001;
+      pointer-events: none;
+    }
+    .left-vertical-black-box-name {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'BitmapFont', Arial, sans-serif;
+      font-size: 2.1rem;
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 0.14em;
+      margin-top: 24px;
+      margin-bottom: 0;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.97;
+      text-shadow: 0 2px 8px #0008, 0 0 2px #fff2;
+    }
+    .main-content {
+      margin-left: 70px;
+      width: calc(100vw - 70px);
+      min-height: 100vh;
+      background: #000;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    #rectiangleNavbar {
+      position: fixed;
+      top: 25px;
+      left: calc(50% + 35px);
+      transform: translateX(-50%);
+      width: fit-content;
+      padding: 9px 20px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 200px;
+      z-index: 9999;
+      transition: background-color 0.3s;
+      font-family: 'Inter', monospace, sans-serif !important;
+      box-shadow: 0 6px 32px 0 rgba(0,0,0,0.18), 0 1.5px 8px 0 rgba(0,0,0,0.10);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
+    }
+    #rectiangleNavbar:hover {
+      background: rgba(255,255,255,0.16) !important;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    @media only screen and (max-width: 768px) {
+      #rectiangleNavbar {
+        display: none;
+      }
+      .main-layout {
+        flex-direction: column;
+      }
+      .left-vertical-black-box, .left-vertical-black-box-white-line {
+        display: none !important;
+      }
+      .main-content {
+        margin-left: 0;
+        width: 100vw;
+      }
+    }
+    #rectiangleNavbar .page-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+      position: relative;
+    }
+    #rectiangleNavbar .page-nav li {
+      cursor: pointer;
+      padding: 5px 12px;
+      transition: background-color 0.3s, color 0.3s, transform 0.3s;
+      border-radius: 50px;
+      position: relative;
+      font-family: 'Inter', monospace, sans-serif !important;
+      color: #fff !important;
+      background: transparent;
+    }
+    #rectiangleNavbar .page-nav li.active {
+      background-color: #fff !important;
+      color: #000 !important;
+    }
+    #rectiangleNavbar .page-nav li:hover:not(.active) {
+      background-color: rgba(255,255,255,0.18) !important;
+      color: #fff !important;
+      transform: scale(1.1);
+    }
+    .highlight {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: #fff !important;
+      border-radius: 50px;
+      z-index: -1;
+      transition: left 0.3s, width 0.3s, height 0.3s, background-color 0.3s;
+      pointer-events: none;
+    }
+    #rectiangleNavbar a {
+      text-decoration: none;
+      color: #fff !important;
+      font-family: 'Inter', monospace, sans-serif !important;
+    }
+    .scroll-anchor {
+      display: block;
+      position: relative;
+      visibility: hidden;
+      height: 0;
+      margin: 0;
+      padding: 0;
+    }
+    ::selection {
+      background: #fff;
+      color: #000;
+    }
+    #ai-fullscreen-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      z-index: 9999;
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease;
+      justify-content: center;
+      align-items: center;
+    }
+    #ai-text {
+      color: #fff;
+      font-family: 'BitmapFont', sans-serif;
+      font-weight: 100;
+      font-size: 3rem;
+      text-align: center;
+      max-width: 80%;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    /* Custom scrollbar right */
+    #right-vertical-scrollbar-container {
+      position: fixed;
+      right: 35px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 100px;
+      width: 24px;
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      color: #fff;
+    }
+    #right-vertical-scrollbar-track {
+      position: relative;
+      width: 2px;
+      height: 100px;
+      background: #fff;
+      border-radius: 2px;
+      box-shadow: 0 0 6px #0004;
+    }
+    #right-vertical-scrollbar-thumb {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border: 2.5px solid #000;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px #0004, 0 0 2px #fff2;
+      transition: background 0.18s;
+      top: 0;
+      cursor: pointer;
+      pointer-events: auto;
+      touch-action: none;
+      user-select: none;
+    }
+    /* Hide scrollbars */
+    ::-webkit-scrollbar { display: none; }
+    html { scrollbar-width: none; background: #000; color: #fff; }
+  </style>
+</head>
+<body>
+  <div id="startup-blur-overlay"></div>
+  <div class="main-layout">
+    <!-- Left vertical box -->
+    <div class="left-vertical-black-box">
+      <div class="left-vertical-black-box-name" data-github-name></div>
     </div>
-    <div class="frame-box" style="height: 900px; margin-bottom: 2vh;">
-      <iframe src="info mobile.html" title="Info" tabindex="-1" style="width:100vw; height:100%; border:none;"></iframe>
+    <div class="left-vertical-black-box-white-line"></div>
+    <!-- Main content area -->
+    <div class="main-content">
+      <!-- Navigation -->
+      <div id="rectiangleNavbar" class="rectriangle">
+        <nav class="page-nav">
+          <ul>
+            <li data-section="home"><a href="#home" id="home-nav-link"><strong>Home</strong></a></li>
+            <li data-section="about"><a href="#about"><strong>About</strong></a></li>
+            <li data-section="skills"><a href="#skills"><strong>Skills</strong></a></li>
+            <li data-section="certificates"><a href="#certificates"><strong>Certificates</strong></a></li>
+            <li data-section="projects"><a href="#projects"><strong>Projects</strong></a></li>
+            <li data-section="contact"><a href="#contact" id="contact-nav-link"><strong>Contact</strong></a></li>
+            <div class="highlight"></div>
+          </ul>
+        </nav>
+      </div>
+      <!-- New full-screen overlay for AI text -->
+      <div id="ai-fullscreen-overlay">
+        <div id="ai-text">Wanna Build Big & Dangerous Artificial Intelligence Systems</div>
+      </div>
+      <!-- Main content iframes and sections -->
+      <iframe src="info mobile.html" style="width:100%; height:650px; border:none; overflow:hidden; color:#fff; background:#000;" scrolling="no"></iframe>
+      <style>
+        .edge-tech-line {
+          font-family:'BitmapFont', sans-serif;
+          width: 100%;
+          text-align: center;
+          font-size: 1em;
+          font-weight: 500;
+          margin: 32px 0 18px 0;
+          letter-spacing: 1px;
+          color: #fff;
+        }
+      </style>
+      <div class="edge-tech-line">
+        I don't just code — I build sht that pushes the edge of tech*.
+      </div>
+      <br>
+      <br>
+      <style>
+        @font-face {
+          font-family: 'OutlineFont';
+          src: url('OutlineFont-Regular.ttf') format('truetype');
+        }
+        .scroll-move-text-container {
+          position: relative;
+          width: 100vw;
+          height: 320px;
+          overflow: hidden;
+          margin: 40px 0 30px 0;
+          z-index: 10;
+          pointer-events: none;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+          justify-content: center;
+          color: #fff;
+        }
+        .scroll-move-text {
+          position: absolute;
+          left: 0;
+          white-space: nowrap;
+          font-size: 4.5rem;
+          font-family: 'OutlineFont', sans-serif;
+          font-weight: 600;
+          color: transparent;
+         -webkit-text-stroke: 0.5px #fff;
+          text-shadow: none;
+          transition: color 0.2s;
+          user-select: none;
+          pointer-events: none;
+          width: 100vw;
+        }
+        .scroll-move-text .intern-text {
+          font-family: 'Inter', sans-serif !important;
+          color: #fff !important;
+          -webkit-text-stroke: 0 !important;
+          text-shadow: none !important;
+          font-weight: 700;
+          letter-spacing: 0.01em;
+          background: none;
+          padding: 0;
+          display: inline;
+        }
+        .scroll-move-text.line1 { top: 20%; }
+        .scroll-move-text.line2 { top: 50%; }
+        .scroll-move-text.line3 { top: 80%; }
+        @media (max-width: 700px) {
+          .scroll-move-text {
+            font-size: 2.2rem;
+          }
+          .scroll-move-text-container {
+            height: 160px;
+          }
+          .scroll-move-text.line1 { top: 20%; }
+          .scroll-move-text.line2 { top: 50%; }
+          .scroll-move-text.line3 { top: 80%; }
+        }
+      </style>
+      <div class="scroll-move-text-container">
+        <div class="scroll-move-text line1" id="scrollMoveText1">
+          Building <span class="intern-text">Artificial Intelligence</span> Systems
+        </div>
+        <div class="scroll-move-text line2" id="scrollMoveText2">
+          To Help <span class="intern-text">Next Generation</span> of <span class="intern-text">Humanity</span>
+        </div>
+        <div class="scroll-move-text line3" id="scrollMoveText3">
+          With <span class="intern-text">Creativity</span> and <span class="intern-text">Precision</span>
+        </div>
+      </div>
+      <script>
+        // 1st line: right to left, 2nd: left to right, 3rd: right to left
+        (function() {
+          const text1 = document.getElementById('scrollMoveText1');
+          const text2 = document.getElementById('scrollMoveText2');
+          const text3 = document.getElementById('scrollMoveText3');
+          const container = document.querySelector('.scroll-move-text-container');
+          function updateTextPosition() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+            let fastProgress = Math.min(progress * 2.5, 1);
+            const text1Width = text1.offsetWidth;
+            const maxTranslate1 = container.offsetWidth + text1Width + 40;
+            const translateX1 = maxTranslate1 * (1 - fastProgress) - text1Width;
+            text1.style.transform = `translateY(-50%) translateX(${translateX1}px)`;
+            const text2Width = text2.offsetWidth;
+            const maxTranslate2 = container.offsetWidth + text2Width + 40;
+            const translateX2 = -text2Width + maxTranslate2 * fastProgress;
+            text2.style.transform = `translateY(-50%) translateX(${translateX2}px)`;
+            const text3Width = text3.offsetWidth;
+            const maxTranslate3 = container.offsetWidth + text3Width + 40;
+            const translateX3 = maxTranslate3 * (1 - fastProgress) - text3Width;
+            text3.style.transform = `translateY(-50%) translateX(${translateX3}px)`;
+          }
+          window.addEventListener('scroll', updateTextPosition);
+          window.addEventListener('resize', updateTextPosition);
+          setTimeout(updateTextPosition, 100);
+        })();
+      </script>
+      <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#fff; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
+      <iframe src="skill mobile.html" style="width:100%; height:350px; border:none; overflow:hidden; color:#fff; background:#000;" scrolling="no"></iframe>
+      <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#fff; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
+      <iframe src="Education mobile.html" style="width:100%; height:350px; border:none; overflow:hidden; color:#fff; background:#000;" scrolling="no"></iframe>
+      <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#fff; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
+      <iframe src="certificate mobile.html" style="width:100%; height:700px; border:none; overflow:hidden; color:#fff; background:#000;" scrolling="no"></iframe>
+      <style>
+        .edge-tech-line {
+          font-family:'BitmapFont', sans-serif;
+          width: 100%;
+          text-align: center;
+          font-size: 1em;
+          font-weight: 500;
+          margin: 32px 0 18px 0;
+          letter-spacing: 1px;
+          color: #fff;
+        }
+      </style>
+      <div class="edge-tech-line">
+        I love these two certificates more than others.
+      </div>
+      <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#fff; font-family: 'BitmapFont', 'inter', sans-serif;">......</div>
+      <iframe src="project mobile.html" style="width:100%; height:1200px; border:none; overflow:hidden; color:#fff; background:#000;" scrolling="no"></iframe>
     </div>
-    <!-- Frame 2: skill mobile.html and skill section mobile.html (stacked vertically, NO line between) -->
-    <div class="frame-box double-frame" style="display: flex; flex-direction: column; gap: 0; padding: 0; height: 700px; margin-bottom: 2vh;">
-      <iframe src="skill mobile.html" title="Skill Squares" tabindex="-1" style="width:100vw; height:60%; flex: 0 0 60%; border:none;"></iframe>
-      <iframe src="Education mobile.html" title="Skill Circles" tabindex="-1" style="width:100vw; height:40%; flex: 0 0 40%; border:none;"></iframe>
-    </div>
-    <!-- Frame 3: certificat.html -->
-    <div class="frame-box" style="height: 750px; margin-bottom: 2vh;">
-      <iframe src="certificate mobile.html" title="Certificates" tabindex="-1" style="width:100vw; height:100%; border:none;"></iframe>
-    </div>
-    <!-- Frame 4: project mobile.html -->
-    <div class="frame-box" style="height: 750px; margin-bottom: 2vh;">
-      <iframe src="project mobile.html" title="Projects" tabindex="-1" style="width:100vw; height:100%; border:none;"></iframe>
-    </div>
-    <!-- Frame 5: contact.html (added as last frame) -->
-    <div class="frame-box" style="height: 750px;">
-      <iframe src="contact.html" title="Contact" tabindex="-1" style="width:100vw; height:100%; border:none;"></iframe>
+    <!-- End main-content -->
+    <!-- Right custom scrollbar -->
+    <div id="right-vertical-scrollbar-container">
+      <div id="right-vertical-scrollbar-track">
+        <div id="right-vertical-scrollbar-thumb"></div>
+      </div>
     </div>
   </div>
-</div>
+  <!-- End main-layout -->
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        const overlay = document.getElementById('startup-blur-overlay');
+        if (overlay) {
+          overlay.style.background = 'rgba(0,0,0,0)';
+          overlay.style.backdropFilter = 'blur(0px)';
+          overlay.style.webkitBackdropFilter = 'blur(0px)';
+          setTimeout(function() {
+            overlay.parentNode && overlay.parentNode.removeChild(overlay);
+          }, 1300);
+        }
+      }, 100);
+    });
+
+    // GitHub name fetch
+    fetch('https://api.github.com/users/rutujdhodapkar')
+      .then(response => response.json())
+      .then(data => {
+        const name = data.name || data.login || "Unknown";
+        document.querySelector('[data-github-name]').textContent = name;
+      })
+      .catch(() => {
+        document.querySelector('[data-github-name]').textContent = "Unknown";
+      });
+
+    // Navbar and scroll logic
+    document.addEventListener('DOMContentLoaded', function() {
+      var homeNavLink = document.getElementById('home-nav-link');
+      if (homeNavLink) {
+        homeNavLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.location.href = "Main.html";
+        });
+      }
+      var contactNavLink = document.getElementById('contact-nav-link');
+      if (contactNavLink) {
+        contactNavLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.location.href = "contact.html";
+        });
+      }
+      if (window.innerWidth > 768) {
+        const navbar = document.getElementById('rectiangleNavbar');
+        const navItems = document.querySelectorAll("#rectiangleNavbar .page-nav li");
+        const highlight = document.querySelector("#rectiangleNavbar .highlight");
+        const sectionMap = [
+          { id: "home", label: "Home" },
+          { id: "about", label: "About" },
+          { id: "skills", label: "Skills" },
+          { id: "certificates", label: "Certificates" },
+          { id: "projects", label: "Projects" },
+          { id: "contact", label: "Contact" }
+        ];
+        function insertScrollAnchors() {
+          let homeAnchor = document.createElement('div');
+          homeAnchor.className = 'scroll-anchor';
+          homeAnchor.id = 'home';
+          document.body.insertBefore(homeAnchor, document.body.firstChild);
+          let aboutAnchor = document.createElement('div');
+          aboutAnchor.className = 'scroll-anchor';
+          aboutAnchor.id = 'about';
+          let firstIframe = document.querySelector('iframe[src="info.html"]');
+          if (firstIframe) document.body.insertBefore(aboutAnchor, firstIframe);
+          let skillsAnchor = document.createElement('div');
+          skillsAnchor.className = 'scroll-anchor';
+          skillsAnchor.id = 'skills';
+          let skillIframe = document.querySelector('iframe[src="skill.html"]');
+          if (skillIframe) document.body.insertBefore(skillsAnchor, skillIframe);
+          let certAnchor = document.createElement('div');
+          certAnchor.className = 'scroll-anchor';
+          certAnchor.id = 'certificates';
+          let certIframe = document.querySelector('iframe[src="certificate.html"]');
+          if (certIframe) document.body.insertBefore(certAnchor, certIframe);
+          let projAnchor = document.createElement('div');
+          projAnchor.className = 'scroll-anchor';
+          projAnchor.id = 'projects';
+          let projIframe = document.querySelector('iframe[src="project section.html"]');
+          if (projIframe) document.body.insertBefore(projAnchor, projIframe);
+          let contactAnchor = document.createElement('div');
+          contactAnchor.className = 'scroll-anchor';
+          contactAnchor.id = 'contact';
+          document.body.appendChild(contactAnchor);
+        }
+        insertScrollAnchors();
+        const sections = sectionMap.map(s => document.getElementById(s.id));
+        navItems.forEach(item => {
+          const section = item.getAttribute("data-section");
+          if (section === "home" || section === "contact") return;
+          item.addEventListener("click", function(event) {
+            event.preventDefault();
+            const targetId = this.getAttribute("data-section");
+            const targetAnchor = document.getElementById(targetId);
+            if (targetAnchor) {
+              let sectionIndex = sectionMap.findIndex(s => s.id === targetId);
+              let nextAnchor = null;
+              if (sectionIndex !== -1 && sectionIndex + 1 < sectionMap.length) {
+                nextAnchor = document.getElementById(sectionMap[sectionIndex + 1].id);
+              }
+              let sectionTop = targetAnchor.getBoundingClientRect().top + window.scrollY;
+              let sectionBottom = nextAnchor
+                ? nextAnchor.getBoundingClientRect().top + window.scrollY
+                : document.body.scrollHeight;
+              let sectionHeight = sectionBottom - sectionTop;
+              let scrollTo = sectionTop - document.getElementById('rectiangleNavbar').offsetHeight - 20;
+              let viewportHeight = window.innerHeight;
+              if (sectionHeight < viewportHeight) {
+                scrollTo = sectionTop - document.getElementById('rectiangleNavbar').offsetHeight - 20 - (viewportHeight - sectionHeight) / 2;
+                if (scrollTo < 0) scrollTo = 0;
+              }
+              window.scrollTo({ top: scrollTo, behavior: "smooth" });
+            }
+          });
+        });
+        function highlightNavOnScroll() {
+          let currentSection = sectionMap[0].id;
+          let maxVisible = 0;
+          let maxSection = currentSection;
+          for (let i = 0; i < sections.length; i++) {
+            const section = sections[i];
+            if (!section) continue;
+            let sectionTop = section.getBoundingClientRect().top + window.scrollY;
+            let nextAnchor = (i + 1 < sections.length) ? sections[i + 1] : null;
+            let sectionBottom = nextAnchor
+              ? nextAnchor.getBoundingClientRect().top + window.scrollY
+              : document.body.scrollHeight;
+            let sectionHeight = sectionBottom - sectionTop;
+            let viewportTop = window.scrollY;
+            let viewportBottom = window.scrollY + window.innerHeight;
+            let visibleTop = Math.max(sectionTop, viewportTop);
+            let visibleBottom = Math.min(sectionBottom, viewportBottom);
+            let visibleHeight = Math.max(0, visibleBottom - visibleTop);
+            let visibleRatio = visibleHeight / window.innerHeight;
+            if (visibleRatio > 0.5 && visibleRatio > maxVisible) {
+              maxVisible = visibleRatio;
+              maxSection = section.id;
+            }
+          }
+          navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('data-section') === maxSection) {
+              item.classList.add('active');
+            }
+          });
+          updateHighlight();
+        }
+        window.addEventListener('scroll', highlightNavOnScroll);
+        window.addEventListener('resize', highlightNavOnScroll);
+        function updateHighlight() {
+          const activeItem = document.querySelector("#rectiangleNavbar .page-nav li.active");
+          if (activeItem) {
+            const { offsetLeft, offsetWidth, offsetHeight } = activeItem;
+            highlight.style.left = offsetLeft + "px";
+            highlight.style.width = offsetWidth + "px";
+            highlight.style.height = offsetHeight + "px";
+            highlight.style.backgroundColor = "#fff";
+          }
+        }
+        navItems.forEach(item => {
+          item.addEventListener('mouseenter', function() {
+            if (this.classList.contains('active')) {
+              highlight.style.backgroundColor = "#fff";
+            }
+          });
+          item.addEventListener('mouseleave', function() {
+            if (this.classList.contains('active')) {
+              highlight.style.backgroundColor = "#fff";
+            }
+          });
+        });
+        highlightNavOnScroll();
+        setTimeout(function() {
+          var aboutAnchor = document.getElementById('about');
+          if (aboutAnchor) {
+            let sectionTop = aboutAnchor.getBoundingClientRect().top + window.scrollY;
+            let nextAnchor = document.getElementById('skills');
+            let sectionBottom = nextAnchor
+              ? nextAnchor.getBoundingClientRect().top + window.scrollY
+              : document.body.scrollHeight;
+            let sectionHeight = sectionBottom - sectionTop;
+            let scrollTo = sectionTop - document.getElementById('rectiangleNavbar').offsetHeight - 20;
+            let viewportHeight = window.innerHeight;
+            if (sectionHeight < viewportHeight) {
+              scrollTo = sectionTop - document.getElementById('rectiangleNavbar').offsetHeight - 20 - (viewportHeight - sectionHeight) / 2;
+              if (scrollTo < 0) scrollTo = 0;
+            }
+            window.scrollTo({ top: scrollTo, behavior: "auto" });
+          }
+        }, 0);
+      }
+      window.addEventListener('scroll', function() {
+        const overlay = document.getElementById('ai-fullscreen-overlay');
+        const aiText = document.getElementById('ai-text');
+        const scrollProgress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+        if ((window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 2)) {
+          overlay.style.display = 'flex';
+          setTimeout(() => {
+            overlay.style.opacity = '1';
+          }, 100);
+          setTimeout(() => {
+            aiText.style.opacity = scrollProgress.toFixed(2);
+          }, 500);
+          setTimeout(() => {
+            window.location.href = "contact.html";
+          }, 2000);
+        }
+      });
+    });
+    window.addEventListener('scroll', function() {
+      if (window.scrollY <= 0) {
+        window.location.href = "Main.html";
+      }
+    });
+    // Custom vertical scrollbar logic with draggable thumb
+    (function() {
+      const track = document.getElementById('right-vertical-scrollbar-track');
+      const thumb = document.getElementById('right-vertical-scrollbar-thumb');
+      const trackHeight = 100;
+      const thumbHeight = 18;
+      let isDragging = false;
+      let dragStartY = 0;
+      let thumbStartTop = 0;
+      function getMaxThumbTop() {
+        return trackHeight - thumbHeight;
+      }
+      function getScrollMax() {
+        return document.documentElement.scrollHeight - window.innerHeight;
+      }
+      function updateThumbPosition() {
+        const docHeight = getScrollMax();
+        const scrollY = window.scrollY;
+        let progress = docHeight > 0 ? Math.min(Math.max(scrollY / docHeight, 0), 1) : 0;
+        const maxThumbTop = getMaxThumbTop();
+        const thumbTop = progress * maxThumbTop;
+        thumb.style.top = `${thumbTop}px`;
+      }
+      function scrollToThumbPosition(thumbTop) {
+        const maxThumbTop = getMaxThumbTop();
+        let progress = maxThumbTop > 0 ? Math.min(Math.max(thumbTop / maxThumbTop, 0), 1) : 0;
+        const docHeight = getScrollMax();
+        const targetScroll = progress * docHeight;
+        window.scrollTo({ top: targetScroll, behavior: "auto" });
+      }
+      thumb.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        dragStartY = e.clientY;
+        thumbStartTop = parseFloat(thumb.style.top) || 0;
+        document.body.style.userSelect = "none";
+      });
+      document.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        const deltaY = e.clientY - dragStartY;
+        let newTop = thumbStartTop + deltaY;
+        const maxThumbTop = getMaxThumbTop();
+        newTop = Math.max(0, Math.min(newTop, maxThumbTop));
+        thumb.style.top = `${newTop}px`;
+        scrollToThumbPosition(newTop);
+      });
+      document.addEventListener('mouseup', function() {
+        if (isDragging) {
+          isDragging = false;
+          document.body.style.userSelect = "";
+        }
+      });
+      thumb.addEventListener('touchstart', function(e) {
+        if (e.touches.length !== 1) return;
+        isDragging = true;
+        dragStartY = e.touches[0].clientY;
+        thumbStartTop = parseFloat(thumb.style.top) || 0;
+      }, {passive: false});
+      document.addEventListener('touchmove', function(e) {
+        if (!isDragging || e.touches.length !== 1) return;
+        const deltaY = e.touches[0].clientY - dragStartY;
+        let newTop = thumbStartTop + deltaY;
+        const maxThumbTop = getMaxThumbTop();
+        newTop = Math.max(0, Math.min(newTop, maxThumbTop));
+        thumb.style.top = `${newTop}px`;
+        scrollToThumbPosition(newTop);
+        e.preventDefault();
+      }, {passive: false});
+      document.addEventListener('touchend', function(e) {
+        if (isDragging) {
+          isDragging = false;
+        }
+      });
+      window.addEventListener('scroll', function() {
+        if (!isDragging) updateThumbPosition();
+      });
+      window.addEventListener('resize', function() {
+        if (!isDragging) updateThumbPosition();
+      });
+      updateThumbPosition();
+    })();
+    document.documentElement.style.scrollBehavior = "smooth";
+  </script>
+</body>
+</html>
