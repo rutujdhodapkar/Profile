@@ -5,6 +5,7 @@
     overflow: hidden;
     background: #000;
   }
+
   .rain-dot {
     position: absolute;
     width: 8px;
@@ -13,124 +14,88 @@
     border-radius: 50%;
     pointer-events: none;
     opacity: 0.13;
-    box-shadow: none;
-    z-index: 1;
-    /* Remove transitions for less GPU/CPU usage */
-    transition: none;
-    will-change: opacity, background;
   }
+
   .rain-dot.on {
     opacity: 1;
-    background: #fff;
-    box-shadow: none;
   }
 </style>
+
 <script>
-  // Hardware-friendly: minimize DOM nodes, avoid transitions, batch DOM updates
-
-  // Responsive spacing and dot size based on screen width, but keep density same
-  function getDotConfig() {
-    const w = window.innerWidth;
-    if (w < 500) {
-      return { SPACING_X: 10, SPACING_Y: 10, DOT_SIZE: 8, MIN_COLS: 20, MIN_ROWS: 32 };
-    } else if (w < 900) {
-      return { SPACING_X: 10, SPACING_Y: 10, DOT_SIZE: 8, MIN_COLS: 24, MIN_ROWS: 28 };
-    } else if (w < 1600) {
-      return { SPACING_X: 12, SPACING_Y: 12, DOT_SIZE: 8, MIN_COLS: 28, MIN_ROWS: 28 };
-    } else {
-      return { SPACING_X: 8, SPACING_Y: 8, DOT_SIZE: 7, MIN_COLS: 40, MIN_ROWS: 40 };
-    }
-  }
-
   let rainDots = [];
   let dotPositions = [];
-  let cols = 0, rows = 0;
-  let SPACING_X = 12, SPACING_Y = 12, DOT_SIZE = 8, MIN_COLS = 28, MIN_ROWS = 28;
+  let lastStates = [];
+  let t = 0;
+
+  const SPACING_X = 12, SPACING_Y = 12, DOT_SIZE = 8;
+  const MIN_COLS = 28, MIN_ROWS = 28;
 
   function placeGridDots() {
-    // Remove old dots
-    for (const dot of rainDots) dot.remove();
+    rainDots.forEach(dot => dot.remove());
     rainDots = [];
     dotPositions = [];
-
-    // Get config for current screen size
-    const config = getDotConfig();
-    SPACING_X = config.SPACING_X;
-    SPACING_Y = config.SPACING_Y;
-    DOT_SIZE = config.DOT_SIZE;
-    MIN_COLS = config.MIN_COLS;
-    MIN_ROWS = config.MIN_ROWS;
 
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    cols = Math.floor((width - DOT_SIZE) / SPACING_X) + 1;
-    rows = Math.floor((height - DOT_SIZE) / SPACING_Y) + 1;
-    if (cols < MIN_COLS) cols = MIN_COLS;
-    if (rows < MIN_ROWS) rows = MIN_ROWS;
+    let cols = Math.max(Math.floor((width - DOT_SIZE) / SPACING_X) + 1, MIN_COLS);
+    let rows = Math.max(Math.floor((height - DOT_SIZE) / SPACING_Y) + 1, MIN_ROWS);
 
-    // Center the grid
     const gridWidth = (cols - 1) * SPACING_X + DOT_SIZE;
     const gridHeight = (rows - 1) * SPACING_Y + DOT_SIZE;
     const offsetX = Math.max(0, (width - gridWidth) / 2);
     const offsetY = Math.max(0, (height - gridHeight) / 2);
 
-    // Use DocumentFragment for batch DOM insertion
     const frag = document.createDocumentFragment();
 
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
         const x = offsetX + col * SPACING_X;
         const y = offsetY + row * SPACING_Y;
+
         const dot = document.createElement('div');
         dot.className = 'rain-dot';
         dot.style.left = x + 'px';
         dot.style.top = y + 'px';
         dot.style.width = DOT_SIZE + 'px';
         dot.style.height = DOT_SIZE + 'px';
+
         frag.appendChild(dot);
         rainDots.push(dot);
         dotPositions.push({ row, col });
       }
     }
+
     document.body.appendChild(frag);
+    lastStates = new Array(rainDots.length).fill(false);
   }
 
-  // Hardware-friendly animation: lower frame rate, only update if state changes, batch DOM updates
-  let t = 0;
-  let lastStates = [];
   function animatePattern() {
-    if (!rainDots.length) return;
-
-    // Lower frame rate: ~15fps (67ms)
     setTimeout(() => {
-      // Batch DOM updates: only update if state changes
       for (let i = 0; i < rainDots.length; i++) {
         const { row, col } = dotPositions[i];
-        // Diagonal wave: use sine function for animation
-        let phase = (row + col) / 10 - t;
-        let on = Math.sin(phase) > 0.6;
+        const phase = (row + col) / 10 - t;
+        const on = Math.sin(phase) > 0.6;
+
         if (lastStates[i] !== on) {
-          if (on) {
-            rainDots[i].classList.add('on');
-          } else {
-            rainDots[i].classList.remove('on');
-          }
+          rainDots[i].classList.toggle('on', on);
           lastStates[i] = on;
         }
       }
-      t += 0.05; // slower animation
+
+      t += 0.05;
       requestAnimationFrame(animatePattern);
-    }, 67);
+    }, 80); // ~12fps
   }
 
   window.addEventListener('DOMContentLoaded', () => {
     placeGridDots();
-    lastStates = [];
     animatePattern();
   });
+
   window.addEventListener('resize', () => {
     placeGridDots();
-    lastStates = [];
   });
 </script>
+
+

@@ -7,7 +7,6 @@
   
   <style>
     html, body {
-
       height: 100%;
       margin: 0;
       padding: 0;
@@ -67,8 +66,8 @@
       color: #000;
       border: none;
       outline: none;
-      padding: 0.65rem 2.2rem; /* reduced vertical padding for smaller height */
-      font-size: 1.18rem;      /* slightly smaller font for a more compact button */
+      padding: 0.65rem 2.2rem;
+      font-size: 1.18rem;
       border-radius: 999px;
       cursor: pointer;
       transition: background 0.18s, color 0.18s, transform 0.12s, border 0.18s;
@@ -94,7 +93,6 @@
       margin-bottom: 2px;
       width: 1.1em;
       height: 1.1em;
-      /* Make sure the arrow is not blurry on retina */
     }
     .username {
       font-family: 'BitmapFont', monospace, Arial, sans-serif;
@@ -123,13 +121,11 @@
       opacity: 0.9;
       cursor: pointer;
     }
-    /* Add style for dotted underline on Give Feedback */
     #giveFeedbackText {
       text-decoration: underline dotted;
       opacity: 0.9;
       cursor: pointer;
     }
-    /* Make iframe cover the whole background */
     .rain-bg-iframe {
       position: fixed;
       top: 0; left: 0;
@@ -148,7 +144,6 @@
     .contact-content {
       z-index: 2;
     }
-    /* Overlay for white-to-black animation */
     #whiteToBlackOverlay {
       position: fixed;
       top: 0; left: 0;
@@ -168,8 +163,6 @@
       pointer-events: none;
       transition: opacity 0.5s cubic-bezier(.6,0,.4,1);
     }
-
-    /* --- Back button styles --- */
     .back-btn-container {
       position: fixed;
       top: 24px;
@@ -207,6 +200,9 @@
       line-height: 1;
       user-select: none;
     }
+    /* REMOVE RESPONSIVE CHANGES THAT ALTER POSITION OR SIZE */
+    /* The following media query is commented out to prevent text/button position/size changes on small screens */
+    /*
     @media (max-width: 600px) {
       .back-btn-container {
         top: 10px;
@@ -221,11 +217,11 @@
         font-size: 1.01rem;
       }
       .contact-btn {
-        padding: 0.55rem 1.4rem; /* even smaller on mobile */
+        padding: 0.55rem 1.4rem;
         font-size: 1.01rem;
       }
     }
-    /* --- Custom styles for support links above feedback --- */
+    */
     .support-links-container {
       display: flex;
       flex-direction: column;
@@ -486,7 +482,7 @@
     margin-top: 0.5em;
   }
   .footer-blur-line-box {
-    padding: 0.4em 1.2em 0.4em 1.2em; /* Reduced height */
+    padding: 0.4em 1.2em 0.4em 1.2em;
     background: rgba(30,30,30,0.32);
     border-radius: 12px;
     border: 1.5px solid rgba(60,60,60,0.22);
@@ -579,4 +575,3 @@
     </div>
   </div>
 </div>
-

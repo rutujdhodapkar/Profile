@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Portfolio -Rutuj Dhodapkar</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'BitmapFont';
+      src: url('BitmapFont.ttf') format('truetype');
+      font-weight: 300;
+      font-style: normal;
+    }
     html, body {
       height: 100%;
       margin: 0;
@@ -15,67 +19,58 @@
       overflow-x: hidden;
     }
     body {
-      background: #000 !important;
-      color: #fff !important;
-      min-height: 100vh;
+      background: #0f0f0f;
+      color: #fff;  
+      min-height: 200vh;
       margin: 0;
-      font-family: 'Krona One', 'Doto', Arial, sans-serif;
+      font-family: 'Krona One', 'BitmapFont', Arial, sans-serif;
       font-size: 1.1rem;
       letter-spacing: 0.01em;
       position: relative;
       overflow: hidden;
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
+      justify-content: flex-start;
     }
     /* --- 3-dot menu styles --- */
     .menu-dot-social-row {
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 0.8em;
-      justify-content: flex-start;
-      width: 100%;
+      gap: 1.1em;
     }
     .menu-dot-container {
       position: fixed;
-      top: 8px;
-      left: 0;
-      margin-left: 6px;
-      margin-right: 0;
+      top: 28px;
+      left: 32px;
       z-index: 10002;
       display: flex;
       flex-direction: row;
       align-items: center;
       user-select: none;
-      gap: 0.6em;
-      justify-content: flex-start;
-      width: auto;
-      max-width: 100vw;
+      gap: 0.7em;
     }
     .menu-dot-btn {
-      background: #fff !important;
+      background: #fff;
       border: none;
       outline: none;
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 2px 16px 0 rgba(255,255,255,0.18);
+      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
       transition: background 0.18s;
       z-index: 10003;
     }
     .menu-dot-btn:hover, .menu-dot-btn:focus {
-      background: #fff !important;
+      background: rgb(255, 255, 255);
     }
     .menu-dot-svg {
-      width: 18px;
-      height: 18px;
+      width: 28px;
+      height: 28px;
       display: block;
     }
     .menu-dot-svg circle {
@@ -84,21 +79,18 @@
     .menu-dropdown {
       display: none;
       position: absolute;
-      top: 44px;
+      top: 56px;
       left: 0;
-      transform: none;
-      min-width: 110px;
-      background: #fff !important;
-      color: #000 !important;
+      min-width: 170px;
+      background: #fff;
+      color: #111;
       border-radius: 1em;
-      box-shadow: 0 8px 32px 0 rgba(255,255,255,0.18);
-      padding: 0.6em 0.1em;
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
+      padding: 0.7em 0.2em;
       z-index: 10004;
-      font-family: 'Doto', 'Krona One', Arial, sans-serif;
-      font-size: 1.1rem;
+      font-family: 'BitmapFont', 'Krona One', Arial, sans-serif;
+      font-size: 1rem;
       animation: menuFadeIn 0.18s;
-      text-align: center;
-      margin-left: 0;
     }
     .menu-dropdown.active {
       display: block;
@@ -112,7 +104,6 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      text-align: center;
     }
     .menu-dropdown-list li {
       margin: 0;
@@ -123,11 +114,11 @@
       background: none;
       border: none;
       outline: none;
-      color: #000 !important;
+      color: #111;
       font-family: inherit;
-      font-size: 1.1rem;
-      text-align: center;
-      padding: 0.8em 1.1em;
+      font-size: 1rem;
+      text-align: left;
+      padding: 0.5em 1em;
       border-radius: 0.7em;
       cursor: pointer;
       transition: background 0.15s, color 0.15s;
@@ -136,53 +127,44 @@
       letter-spacing: 0.01em;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 0.6em;
+      gap: 0.5em;
     }
     .menu-dropdown-list button:last-child {
       margin-bottom: 0;
     }
     .menu-dropdown-list button:hover, .menu-dropdown-list button:focus {
-      background: #fff !important;
-      color: #000 !important;
+      background: #f0f0f0;
+      color: #000;
     }
-    /* Social buttons */
     .social-btns-bar {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 0.25em;
-      margin-left: 0;
-      justify-content: flex-start;
+      display: none !important;
     }
     .social-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff !important;
-      border: none;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      cursor: pointer;
-      transition: box-shadow 0.18s, background 0.18s;
-      box-shadow: 0 2px 12px 0 rgba(255,255,255,0.10);
-      padding: 0;
-      outline: none;
-      z-index: 10003;
+      display: none !important;
     }
-    .social-btn:hover, .social-btn:focus {
-      background: #fff !important;
-      box-shadow: 0 4px 18px 0 rgba(255,255,255,0.18);
+    @media (max-width: 600px) {
+      .menu-dot-container {
+        top: 12px;
+        left: 10px;
+        gap: 0.3em;
+      }
+      .menu-dot-btn {
+        width: 38px;
+        height: 38px;
+      }
+      .menu-dot-svg {
+        width: 20px;
+        height: 20px;
+      }
+      .menu-dropdown {
+        min-width: 110px;
+        font-size: 0.85rem;
+      }
+      .social-btn {
+        width: 28px;
+        height: 28px;
+      }
     }
-    .social-btn svg,
-    .social-btn img {
-      width: 19px;
-      height: 19px;
-      display: block;
-      filter: invert(0);
-    }
-    /* Rain pattern overlay styles */
     #rain-pattern-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -198,7 +180,7 @@
     .main-center-container {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       min-height: 100vh;
       width: 100vw;
@@ -207,68 +189,62 @@
       left: 0;
       z-index: 2;
       pointer-events: none;
-      text-align: center;
     }
     .main-message {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
+      align-items: flex-start;
+      text-align: left;
       z-index: 2;
       pointer-events: auto;
-      margin: 0 auto;
-      width: 98vw;
-      max-width: 400px;
+      margin-left: 6vw;
     }
     .hello {
-      font-size: 2.2rem;
+      font-size: 1.5rem;
       margin-bottom: 0.7rem;
       line-height: 1.1;
-      font-family: 'Krona One', 'Doto', Arial, sans-serif;
-      text-align: center;
-      width: 100%;
-      font-weight: bold;
-      color: #fff !important;
+      font-family: 'Krona One', 'BitmapFont', Arial, sans-serif;
     }
     .mdesc1 {
-      font-size: 1.1rem;
-      font-family: 'Doto', Arial, sans-serif;
-      color: #fff !important;
-      margin-bottom: 0.18em;
-      margin-top: 0.18em;
+      font-size: 0.95rem;
+      font-family: 'BitmapFont', Arial, sans-serif;
+      color: #fff;
+      margin-bottom: 0.2em;
+      margin-top: 0.2em;
       line-height: 1.4;
-      max-width: 95vw;
-      text-align: center;
-      margin-left: auto;
-      margin-right: auto;
-      font-weight: 500;
+      max-width: 700px;
+    }
+    @media (max-width: 600px) {
+      .mdesc1 {
+        font-size: 0.85rem;
+        max-width: 95vw;
+      }
     }
     .name-box {
-      background: #fff !important;
-      color: #000 !important;
+      background: #ffffffdb;
+      color: #000;
       -webkit-backdrop-filter: blur(5px);
       backdrop-filter: blur(5px);
-      padding: 0.4em 0.7em;
+      padding: 0.3em 0.3em 0.3em 0.7em;
       border-radius: 0.45em;
-      font-size: 2.2rem;
+      font-size: 1.5rem;
       font-weight: bold;
       display: inline-block;
-      box-shadow: 0 2px 16px 0 rgba(255,255,255,0.08);
+      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
       min-width: 2ch;
       position: relative;
       white-space: pre;
-      max-width: 90vw;
-      font-family: 'Krona One', 'Doto', Arial, sans-serif;
-      text-align: center;
+      max-width: fit-content;
+      font-family: 'Krona One', 'BitmapFont', Arial, sans-serif;
     }
     .typing-caret {
       display: inline-block;
-      width: 0.7em;
-      height: 0.7em;
+      width: 0.45em;
+      height: 0.45em;
       border-radius: 50%;
-      background: #000 !important;
-      color: #000 !important;
-      margin-left: 0.15em;
+      background: #000;
+      color: #000;
+      margin-left: 0.12em;
       margin-bottom: 0.25em;
       animation: blink-caret 1s steps(1) infinite;
       font-weight: bold;
@@ -284,39 +260,34 @@
       50%, 100% { opacity: 0; }
     }
     .get-connected-container {
-      margin-top: 1.1rem;
+      margin-top: 1.2rem;
       pointer-events: auto;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      gap: 0.7em;
-      width: 100%;
+      gap: 0.5em;
     }
     .get-connected-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.7em;
-      font-family: 'Doto', 'Krona One', Arial, sans-serif;
-      font-size: 1.1rem;
+      gap: 0.5em;
+      font-family: 'BitmapFont', 'Krona One', Arial, sans-serif;
+      font-size: 0.95rem;
       font-weight: bold;
-      color: #fff !important;
+      color: #fff;
       background: transparent;
-      border: 2px solid #fff !important;
+      border: 2px solid #fff;
       border-radius: 2em;
-      padding: 0.5em 1.1em 0.5em 1em;
+      padding: 0.35em 1em 0.35em 0.8em;
       cursor: pointer;
       transition: background 0.18s, color 0.18s, border-color 0.18s;
       outline: none;
       position: relative;
       z-index: 2;
-      box-shadow: 0 2px 16px 0 #ffffff11;
+      box-shadow: 0 2px 16px 0 #00000011;
       backdrop-filter: blur(5px);
       user-select: none;
       overflow: hidden;
-      width: 90vw;
-      max-width: 270px;
-      justify-content: center;
-      text-align: center;
     }
     .get-connected-btn .light-effect {
       content: "";
@@ -325,7 +296,7 @@
       left: -60%;
       width: 60%;
       height: 100%;
-      background: linear-gradient(90deg, rgba(255,255,255,0.151) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.195) 100%);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.151) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.195) 100%);
       opacity: 0.85;
       pointer-events: none;
       z-index: 1;
@@ -339,48 +310,10 @@
     }
     .get-connected-btn:hover, .get-connected-btn:focus {
       background: rgba(255,255,255,0.08);
-      color: #fff !important;
-      border-color: #fff !important;
+      color: #fff;
+      border-color: #fff;
     }
     .arrow-inside-btn {
-      display: inline-block;
-      width: 1.1em;
-      height: 1.1em;
-      vertical-align: middle;
-      z-index: 2;
-      position: relative;
-    }
-    .blogs-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.7em;
-      font-family: 'Doto', 'Krona One', Arial, sans-serif;
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #000 !important;
-      background: #fff !important;
-      border: 2px solid #fff !important;
-      border-radius: 2em;
-      padding: 0.45em 1.1em 0.45em 1em;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s, border-color 0.18s;
-      outline: none;
-      position: relative;
-      z-index: 2;
-      box-shadow: 0 2px 16px 0 rgba(255,255,255,0.08);
-      user-select: none;
-      overflow: hidden;
-      width: 90vw;
-      max-width: 270px;
-      justify-content: center;
-      text-align: center;
-    }
-    .blogs-btn:hover, .blogs-btn:focus {
-      background: #fff !important;
-      color: #000 !important;
-      border-color: #fff !important;
-    }
-    .arrow-topright-btn {
       display: inline-block;
       width: 1em;
       height: 1em;
@@ -388,25 +321,141 @@
       z-index: 2;
       position: relative;
     }
+    .blogs-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      font-family: 'BitmapFont', 'Krona One', Arial, sans-serif;
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #000;
+      background: #fff;
+      border: 2px solid #fff;
+      border-radius: 2em;
+      padding: 0.32em 0.9em 0.32em 0.7em;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+      outline: none;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
+      user-select: none;
+      overflow: hidden;
+    }
+    .blogs-btn:hover, .blogs-btn:focus {
+      background: #f5f5f5;
+      color: #000;
+      border-color: #fff;
+    }
+    .arrow-topright-btn {
+      display: inline-block;
+      width: 0.8em;
+      height: 0.8em;
+      vertical-align: middle;
+      z-index: 2;
+      position: relative;
+    }
+    @media (max-width: 600px) {
+      .menu-dot-container {
+        top: 12px;
+        left: 10px;
+        gap: 0.3em;
+      }
+      .menu-dot-btn {
+        width: 32px;
+        height: 32px;
+      }
+      .menu-dot-svg {
+        width: 16px;
+        height: 16px;
+      }
+      .menu-dropdown {
+        min-width: 90px;
+        font-size: 0.75rem;
+      }
+      .get-connected-btn {
+        font-size: 0.8rem;
+        padding: 0.28em 0.7em 0.28em 0.6em;
+      }
+      .arrow-inside-btn {
+        width: 0.8em;
+        height: 0.8em;
+      }
+      .blogs-btn {
+        font-size: 0.75rem;
+        padding: 0.22em 0.7em 0.22em 0.5em;
+      }
+      .arrow-topright-btn {
+        width: 0.6em;
+        height: 0.6em;
+      }
+      .hello {
+        font-size: 1.1rem;
+      }
+      .name-box {
+        font-size: 1.1rem;
+        padding: 0.18em 0.18em 0.18em 0.4em;
+      }
+    }
+    .circle-reveal {
+      display: none !important;
+    }
     .content {
       position: relative;
       z-index: 2;
-      color: #fff !important;
-      font-family: 'Krona One', 'Doto', Arial, sans-serif;
+      color: #111;
+      font-family: 'Krona One', 'BitmapFont', Arial, sans-serif;
       font-size: 1.1rem;
       text-align: center;
-      margin-top: 10vh;
+      margin-top: 40vh;
       transition: color 0.5s;
       pointer-events: none;
     }
     .number {
-      display: none;
+      position: fixed;
+      right: 10%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 80px;
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 2px #ffff;
+      opacity: 0.3;
+      z-index: 2002;
     }
     .sign-up-btn {
-      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-family: 'BitmapFont', Arial, sans-serif;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #fff;
+      background: transparent;
+      border: 2px solid #fff;
+      border-radius: 2em;
+      padding: 0.3em 0.8em;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+      outline: none;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
     }
-    .right-image-container {
-      display: none !important;
+    .sign-up-btn:hover, .sign-up-btn:focus {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      border-color: #fff;
+    }
+    .arrow-topright-signup {
+      display: inline-block;
+      width: 0.8em;
+      height: 0.8em;
+      vertical-align: middle;
+      z-index: 2;
+      position: relative;
     }
     .black-fade-overlay {
       position: fixed;
@@ -414,7 +463,7 @@
       top: 0; left: 0; right: 0; bottom: 0;
       width: 100vw;
       height: 100vh;
-      background: #000 !important;
+      background: #000;
       opacity: 1;
       pointer-events: none;
       transition: opacity 1s linear;
@@ -430,7 +479,7 @@
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      background: rgba(255,255,255,0.18) !important;
+      background: rgba(0,0,0,0.18);
       backdrop-filter: blur(32px);
       -webkit-backdrop-filter: blur(32px);
       opacity: 1;
@@ -446,9 +495,9 @@
       position: fixed;
       left: 0;
       right: 0;
-      bottom: -100px;
+      bottom: -150px;
       height: 0;
-      background: #fff !important;
+      background: #fff;
       z-index: 10010;
       transition: height 0.6s cubic-bezier(.4,1.2,.6,1), bottom 0.6s cubic-bezier(.4,1.2,.6,1);
       pointer-events: none;
@@ -458,194 +507,37 @@
       bottom: 0;
       transition: height 0.6s cubic-bezier(.4,1.2,.6,1), bottom 0.6s cubic-bezier(.4,1.2,.6,1);
     }
-    .acc-scroll-box {
-      width: 300px;
-      min-width: 300px;
-      max-width: 300px;
-      height: 48px;
-      border-radius: 32px;
-      background: #fff !important;
-      box-shadow: 0 2px 16px 0 rgba(255,255,255,0.18);
-      display: flex;
-      align-items: center;
-      position: relative;
-      cursor: pointer;
-      transition: box-shadow 0.18s, background 0.18s;
-      overflow: hidden;
-      border: 2px solid #fff !important;
-      touch-action: pan-x;
-      user-select: none;
-      flex-shrink: 0;
-      margin: 0 auto;
-    }
-    .acc-scroll-circle {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #000 !important;
-      position: absolute;
-      left: 4px;
-      top: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff !important;
-      font-size: 1.3rem;
-      font-family: 'Orbitron', Arial, sans-serif;
-      user-select: none;
-      box-shadow: 0 2px 8px 0 rgba(255,255,255,0.10);
-      transition: left 0.3s cubic-bezier(.4,1.2,.6,1), background 0.2s;
-      z-index: 2;
-      cursor: grab;
-      touch-action: pan-x;
-    }
-    .acc-scroll-box.dragging .acc-scroll-circle {
-      background: #222 !important;
-      cursor: grabbing;
-    }
-    .acc-scroll-box.completed .acc-scroll-circle {
-      background: #222 !important;
-    }
-    .acc-scroll-box .acc-scroll-label {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #000 !important;
-      font-size: 1.05rem;
-      font-family: 'Doto', Arial, sans-serif;
-      pointer-events: none;
-      z-index: 100;
-      opacity: 1;
-      user-select: none;
-    }
-    .acc-scroll-box.completed .acc-scroll-label {
-      color: #000 !important;
-      opacity: 1;
-      z-index: 100;
-    }
-    .scroll-btn-bottom {
-      background: #fff !important;
-      color: #000 !important;
-      border: none;
+    .bottom-center-prompt {
+      position: fixed;
+      left: 50%;
+      bottom: 3.5vh;
+      transform: translateX(-50%);
+      z-index: 13;
+      background: #00000011;
+      backdrop-filter: blur(8px);
+      border: 2px solid #ffffff;
+      color: #fff;
+      font-family: 'BitmapFont', Arial, sans-serif;
+      font-size: 0.95rem;
+      padding: 0.5em 1.1em;
       border-radius: 2em;
-      font-family: 'Doto', 'Krona One', Arial, sans-serif;
-      font-size: 1.15rem;
-      font-weight: bold;
-      padding: 0.6em 1.5em;
-      box-shadow: 0 2px 16px 0 #ffffffa6;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s;
-      outline: none;
-      display: flex;
-      align-items: center;
-      gap: 0.7em;
+      box-shadow: 0 2px 16px 0 #00000011;
+      letter-spacing: 0.01em;
+      text-align: center;
+      pointer-events: none;
       user-select: none;
-      flex: 1 1 0;
-      min-width: 90px;
-      max-width: 300px;
-      justify-content: center;
+      opacity: 0.97;
+      transition: opacity 0.3s;
     }
-    .scroll-btn-bottom:hover, .scroll-btn-bottom:focus {
-      background: #fff !important;
-      color: #000 !important;
-    }
-    @media (max-width: 500px) {
-      .bottom-scroll-container {
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 10%;
-        gap: 1em;
-        width: 340px;
-        min-width: 340px;
-        max-width: 340px;
+    @media (max-width: 600px) {
+      .bottom-center-prompt {
+        font-size: 0.8rem;
+        padding: 0.3em 0.7em;
+        bottom: 1.5vh;
       }
-      .acc-scroll-box {
-        width: 300px;
-        min-width: 300px;
-        max-width: 300px;
-        height: 48px;
-      }
-      .acc-scroll-circle {
-        width: 40px;
-        height: 40px;
-        left: 4px;
-        top: 4px;
-        font-size: 1.3rem;
-      }
-      .scroll-btn-bottom {
-        font-size: 1.15rem;
-        padding: 0.6em 1.5em;
-        min-width: 90px;
-      }
-      .hello {
-        font-size: 2rem;
-      }
-      .name-box {
-        font-size: 2rem;
-      }
-      .mdesc1, .get-connected-btn, .blogs-btn, .content {
-        font-size: 1rem;
-      }
-      .menu-dot-btn {
-        width: 40px;
-        height: 40px;
-      }
-      .menu-dot-svg {
-        width: 20px;
-        height: 20px;
-      }
-      .social-btn {
-        width: 36px;
-        height: 36px;
-      }
-      .social-btn svg,
-      .social-btn img {
-        width: 22px;
-        height: 22px;
-        filter: invert(0);
-      }
-      .menu-dropdown {
-        font-size: 1.1rem;
-        min-width: 120px;
-        top: 48px;
-      }
-      .menu-dropdown-list button {
-        font-size: 1.1rem;
-        padding: 0.9em 1.2em;
-      }
-    }
-    ::selection {
-      background: #fff !important;
-      color: #000 !important;
-    }
-    ::-webkit-scrollbar {
-      width: 10px;
-      background: #00000000;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(135deg, #fff 100%, #eaeaea 100%);
-      border-radius: 8px;
-      border: 2px solid #00000000;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(135deg, #fff 100%, #cccccc 100%);
-    }
-    ::-webkit-scrollbar-track {
-      background: #00000000;
-      border-radius: 8px;
-    }
-    html {
-      scrollbar-width: thin;
-      scrollbar-color: #fff #00000000;
     }
   </style>
   <script>
-    // Always open page at top
     window.addEventListener('beforeunload', function () {
       window.scrollTo(0, 0);
     });
@@ -659,7 +551,6 @@
   </script>
 </head>
 <body>
-  <!-- 3-dot menu in top left, social buttons to left -->
   <div class="menu-dot-container">
     <div class="menu-dot-social-row">
       <button class="menu-dot-btn" id="menuDotBtn" aria-label="Open menu">
@@ -669,24 +560,6 @@
           <circle cx="26" cy="16" r="3.2"/>
         </svg>
       </button>
-      <div class="social-btns-bar">
-        <!-- GitHub -->
-        <a class="social-btn" href="https://github.com/rutujdhodapkar" target="_blank" aria-label="GitHub">
-          <img src="svg/github.svg" alt="GitHub"/>
-        </a>
-        <!-- LinkedIn -->
-        <a class="social-btn" href="https://www.linkedin.com/in/rutujdhodapkar" target="_blank" aria-label="LinkedIn">
-          <img src="svg/linkedin.svg" alt="LinkedIn"/>
-        </a>
-        <!-- X.com (Twitter X) -->
-        <a class="social-btn" href="https://x.com/rutujdhodapkar" target="_blank" aria-label="X.com">
-          <img src="svg/x.jpg" alt="X.com"/>
-        </a>
-        <!-- Email -->
-        <a class="social-btn" href="mailto:rutujdhodapkar@gmail.com" aria-label="Email">
-          <img src="svg/email.svg" alt="Email"/>
-        </a>
-      </div>
     </div>
     <div class="menu-dropdown" id="menuDropdown">
       <ul class="menu-dropdown-list">
@@ -705,21 +578,19 @@
       </ul>
     </div>
   </div>
-  <!-- Black fade overlay for 1s fade out -->
   <div class="black-fade-overlay" id="blackFadeOverlay"></div>
-  <!-- Rain pattern overlay (hidden initially) -->
+  <div id="rain-pattern-overlay"></div>
   <div class="blur-overlay" id="blurOverlay"></div>
-  <!-- Project transition overlay for Projects menu click -->
   <div class="project-transition-overlay" id="projectTransitionOverlay"></div>
+
   <div class="main-center-container">
     <div class="main-message">
       <div class="hello">Hello There!!!</div>
-      <div style="font-size: 2.2rem; font-weight: bold; font-family: 'Krona One', 'Doto', Arial, sans-serif; text-align:center; color:#fff;">
+      <div style="font-size: 1.5rem; font-weight: bold; font-family: 'Krona One', Arial, sans-serif;">
         I'm <span class="name-box"><b id="typed-name"></b><span class="typing-caret"></span></span>
       </div>
-      <!-- Insert mdesc1 here -->
       <div id="mdesc1" class="mdesc1" style="display:none;"></div>
-      <div style="font-size: 1.1rem; color: #fff; margin-top: 0.18em; margin-bottom: 0.18em; font-family: 'Doto', Arial, sans-serif; text-align:center; font-weight: 500;">
+      <div style="font-size: 0.85rem; color: #fff; margin-top: 0.2em; margin-bottom: 0.2em; font-family: 'BitmapFont', Arial, sans-serif;">
         Building systems that can talk think and improve itself.
       </div>
       <div class="get-connected-container">
@@ -727,7 +598,6 @@
           <span class="light-effect"></span>
           Get connected
           <span class="arrow-inside-btn">
-            <!-- SVG arrow down-right -->
             <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M7 7 L17 17"/>
               <polyline points="10 17 17 17 17 10"/>
@@ -738,12 +608,13 @@
     </div>
   </div>
   <div class="content">
-    <div style="font-size:1.1rem; margin-top:2em; color:#fff;"></div>
+    <div style="font-size:0.85rem; margin-top:2em;"></div>
   </div>
   <div class="number"></div>
-
+  <div class="bottom-center-prompt">
+    Scroll to get started
+  </div>
   <script>
-    // 3-dot menu logic
     (function() {
       const menuBtn = document.getElementById('menuDotBtn');
       const menuDropdown = document.getElementById('menuDropdown');
@@ -803,7 +674,6 @@
       };
     })();
 
-    // Black overlay fade out for 1s on load
     window.addEventListener('DOMContentLoaded', function() {
       const blackFade = document.getElementById('blackFadeOverlay');
       setTimeout(() => {
@@ -814,7 +684,6 @@
       }, 1010);
     });
 
-    // Blur out animation on load
     window.addEventListener('DOMContentLoaded', function() {
       const blur = document.getElementById('blurOverlay');
       setTimeout(() => {
@@ -825,7 +694,6 @@
       }, 2200);
     });
 
-    // Fetch name, mdesc1 from GitHub raw CSV and use for typing animation and description
     fetch('https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv', {cache: "no-store"})
       .then(response => {
         if (!response.ok) {
@@ -860,7 +728,6 @@
           return;
         }
 
-        // Typing animation for name
         const typedNameElem = document.getElementById('typed-name');
         const caretElem = document.querySelector('.typing-caret');
         let idx = 0;
@@ -902,7 +769,6 @@
         }
         setTimeout(typeName, 700);
 
-        // Show mdesc1
         if (mdesc1) {
           const mdesc1Elem = document.getElementById('mdesc1');
           mdesc1Elem.textContent = mdesc1;
@@ -919,6 +785,7 @@
         if (!overlay.hasChildNodes()) {
           var obj = document.createElement('object');
           obj.type = 'text/html';
+          obj.data = 'animations/rain pattern.html';
           obj.style.width = '100vw';
           obj.style.height = '100vh';
           obj.style.pointerEvents = 'none';
@@ -931,126 +798,251 @@
         overlay.classList.add('active');
       }
     }, 5000);
-
-    // Listen for user typing "help" anywhere on the page
-    (function() {
-      let buffer = '';
-      let timeout = null;
-
-      document.addEventListener('keydown', function(e) {
-        if (e.key.length === 1 && /^[a-zA-Z]$/.test(e.key)) {
-          buffer += e.key.toLowerCase();
-          if (buffer.length > 4) buffer = buffer.slice(-4);
-
-          if (buffer === 'help') {
-            window.location.href = 'resume.html';
-            buffer = '';
-          }
-
-          clearTimeout(timeout);
-          timeout = setTimeout(() => { buffer = ''; }, 2000);
-        }
-      });
-    })();
-
-    // --- Bottom acc scroll box drag to redirect logic ---
-    (function() {
-      const accBox = document.getElementById('accScrollBox');
-      const accCircle = document.getElementById('accScrollCircle');
-      // const scrollBtn = document.getElementById('scrollBtnBottom'); // Removed
-      let isDragging = false;
-      let startX = 0;
-      let currentX = 0;
-      let boxRect = null;
-      let circleRect = null;
-      let maxLeft = 0;
-      let minLeft = 0;
-      let dragOffset = 0;
-      let completed = false;
-
-      function getBoxAndCircleRects() {
-        boxRect = accBox.getBoundingClientRect();
-        circleRect = accCircle.getBoundingClientRect();
-        minLeft = 4;
-        maxLeft = boxRect.width - circleRect.width - 4;
-      }
-
-      function setCircleLeft(px) {
-        accCircle.style.left = px + 'px';
-      }
-
-      function onDragStart(e) {
-        if (completed) return;
-        isDragging = true;
-        accBox.classList.add('dragging');
-        getBoxAndCircleRects();
-        if (e.type === 'touchstart') {
-          startX = e.touches[0].clientX;
-        } else {
-          startX = e.clientX;
-        }
-        dragOffset = parseInt(accCircle.style.left || minLeft, 10);
-        document.addEventListener('mousemove', onDragMove);
-        document.addEventListener('mouseup', onDragEnd);
-        document.addEventListener('touchmove', onDragMove, {passive: false});
-        document.addEventListener('touchend', onDragEnd);
-      }
-      function onDragMove(e) {
-        if (!isDragging) return;
-        let clientX;
-        if (e.type === 'touchmove') {
-          clientX = e.touches[0].clientX;
-        } else {
-          clientX = e.clientX;
-        }
-        let dx = clientX - startX;
-        let newLeft = dragOffset + dx;
-        if (newLeft < minLeft) newLeft = minLeft;
-        if (newLeft > maxLeft) newLeft = maxLeft;
-        setCircleLeft(newLeft);
-        e.preventDefault && e.preventDefault();
-      }
-      function onDragEnd(e) {
-        if (!isDragging) return;
-        isDragging = false;
-        accBox.classList.remove('dragging');
-        getBoxAndCircleRects();
-        let left = parseInt(accCircle.style.left || minLeft, 10);
-        if (left >= maxLeft - 2) {
-          // Completed
-          accBox.classList.add('completed');
-          completed = true;
-          setCircleLeft(maxLeft);
-          setTimeout(() => {
-            window.location.href = "detailmobile.html";
-          }, 350);
-        } else {
-          // Snap back
-          setCircleLeft(minLeft);
-        }
-        document.removeEventListener('mousemove', onDragMove);
-        document.removeEventListener('mouseup', onDragEnd);
-        document.removeEventListener('touchmove', onDragMove);
-        document.removeEventListener('touchend', onDragEnd);
-      }
-      accCircle.addEventListener('mousedown', onDragStart);
-      accCircle.addEventListener('touchstart', onDragStart, {passive: false});
-      // Prevent accidental text selection
-      accBox.addEventListener('dragstart', e => e.preventDefault());
-
-      // Also allow click on button to scroll (REMOVED)
-      // scrollBtn.addEventListener('click', function() {
-      //   window.scrollBy({top: window.innerHeight, left: 0, behavior: 'smooth'});
-      // });
-
-      // Initialize
-      window.addEventListener('DOMContentLoaded', function() {
-        setCircleLeft(4);
-      });
-      window.addEventListener('resize', function() {
-        if (!completed) setCircleLeft(4);
-      });
-    })();
   </script>
 </body>
+
+<style>
+  .custom-cursor {
+    position: relative;
+    display: inline-block;
+    width: 220px;
+  }
+  .custom-cursor input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    outline: none;
+    width: 100%;
+    font-family: 'BitmapFont', Arial, sans-serif;
+    font-size: 0.9rem;
+    margin-left: 5px;
+    caret-color: transparent;
+    position: relative;
+    z-index: 1;
+  }
+  .typing-cursor {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1em;
+    width: 2px;
+    background: #fff;
+    animation: blink-cursor 1s steps(1) infinite;
+    pointer-events: none;
+    z-index: 2;
+  }
+  @keyframes blink-cursor {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+</style>
+
+<script>
+  (function() {
+    let buffer = '';
+    let timeout = null;
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key.length === 1 && /^[a-zA-Z]$/.test(e.key)) {
+        buffer += e.key.toLowerCase();
+        if (buffer.length > 4) buffer = buffer.slice(-4);
+
+        if (buffer === 'help') {
+          window.location.href = 'resume.html';
+          buffer = '';
+        }
+
+        clearTimeout(timeout);
+        timeout = setTimeout(() => { buffer = ''; }, 2000);
+      }
+    });
+  })();
+</script>
+
+<style>
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+    background: transparent !important;
+  }
+  html {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none;
+  }
+  body {
+    -ms-overflow-style: none;
+    scrollbar-width: none !important;
+  }
+  ::selection {
+    background: #fff;
+    color: #000;
+  }
+</style>
 </html>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&display=swap" rel="stylesheet">
+<style>
+  #fullscreen-black-box {
+    position: fixed;
+    left: 0;
+    bottom: -100vh;
+    width: 100vw;
+    height: 100vh;
+    background: #ffffff;
+    z-index: 999999;
+    transition: bottom 0.7s cubic-bezier(0.77,0,0.175,1);
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  #fullscreen-black-box.active {
+    bottom: 0;
+  }
+  #ai-message {
+    color: #fff;
+    font-size: 5vw;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-weight: 100;
+    letter-spacing: 0.04em;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(60px) scale(0.98);
+    transition:
+      opacity 0.7s cubic-bezier(0.77,0,0.175,1),
+      transform 0.7s cubic-bezier(0.77,0,0.175,1);
+    min-height: 1.2em;
+    line-height: 1.1;
+    white-space: pre-line;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    will-change: opacity, transform;
+    user-select: none;
+  }
+  #fullscreen-black-box.active #ai-message {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: 0.1s;
+  }
+  #fullscreen-black-box:not(.active) #ai-message {
+    opacity: 0;
+    transform: translateY(-60px) scale(0.98);
+    transition-delay: 0s;
+  }
+  .typing-cursor {
+    display: inline-block;
+    width: 1ch;
+    animation: blink 1s steps(1) infinite;
+    color: #fff;
+  }
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+  @media (max-width: 600px) {
+    #ai-message {
+      font-size: 7vw;
+    }
+  }
+</style>
+
+<div id="fullscreen-black-box">
+  <span id="ai-message"></span>
+</div>
+<script>
+  (function() {
+    let box = document.getElementById('fullscreen-black-box');
+    let messageEl = document.getElementById('ai-message');
+    let lastScroll = window.scrollY;
+    let ticking = false;
+    const message = "";
+    let typingTimeout;
+    let cursorSpan;
+    let redirectTimeout = null;
+    let hasRedirected = false;
+
+    function showMessageWithTyping() {
+      if (!messageEl) return;
+      messageEl.textContent = '';
+      if (cursorSpan) cursorSpan.remove();
+      let i = 0;
+      function typeChar() {
+        if (i <= message.length) {
+          messageEl.textContent = message.slice(0, i);
+          if (!cursorSpan) {
+            cursorSpan = document.createElement('span');
+            cursorSpan.className = 'typing-cursor';
+            cursorSpan.textContent = '|';
+            messageEl.appendChild(cursorSpan);
+          }
+          i++;
+          typingTimeout = setTimeout(typeChar, 45);
+        } else {
+          if (cursorSpan) cursorSpan.remove();
+        }
+      }
+      typeChar();
+    }
+
+    function clearMessage() {
+      if (typingTimeout) clearTimeout(typingTimeout);
+      if (messageEl) messageEl.textContent = '';
+      if (cursorSpan) cursorSpan.remove();
+    }
+
+    function onScroll() {
+      let currentScroll = window.scrollY;
+      if (currentScroll > lastScroll) {
+        box.classList.add('active');
+        setTimeout(showMessageWithTyping, 120);
+      } else if (currentScroll < lastScroll) {
+        box.classList.remove('active');
+        clearMessage();
+        if (redirectTimeout) {
+          clearTimeout(redirectTimeout);
+          redirectTimeout = null;
+        }
+      }
+      lastScroll = currentScroll;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    });
+
+    box.addEventListener('transitionend', function(e) {
+      if (
+        e.propertyName === 'bottom' &&
+        box.classList.contains('active') &&
+        !hasRedirected
+      ) {
+        redirectTimeout = setTimeout(function() {
+          hasRedirected = true;
+          window.location.href = "detailmobile.html";
+        }, 500);
+      }
+    });
+
+    clearMessage();
+  })();
+</script>
+
+<style>
+  @media (max-width: 1370px) {
+    .side-image-container {
+      display: none !important;
+    }
+  }
+</style>
+
+<div class="side-image-container" style="position: fixed; top: 50%; right: 6%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center; z-index: 12;">
+  <img src="svg\img.png" alt="Image" style="max-height: 700px; max-width: 500px; display: block;">
+</div>

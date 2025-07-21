@@ -47,6 +47,7 @@
             align-items: flex-start;
             justify-content: space-between;
             width: 100%;
+
         }
         .project-title {
             font-size: 1.3rem;
@@ -105,6 +106,45 @@
             text-decoration: underline;
             word-break: break-all;
             font-family: 'BitmapFont', monospace, sans-serif;
+        }
+        /* Style for the Visit button */
+        .project-visit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 1.08rem;
+            font-family: 'BitmapFont', monospace, sans-serif;
+            font-weight: 500;
+            color: #fff;
+            background: #232323;
+            border: 1.5px solid #fff;
+            border-radius: 999px;
+            padding: 7px 20px 7px 18px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 16px;
+            margin-bottom: 2px;
+            transition: 
+                background 0.2s,
+                color 0.2s,
+                border-color 0.2s,
+                box-shadow 0.2s;
+            box-shadow: 0 1px 6px 0 rgba(0,0,0,0.08);
+            outline: none;
+        }
+        .project-visit-btn:hover, .project-visit-btn:focus {
+            background: #2a2a2a;
+            color: #d2d2d2;
+            border-color: #d2d2d2;
+            text-decoration: none;
+        }
+        .project-visit-arrow {
+            width: 1.1em;
+            height: 1.1em;
+            display: inline-block;
+            vertical-align: middle;
+            fill: currentColor;
+            margin-left: 2px;
         }
         .project-item.expanded .project-details {
             max-height: 500px;
@@ -284,6 +324,10 @@
             .github-more-btn-wrapper {
                 margin: 28px 0 20px 0;
             }
+            .project-visit-btn {
+                font-size: 0.95rem;
+                padding: 7px 14px 7px 12px;
+            }
         }
     </style>
 </head>
@@ -418,12 +462,6 @@
                         desc.textContent = "Description: " + project['project description'];
                         detailsDiv.appendChild(desc);
                     }
-                    // Link
-                    if (project['project link']) {
-                        const link = document.createElement('div');
-                        link.innerHTML = 'Link: <a href="' + project['project link'] + '" target="_blank">' + project['project link'] + '</a>';
-                        detailsDiv.appendChild(link);
-                    }
                     // Feature
                     if (project['project feature']) {
                         const feat = document.createElement('div');
@@ -442,12 +480,33 @@
                         cat.textContent = "Category: " + project['project category'];
                         detailsDiv.appendChild(cat);
                     }
+                    // Link button at the bottom
+                    if (project['project link']) {
+                        const visitBtn = document.createElement('a');
+                        visitBtn.className = 'project-visit-btn';
+                        visitBtn.href = project['project link'];
+                        visitBtn.target = '_blank';
+                        visitBtn.rel = 'noopener noreferrer';
+                        visitBtn.setAttribute('tabindex', '0');
+                        visitBtn.innerHTML = `Visit
+                            <svg class="project-visit-arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                                <path d="M7.5 4a.75.75 0 0 1 0-1.5h7.75a.75.75 0 0 1 .75.75V11a.75.75 0 0 1-1.5 0V6.56l-9.22 9.22a.75.75 0 1 1-1.06-1.06l9.22-9.22H7.5z" fill="currentColor"/>
+                            </svg>`;
+                        detailsDiv.appendChild(visitBtn);
+                    }
 
                     item.appendChild(detailsDiv);
 
                     // Accordion: Only one open at a time
                     item.addEventListener('click', function(e) {
-                        // Only expand/collapse if not clicking a link
+                        // Only expand/collapse if not clicking a link or button
+                        if (
+                            (e.target.tagName.toLowerCase() === 'a' && e.target.classList.contains('project-visit-btn')) ||
+                            (e.target.closest('.project-visit-btn'))
+                        ) {
+                            // Let the button work as a link, don't expand/collapse
+                            return;
+                        }
                         if (e.target.tagName.toLowerCase() === 'a') return;
 
                         // Find currently expanded item (if any)
@@ -468,5 +527,16 @@
                 console.error(err);
             });
     </script>
+
+
+
 </body>
+
+<style>
+        ::selection {
+      background: #fff;
+      color: #000;
+    }
+</style>
 </html>
+

@@ -520,7 +520,7 @@
       left: 50%;
       bottom: 3.5vh;
       transform: translateX(-50%);
-      z-index: 10020;
+      z-index: 13;
       background: #00000011;
       backdrop-filter: blur(8px);
       border: 2px solid #ffffff; /* Increased border thickness from 1px to 3px */
@@ -633,7 +633,7 @@
   <div class="number"></div>
   <!-- Bottom center prompt -->
   <div class="bottom-center-prompt">
-    Scroll or type "<b>HELP</b>" to get started
+    Scroll to get started
   </div>
   <!-- Removed scroll-prompt and its content -->
   <script>
@@ -682,7 +682,7 @@
       };
       document.getElementById('menuAboutBtn').onclick = function(e) {
         closeMenu();
-        window.location.href = "detail.html";
+        window.location.href = "detailmobile.html";
       };
       document.getElementById('menuProjectsBtn').onclick = function(e) {
         closeMenu();
@@ -691,10 +691,10 @@
         if (overlay) {
           overlay.classList.add('active');
           setTimeout(function() {
-            window.location.href = "detail.html";
+            window.location.href = "detailmobile.html";
           }, 650);
         } else {
-          window.location.href = "detail.html";
+          window.location.href = "detailmobile.html";
         }
       };
       document.getElementById('menuContactBtn').onclick = function(e) {
@@ -1092,7 +1092,7 @@
           // Now box covers full screen, start 1s timer to redirect
           redirectTimeout = setTimeout(function() {
             hasRedirected = true;
-            window.location.href = "detail.html";
+            window.location.href = "detailmobile.html";
           }, 500);
         }
       });
@@ -1113,10 +1113,12 @@
      }
    </style>
 
-   <div class="side-image-container" style="position: fixed; top: 50%; right: 6%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+   <div class="side-image-container" style="position: fixed; top: 50%; right: 6%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center; z-index: 12;">
     <img src="svg\img.png" alt="Image" style="max-height: 700px; max-width: 500px; display: block;">
   </div>
 
 
 
   
+
+

@@ -4,14 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Certificates</title>
-  <!-- inter font for certificate titles -->
   <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-
   <style>
-    ::selection {
-      background: #fff;
-      color: #0f0f0f;
-    }
+    ::selection { background: #fff; color: #0f0f0f; }
     @font-face {
       font-family: 'BitmapFont';
       src: url('BitmapFont.ttf') format('truetype');
@@ -40,7 +35,7 @@
       letter-spacing: 0.04em;
       text-align: center;
       text-shadow: 0 2px 12px #0f0f0f8, 0 0 2px #fff2;
-      font-weight: 700; /* Make the Certificates title bolder */
+      font-weight: 700;
     }
     .cert-scroll-wrapper {
       position: relative;
@@ -53,21 +48,18 @@
     .container {
       display: flex;
       gap: 40px;
-      transition: scroll-left 0.3s;
       color: #fff;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none;  /* IE 10+ */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       overflow-x: auto;
       overflow-y: hidden;
     }
-    .container::-webkit-scrollbar {
-      display: none; /* Chrome/Safari/Webkit */
-    }
+    .container::-webkit-scrollbar { display: none; }
     .white-box {
-      background: rgba(255, 255, 255, 0.1); /* Slightly visible box */
+      background: rgba(255,255,255,0.1);
       border: 2px solid #606060;
-      border-radius: 1.5em; /* More curve */
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2); /* Slight shadow */
+      border-radius: 1.5em;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
       width: 340px;
       height: 420px;
       display: flex;
@@ -83,11 +75,11 @@
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
       color: #fff;
-      cursor: pointer; /* Indicate clickable */
+      cursor: pointer;
     }
     .white-box:hover {
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      background: rgba(255,255,255,0.2);
       border-color: #fff;
       filter: brightness(1.08);
     }
@@ -95,8 +87,8 @@
       max-width: 90%;
       max-height: 200px;
       object-fit: contain;
-      border-radius: 45px; /* More curve for image */
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 45px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       margin-top: 24px;
       margin-bottom: 18px;
     }
@@ -127,8 +119,6 @@
       font-family: 'BitmapFont', Arial, sans-serif;
       font-weight: 300 !important;
     }
-
-    /* Arrow styles */
     .scroll-arrow {
       position: absolute;
       top: 50%;
@@ -139,34 +129,22 @@
       border-radius: 50%;
       width: 38px;
       height: 38px;
-      display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.7rem;
       color: #222;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0);
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
       opacity: 0.85;
       outline: none;
       user-select: none;
       -webkit-user-select: none;
+      display: none;
     }
-    .scroll-arrow:active {
-      background: #eee;
-      color: #0f0f0f;
-    }
-    .scroll-arrow.left {
-      left: 8px;
-    }
-    .scroll-arrow.right {
-      right: 8px;
-    }
-    .scroll-arrow[hidden] {
-      display: none !important;
-    }
-
-    /* Responsive: On medium screens */
+    .scroll-arrow:active { background: #eee; color: #0f0f0f; }
+    .scroll-arrow.left { left: 8px; }
+    .scroll-arrow.right { right: 8px; }
+    .scroll-arrow[hidden] { display: none !important; }
     @media (max-width: 1200px) {
       .cert-page-title {
         font-size: 2.8rem !important;
@@ -174,17 +152,13 @@
         margin-bottom: 28px;
         font-weight: 700 !important;
       }
-      .container {
-        gap: 28px;
-      }
+      .container { gap: 28px; }
       .white-box {
         width: 300px;
         height: 390px;
         border-radius: 48px;
       }
     }
-
-    /* Responsive: On small screens, enable horizontal scroll and show arrows if needed */
     @media (max-width: 900px) {
       .cert-page-title {
         font-size: 2.8rem !important;
@@ -195,29 +169,22 @@
       .cert-scroll-wrapper {
         max-width: 100vw;
         width: 100vw;
-        padding: 0 0;
       }
       .container {
         gap: 20px;
         padding: 0 32px;
         width: 100vw;
         max-width: 100vw;
-        overflow-x: auto;
-        overflow-y: hidden;
         scroll-behavior: smooth;
-        color: #fff;
       }
       .white-box {
         width: 80vw;
         max-width: 340px;
         min-width: 240px;
-        color: #fff;
         border-radius: 45px;
         height: 370px;
       }
-      .scroll-arrow {
-        display: flex;
-      }
+      .scroll-arrow { display: flex; }
     }
     @media (max-width: 600px) {
       .cert-page-title {
@@ -229,13 +196,11 @@
       .container {
         gap: 12px;
         padding: 0 8px;
-        color: #fff;
       }
       .white-box {
         width: 96vw;
         max-width: 320px;
         min-width: 160px;
-        color: #fff;
         border-radius: 32px;
         height: 320px;
         padding-bottom: 12px;
@@ -245,34 +210,23 @@
         margin-top: 12px;
         margin-bottom: 10px;
       }
-      .cert-title {
-        font-size: 1rem;
-      }
-      .cert-desc {
-        font-size: 0.9rem;
-      }
-      .cert-issued {
-        font-size: 0.85rem;
-      }
-    }
-    /* Hide arrows by default on desktop */
-    .scroll-arrow {
-      display: none;
-    }
-    @media (max-width: 900px) {
-      .scroll-arrow {
-        display: flex;
+      .cert-title { font-size: 1rem; }
+      .cert-desc { font-size: 0.9rem; }
+      .cert-issued { font-size: 0.85rem; }
+      .other-certs-btn {
+        margin-top: 24px;
+        margin-bottom: 18px;
+        padding: 6px 14px;
+        font-size: 0.93rem;
+        border-radius: 16px;
       }
     }
-
-    
-    /* Other Certificates Button Styles */
     .other-certs-btn {
       margin-top: 40px;
       margin-bottom: 32px;
       padding: 7px 22px;
       font-size: 1rem;
-      font-family:  'BitmapFont', Arial, sans-serif;
+      font-family: 'BitmapFont', Arial, sans-serif;
       background: transparent;
       border: 2px solid #fff;
       color: #fff;
@@ -286,18 +240,8 @@
     }
     .other-certs-btn:hover, .other-certs-btn:focus {
       background: rgba(255,255,255,0.08);
-      color: #fff;
       border-color: #fff;
       box-shadow: 0 4px 16px rgba(255,255,255,0.08);
-    }
-    @media (max-width: 600px) {
-      .other-certs-btn {
-        margin-top: 24px;
-        margin-bottom: 18px;
-        padding: 6px 14px;
-        font-size: 0.93rem;
-        border-radius: 16px;
-      }
     }
   </style>
 </head>
@@ -305,27 +249,11 @@
   <div class="cert-page-title">Certificates</div>
   <div class="cert-scroll-wrapper">
     <button class="scroll-arrow left" id="scrollLeft" aria-label="Scroll left" hidden>&#8592;</button>
-    <div class="container" id="certContainer">
-      <!-- Certificate cards will be inserted here by JS -->
-    </div>
+    <div class="container" id="certContainer"></div>
     <button class="scroll-arrow right" id="scrollRight" aria-label="Scroll right" hidden>&#8594;</button>
   </div>
-
-  <!-- Other Certificates Button at the bottom -->
   <button class="other-certs-btn" id="otherCertsBtn" type="button">Other Certificates</button>
   <script>
-    // Redirect to error.html on any error (JS error, resource load error, etc.)
-    window.onerror = function() {
-      // window.location.href = "error.html";
-      return false;
-    };
-    window.addEventListener('error', function() {
-      // window.location.href = "error.html";
-    });
-    window.addEventListener('unhandledrejection', function() {
-      // window.location.href = "error.html";
-    });
-
     function createCertBox({cimg, ctitle, cdesc, cissue, clink}) {
       const box = document.createElement('div');
       box.className = 'white-box';
@@ -395,18 +323,16 @@
         }
         values.push(cur.replace(/^"|"$/g, '').replace(/\\"/g, '"').trim());
         const obj = {};
-        headers.forEach((h, idx) => obj[h] = values[idx] || ''
-        );
+        headers.forEach((h, idx) => obj[h] = values[idx] || '');
         return obj;
       });
     }
 
     function loadCertificates() {
-      // Use the raw.githubusercontent.com link to fetch the CSV file directly
       const githubRawCSV = "https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv";
       fetch(githubRawCSV)
         .then(response => {
-          if (!response.ok) throw new Error('Failed to load data.csv from GitHub');
+          if (!response.ok) throw new Error();
           return response.text();
         })
         .then(csv => {
@@ -419,10 +345,6 @@
             }
           });
           updateArrows();
-        })
-        .catch(err => {
-          // On any error, redirect to error.html
-          // window.location.href = "error.html";
         });
     }
 
@@ -464,19 +386,13 @@
     window.addEventListener('resize', updateArrows);
 
     window.addEventListener('DOMContentLoaded', function() {
-      try {
-        loadCertificates();
-        updateArrows();
-      } catch (e) {
-        // window.location.href = "error.html";
-      }
+      loadCertificates();
+      updateArrows();
     });
 
-    // Other Certificates Button click handler
     document.getElementById('otherCertsBtn').addEventListener('click', function() {
-      window.open('opthercert.html', '_blank');
+      window.open('othercert.html', '_blank');
     });
   </script>
 </body>
-
 </html>
