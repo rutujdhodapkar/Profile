@@ -682,7 +682,7 @@
       };
       document.getElementById('menuAboutBtn').onclick = function(e) {
         closeMenu();
-        window.location.href = "detailmobile.html";
+        window.location.href = "detail.html";
       };
       document.getElementById('menuProjectsBtn').onclick = function(e) {
         closeMenu();
@@ -691,10 +691,10 @@
         if (overlay) {
           overlay.classList.add('active');
           setTimeout(function() {
-            window.location.href = "detailmobile.html";
+            window.location.href = "detail.html";
           }, 650);
         } else {
-          window.location.href = "detailmobile.html";
+          window.location.href = "detail.html";
         }
       };
       document.getElementById('menuContactBtn').onclick = function(e) {
@@ -1092,7 +1092,7 @@
           // Now box covers full screen, start 1s timer to redirect
           redirectTimeout = setTimeout(function() {
             hasRedirected = true;
-            window.location.href = "detailmobile.html";
+            window.location.href = "detail.html";
           }, 500);
         }
       });
