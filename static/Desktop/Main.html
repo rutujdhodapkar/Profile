@@ -1117,8 +1117,57 @@
     <img src="svg\img.png" alt="Image" style="max-height: 700px; max-width: 500px; display: block;">
   </div>
 
+  <style>
+    .white-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #fff;
+      opacity: 1;
+      z-index: 99999;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+    .white-overlay.hide {
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+  </style>
+  <div id="whiteOverlay" class="white-overlay hide"></div>
+  <script>
+    (function() {
+      let overlay = document.getElementById('whiteOverlay');
+      let overlayTimeout = null;
+      let delayTimeout = null;
+      let lastScrollY = window.scrollY;
 
+      function showWhiteOverlayWithDelay() {
+        if (delayTimeout) clearTimeout(delayTimeout);
+        if (overlayTimeout) clearTimeout(overlayTimeout);
 
-  
+        delayTimeout = setTimeout(() => {
+          overlay.classList.remove('hide');
+          overlayTimeout = setTimeout(() => {
+            overlay.classList.add('hide');
+          }, 3000);
+        }, 500);
+      }
 
+      let ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            if (window.scrollY !== lastScrollY) {
+              showWhiteOverlayWithDelay();
+              lastScrollY = window.scrollY;
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+    })();
+  </script>
 

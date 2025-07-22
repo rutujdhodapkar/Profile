@@ -199,11 +199,12 @@
       pointer-events: auto;
       margin-left: 6vw;
     }
-    .hello {
-      font-size: 1.5rem;
-      margin-bottom: 0.7rem;
-      line-height: 1.1;
+    .main-greeting {
+      font-size: 2.1rem;
       font-family: 'Krona One', 'BitmapFont', Arial, sans-serif;
+      font-weight: bold;
+      line-height: 1.1;
+      margin-bottom: 0.1em;
     }
     .mdesc1 {
       font-size: 0.95rem;
@@ -219,6 +220,13 @@
         font-size: 0.85rem;
         max-width: 95vw;
       }
+      .main-greeting {
+        font-size: 1.45rem;
+      }
+      .name-box {
+        font-size: 1.45rem;
+        padding: 0.18em 0.18em 0.18em 0.4em;
+      }
     }
     .name-box {
       background: #ffffffdb;
@@ -227,7 +235,7 @@
       backdrop-filter: blur(5px);
       padding: 0.3em 0.3em 0.3em 0.7em;
       border-radius: 0.45em;
-      font-size: 1.5rem;
+      font-size: 2.1rem;
       font-weight: bold;
       display: inline-block;
       box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
@@ -236,6 +244,7 @@
       white-space: pre;
       max-width: fit-content;
       font-family: 'Krona One', 'BitmapFont', Arial, sans-serif;
+      vertical-align: middle;
     }
     .typing-caret {
       display: inline-block;
@@ -389,11 +398,11 @@
         width: 0.6em;
         height: 0.6em;
       }
-      .hello {
-        font-size: 1.1rem;
+      .main-greeting {
+        font-size: 1.45rem;
       }
       .name-box {
-        font-size: 1.1rem;
+        font-size: 1.45rem;
         padding: 0.18em 0.18em 0.18em 0.4em;
       }
     }
@@ -585,8 +594,8 @@
 
   <div class="main-center-container">
     <div class="main-message">
-      <div class="hello">Hello There!!!</div>
-      <div style="font-size: 1.5rem; font-weight: bold; font-family: 'Krona One', Arial, sans-serif;">
+      <div class="main-greeting" id="greeting-hello">Hello There!!!</div>
+      <div class="main-greeting" id="greeting-im">
         I'm <span class="name-box"><b id="typed-name"></b><span class="typing-caret"></span></span>
       </div>
       <div id="mdesc1" class="mdesc1" style="display:none;"></div>
