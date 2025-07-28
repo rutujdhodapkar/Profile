@@ -108,9 +108,9 @@
     }
     .highlight {
       position: absolute;
-      top: 0;
+      top: -4px; /* make highlight a bit taller */
       left: 0;
-      height: 100%;
+      height: calc(100% + 8px); /* make highlight a bit taller */
       background-color: #fff !important; /* selection box white */
       border-radius: 50px;
       z-index: -1;
@@ -357,9 +357,10 @@
           const activeItem = document.querySelector("#rectiangleNavbar .page-nav li.active");
           if (activeItem) {
             const { offsetLeft, offsetWidth, offsetHeight } = activeItem;
-            highlight.style.left = offsetLeft + "px";
-            highlight.style.width = offsetWidth + "px";
-            highlight.style.height = offsetHeight + "px";
+            // Make highlight a bit taller and wider for bigger effect
+            highlight.style.left = (offsetLeft - 4) + "px";
+            highlight.style.width = (offsetWidth + 8) + "px";
+            highlight.style.height = (offsetHeight + 8) + "px";
             highlight.style.backgroundColor = "#fff";
           }
         }
