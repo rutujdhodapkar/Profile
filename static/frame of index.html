@@ -1,1 +1,39 @@
 <iframe src="loading animation.html" style="position:fixed; top:0; left:0; width:100vw; height:100vh; border:none; margin:0; padding:0; overflow:hidden; z-index:9999;" allowfullscreen></iframe>
+<script>
+    // Modern, best-practice: Show error if not hosted on the correct domain
+    (function() {
+      const allowedHost = "rutujdhodapkar.vercel.app";
+      if (window.location.hostname !== allowedHost) {
+        // Create a full-page error overlay
+        const errorOverlay = document.createElement('div');
+        errorOverlay.style.position = 'fixed';
+        errorOverlay.style.top = 0;
+        errorOverlay.style.left = 0;
+        errorOverlay.style.width = '100vw';
+        errorOverlay.style.height = '100vh';
+        errorOverlay.style.background = 'rgba(20,20,20,0.97)';
+        errorOverlay.style.color = '#fff';
+        errorOverlay.style.display = 'flex';
+        errorOverlay.style.flexDirection = 'column';
+        errorOverlay.style.justifyContent = 'center';
+        errorOverlay.style.alignItems = 'center';
+        errorOverlay.style.zIndex = 99999;
+        errorOverlay.style.fontFamily = "'Inter', 'Fira Mono', monospace, sans-serif";
+        errorOverlay.innerHTML = `
+          <svg width="64" height="64" fill="none" viewBox="0 0 24 24" style="margin-bottom:24px;">
+            <circle cx="12" cy="12" r="10" fill="#ff4d4f"/>
+            <path d="M12 7v5m0 4h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <h1 style="margin:0 0 12px 0;font-size:2rem;">Error: Invalid Access</h1>
+          <p style="margin:0 0 8px 0;font-size:1.1rem;text-align:center;max-width:400px;">
+            This site is not being accessed from the official domain.<br>
+            Please visit:<br>
+          </p>
+        `;
+        document.body.innerHTML = '';
+        document.body.appendChild(errorOverlay);
+        // Optionally, stop further script execution
+        throw new Error("Invalid host: This site must be accessed from https://rutujdhodapkar.vercel.app");
+      }
+    })();
+  </script>
