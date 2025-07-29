@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Contact -rutujdhodapkar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
   
   <style>
@@ -11,6 +12,7 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
+      box-sizing: border-box;
     }
     body {
       width: 100vw;
@@ -23,6 +25,7 @@
       overflow: hidden;
       color: #fff;
       background: #000;
+      font-size: 16px;
     }
     .contact-content {
       position: absolute;
@@ -35,24 +38,29 @@
       align-items: center;
       justify-content: center;
       pointer-events: none;
+      padding: 1.5rem 0.5rem 5.5rem 0.5rem;
+      box-sizing: border-box;
     }
     .contact-title {
-      font-family: 'krona one', Arial, sans-serif;
-      font-size: 2.8rem;
+      font-family: 'Krona One', Arial, sans-serif;
+      font-size: 2.2rem;
       color: #fff;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
       letter-spacing: 0.04em;
       text-align: center;
       text-shadow: 0 2px 12px #0008, 0 0 2px #fff2;
       pointer-events: auto;
+      word-break: break-word;
     }
     .button-row {
       display: flex;
-      gap: 1.2rem;
-      margin-top: 1.2rem;
+      gap: 1rem;
+      margin-top: 1rem;
       flex-wrap: wrap;
       justify-content: center;
       pointer-events: auto;
+      width: 100%;
+      max-width: 420px;
     }
     @font-face {
       font-family: 'BitmapFont';
@@ -66,8 +74,8 @@
       color: #000;
       border: none;
       outline: none;
-      padding: 0.65rem 2.2rem;
-      font-size: 1.18rem;
+      padding: 0.6rem 1.3rem;
+      font-size: 1.05rem;
       border-radius: 999px;
       cursor: pointer;
       transition: background 0.18s, color 0.18s, transform 0.12s, border 0.18s;
@@ -78,6 +86,9 @@
       text-decoration: none;
       pointer-events: auto;
       position: relative;
+      min-width: 110px;
+      max-width: 100%;
+      word-break: break-word;
     }
     .contact-btn:hover, .contact-btn:focus {
       background: transparent;
@@ -109,11 +120,12 @@
     }
     .feedback-link {
       text-align: center;
-      margin-top: 2.5rem;
+      margin-top: 2rem;
       font-family: 'BitmapFont', monospace, Arial, sans-serif;
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       pointer-events: auto;
       color: #fff;
+      width: 100%;
     }
     .feedback-link a {
       color: #fff;
@@ -165,32 +177,35 @@
     }
     .back-btn-container {
       position: fixed;
-      top: 24px;
-      left: 24px;
+      top: 18px;
+      left: 14px;
       z-index: 10000;
       display: flex;
       align-items: center;
       gap: 0.5em;
       border-radius: 999px;
-      padding: 0.18em 0.9em 0.18em 0.18em;
+      padding: 0.14em 0.7em 0.14em 0.14em;
       cursor: pointer;
       user-select: none;
       transition: background 0.18s;
       pointer-events: auto;
       text-decoration: none;
+      background: rgba(0,0,0,0.12);
+      box-shadow: 0 2px 8px #0002;
     }
     .back-btn-container:hover, .back-btn-container:focus {
       text-decoration: none;
+      background: rgba(255,255,255,0.08);
     }
     .back-btn-svg {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       display: inline-block;
       vertical-align: middle;
     }
     .back-btn-text {
       font-family: 'BitmapFont', 'inter', Arial, sans-serif;
-      font-size: 1.18rem;
+      font-size: 1.05rem;
       color: #e3e3e3;
       letter-spacing: 0.04em;
       font-weight: 600;
@@ -200,42 +215,21 @@
       line-height: 1;
       user-select: none;
     }
-    /* REMOVE RESPONSIVE CHANGES THAT ALTER POSITION OR SIZE */
-    /* The following media query is commented out to prevent text/button position/size changes on small screens */
-    /*
-    @media (max-width: 600px) {
-      .back-btn-container {
-        top: 10px;
-        left: 8px;
-        padding: 0.12em 0.7em 0.12em 0.12em;
-      }
-      .back-btn-svg {
-        width: 22px;
-        height: 22px;
-      }
-      .back-btn-text {
-        font-size: 1.01rem;
-      }
-      .contact-btn {
-        padding: 0.55rem 1.4rem;
-        font-size: 1.01rem;
-      }
-    }
-    */
     .support-links-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.7em;
-      margin-top: 2.2rem;
+      margin-top: 1.5rem;
       margin-bottom: 0.2rem;
       pointer-events: auto;
+      width: 100%;
     }
     .support-link {
       display: inline-flex;
       align-items: center;
       font-family: 'BitmapFont', monospace, Arial, sans-serif;
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       color: #fff;
       background: rgba(30,30,30,0.32);
       border-radius: 0.7em;
@@ -249,6 +243,8 @@
       border: none;
       outline: none;
       pointer-events: auto;
+      max-width: 100%;
+      word-break: break-word;
     }
     .support-link:hover, .support-link:focus {
       background: rgba(60,60,60,0.38);
@@ -262,6 +258,61 @@
       margin-bottom: 2px;
       width: 1.1em;
       height: 1.1em;
+    }
+    /* Responsive styles for mobile devices */
+    @media (max-width: 600px) {
+      .contact-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.2rem;
+      }
+      .contact-content {
+        padding: 1.1rem 0.2rem 5.5rem 0.2rem;
+      }
+      .button-row {
+        gap: 0.6rem;
+        margin-top: 0.7rem;
+        max-width: 98vw;
+      }
+      .contact-btn {
+        font-size: 0.98rem;
+        padding: 0.5rem 0.9rem;
+        min-width: 90px;
+      }
+      .back-btn-container {
+        top: 8px;
+        left: 6px;
+        padding: 0.10em 0.5em 0.10em 0.10em;
+      }
+      .back-btn-svg {
+        width: 18px;
+        height: 18px;
+      }
+      .back-btn-text {
+        font-size: 0.92rem;
+      }
+      .support-links-container {
+        margin-top: 1rem;
+      }
+      .support-link {
+        font-size: 0.98rem;
+        padding: 0.13em 0.7em;
+      }
+      .feedback-link {
+        font-size: 0.98rem;
+        margin-top: 1.2rem;
+      }
+    }
+    @media (max-width: 400px) {
+      .contact-title {
+        font-size: 1.1rem;
+      }
+      .contact-btn {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.6rem;
+      }
+      .back-btn-text {
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
@@ -279,23 +330,10 @@
   <div class="contact-content">
     <div class="contact-title">Contact Me</div>
     <div class="button-row" id="contact-links">
-
       <!-- Contact buttons will be inserted here by JS -->
     </div>
     <!-- Support links above feedback -->
     <div class="support-links-container">
-      <a class="support-link" href="https://www.fiverr.com/s/2K9b4Vk" target="_blank" rel="noopener noreferrer">
-        Buy me coffee
-        <svg class="arrow-top-right" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M6 14L14 6M14 6H7.5M14 6V12.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-      <a class="support-link" href="https://www.fiverr.com/s/ZmkbG7l" target="_blank" rel="noopener noreferrer">
-        Fiverr
-        <svg class="arrow-top-right" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M6 14L14 6M14 6H7.5M14 6V12.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
     </div>
     <div class="feedback-link">
        <span style="display: inline-block; backdrop-filter: blur(8px); background: rgba(30,30,30,0.32); border-radius: 0.7em; padding: 0.18em 0.95em 0.18em 0.95em; box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);">
@@ -422,9 +460,6 @@
 
     // --- Scroll up to show 2nd page,html ---
     (function() {
-      let lastScroll = 0;
-      let ticking = false;
-
       // Since the page is not scrollable, listen to wheel/touch events for "scroll up" intent
       function handleScrollUp(e) {
         // For wheel event: deltaY < 0 means scroll up
@@ -451,7 +486,6 @@
     // --- End scroll up to show 2nd page,html ---
 
   </script>
-
 
 <style>
   ::selection {
@@ -533,6 +567,18 @@
     gap: 0.2em;
     width: fit-content;
   }
+  @media (max-width: 600px) {
+    .footer-blur-line-box {
+      padding: 0.25em 0.7em 0.25em 0.7em;
+    }
+    .footer-blur-line {
+      font-size: 0.85em;
+    }
+    .footer-link {
+      font-size: 0.85em;
+      padding: 0 0.1em;
+    }
+  }
 </style>
   <div style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #aaa; font-size: 1.05rem; font-family: 'BitmapFont', 'inter', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.5rem; line-height: 1.7;">
   <div class="footer-blur-box-separate">
@@ -575,5 +621,3 @@
     </div>
   </div>
 </div>
-
-
