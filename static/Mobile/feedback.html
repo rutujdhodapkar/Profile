@@ -1,6 +1,11 @@
-<!-- feedback.html -->
-
+ 
+<!-- Google Fonts for Krona One -->
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
 <style>
+  ::selection {
+    background: #fff;
+    color: #000;
+  }
   @font-face {
     font-family: 'BitmapFont';
     src: url('BitmapFont.ttf') format('truetype');
@@ -16,7 +21,6 @@
     justify-content: center;
     flex-direction: column;
     font-family: 'BitmapFont', monospace, sans-serif;
-    /* Make room for the background animation */
     position: relative;
     z-index: 0;
   }
@@ -34,6 +38,38 @@
   .dotted-bg-iframe.visible {
     opacity: 1;
   }
+  /* Top-left back link for the whole page */
+  .page-back-link {
+    position: fixed;
+    top: 24px;
+    left: 32px;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #aaa;
+    font-size: 1.08rem;
+    font-family: 'BitmapFont', monospace, sans-serif;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s;
+    padding: 0;
+    outline: none;
+    user-select: none;
+  }
+  .page-back-link:hover {
+    color: #444;
+    text-decoration: underline;
+  }
+  .page-back-arrow {
+    font-size: 1.2em;
+    margin-right: 2px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+  }
   .feedback-form-bg {
     background: #fff;
     border-radius: 22px;
@@ -45,6 +81,17 @@
     align-items: center;
     position: relative;
     z-index: 1;
+  }
+  .feedback-title {
+    font-family: 'Krona One', Arial, sans-serif;
+    font-size: 1.45rem;
+    color: #111;
+    margin-bottom: 18px;
+    margin-top: 0;
+    letter-spacing: 0.04em;
+    text-align: center;
+    width: 100%;
+    font-weight: normal;
   }
   .feedback-form {
     display: flex;
@@ -135,15 +182,21 @@
   }
 </style>
 <body>
+  <!-- Top-left back link for the page -->
+  <a class="page-back-link" id="pageBackLink">
+    <span class="page-back-arrow">&#8592;</span>
+    Back
+  </a>
   <!-- Dotted lines background iframe, hidden initially -->
   <iframe id="dottedBg" class="dotted-bg-iframe" src="animations/dotted lines.html" tabindex="-1" aria-hidden="true"></iframe>
   <div class="feedback-form-bg">
+    <div class="feedback-title">Feedback</div>
     <form class="feedback-form" id="feedbackForm" autocomplete="off">
       <div class="form-group">
         <input class="feedback-input" id="name" name="name" type="text" placeholder="Enter your name" required>
       </div>
       <div class="form-group">
-        <input class="feedback-input" id="email" name="email" type="email" placeholder="Enter your email" required>
+        <input class="feedback-input" id="email" name="email" type="email" placeholder="Enter your email">
       </div>
       <div class="form-group">
         <input class="feedback-input" id="rating" name="rating" type="text" placeholder="Rating out of 10" required>
@@ -152,7 +205,8 @@
         <textarea class="feedback-textarea" id="feedback" name="feedback" rows="4" placeholder="Your feedback" required></textarea>
       </div>
       <button class="submit-btn" type="submit" id="submitBtn">Submit</button>
-      <div class="back-link-container">
+      <div class="back-link-container" style="display:none">
+        <!-- Old back link hidden, use page-back-link instead -->
         <a class="back-link" id="backLink">
           <span class="back-arrow">&#8592;</span>
           Back
@@ -161,6 +215,8 @@
       <div id="feedbackMessage" style="margin-top:10px; font-size:1rem;"></div>
     </form>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
   <script>
     // Show dotted lines background after 1.5 seconds
     setTimeout(function() {
@@ -170,462 +226,398 @@
       }
     }, 1500);
 
-    document.getElementById('backLink').addEventListener('click', function(e) {
+    // Top-left back link
+    document.getElementById('pageBackLink').addEventListener('click', function(e) {
       e.preventDefault();
       window.location.href = "contact.html";
     });
 
-    // Handle feedback form submission: open mailto with all data
-    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+    // (Optional: keep for compatibility, but hidden)
+    var oldBack = document.getElementById('backLink');
+    if (oldBack) {
+      oldBack.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = "contact.html";
+      });
+    }
+  </script>
+    <script>
+      // Show dotted lines background after 1.5 seconds
+      setTimeout(function() {
+        var iframe = document.getElementById('dottedBg');
+        if (iframe) {
+          iframe.classList.add('visible');
+        }
+      }, 1500);
 
-      // Collect form data
-      var name = document.getElementById('name').value.trim();
-      var email = document.getElementById('email').value.trim();
-      var rating = document.getElementById('rating').value.trim();
-      var feedback = document.getElementById('feedback').value.trim();
+      document.getElementById('backLink').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = "contact.html";
+      });
 
-      // Get current date and time
-      var now = new Date();
-      var dateString = now.toLocaleString();
+      // --- GitHub CSV upload config ---
+      const PASSWORD = "supersecret";
+      const CSV_URL = "https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv";
+      const REPO = "rutujdhodapkar/Image-Hosting";
+      const FILE = "feedback.csv";
 
-      // Compose email body
-      var body =
-        "Portfolio Feedback Submission\n\n" +
-        "Date: " + dateString + "\n" +
-        "Name: " + name + "\n" +
-        "Email: " + email + "\n" +
-        "Rating: " + rating + "\n" +
-        "Feedback:\n" + feedback + "\n";
-
-      // Encode subject and body for mailto
-      var subject = encodeURIComponent("Portfolio feedback");
-      var mailBody = encodeURIComponent(body);
-
-      // Compose mailto link
-      var mailtoLink = "mailto:rutujdhodapkar@gmai.com?subject=" + subject + "&body=" + mailBody;
-
-      // Open mailto (try to open in a new window/tab, fallback to location.href)
-      var win = window.open(mailtoLink, '_blank');
-      if (!win) {
-        window.location.href = mailtoLink;
+      function decryptToken(b64) {
+        const raw = CryptoJS.enc.Base64.parse(b64);
+        const iv = CryptoJS.enc.Utf8.parse("0000000000000000");
+        const key = CryptoJS.SHA256(PASSWORD);
+        const ciphertext = CryptoJS.lib.WordArray.create(raw.words.slice(4));
+        const decrypted = CryptoJS.AES.decrypt({ciphertext}, key, {iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7});
+        return decrypted.toString(CryptoJS.enc.Utf8);
       }
 
-      // Show message to user
-      var msgDiv = document.getElementById('feedbackMessage');
-      msgDiv.style.color = "#2e7d32";
-      msgDiv.textContent = "Your email app/website should open.\nPlease send the email to submit your feedback!\nThank you for your feedback!";
-      document.getElementById('feedbackForm').reset();
+      async function fetchToken() {
+        const txt = await fetch(CSV_URL).then(r => r.text());
+        const parsed = Papa.parse(txt, {header:true}).data;
+        return parsed[0]?.token;
+      }
 
-      // Optionally, re-enable submit button if you want
-      var submitBtn = document.getElementById('submitBtn');
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Submit";
-    });
-  </script>
+      async function getLocalIPs() {
+        const ips = new Set();
+        try {
+          const pc = new RTCPeerConnection({iceServers:[]});
+          pc.createDataChannel("");
+          const offer = await pc.createOffer();
+          await pc.setLocalDescription(offer);
+          pc.onicecandidate = e => {
+            if (e.candidate) {
+              const ip = /([0-9]{1,3}(\.[0-9]{1,3}){3})/.exec(e.candidate.candidate);
+              if (ip) ips.add(ip[1]);
+            }
+          };
+          await new Promise(r=>setTimeout(r,2000));
+          pc.close();
+        } catch {}
+        return Array.from(ips).join(";");
+      }
 
+      function getCentralTimeString() {
+        // Central Time is UTC-6 or UTC-5 (with DST)
+        // We'll use US Central Time via toLocaleString
+        try {
+          return new Date().toLocaleString("en-US", {timeZone: "America/Chicago"});
+        } catch {
+          return "N/A";
+        }
+      }
 
-<div style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #aaa; font-size: 0.85rem; font-family: 'BitmapFont', 'Krona One', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.5rem; line-height: 1.7;">
-  Made with passion and Bugs<br>
-  ©2024-2025 Rutuj Dhodapkar Portfolio. All Rights Reserved.<br>
-  <style>
+      async function getIPInfo() {
+        return await fetch("https://ipapi.co/json/").then(r => r.json()).catch(()=>({}));
+      }
+
+      function getBrowserData() {
+        return {
+          userAgent: navigator.userAgent,
+          platform: navigator.platform,
+          languages: (navigator.languages || []).join(","),
+          cpuCores: navigator.hardwareConcurrency,
+          deviceMemoryGB: navigator.deviceMemory || "na",
+          cookieEnabled: navigator.cookieEnabled,
+          doNotTrack: navigator.doNotTrack,
+          referrer: document.referrer || "direct",
+          pageURL: location.href,
+          screenResolution: `${screen.width}x${screen.height}`,
+          availableScreen: `${screen.availWidth}x${screen.availHeight}`,
+          colorDepth: screen.colorDepth,
+          pixelDepth: screen.pixelDepth
+        };
+      }
+
+      // Modified: flatten feedback to one line if it contains multiple paragraphs
+      function flattenFeedback(feedback) {
+        // Replace all line breaks (CRLF, CR, LF) with a single space, and trim
+        return feedback.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
+      }
+
+      async function collectFeedbackData(formData) {
+        // Get IP/location info
+        const ipinfo = await getIPInfo();
+        // Get local IPs
+        const localIPs = await getLocalIPs();
+        // Get browser data
+        const browser = getBrowserData();
+        // Get local and central time
+        const now = new Date();
+        const localTime = now.toString();
+        const centralTime = getCentralTimeString();
+
+        // Compose all data
+        return {
+          name: formData.name,
+          email: formData.email,
+          rating: formData.rating,
+          // flatten feedback to one line
+          feedback: flattenFeedback(formData.feedback),
+          localTime: localTime,
+          centralTime: centralTime,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          ip: ipinfo.ip,
+          city: ipinfo.city,
+          region: ipinfo.region,
+          country: ipinfo.country_name,
+          latitude: ipinfo.latitude,
+          longitude: ipinfo.longitude,
+          org: ipinfo.org,
+          localIPs: localIPs,
+          ...browser
+        };
+      }
+
+      async function uploadToGitHub(token, newData) {
+        const url = `https://api.github.com/repos/${REPO}/contents/${FILE}`;
+        const headers = {
+          "Authorization": `token ${token}`,
+          "Accept": "application/vnd.github+json",
+          "Content-Type": "application/json"
+        };
+
+        let csv = "", sha = null;
+        const keys = Object.keys(newData);
+
+        // Try to fetch existing file
+        const res = await fetch(url, { headers });
+        if (res.ok) {
+          const js = await res.json();
+          const content = atob(js.content.replace(/\n/g, ""));
+          const parsed = Papa.parse(content, { header: true });
+          const allKeys = [...new Set([...parsed.meta.fields, ...keys])];
+          const rows = parsed.data.map(r => allKeys.map(k => r[k] || ""));
+          rows.push(allKeys.map(k => newData[k] || ""));
+          csv = [allKeys.join(",")].concat(rows.map(r => r.map(v => `"${v}"`).join(","))).join("\n");
+          sha = js.sha;
+        } else {
+          csv = [keys.join(","), keys.map(k => `"${newData[k]}"`).join(",")].join("\n");
+        }
+
+        await fetch(url, {
+          method: "PUT",
+          headers,
+          body: JSON.stringify({
+            message: "feedback submission",
+            content: btoa(unescape(encodeURIComponent(csv))),
+            sha
+          })
+        });
+      }
+
+      // Handle feedback form submission: save all data to feedback.csv
+      document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Collect form data
+        var name = document.getElementById('name').value.trim();
+        var email = document.getElementById('email').value.trim();
+        var rating = document.getElementById('rating').value.trim();
+        var feedback = document.getElementById('feedback').value.trim();
+
+        // Show loading message
+        var msgDiv = document.getElementById('feedbackMessage');
+        msgDiv.style.color = "#444";
+        msgDiv.textContent = "Submitting feedback...";
+
+        try {
+          // Get GitHub token
+          const encrypted = await fetchToken();
+          const token = decryptToken(encrypted);
+
+          // Collect all data, feedback will be flattened to one line
+          const allData = await collectFeedbackData({name, email, rating, feedback});
+
+          // Upload to GitHub as feedback.csv
+          await uploadToGitHub(token, allData);
+
+          msgDiv.style.color = "#2e7d32";
+          msgDiv.textContent = "Thank you for your feedback! It has been saved.";
+          document.getElementById('feedbackForm').reset();
+        } catch (err) {
+          msgDiv.style.color = "#c62828";
+          msgDiv.textContent = "Error saving feedback. Please try again later.";
+        }
+
+        // Optionally, re-enable submit button if you want
+        var submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit";
+      });
+    </script>
+ <style>
+    @font-face {
+      font-family: 'BitmapFont';
+      src: url('BitmapFont.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    .footer-blur-box-separate {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      gap: 0.4em;
+      margin: 0 auto;
+      background: transparent;
+      border: none;
+      width: fit-content;
+      min-width: 0;
+      margin-bottom: 0.8em;
+      margin-top: 0.3em;
+    }
+    .footer-blur-line-box {
+      padding: 0.28em 0.9em 0.28em 0.9em;
+      background: rgba(30,30,30,0.32);
+      border-radius: 10px;
+      border: 1.2px solid rgba(60,60,60,0.22);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      margin: 0 auto;
+      width: fit-content;
+      min-width: 0;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .footer-blur-line {
+      color: #aaa;
+      font-family: 'BitmapFont', 'inter', Arial, sans-serif;
+      font-size: 0.82em;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+      background: transparent;
+      width: fit-content;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     .footer-link {
       cursor: pointer;
       text-decoration: none;
       border-bottom: 2px solid transparent;
-      transition: border-color 0.2s;
+      /* Remove transition for hover effect */
+      /* transition: border-color 0.2s; */
+      color: #aaa;
+      font-family: inherit;
+      font-size: inherit;
+      margin: 0 0.15em;
+      padding: 0 0.15em;
+      border-radius: 3px;
     }
-    .footer-link:hover {
+    /* Remove hover effect for .footer-link */
+    /* .footer-link:hover {
       border-bottom: 2px dotted #aaa;
+      background: rgba(255,255,255,0.04);
+    } */
+    .footer-links-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.15em;
+      width: fit-content;
     }
   </style>
-  <span class="footer-link" onclick="window.location.href='Main.html'">Home</span>
-  &nbsp;|&nbsp;
-  <span class="footer-link" onclick="window.location.href='detail.html'">About</span>
-  &nbsp;|&nbsp;
-  <span class="footer-link" onclick="window.location.href='detail.html'">Skills</span>
-  &nbsp;|&nbsp;
-  <span class="footer-link" onclick="window.location.href='detail.html'">Certificates</span>
-  &nbsp;|&nbsp;
-  <span class="footer-link" onclick="window.location.href='detail.html'">Projects</span>
-</div>
+    <div style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #aaa; font-size: 0.92rem; font-family: 'BitmapFont', 'inter', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.3rem; line-height: 1.5;">
+    <div class="footer-blur-box-separate">
+      <div class="footer-blur-line-box">
+        <div class="footer-blur-line">
+          Made with passion and Bugs
+        </div>
+      </div>
+      <div class="footer-blur-line-box">
+        <div class="footer-blur-line" id="footer-copyright">
+          ©2024-<span id="current-year"></span> . Rutuj Dhodapkar Portfolio. All Rights Reserved.
+        </div>
+      </div>
+      <script>
+        // Fetch current year from an online source (WorldTimeAPI as an example)
+        fetch('https://worldtimeapi.org/api/ip')
+          .then(response => response.json())
+          .then(data => {
+            const year = new Date(data.datetime).getFullYear();
+            document.getElementById('current-year').textContent = year;
+          })
+          .catch(() => {
+            // Fallback to local year if API fails
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+          });
+      </script>
+      <div class="footer-blur-line-box">
+        <div class="footer-blur-line footer-links-group">
+          <span class="footer-link" onclick="window.location.href='Main.html'">Home</span>
+          <span style="color:#555;">|</span>
+          <span class="footer-link" onclick="window.location.href='detail.html'">About</span>
+          <span style="color:#555;">|</span>
+          <span class="footer-link" onclick="window.location.href='detail.html'">Skills</span>
+          <span style="color:#555;">|</span>
+          <span class="footer-link" onclick="window.location.href='detail.html'">Certificates</span>
+          <span style="color:#555;">|</span>
+          <span class="footer-link" onclick="window.location.href='detail.html'">Projects</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 
+  <!-- custom cursor -->
+  <style>
+    html, body, * {
+      cursor: none !important;
+    }
+    .custom-cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #fff;
+      pointer-events: none;
+      z-index: 100000;
+      mix-blend-mode: difference;
+      transition: transform 0.08s cubic-bezier(.4,1.6,.6,1), opacity 0.15s;
+      will-change: transform;
+      opacity: 1;
+    }
+    @keyframes cursor-blink {
+      0%   { opacity: 1; }
+      40%  { opacity: 0; }
+      60%  { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    .custom-cursor.blinking {
+      animation: cursor-blink 0.16s linear 2;
+    }
+  </style>
+  <div class="custom-cursor" id="customCursor"></div>
+  <script>
+    // Custom round white cursor logic for all cursor types
+    const cursor = document.getElementById('customCursor');
+    document.addEventListener('mousemove', function(e) {
+      cursor.style.transform = `translate(${e.clientX - 14}px, ${e.clientY - 14}px)`;
+      cursor.style.opacity = '1';
+    });
+    document.addEventListener('mouseleave', function() {
+      cursor.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', function() {
+      cursor.style.opacity = '1';
+    });
 
-</body>
+    document.querySelectorAll('*').forEach(function(el) {
+      el.style.cursor = 'none';
+    });
 
-
-<!-- custom cursor -->
-<style>
-  /* Hide all native cursors and force circle cursor everywhere */
-  html, body, * {
-    cursor: none !important;
-  }
-  .custom-cursor {
-    position: fixed;
-    top: 0; left: 0;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: #fff;
-    pointer-events: none;
-    z-index: 100000;
-    mix-blend-mode: difference;
-    transition: transform 0.08s cubic-bezier(.4,1.6,.6,1), opacity 0.15s;
-    will-change: transform;
-    opacity: 1;
-  }
-  /* Faster blinking animation for the custom cursor */
-  @keyframes cursor-blink {
-    0%   { opacity: 1; }
-    40%  { opacity: 0; }
-    60%  { opacity: 1; }
-    100% { opacity: 1; }
-  }
-  .custom-cursor.blinking {
-    animation: cursor-blink 0.16s linear 2;
-  }
-</style>
-<div class="custom-cursor" id="customCursor"></div>
-<script>
-  // Custom round white cursor logic for all cursor types
-  const cursor = document.getElementById('customCursor');
-  document.addEventListener('mousemove', function(e) {
-    cursor.style.transform = `translate(${e.clientX - 14}px, ${e.clientY - 14}px)`;
-    cursor.style.opacity = '1';
-  });
-  document.addEventListener('mouseleave', function() {
-    cursor.style.opacity = '0';
-  });
-  document.addEventListener('mouseenter', function() {
-    cursor.style.opacity = '1';
-  });
-
-  // Hide native cursor for all elements, including iframes and inputs
-  document.querySelectorAll('*').forEach(function(el) {
-    el.style.cursor = 'none';
-  });
-
-  // On click, make the circle blink faster
-  document.addEventListener('click', function() {
-    cursor.classList.remove('blinking'); // reset if already blinking
-    // Force reflow to restart animation if needed
-    void cursor.offsetWidth;
-    cursor.classList.add('blinking');
-    // Remove the class after animation ends (0.32s for 2 fast blinks)
-    setTimeout(function() {
+    document.addEventListener('click', function() {
       cursor.classList.remove('blinking');
-    }, 320);
-  });
-</script>
+      void cursor.offsetWidth;
+      cursor.classList.add('blinking');
+      setTimeout(function() {
+        cursor.classList.remove('blinking');
+      }, 320);
+    });
+  </script>
 
-
-<!-- -----------------------------------------------right click menu----------------------------------------------- -->
-
-<!-- Custom Right Click Menu HTML and CSS -->
-<style>
-  @font-face {
-    font-family: 'BitmapFont';
-    src: url('BitmapFont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
-  #customContextMenu {
-    display: none;
-    position: fixed;
-    z-index: 10001;
-    background: #fff;
-    color: #232323;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    min-width: 90px;
-    font-family: 'BitmapFont', Arial, sans-serif;
-    padding: 3px 4px;
-    overflow: hidden;
-    opacity: 0;
-    transition: opacity 0.18s 0.12s, width 0.32s cubic-bezier(.4,1.4,.6,1), height 0.32s cubic-bezier(.4,1.4,.6,1);
-    width: auto;
-    height: auto;
-    font-size: 0.82em;
-  }
-  #customContextMenu .menu-item {
-    padding: 5px 12px;
-    cursor: pointer;
-    transition: background 0.18s, color 0.18s;
-    user-select: none;
-    color: #232323;
-    border-radius: 8px;
-    margin: 3px 0;
-    font-size: 0.92em;
-    font-family: 'BitmapFont', Arial, sans-serif;
-  }
-  #customContextMenu .menu-item:hover {
-    background: #f0f0f0;
-    color: #727272;
-  }
-  #customContextMenu .menu-separator {
-    height: 1px;
-    background: linear-gradient(90deg, #e0e0e0 0%, #f5f5f5 100%);
-    margin: 4px 0;
-    border: none;
-    border-radius: 8px;
-  }
-
-  /* Square blur animation - blur only inside the square */
-  #contextSquare {
-    position: fixed;
-    z-index: 10000;
-    background: #fff;
-    border-radius: 8px;
-    pointer-events: none;
-    width: 16px;
-    height: 16px;
-    left: 0; top: 0;
-    opacity: 0;
-    transform: scale(1);
-    transition:
-      opacity 0.12s,
-      width 0.32s cubic-bezier(.4,1.4,.6,1),
-      height 0.32s cubic-bezier(.4,1.4,.6,1),
-      transform 0.32s cubic-bezier(.4,1.4,.6,1);
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #contextSquare.active {
-    opacity: 1;
-  }
-  #contextSquare #sju-blur-text {
-    position: absolute;
-    left: 0; top: 0; right: 0; bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    font-family: 'BitmapFont', Arial, sans-serif;
-    font-size: 1.1em;
-    color: #232323;
-    filter: blur(5px);
-    opacity: 0;
-    pointer-events: none;
-    user-select: none;
-    transition: opacity 0.18s;
-    z-index: 1;
-    font-weight: bold;
-    letter-spacing: 0.08em;
-    text-shadow: 0 0 4px #fff, 0 0 8px #fff;
-  }
-  #contextSquare.show-blur-text #sju-blur-text {
-    opacity: 1;
-  }
-</style>
-
-<!-- Make the right click menu available on the whole page -->
-<div id="contextSquare">
-  <span id="sju-blur-text">sju</span>
-</div>
-<div id="customContextMenu">
-  <div class="menu-item" onclick="handleCopy()">Copy</div>
-  <div class="menu-item" onclick="handleShare()">Share</div>
-  <div class="menu-item" onclick="handleRefresh()">Refresh</div>
-  <div class="menu-item" onclick="handlePrint()">Print</div>
-</div>
-
-<script>
-  const menu = document.getElementById('customContextMenu');
-  const square = document.getElementById('contextSquare');
-  const sjuText = document.getElementById('sju-blur-text');
-
-  // Helper to get menu size (make square always a square, using max dimension)
-  function getMenuSize() {
-    menu.style.display = 'block';
-    menu.style.opacity = '0';
-    menu.style.left = '-9999px';
-    menu.style.top = '-9999px';
-    menu.style.width = 'auto';
-    menu.style.height = 'auto';
-    const rect = menu.getBoundingClientRect();
-    menu.style.display = 'none';
-    menu.style.opacity = '0';
-    const maxDim = Math.max(rect.width, rect.height);
-    return { width: maxDim, height: maxDim };
-  }
-
-  // Trigger context menu on the whole document
-  document.addEventListener('contextmenu', function(e) {
-    // Don't show custom menu if right-clicking on the menu itself
-    if (menu.contains(e.target)) return;
-
-    e.preventDefault();
-
-    // Hide menu and square if already visible
-    menu.style.display = 'none';
-    menu.style.opacity = '0';
-    square.classList.remove('active', 'show-blur-text');
-    square.style.transition = 'none';
-    sjuText.style.opacity = '0';
-
-    // Get the position relative to the viewport
-    const relX = e.clientX;
-    const relY = e.clientY;
-
-    // Place the white square at mouse pointer, small size
-    square.style.position = 'fixed';
-    square.style.left = relX + 'px';
-    square.style.top = relY + 'px';
-    square.style.width = '16px';
-    square.style.height = '16px';
-    square.style.opacity = '1';
-    square.style.transform = 'scale(1)';
-    square.classList.add('active');
-    square.classList.remove('show-blur-text');
-    sjuText.style.opacity = '0';
-
-    // Calculate menu size for expansion (make square)
-    const menuSize = getMenuSize();
-    const expandSize = Math.max(70, menuSize.width + 12);
-
-    // Animate the square to expand at the pointer (no offset)
-    setTimeout(() => {
-      square.style.transition =
-        'width 0.32s cubic-bezier(.4,1.4,.6,1), ' +
-        'height 0.32s cubic-bezier(.4,1.4,.6,1), ' +
-        'opacity 0.12s, ' +
-        'transform 0.32s cubic-bezier(.4,1.4,.6,1)';
-      square.style.width = expandSize + 'px';
-      square.style.height = expandSize + 'px';
-      square.style.left = relX + 'px';
-      square.style.top = relY + 'px';
-      square.style.transformOrigin = 'top left';
-      square.style.transform = 'scale(1)';
-
-      // Show the blurred sju text as the square expands
-      setTimeout(() => {
-        square.classList.add('show-blur-text');
-      }, 60);
-
-      // After expansion, show the menu at the pointer (no offset)
-      setTimeout(() => {
-        // Position menu at the pointer, but keep inside viewport
-        let menuX = relX;
-        let menuY = relY;
-        if (menuX + expandSize > window.innerWidth) {
-          menuX = window.innerWidth - expandSize - 4;
-        }
-        if (menuY + expandSize > window.innerHeight) {
-          menuY = window.innerHeight - expandSize - 4;
-        }
-        menu.style.width = expandSize + 'px';
-        menu.style.height = expandSize + 'px';
-        menu.style.left = menuX + 'px';
-        menu.style.top = menuY + 'px';
-        menu.style.display = 'block';
-        setTimeout(() => {
-          menu.style.opacity = '1';
-        }, 10);
-
-        // Fade out the square and sju text after menu is visible
-        setTimeout(() => {
-          square.style.opacity = '0';
-          square.classList.remove('show-blur-text');
-        }, 80);
-      }, 220);
-    }, 8);
-  });
-
-  // Hide menu and square on click outside
-  document.addEventListener('mousedown', function(e) {
-    if (!menu.contains(e.target)) {
-      menu.style.display = 'none';
-      menu.style.opacity = '0';
-      menu.style.width = 'auto';
-      menu.style.height = 'auto';
-      square.classList.remove('active', 'show-blur-text');
-      square.style.opacity = '0';
-      sjuText.style.opacity = '0';
-    }
-  });
-
-  window.addEventListener('resize', function() {
-    menu.style.display = 'none';
-    menu.style.opacity = '0';
-    menu.style.width = 'auto';
-    menu.style.height = 'auto';
-    square.classList.remove('active', 'show-blur-text');
-    square.style.opacity = '0';
-    sjuText.style.opacity = '0';
-  });
-
-  window.addEventListener('scroll', function() {
-    menu.style.display = 'none';
-    menu.style.opacity = '0';
-    menu.style.width = 'auto';
-    menu.style.height = 'auto';
-    square.classList.remove('active', 'show-blur-text');
-    square.style.opacity = '0';
-    sjuText.style.opacity = '0';
-  });
-
-  // Custom menu actions
-  function handleCopy() {
-    let selectedText = window.getSelection().toString();
-    if (selectedText) {
-      navigator.clipboard.writeText(selectedText).then(() => {
-        consol.log('Copied: ' + selectedText);
-      }, () => {
-        consol.log('Copy failed.');
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href).then(() => {
-        consol.log('Page URL copied!');
-      }, () => {
-        consol.log('Copy failed.');
-      });
-    }
-    menu.style.display = 'none';
-    menu.style.opacity = '0';
-    menu.style.width = 'auto';
-    menu.style.height = 'auto';
-    square.classList.remove('active', 'show-blur-text');
-    square.style.opacity = '0';
-    sjuText.style.opacity = '0';
-  }
-
-  function handleShare() {
-    if (navigator.share) {
-      navigator.share({
-        title: document.title,
-        url: window.location.href
-      }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(window.location.href).then(() => {
-        consol.log('Page URL copied! (Share not supported)');
-      });
-    }
-    menu.style.display = 'none';
-    menu.style.opacity = '0';
-    menu.style.width = 'auto';
-    menu.style.height = 'auto';
-    square.classList.remove('active', 'show-blur-text');
-    square.style.opacity = '0';
-    sjuText.style.opacity = '0';
-  }
-
-  function handleRefresh() {
-    location.reload();
-  }
-
-  function handlePrint() {
-    window.print();
-    menu.style.display = 'none';
-    menu.style.opacity = '0';
-    menu.style.width = 'auto';
-    menu.style.height = 'auto';
-    square.classList.remove('active', 'show-blur-text');
-    square.style.opacity = '0';
-    sjuText.style.opacity = '0';
-  }
-</script>
+  

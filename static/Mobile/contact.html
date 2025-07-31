@@ -1,9 +1,8 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Contact -rutujdhodapkar</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
   
   <style>
@@ -12,7 +11,6 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-      box-sizing: border-box;
     }
     body {
       width: 100vw;
@@ -25,7 +23,6 @@
       overflow: hidden;
       color: #fff;
       background: #000;
-      font-size: 16px;
     }
     .contact-content {
       position: absolute;
@@ -38,29 +35,24 @@
       align-items: center;
       justify-content: center;
       pointer-events: none;
-      padding: 1.5rem 0.5rem 5.5rem 0.5rem;
-      box-sizing: border-box;
     }
     .contact-title {
-      font-family: 'Krona One', Arial, sans-serif;
-      font-size: 2.2rem;
+      font-family: 'krona one', Arial, sans-serif;
+      font-size: 2.8rem;
       color: #fff;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       letter-spacing: 0.04em;
       text-align: center;
       text-shadow: 0 2px 12px #0008, 0 0 2px #fff2;
       pointer-events: auto;
-      word-break: break-word;
     }
     .button-row {
       display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
+      gap: 1.2rem;
+      margin-top: 1.2rem;
       flex-wrap: wrap;
       justify-content: center;
       pointer-events: auto;
-      width: 100%;
-      max-width: 420px;
     }
     @font-face {
       font-family: 'BitmapFont';
@@ -74,11 +66,12 @@
       color: #000;
       border: none;
       outline: none;
-      padding: 0.6rem 1.3rem;
-      font-size: 1.05rem;
+      padding: 0.65rem 2.2rem;
+      font-size: 1.18rem;
       border-radius: 999px;
       cursor: pointer;
-      transition: background 0.18s, color 0.18s, transform 0.12s, border 0.18s;
+      /* Remove transition for hover effect */
+      /* transition: background 0.18s, color 0.18s, transform 0.12s, border 0.18s; */
       box-shadow: 0 2px 12px #0001;
       letter-spacing: 0.03em;
       margin: 0;
@@ -86,17 +79,15 @@
       text-decoration: none;
       pointer-events: auto;
       position: relative;
-      min-width: 110px;
-      max-width: 100%;
-      word-break: break-word;
     }
-    .contact-btn:hover, .contact-btn:focus {
+    /* Remove hover/focus effect for .contact-btn */
+    /* .contact-btn:hover, .contact-btn:focus {
       background: transparent;
       color: #fff;
       border: 2px solid #fff;
       transform: translateY(-2px) scale(1.04);
       text-decoration: none;
-    }
+    } */
     .contact-btn .arrow-top-right {
       display: inline-block;
       vertical-align: middle;
@@ -120,12 +111,11 @@
     }
     .feedback-link {
       text-align: center;
-      margin-top: 2rem;
+      margin-top: 2.5rem;
       font-family: 'BitmapFont', monospace, Arial, sans-serif;
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       pointer-events: auto;
       color: #fff;
-      width: 100%;
     }
     .feedback-link a {
       color: #fff;
@@ -161,7 +151,7 @@
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background: #fff;
+      background: #000000;
       z-index: 9999;
       pointer-events: all;
       transition: background 0.5s cubic-bezier(.6,0,.4,1);
@@ -177,35 +167,34 @@
     }
     .back-btn-container {
       position: fixed;
-      top: 18px;
-      left: 14px;
+      top: 24px;
+      left: 24px;
       z-index: 10000;
       display: flex;
       align-items: center;
       gap: 0.5em;
       border-radius: 999px;
-      padding: 0.14em 0.7em 0.14em 0.14em;
+      padding: 0.18em 0.9em 0.18em 0.18em;
       cursor: pointer;
       user-select: none;
-      transition: background 0.18s;
+      /* Remove transition for hover effect */
+      /* transition: background 0.18s; */
       pointer-events: auto;
       text-decoration: none;
-      background: rgba(0,0,0,0.12);
-      box-shadow: 0 2px 8px #0002;
     }
-    .back-btn-container:hover, .back-btn-container:focus {
+    /* Remove hover/focus effect for .back-btn-container */
+    /* .back-btn-container:hover, .back-btn-container:focus {
       text-decoration: none;
-      background: rgba(255,255,255,0.08);
-    }
+    } */
     .back-btn-svg {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       display: inline-block;
       vertical-align: middle;
     }
     .back-btn-text {
       font-family: 'BitmapFont', 'inter', Arial, sans-serif;
-      font-size: 1.05rem;
+      font-size: 1.18rem;
       color: #e3e3e3;
       letter-spacing: 0.04em;
       font-weight: 600;
@@ -215,21 +204,21 @@
       line-height: 1;
       user-select: none;
     }
+  
     .support-links-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.7em;
-      margin-top: 1.5rem;
+      margin-top: 2.2rem;
       margin-bottom: 0.2rem;
       pointer-events: auto;
-      width: 100%;
     }
     .support-link {
       display: inline-flex;
       align-items: center;
       font-family: 'BitmapFont', monospace, Arial, sans-serif;
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       color: #fff;
       background: rgba(30,30,30,0.32);
       border-radius: 0.7em;
@@ -237,20 +226,20 @@
       box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
       text-decoration: none;
       cursor: pointer;
-      transition: background 0.18s, color 0.18s;
+      /* Remove transition for hover effect */
+      /* transition: background 0.18s, color 0.18s; */
       backdrop-filter: blur(8px);
       margin: 0;
       border: none;
       outline: none;
       pointer-events: auto;
-      max-width: 100%;
-      word-break: break-word;
     }
-    .support-link:hover, .support-link:focus {
+    /* Remove hover/focus effect for .support-link */
+    /* .support-link:hover, .support-link:focus {
       background: rgba(60,60,60,0.38);
       color: #fff;
       text-decoration: none;
-    }
+    } */
     .support-link .arrow-top-right {
       display: inline-block;
       vertical-align: middle;
@@ -259,66 +248,11 @@
       width: 1.1em;
       height: 1.1em;
     }
-    /* Responsive styles for mobile devices */
-    @media (max-width: 600px) {
-      .contact-title {
-        font-size: 1.5rem;
-        margin-bottom: 1.2rem;
-      }
-      .contact-content {
-        padding: 1.1rem 0.2rem 5.5rem 0.2rem;
-      }
-      .button-row {
-        gap: 0.6rem;
-        margin-top: 0.7rem;
-        max-width: 98vw;
-      }
-      .contact-btn {
-        font-size: 0.98rem;
-        padding: 0.5rem 0.9rem;
-        min-width: 90px;
-      }
-      .back-btn-container {
-        top: 8px;
-        left: 6px;
-        padding: 0.10em 0.5em 0.10em 0.10em;
-      }
-      .back-btn-svg {
-        width: 18px;
-        height: 18px;
-      }
-      .back-btn-text {
-        font-size: 0.92rem;
-      }
-      .support-links-container {
-        margin-top: 1rem;
-      }
-      .support-link {
-        font-size: 0.98rem;
-        padding: 0.13em 0.7em;
-      }
-      .feedback-link {
-        font-size: 0.98rem;
-        margin-top: 1.2rem;
-      }
-    }
-    @media (max-width: 400px) {
-      .contact-title {
-        font-size: 1.1rem;
-      }
-      .contact-btn {
-        font-size: 0.85rem;
-        padding: 0.4rem 0.6rem;
-      }
-      .back-btn-text {
-        font-size: 0.8rem;
-      }
-    }
   </style>
 </head>
 <body>
   <!-- Back button with SVG icon -->
-  <a href="detailmobile.html" class="back-btn-container" id="backBtn" title="Back">
+  <a href="detail.html" class="back-btn-container" id="backBtn" title="Back">
     <svg class="back-btn-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
       <path d="M15 19L8 12L15 5" stroke="#e3e3e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -330,10 +264,18 @@
   <div class="contact-content">
     <div class="contact-title">Contact Me</div>
     <div class="button-row" id="contact-links">
+
       <!-- Contact buttons will be inserted here by JS -->
     </div>
     <!-- Support links above feedback -->
     <div class="support-links-container">
+      <a class="support-link" href="https://www.fiverr.com/s/2K9b4Vk" target="_blank" rel="noopener noreferrer">
+        Buy me coffee
+        <svg class="arrow-top-right" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M6 14L14 6M14 6H7.5M14 6V12.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
     </div>
     <div class="feedback-link">
        <span style="display: inline-block; backdrop-filter: blur(8px); background: rgba(30,30,30,0.32); border-radius: 0.7em; padding: 0.18em 0.95em 0.18em 0.95em; box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);">
@@ -367,9 +309,9 @@
       function setRainBgSrc() {
         // If screen width < height, use "rain pattern.html", else "dotted lines.html"
         var w = window.innerWidth, h = window.innerHeight;
-        var mobileRain = "animations/rain%20pattern.html";
+        var Rain = "animations/rain%20pattern.html";
         var desktopDotted = "animations/dotted%20lines.html";
-        var newSrc = (w < h) ? mobileRain : desktopDotted;
+        var newSrc = (w < h) ? Rain : desktopDotted;
         if (rainBg.getAttribute('src') !== newSrc) {
           rainBg.setAttribute('src', newSrc);
         }
@@ -411,17 +353,12 @@
         url: 'https://x.com/rutujdhodapkar'
       },
       {
-        label: 'Instagram',
-        url: 'https://instagram.com/rutujdhodapkar'
-      },
-      {
         label: 'Research',
-        url: 'https://researchrutujdhodapkar.vercel.app',
-        arrow: true
+        url: 'https://researchrutujdhodapkar.vercel.app'
       }
     ];
 
-    function createContactButton(href, label, arrow) {
+    function createContactButton(href, label) {
       if (!href) return '';
       let btn = document.createElement('button');
       btn.className = 'contact-btn';
@@ -430,41 +367,42 @@
       btn.onclick = function(e) {
         window.open(href, '_blank');
       };
-      if (arrow) {
-        // Add arrow SVG for top-right
-        let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("class", "arrow-top-right");
-        svg.setAttribute("width", "1em");
-        svg.setAttribute("height", "1em");
-        svg.setAttribute("viewBox", "0 0 20 20");
-        svg.setAttribute("fill", "none");
-        svg.setAttribute("aria-hidden", "true");
-        let path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        path.setAttribute("d", "M6 14L14 6M14 6H7.5M14 6V12.5");
-        path.setAttribute("stroke", "#000");
-        path.setAttribute("stroke-width", "2");
-        path.setAttribute("stroke-linecap", "round");
-        path.setAttribute("stroke-linejoin", "round");
-        svg.appendChild(path);
-        btn.appendChild(svg);
-      }
+      // Always add arrow SVG for top-right
+      let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("class", "arrow-top-right");
+      svg.setAttribute("width", "1em");
+      svg.setAttribute("height", "1em");
+      svg.setAttribute("viewBox", "0 0 20 20");
+      svg.setAttribute("fill", "none");
+      svg.setAttribute("aria-hidden", "true");
+      let path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", "M6 14L14 6M14 6H7.5M14 6V12.5");
+      path.setAttribute("stroke", "#000");
+      path.setAttribute("stroke-width", "2");
+      path.setAttribute("stroke-linecap", "round");
+      path.setAttribute("stroke-linejoin", "round");
+      svg.appendChild(path);
+      btn.appendChild(svg);
       return btn;
     }
 
     // Populate the contact links directly
     const btnRow = document.getElementById('contact-links');
-    contacts.forEach(({url, label, arrow}) => {
-      let btn = createContactButton(url, label, arrow);
+    contacts.forEach(({url, label}) => {
+      let btn = createContactButton(url, label);
       if (btn) btnRow.appendChild(btn);
     });
 
     // --- Scroll up to show 2nd page,html ---
     (function() {
+      let lastScroll = 0;
+      let ticking = false;
+
       // Since the page is not scrollable, listen to wheel/touch events for "scroll up" intent
       function handleScrollUp(e) {
         // For wheel event: deltaY < 0 means scroll up
         if (e.type === 'wheel' && e.deltaY < 0) {
-          window.location.href = 'detailmobile.html';
+          window.location.href = 'detail.html';
         }
         // For touch events: detect swipe down (which is scroll up)
         if (e.type === 'touchstart') {
@@ -473,7 +411,7 @@
         if (e.type === 'touchend' && typeof handleScrollUp.touchStartY === 'number') {
           let endY = e.changedTouches[0].clientY;
           if (endY - handleScrollUp.touchStartY > 40) { // swipe down
-            window.location.href = 'detailmobile.html';
+            window.location.href = 'detail.html';
           }
           handleScrollUp.touchStartY = undefined;
         }
@@ -486,6 +424,7 @@
     // --- End scroll up to show 2nd page,html ---
 
   </script>
+
 
 <style>
   ::selection {
@@ -547,7 +486,8 @@
     cursor: pointer;
     text-decoration: none;
     border-bottom: 2px solid transparent;
-    transition: border-color 0.2s;
+    /* Remove transition for hover effect */
+    /* transition: border-color 0.2s; */
     color: #aaa;
     font-family: inherit;
     font-size: inherit;
@@ -555,10 +495,11 @@
     padding: 0 0.2em;
     border-radius: 3px;
   }
-  .footer-link:hover {
+  /* Remove hover effect for .footer-link */
+  /* .footer-link:hover {
     border-bottom: 2px dotted #aaa;
     background: rgba(255,255,255,0.04);
-  }
+  } */
   .footer-links-group {
     display: flex;
     flex-wrap: wrap;
@@ -567,31 +508,13 @@
     gap: 0.2em;
     width: fit-content;
   }
-  @media (max-width: 600px) {
-    .footer-blur-line-box {
-      padding: 0.25em 0.7em 0.25em 0.7em;
-    }
-    .footer-blur-line {
-      font-size: 0.85em;
-    }
-    .footer-link {
-      font-size: 0.85em;
-      padding: 0 0.1em;
-    }
-  }
 </style>
-  <div style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #aaa; font-size: 1.05rem; font-family: 'BitmapFont', 'inter', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.5rem; line-height: 1.7;">
-  <div class="footer-blur-box-separate">
-    <div class="footer-blur-line-box">
-      <div class="footer-blur-line">
-        Made with passion and Bugs
-      </div>
+  <footer style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #aaa; font-size: 1.05rem; font-family: 'BitmapFont', 'inter', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.5rem; line-height: 1.7;">
+    <div style="margin-bottom: 0.1em;">
+      Made with passion and Bugs
     </div>
-    <div class="footer-blur-line-box">
-      <div class="footer-blur-line" id="footer-copyright">
-        ©2024-<span id="current-year"></span> . Rutuj Dhodapkar Portfolio. All Rights Reserved.
-
-      </div>
+    <div id="footer-copyright" style="margin-bottom: 0.1em;">
+      ©2024-<span id="current-year"></span> . Rutuj Dhodapkar Portfolio. All Rights Reserved.
     </div>
     <script>
       // Fetch current year from an online source (WorldTimeAPI as an example)
@@ -606,18 +529,19 @@
           document.getElementById('current-year').textContent = new Date().getFullYear();
         });
     </script>
-    <div class="footer-blur-line-box">
-      <div class="footer-blur-line footer-links-group">
-        <span class="footer-link" onclick="window.location.href='Main.html'">Home</span>
-        <span style="color:#555;">|</span>
-        <span class="footer-link" onclick="window.location.href='detailmobile.html'">About</span>
-        <span style="color:#555;">|</span>
-        <span class="footer-link" onclick="window.location.href='detailmobile.html'">Skills</span>
-        <span style="color:#555;">|</span>
-        <span class="footer-link" onclick="window.location.href='detailmobile.html'">Certificates</span>
-        <span style="color:#555;">|</span>
-        <span class="footer-link" onclick="window.location.href='detailmobile.html'">Projects</span>
-      </div>
+    <nav style="display: flex; justify-content: center; align-items: center; gap: 0.2em; width: fit-content; margin: 0 auto;">
+      <span class="footer-link" onclick="window.location.href='Main.html'">Home</span>
+      <span style="color:#555;">|</span>
+      <span class="footer-link" onclick="window.location.href='detail.html'">About</span>
+      <span style="color:#555;">|</span>
+      <span class="footer-link" onclick="window.location.href='detail.html'">Skills</span>
+      <span style="color:#555;">|</span>
+      <span class="footer-link" onclick="window.location.href='detail.html'">Certificates</span>
+      <span style="color:#555;">|</span>
+      <span class="footer-link" onclick="window.location.href='detail.html'">Projects</span>
+    </nav>
+  </footer>
     </div>
   </div>
 </div>
+
