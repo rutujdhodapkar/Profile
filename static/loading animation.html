@@ -19,7 +19,6 @@
     width: 40px;
     height: 40px;
     font-size: 1.05rem;
-    font-family: monospace, 'CustomPixelFont', 'Courier New', Courier, monospace;
     cursor: pointer;
     box-shadow: 0 4px 24px #00000026;
     transition: 
@@ -56,7 +55,6 @@
     font-size: 0.95rem;
     background: #0f0f0f;
     color: #ffffff;
-    font-family: monospace, 'CustomPixelFont', 'Courier New', Courier, monospace;
     transition: 
       width 0.8s cubic-bezier(.4,1.2,.6,1), 
       height 0.8s cubic-bezier(.4,1.2,.6,1), 
@@ -75,7 +73,6 @@
     font-size: 1.3rem;
     background: #0f0f0f;
     color: #fff;
-    font-family: monospace, 'CustomPixelFont', 'Courier New', Courier, monospace;
     transition: 
       width 1.2s cubic-bezier(.4,1.2,.6,1), 
       height 1.2s cubic-bezier(.4,1.2,.6,1), 
@@ -95,14 +92,13 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-    font-family: monospace, 'CustomPixelFont', 'Courier New', Courier, monospace;
   }
   #curveBtn .fade-text.visible {
     opacity: 1;
     transition: opacity 0.4s;
   }
 </style>
-<button id="curveBtn">
+<button id="curveBtn" style="font-family: 'BitmapFont', monospace;">
   <span class="fade-text visible" id="loadingText"></span>
   <span class="fade-text" id="stageText"></span>
   <span class="fade-text" id="welcomeText"></span>
@@ -152,10 +148,10 @@
   }
   // --- PIXEL FONT LOGIC END ---
 
-  var btn = document.getElementById('curveBtn');
-  var loadingText = document.getElementById('loadingText');
-  var stageText = document.getElementById('stageText');
-  var welcomeText = document.getElementById('welcomeText');
+  const btn = document.getElementById('curveBtn');
+  const loadingText = document.getElementById('loadingText');
+  const stageText = document.getElementById('stageText');
+  const welcomeText = document.getElementById('welcomeText');
 
   // Initial state: empty circle, subtle loading dots
   loadingText.innerHTML = renderPixelText('', {scale: 3, color: "#fff"});
@@ -208,40 +204,40 @@
   // --- Animation timing logic based on screen size ---
   function getAnimTimings() {
     // Consider small screen if width <= 600px or height <= 600px
-    var isSmall = window.innerWidth <= 600 || window.innerHeight <= 600;
+    const isSmall = window.innerWidth <= 600 || window.innerHeight <= 600;
     if (isSmall) {
-      // Slow down each stage by 40%
+      // Slow down each stage by 40%, but make welcome page time less
       return {
         growDelay: 100,
         growDuration: 1540, // 1100 * 1.4
         stage2Duration: 3220, // 2300 * 1.4
-        afterFullscreenDelay: 7000 // 5000 * 1.4
+        afterFullscreenDelay: 3500 // was 7000, now 3500 (50% less)
       };
     } else {
       return {
         growDelay: 100,
         growDuration: 1100,
         stage2Duration: 2300,
-        afterFullscreenDelay: 5000
+        afterFullscreenDelay: 2500 // was 5000, now 2500 (50% less)
       };
     }
   }
 
-  var timings = getAnimTimings();
+  const timings = getAnimTimings();
 
   // Animation stages
   showText(loadingText, stageText, welcomeText);
-  setTimeout(function() {
+  setTimeout(() => {
     btn.classList.add('grow');
   }, timings.growDelay);
 
-  setTimeout(function() {
+  setTimeout(() => {
     btn.classList.remove('grow');
     btn.classList.add('stage2');
     showText(stageText, loadingText, welcomeText);
   }, timings.growDelay + timings.growDuration);
 
-  setTimeout(function() {
+  setTimeout(() => {
     btn.classList.remove('stage2');
     btn.classList.add('fullscreen');
     showText(welcomeText, loadingText, stageText);
@@ -250,9 +246,9 @@
     document.body.style.background = "#0f0f0f";
 
     // After a delay, check data and redirect accordingly
-    setTimeout(function() {
+    setTimeout(() => {
       // First, check if data is accessible
-      checkDataAccessible().then(function(accessible) {
+      checkDataAccessible().then(accessible => {
         if (!accessible) {
           window.location.href = "error.html";
           return;
