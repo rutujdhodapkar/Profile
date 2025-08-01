@@ -106,87 +106,8 @@
       display: flex;
       flex-direction: column;
     }
-    #rectiangleNavbar {
-      position: fixed;
-      top: 25px;
-      left: calc(50% + 35px);
-      transform: translateX(-50%);
-      width: fit-content;
-      padding: 9px 20px;
-      background: #ffffff00;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 200px;
-      z-index: 9999;
-      transition: background-color 0.3s;
-      font-family: 'Inter', monospace, sans-serif !important;
-      box-shadow: 0 6px 32px 0 rgba(0,0,0,0.18), 0 1.5px 8px 0 rgba(0,0,0,0.10);
-      border: 1px solid rgba(255,255,255,0.35);
-      color: #fff;
-    }
-    #rectiangleNavbar:hover {
-      background: rgba(255,255,255,0.16) !important;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-    @media only screen and (max-width: 768px) {
-      #rectiangleNavbar {
-        display: none;
-      }
-      .main-layout {
-        flex-direction: column;
-      }
-      .left-vertical-black-box, .left-vertical-black-box-white-line {
-        display: none !important;
-      }
-      .main-content {
-        margin-left: 0;
-        width: 100vw;
-      }
-    }
-    #rectiangleNavbar .page-nav ul {
-      list-style: none;
-      display: flex;
-      gap: 8px;
-      padding: 0;
-      margin: 0;
-      position: relative;
-    }
-    #rectiangleNavbar .page-nav li {
-      cursor: pointer;
-      padding: 5px 12px;
-      transition: background-color 0.3s, color 0.3s, transform 0.3s;
-      border-radius: 50px;
-      position: relative;
-      font-family: 'Inter', monospace, sans-serif !important;
-      color: #fff !important;
-      background: transparent;
-    }
-    #rectiangleNavbar .page-nav li.active {
-      background-color: #fff !important;
-      color: #0f0f0f !important;
-    }
-    #rectiangleNavbar .page-nav li:hover:not(.active) {
-      background-color: rgba(255,255,255,0.18) !important;
-      color: #fff !important;
-      transform: scale(1.1);
-    }
-    .highlight {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      background-color: #fff !important;
-      border-radius: 50px;
-      z-index: -1;
-      transition: left 0.3s, width 0.3s, height 0.3s, background-color 0.3s;
-      pointer-events: none;
-    }
-    #rectiangleNavbar a {
-      text-decoration: none;
-      color: #fff !important;
-      font-family: 'Inter', monospace, sans-serif !important;
-    }
+    /* --- Transparent Header/Navbar --- */
+  
     .scroll-anchor {
       display: block;
       position: relative;
@@ -352,20 +273,7 @@
     <div class="left-vertical-black-box-white-line"></div>
     <!-- Main content area -->
     <div class="main-content">
-      <!-- Navigation -->
-      <div id="rectiangleNavbar" class="rectriangle">
-        <nav class="page-nav">
-          <ul>
-            <li data-section="home"><a href="#home" id="home-nav-link"><strong>Home</strong></a></li>
-            <li data-section="about"><a href="#about"><strong>About</strong></a></li>
-            <li data-section="skills"><a href="#skills"><strong>Skills</strong></a></li>
-            <li data-section="certificates"><a href="#certificates"><strong>Certificates</strong></a></li>
-            <li data-section="projects"><a href="#projects"><strong>Projects</strong></a></li>
-            <li data-section="contact"><a href="#contact" id="contact-nav-link"><strong>Contact</strong></a></li>
-            <div class="highlight"></div>
-          </ul>
-        </nav>
-      </div>
+
       <!-- New full-screen overlay for AI text -->
       <div id="ai-fullscreen-overlay">
         <div id="ai-text"></div>
@@ -779,4 +687,3 @@
   </script>
 </body>
 </html>
-

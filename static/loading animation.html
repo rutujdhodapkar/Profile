@@ -165,10 +165,14 @@
     hide2.classList.remove('visible');
   }
 
-  // --- Custom logic for data check and mobile redirect ---
+  // --- Custom logic for data check and mobile/portrait redirect ---
   function isMobileBrowser() {
     // Simple mobile detection
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+
+  function isPortraitScreen() {
+    return window.innerHeight > window.innerWidth;
   }
 
   // Returns a promise that resolves true if accessible, false if not (timeout 6s)
@@ -253,8 +257,8 @@
           window.location.href = "error.html";
           return;
         }
-        // If mobile, show under dev page
-        if (isMobileBrowser()) {
+        // If mobile browser, or portrait mode (even on desktop), redirect to mobile.html
+        if (isMobileBrowser() || isPortraitScreen()) {
           window.location.href = "Mobile/mobile.html";
         } else {
           window.location.href = "Desktop/Main.html";
