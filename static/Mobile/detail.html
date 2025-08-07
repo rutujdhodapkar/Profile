@@ -53,52 +53,11 @@
       width: 100vw;
       background: #0f0f0f00000;
     }
-    .left-vertical-black-box {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 70px;
-      height: 100vh;
-      background: transparent;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      z-index: 10000;
-      border-right: 1px solid #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      color: #fff;
-      pointer-events: none;
-    }
-    .left-vertical-black-box-white-line {
-      position: fixed;
-      left: 35px;
-      top: 57vh;
-      width: 2.5px;
-      height: 50vh;
-      background: #fff;
-      border-radius: 2px;
-      z-index: 10001;
-      pointer-events: none;
-    }
-    .left-vertical-black-box-name {
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      font-family: 'BitmapFont', Arial, sans-serif;
-      font-size: 2.1rem;
-      font-weight: 300;
-      color: #fff;
-      letter-spacing: 0.14em;
-      margin-top: 24px;
-      margin-bottom: 0;
-      pointer-events: none;
-      user-select: none;
-      opacity: 0.97;
-    }
+    /* Removed left-vertical-black-box and left-vertical-black-box-white-line styles */
     .main-content {
-      margin-left: 70px;
-      width: calc(100vw - 70px);
+      /* Remove margin-left and width calc for sidebar */
+      margin-left: 0;
+      width: 100vw;
       min-height: 100vh;
       background: #0f0f0f00000;
       position: relative;
@@ -266,11 +225,7 @@
 <body>
   <div id="startup-blur-overlay"></div>
   <div class="main-layout">
-    <!-- Left vertical box -->
-    <div class="left-vertical-black-box">
-      <div class="left-vertical-black-box-name" data-github-name></div>
-    </div>
-    <div class="left-vertical-black-box-white-line"></div>
+    <!-- Removed left vertical box and white line -->
     <!-- Main content area -->
     <div class="main-content">
 
@@ -300,22 +255,10 @@
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = docHeight > 0 ? scrollTop / docHeight : 0;
             let fastProgress = Math.min(progress * 2.5, 1);
-            const text1Width = text1.offsetWidth;
-            const maxTranslate1 = container.offsetWidth + text1Width + 40;
-            const translateX1 = maxTranslate1 * (1 - fastProgress) - text1Width;
-            text1.style.transform = `translateY(-50%) translateX(${translateX1}px)`;
-            const text2Width = text2.offsetWidth;
-            const maxTranslate2 = container.offsetWidth + text2Width + 40;
-            const translateX2 = -text2Width + maxTranslate2 * fastProgress;
-            text2.style.transform = `translateY(-50%) translateX(${translateX2}px)`;
-            const text3Width = text3.offsetWidth;
-            const maxTranslate3 = container.offsetWidth + text3Width + 40;
-            const translateX3 = maxTranslate3 * (1 - fastProgress) - text3Width;
-            text3.style.transform = `translateY(-50%) translateX(${translateX3}px)`;
+
           }
           window.addEventListener('scroll', updateTextPosition);
           window.addEventListener('resize', updateTextPosition);
-          setTimeout(updateTextPosition, 100);
         })();
       </script>
       
@@ -382,10 +325,6 @@
         </div>
       </div>
     </div>
-
-
-
-  
   <script>
     // Startup blur overlay fade out
     window.addEventListener('DOMContentLoaded', () => {
@@ -402,17 +341,7 @@
       }, 100);
     });
 
-    // GitHub name fetch
-    fetch('https://api.github.com/users/rutujdhodapkar')
-      .then(response => response.json())
-      .then(data => {
-        const name = data.name || data.login || "Unknown";
-        document.querySelector('[data-github-name]').textContent = name;
-      })
-      .catch(() => {
-        document.querySelector('[data-github-name]').textContent = "Unknown";
-      });
-
+    // Removed GitHub name fetch (no sidebar to display it)
     // Navbar and scroll logic
     document.addEventListener('DOMContentLoaded', function() {
       const homeNavLink = document.getElementById('home-nav-link');
@@ -687,3 +616,4 @@
   </script>
 </body>
 </html>
+
