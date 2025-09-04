@@ -2,6 +2,7 @@
 
 ![Portfolio Banner](Poster.png)
 
+
 ## About Me
 
 I am Rutuj Dhodapkar, a passionate AI developer with a deep understanding of designing scalable and efficient AI systems. I specialize in technologies like AI, ML, DL, Cloud Computing, Python, Java. My goal is to build high-performance, secure, and maintainable AI solutions.
