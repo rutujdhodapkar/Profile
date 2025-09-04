@@ -13,7 +13,7 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content="Rutuj Dhodapkar | AI Student & Developer Portfolio">
     <meta property="og:description" content="Explore Rutuj Dhodapkar's portfolio: AI, ML, DL, software projects, interactive demos, research, and more.">
-    <meta property="og:image" content="https://github.com/rutujdhodapkar/Profile/blob/main/Poster.png">
+    <meta property="og:image" content="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/Poster.png">
     <meta property="og:url" content="https://rutujdhodapkar.vercel.app">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Rutuj Dhodapkar Portfolio">
@@ -22,42 +22,22 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Rutuj Dhodapkar | AI Student & Developer Portfolio">
     <meta name="twitter:description" content="Explore Rutuj Dhodapkar's portfolio: AI, ML, DL, software projects, interactive demos, research, and more.">
-    <meta name="twitter:image" content="https://github.com/rutujdhodapkar/Profile/blob/main/Poster.png">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/Poster.png">
     <meta name="twitter:site" content="@rutujdhodapkar">
     <meta name="twitter:creator" content="@rutujdhodapkar">
 
     <!-- Favicon and Manifest -->
-    <link rel="icon" href="https://github.com/rutujdhodapkar/Profile/blob/main/icon.png" type="image/png" sizes="any" style="border-radius:50%;">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/rutujdhodapkar/Profile/blob/main/icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/rutujdhodapkar/Profile/blob/main/icon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://github.com/rutujdhodapkar/Profile/blob/main/icon.png">
+    <link rel="icon" href="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/icon.png" type="image/png" sizes="any" style="border-radius:50%;">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="https://github.com/rutujdhodapkar/Profile/blob/main/icon.png" color="#0a192f">
+    <link rel="mask-icon" href="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/icon.png" color="#0a192f">
 
-    <!-- Preload critical images for performance -->
-    <link rel="preload" href="static/diabetes.jpg" as="image" fetchpriority="high">
-    <link rel="preload" href="static/instagram.png" as="image">
-    <link rel="preload" href="static/x com.png" as="image">
-    <link rel="preload" href="static/linkdin.png" as="image">
-    <link rel="preload" href="static/github.png" as="image">
-    <link rel="preload" href="static/mail.png" as="image">
-
-    <!-- Preconnect for faster font and CDN loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-
-    <!-- Google Fonts: Modern, accessible, and performant -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Required Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="styles.css">
-
-    <!-- Custom Cursor Style -->
     <style>
       html, body {
         cursor: url('cursor.svg'), auto;
@@ -75,7 +55,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="msapplication-TileColor" content="#0a192f">
-    <meta name="msapplication-TileImage" content="https://github.com/rutujdhodapkar/Profile/blob/main/icon.png">
+    <meta name="msapplication-TileImage" content="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/icon.png">
 
     <iframe 
         src="static/frame of index.html" 
@@ -131,7 +111,7 @@
       return Promise.race([
         promise,
         new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Operation timed out')), timeoutMs)
+          setTimeout(() => reject(new Error('O')), timeoutMs)
         )
       ]);
     }
@@ -150,7 +130,7 @@
         });
         return decrypted.toString(CryptoJS.enc.Utf8);
       } catch (e) {
-        log('Legacy token decryption failed: ' + e.message, true);
+        log('L ' + e.message, true);
         throw e;
       }
     }
@@ -160,14 +140,13 @@
         const decrypted = CryptoJS.AES.decrypt(encrypted, PASSWORD);
         return decrypted.toString(CryptoJS.enc.Utf8);
       } catch (e) {
-        log('Modern token decryption failed: ' + e.message, true);
+        log('M' + e.message, true);
         throw e;
       }
     }
 
     async function getEncryptedToken() {
       try {
-        log('Fetching token from CSV...');
         const response = await withTimeout(fetch(CSV_URL), TIMEOUT);
         
         if (!response.ok) {
@@ -175,7 +154,6 @@
         }
         
         const text = await response.text();
-        log('CSV content received, parsing...');
         
         // Enhanced CSV parsing with error handling
         try {
@@ -186,18 +164,18 @@
           });
           
           if (parsed.errors && parsed.errors.length > 0) {
-            log('CSV parsing warnings: ' + JSON.stringify(parsed.errors));
+            log('C' + JSON.stringify(parsed.errors));
           }
           
           if (parsed.data && parsed.data.length > 0) {
             const firstRow = parsed.data[0];
             if (firstRow.token) {
-              log('Token found in parsed CSV');
+              log('T');
               return firstRow.token;
             }
           }
         } catch (parseError) {
-          log('Papa Parse failed, trying manual parsing: ' + parseError.message);
+          log('p' + parseError.message);
         }
         
         // Fallback: manual parsing
@@ -211,9 +189,9 @@
           }
         }
         
-        throw new Error('No token found in CSV');
+        throw new Error('N');
       } catch (error) {
-        log('Failed to get encrypted token: ' + error.message, true);
+        log('Failed' + error.message, true);
         throw error;
       }
     }
