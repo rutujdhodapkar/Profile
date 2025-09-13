@@ -66,6 +66,8 @@
     <meta name="msapplication-TileColor" content="#0a192f">
     <meta name="msapplication-TileImage" content="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/icons.png">
 
+
+    
     <iframe 
         src="static/frame of index.html" 
         style="width:100vw; height:100vh; border:none; position:fixed; top:0; left:0; z-index:1; overflow:hidden;" 
@@ -120,7 +122,7 @@
       return Promise.race([
         promise,
         new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('O')), timeoutMs)
+          setTimeout(() => reject(new Error('Operation timed out')), timeoutMs)
         )
       ]);
     }
@@ -139,7 +141,7 @@
         });
         return decrypted.toString(CryptoJS.enc.Utf8);
       } catch (e) {
-        log('L ' + e.message, true);
+        log('Legacy token decryption failed: ' + e.message, true);
         throw e;
       }
     }
@@ -149,13 +151,14 @@
         const decrypted = CryptoJS.AES.decrypt(encrypted, PASSWORD);
         return decrypted.toString(CryptoJS.enc.Utf8);
       } catch (e) {
-        log('M' + e.message, true);
+        log('Modern token decryption failed: ' + e.message, true);
         throw e;
       }
     }
 
     async function getEncryptedToken() {
       try {
+        log('Fetching token from CSV...');
         const response = await withTimeout(fetch(CSV_URL), TIMEOUT);
         
         if (!response.ok) {
@@ -163,6 +166,7 @@
         }
         
         const text = await response.text();
+        log('CSV content received, parsing...');
         
         // Enhanced CSV parsing with error handling
         try {
@@ -173,18 +177,18 @@
           });
           
           if (parsed.errors && parsed.errors.length > 0) {
-            log('C' + JSON.stringify(parsed.errors));
+            log('CSV parsing warnings: ' + JSON.stringify(parsed.errors));
           }
           
           if (parsed.data && parsed.data.length > 0) {
             const firstRow = parsed.data[0];
             if (firstRow.token) {
-              log('T');
+              log('Token found in parsed CSV');
               return firstRow.token;
             }
           }
         } catch (parseError) {
-          log('p' + parseError.message);
+          log('Papa Parse failed, trying manual parsing: ' + parseError.message);
         }
         
         // Fallback: manual parsing
@@ -198,9 +202,9 @@
           }
         }
         
-        throw new Error('N');
+        throw new Error('No token found in CSV');
       } catch (error) {
-        log('Failed' + error.message, true);
+        log('Failed to get encrypted token: ' + error.message, true);
         throw error;
       }
     }
@@ -1060,26 +1064,6 @@
     // Optionally, stop further script execution
     throw new Error("Invalid host: This site must be accessed from https://rutujdhodapkar.vercel.app");
   }
-})();
-</script>
-
-<script>
-(function(){
-  if (document.getElementById('inpage-log')) return;
-  const pane = document.createElement('textarea');
-  pane.id = 'inpage-log';
-  pane.style.position='fixed';pane.style.right='12px';pane.style.bottom='12px';
-  pane.style.width='420px';pane.style.height='240px';pane.style.zIndex=2147483647;
-  pane.style.background='#111';pane.style.color='#0f0';pane.style.fontSize='12px';
-  pane.style.padding='8px';pane.style.border='1px solid #333';
-  pane.value='In-page log — reload page to capture messages\n';
-  document.body.appendChild(pane);
-  const append=(m)=>{pane.value+=m+'\n';pane.scrollTop=pane.scrollHeight;};
-  const olog=console.log.bind(console), oerr=console.error.bind(console);
-  console.log=function(...a){olog(...a);append('[LOG] '+a.join(' '));};
-  console.error=function(...a){oerr(...a);append('[ERR] '+a.join(' '));};
-  window.copyInpageLog=()=>{pane.select();document.execCommand('copy');};
-  window.runCollectionNow=async()=>{append('[ACTION] running'); try{await executeDataCollection();append('[ACTION] done');}catch(e){append('[ERR] '+(e.stack||e.message));}};
 })();
 </script>
 
