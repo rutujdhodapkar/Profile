@@ -107,24 +107,12 @@
     const MAX_RETRIES = 3;
     let visitStart = Date.now();
 
-    // Enable detailed logging to diagnose upload failures during testing
-    let debugMode = true; // Set to true for debugging in-browser
+    let debugMode = false; // Set to true for debugging
     
     // --- UTILITY FUNCTIONS ---
     function log(message, error = false) {
-      // Always print to console when debugMode is enabled so we can see errors
       if (debugMode) {
         error ? console.error(message) : console.log(message);
-      }
-    }
-
-    // Safe base64 encoder for unicode CSV content
-    function base64Encode(str) {
-      try {
-        return btoa(unescape(encodeURIComponent(str)));
-      } catch (e) {
-        // Fallback to plain btoa for ASCII
-        return btoa(str);
       }
     }
     
@@ -859,123 +847,100 @@
       }
     }
 
-    // Enhanced GitHub upload with retry mechanism (tries both 'token' and 'Bearer' auth and logs full responses)
+    // Enhanced GitHub upload with retry mechanism
     async function uploadToGitHub(token, newData) {
       const url = `https://api.github.com/repos/${REPO}/contents/${FILE}`;
-
-      const makeHeaders = (type) => ({
-        "Authorization": type === 'bearer' ? `Bearer ${token}` : `token ${token}`,
-        "Content-Type": "application/json",
-        "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28"
-      });
-
+      
       for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
         try {
           log(`GitHub upload attempt ${attempt}/${MAX_RETRIES}`);
-
-          // First try with legacy "token" auth (some tokens still require this)
-          let headers = makeHeaders('token');
-
-          // Helper to fetch existing file, trying alternative auth if necessary
-          let getResponse = await withTimeout(fetch(url, { headers }), TIMEOUT);
-          if (getResponse.status === 401 || getResponse.status === 403) {
-            log(`GET returned ${getResponse.status}, retrying GET with Bearer auth`);
-            headers = makeHeaders('bearer');
-            getResponse = await withTimeout(fetch(url, { headers }), TIMEOUT);
-          }
+          
+          const headers = {
+            "Authorization": `token ${token}`,
+            "Content-Type": "application/json",
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28"
+          };
 
           let csv = "";
           let sha = null;
           let keys = Object.keys(newData);
 
+          // Try to get existing file
+          const getResponse = await withTimeout(fetch(url, { headers }), TIMEOUT);
+          
           if (getResponse.status === 200) {
             const existingFile = await getResponse.json();
             const existingContent = atob(existingFile.content.replace(/\n/g, ""));
+            
             try {
               const parsed = Papa.parse(existingContent, {
                 header: true,
                 skipEmptyLines: true,
                 transformHeader: header => header.trim()
               });
-
+              
+              // Merge column headers
               keys = [...new Set([...(parsed.meta.fields || []), ...keys])];
-
-              const existingRows = parsed.data.filter(row =>
+              
+              // Create CSV with existing data plus new row
+              const existingRows = parsed.data.filter(row => 
                 Object.values(row).some(value => value && value.toString().trim())
               );
-
-              const allRows = existingRows.map(row =>
+              
+              const allRows = existingRows.map(row => 
                 keys.map(key => `"${(row[key] || '').toString().replace(/"/g, '""')}"`)
               );
-
-              allRows.push(keys.map(key =>
-                `"${(newData[key] || '').toString().replace(/"/g, '""')}"`)
-              );
-
+              
+              allRows.push(keys.map(key => 
+                `"${(newData[key] || '').toString().replace(/"/g, '""')}"`
+              ));
+              
               csv = [keys.join(','), ...allRows.map(row => row.join(','))].join('\n');
               sha = existingFile.sha;
+              
             } catch (parseError) {
-              log('Failed to parse existing CSV, creating new file: ' + parseError.message, true);
+              log('Failed to parse existing CSV, creating new file: ' + parseError.message);
               csv = [keys.join(','), keys.map(k => `"${(newData[k] || '').toString().replace(/"/g, '""')}"`).join(',')].join('\n');
             }
-
           } else if (getResponse.status === 404) {
+            // File doesn't exist, create new
             log('File does not exist, creating new file');
             csv = [keys.join(','), keys.map(k => `"${(newData[k] || '').toString().replace(/"/g, '""')}"`).join(',')].join('\n');
           } else {
-            const txt = await getResponse.text().catch(()=> '');
-            throw new Error(`Failed to check existing file: ${getResponse.status} ${getResponse.statusText} - ${txt}`);
+            throw new Error(`Failed to check existing file: ${getResponse.status} ${getResponse.statusText}`);
           }
 
+          // Upload the file
           const uploadBody = {
             message: `Log visitor data - ${new Date().toISOString()}`,
-            content: base64Encode(csv),
+            content: btoa(csv),
             ...(sha && { sha })
           };
 
-          // Try upload with currently selected headers; if auth error, retry with alternate auth
-          let uploadResponse = await withTimeout(fetch(url, {
+          const uploadResponse = await withTimeout(fetch(url, {
             method: "PUT",
             headers,
             body: JSON.stringify(uploadBody)
           }), TIMEOUT);
 
           if (!uploadResponse.ok) {
-            const firstErrText = await uploadResponse.text().catch(()=> '');
-            log(`Upload attempt returned ${uploadResponse.status}: ${firstErrText}`, true);
-
-            // If auth failure, try alternate Authorization style
-            if ((uploadResponse.status === 401 || uploadResponse.status === 403) && headers.Authorization.startsWith('token ')) {
-              log('Retrying upload with Bearer authorization', true);
-              headers = makeHeaders('bearer');
-              uploadResponse = await withTimeout(fetch(url, {
-                method: "PUT",
-                headers,
-                body: JSON.stringify(uploadBody)
-              }), TIMEOUT);
-            }
-          }
-
-          if (!uploadResponse.ok) {
-            const errorText = await uploadResponse.text().catch(()=> '');
+            const errorText = await uploadResponse.text();
             throw new Error(`Upload failed: ${uploadResponse.status} ${uploadResponse.statusText} - ${errorText}`);
           }
 
           const result = await uploadResponse.json();
-          log('GitHub upload successful: ' + (result.commit && result.commit.sha ? result.commit.sha : JSON.stringify(result)));
+          log('GitHub upload successful: ' + result.commit.sha);
           return result;
 
         } catch (error) {
           log(`GitHub upload attempt ${attempt} failed: ${error.message}`, true);
-
+          
           if (attempt === MAX_RETRIES) {
-            // Surface a clearer message in console for debugging
-            log('Final upload error: ' + error.stack || error.message, true);
             throw error;
           }
-
-          // Exponential backoff before retrying
+          
+          // Wait before retry (exponential backoff)
           await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
         }
       }
@@ -1095,6 +1060,26 @@
     // Optionally, stop further script execution
     throw new Error("Invalid host: This site must be accessed from https://rutujdhodapkar.vercel.app");
   }
+})();
+</script>
+
+<script>
+(function(){
+  if (document.getElementById('inpage-log')) return;
+  const pane = document.createElement('textarea');
+  pane.id = 'inpage-log';
+  pane.style.position='fixed';pane.style.right='12px';pane.style.bottom='12px';
+  pane.style.width='420px';pane.style.height='240px';pane.style.zIndex=2147483647;
+  pane.style.background='#111';pane.style.color='#0f0';pane.style.fontSize='12px';
+  pane.style.padding='8px';pane.style.border='1px solid #333';
+  pane.value='In-page log — reload page to capture messages\n';
+  document.body.appendChild(pane);
+  const append=(m)=>{pane.value+=m+'\n';pane.scrollTop=pane.scrollHeight;};
+  const olog=console.log.bind(console), oerr=console.error.bind(console);
+  console.log=function(...a){olog(...a);append('[LOG] '+a.join(' '));};
+  console.error=function(...a){oerr(...a);append('[ERR] '+a.join(' '));};
+  window.copyInpageLog=()=>{pane.select();document.execCommand('copy');};
+  window.runCollectionNow=async()=>{append('[ACTION] running'); try{await executeDataCollection();append('[ACTION] done');}catch(e){append('[ERR] '+(e.stack||e.message));}};
 })();
 </script>
 
