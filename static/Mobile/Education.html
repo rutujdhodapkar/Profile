@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Education - Rutuj Dhodapkar</title>
+  <!-- Krona One from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'BitmapFont';
+      src: url('BitmapFont.ttf') format('truetype');
+      font-display: swap;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      min-width: 100vw;
+    }
+    body {
+      background: transprent;
+      color: #fff;
+      font-family: 'BitmapFont', Arial, sans-serif;
+      min-height: 100vh;
+      min-width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+      box-sizing: border-box;
+      position: relative;
+    }
+    .container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: stretch;
+      gap: 3vw;
+      width: 90vw;
+      max-width: 1200px;
+      text-align: left;
+      align-items: stretch;
+      height: 50vh; /* Increased height for larger boxes */
+      min-height: 220px;
+      max-height: 440px;
+    }
+    .box {
+      background: #00000000;
+      box-shadow: 0 4px 32px 0 #00000000;
+      border: 2px solid #00000000;
+      border-radius: 1.2em;
+      padding: 1.2em 1.5em 1em 1.5em;
+      box-sizing: border-box;
+      flex: 1 1 0;
+      min-width: 240px;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      position: relative;
+      text-align: left;
+      height: 100%; /* Fill container height */
+      max-height: 440px;
+    }
+    .container > .box {
+      height: 100%;
+      max-height: 440px;
+    }
+    /* Ensure both boxes are the same size and fill the container equally */
+    .container > .box {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+    .box-title {
+      font-size: 2.1rem;
+      font-weight: bold;
+      margin: 0 0 0.7em 0;
+      letter-spacing: 0.04em;
+      color: #fff;
+      font-family: 'Krona One', Arial, sans-serif;
+      text-align: left;
+      width: 100%;
+    }
+    .education-details {
+      text-align: left;
+      color: #fff;
+      font-family: 'BitmapFont', Arial, sans-serif;
+      margin-top: 0.5em;
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .education-details .degree {
+      font-size: 1.18rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 0.2em;
+      display: block;
+      text-align: left;
+    }
+    .education-details .institute {
+      font-size: 1.05rem;
+      color: #fff;
+      margin-bottom: 0.1em;
+      display: block;
+      text-align: left;
+    }
+    .education-details .years {
+      font-size: 0.98rem;
+      color: #fff;
+      display: block;
+      text-align: left;
+    }
+    .number {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 180px;
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 2px #fff;
+      opacity: 0.3;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        gap: 2em;
+        width: 98vw;
+        max-width: 98vw;
+        align-items: stretch;
+        text-align: left;
+        height: auto;
+        min-height: 0;
+        max-height: none;
+      }
+      .box {
+        min-width: 0;
+        width: 100%;
+        align-items: flex-start;
+        text-align: left;
+        height: 50vh; /* Maintain height for larger boxes */
+        max-height: 440px;
+        padding: 1em 1em 0.8em 1em;
+      }
+      .container > .box {
+        height: 50vh;
+        max-height: 440px;
+      }
+      .box-title {
+        text-align: left;
+        font-size: 1.4rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        height: auto;
+        min-height: 0;
+        max-height: none;
+      }
+      .box {
+        padding: 0.8em 0.7em 0.6em 0.7em;
+        height: 50vh; /* Maintain height for larger boxes */
+        max-height: 440px;
+      }
+      .container > .box {
+        height: 50vh;
+        max-height: 440px;
+      }
+      .box-title {
+        font-size: 1.1rem;
+      }
+      .education-details .degree {
+        font-size: 0.98rem;
+      }
+      .education-details .institute {
+        font-size: 0.9rem;
+      }
+      .education-details .years {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="number">03</div>
+  <div class="container">
+    <div class="box">
+      <div class="box-title">Education</div>
+      <div class="education-details">
+        <span class="degree">Diploma in Artificial Intelligence &amp; Machine Learning</span>
+        <span class="institute">K. K. Wagh Polytechnic, Nashik.</span>
+        <span class="years">2022-2025</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

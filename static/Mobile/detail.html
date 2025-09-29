@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'BitmapFont';
+      src: url('BitmapFont.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'OutlineFont';
+      src: url('OutlineFont-Regular.ttf') format('truetype');
+      font-display: swap;
+    }
+    html {
+      scrollbar-width: none;
+      background: #0f0f0f;
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+    ::-webkit-scrollbar { display: none; }
+    body {
+      font-family: 'BitmapFont', monospace, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background-color: #0f0f0f00000;
+      color: #fff;
+    }
+    #startup-blur-overlay {
+      position: fixed;
+      z-index: 99999;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0f0f0f00000;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: background 1.2s cubic-bezier(.4,0,.2,1), backdrop-filter 1.2s cubic-bezier(.4,0,.2,1);
+      pointer-events: none;
+    }
+    .main-layout {
+      display: flex;
+      flex-direction: row;
+      min-height: 100vh;
+      width: 100vw;
+      background: #0f0f0f00000;
+    }
+    .main-content {
+      margin-left: 0;
+      width: 100vw;
+      min-height: 100vh;
+      background: #0f0f0f00000;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .scroll-anchor {
+      display: block;
+      position: relative;
+      visibility: hidden;
+      height: 0;
+      margin: 0;
+      padding: 0;
+    }
+    ::selection {
+      background: #fff;
+      color: #0f0f0f;
+    }
+    #ai-fullscreen-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #0f0f0f;
+      z-index: 9999;
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease;
+      justify-content: center;
+      align-items: center;
+    }
+    #ai-text {
+      color: #fff;
+      font-family: 'BitmapFont', sans-serif;
+      font-weight: 100;
+      font-size: 3rem;
+      text-align: center;
+      max-width: 80%;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    #right-vertical-scrollbar-container {
+      position: fixed;
+      right: 35px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 100px;
+      width: 24px;
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      color: #fff;
+    }
+    #right-vertical-scrollbar-track {
+      position: relative;
+      width: 2px;
+      height: 100px;
+      background: #fff;
+      border-radius: 2px;
+      box-shadow: 0 0 6px #0f0f0f4;
+    }
+    #right-vertical-scrollbar-thumb {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border: 2.5px solid #0f0f0f;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px #0f0f0f4, 0 0 2px #fff2;
+      transition: background 0.18s;
+      top: 0;
+      cursor: pointer;
+      pointer-events: auto;
+      touch-action: none;
+      user-select: none;
+    }
+    .edge-tech-line {
+      font-family:'BitmapFont', sans-serif;
+      width: 100%;
+      text-align: center;
+      font-size: 1em;
+      font-weight: 500;
+      margin: 32px 0 18px 0;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+    .scroll-move-text-container {
+      position: relative;
+      width: 100vw;
+      height: 320px;
+      overflow: hidden;
+      margin: 40px 0 30px 0;
+      z-index: 10;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      justify-content: center;
+      color: #fff;
+    }
+    .scroll-move-text {
+      position: absolute;
+      left: 0;
+      white-space: nowrap;
+      font-size: 4.5rem;
+      font-family: 'OutlineFont', sans-serif;
+      font-weight: 600;
+      color: transparent;
+      -webkit-text-stroke: 0.5px #fff;
+      text-shadow: none;
+      transition: color 0.2s;
+      user-select: none;
+      pointer-events: none;
+      width: 100vw;
+    }
+    .scroll-move-text .intern-text {
+      font-family: 'Inter', sans-serif !important;
+      color: #fff !important;
+      -webkit-text-stroke: 0 !important;
+      text-shadow: none !important;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      background: none;
+      padding: 0;
+      display: inline;
+    }
+    .scroll-move-text.line1 { top: 20%; }
+    .scroll-move-text.line2 { top: 50%; }
+    .scroll-move-text.line3 { top: 80%; }
+    @media (max-width: 700px) {
+      .scroll-move-text {
+        font-size: 2.2rem;
+      }
+      .scroll-move-text-container {
+        height: 160px;
+      }
+      .scroll-move-text.line1 { top: 20%; }
+      .scroll-move-text.line2 { top: 50%; }
+      .scroll-move-text.line3 { top: 80%; }
+    }
+    .ai-message-block {
+      width: 90%;
+      margin: 24px auto 0 auto;
+      text-align: center;
+      letter-spacing: 1.5px;
+      font-size: 1em;
+      color: #aaa;
+      font-family: 'BitmapFont', 'Inter', sans-serif;
+      opacity: 0.92;
+    }
+    .ai-message-block > div {
+      font-size: 1.08em;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div id="startup-blur-overlay"></div>
+  <div class="main-layout">
+    <div class="main-content">
+
+      <!-- New full-screen overlay for AI text -->
+      <div id="ai-fullscreen-overlay">
+        <div id="ai-text"></div>
+      </div>
+      <!-- Main content iframes and sections -->
+
+
+      <iframe 
+        src="info.html" 
+        style="width:100%; height:1000px; min-height:60vh; border:none; overflow:hidden; color:#fff; background:#0f0f0f;" 
+        scrolling="no">
+      </iframe>
+      <div class="edge-tech-line">
+        I don't just code — I build sht that pushes the edge of tech*.
+      </div>
+
+      <script>
+        // 1st line: right to left, 2nd: left to right, 3rd: right to left
+        (() => {
+          const text1 = document.getElementById('scrollMoveText1');
+          const text2 = document.getElementById('scrollMoveText2');
+          const text3 = document.getElementById('scrollMoveText3');
+          const container = document.querySelector('.scroll-move-text-container');
+          function updateTextPosition() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+            let fastProgress = Math.min(progress * 2.5, 1);
+
+          }
+          window.addEventListener('scroll', updateTextPosition);
+          window.addEventListener('resize', updateTextPosition);
+        })();
+      </script>
+      
+      <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#fff; font-family: 'BitmapFont', 'Inter', sans-serif;"></div>
+      <div class="ai-message-block">
+
+        <div>
+          and... sometimes I get a lot on my mind so I write it out as 
+          <a href="https://researchrutujdhodapkar.vercel.app" target="_blank" rel="noopener noreferrer" style="color:#fff; text-decoration:underline; text-underline-offset:3px; font-weight:500;">blogs
+          </a>
+        </div>
+      </div>
+      
+      <iframe src="skill.html" style="width:100%; height:350px; border:none; overflow:hidden; color:#fff; background:#0f0f0f;" scrolling="no"></iframe>
+      <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#fff; font-family: 'BitmapFont', 'Inter', sans-serif;"></div>
+      <div class="edge-tech-line">
+        Still doubt if my knowledge is real? Check my:
+      </div>
+
+      <iframe src="certificate.html" style="width:100%; height:700px; border:none; overflow:hidden; color:#fff; background:#0f0f0f;" scrolling="no"></iframe>
+      <div class="edge-tech-line">
+        I love these two certificates more than others.
+      </div>
+      <iframe src="project.html" style="width:100%; height:1270px; border:none; overflow:hidden; color:#fff; background:#0f0f0f;" scrolling="no"></iframe>
+      <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#fff; font-family: 'BitmapFont', 'Inter', sans-serif;">......</div>
+      <div class="ai-message-block">
+        <div>
+          Best AI isn’t defined by intelligence alone, but by its ability to elevate humanity.
+        </div>
+      </div>
+      <hr style="
+        border: none;
+        border-top: 2px dotted #bbb;
+        margin: 32px 0 32px 10%;
+        width: 80%;
+        opacity: 0.7;
+      ">
+      <div style="
+        margin: 0 auto;
+        width: fit-content;
+        z-index: 2;
+        font-family: 'Libre Barcode 39', cursive, sans-serif;
+        font-size: 2.5rem;
+        color: #fff;
+        background: #0f0f0f;
+        border-radius: 10px;
+        padding: 10px 28px;
+        box-shadow: #0f0f0f;
+        letter-spacing: 2px;
+        font-weight: 400;
+        text-align: center;
+        backdrop-filter: blur(8px);
+        position: static;
+        display: block;
+      ">
+        I just wanna study/research in AI
+        <br><br>
+      </div>
+
+
+
+      <!-- Right custom scrollbar -->
+      <div id="right-vertical-scrollbar-container">
+        <div id="right-vertical-scrollbar-track">
+          <div id="right-vertical-scrollbar-thumb"></div>
+        </div>
+      </div>
+    </div>
+  <script>
+    // Startup blur overlay fade out
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const overlay = document.getElementById('startup-blur-overlay');
+        if (overlay) {
+          overlay.style.background = 'rgba(0,0,0,0)';
+          overlay.style.backdropFilter = 'blur(0px)';
+          overlay.style.webkitBackdropFilter = 'blur(0px)';
+          setTimeout(() => {
+            overlay.parentNode && overlay.parentNode.removeChild(overlay);
+          }, 1300);
+        }
+      }, 100);
+    });
+
+    // Removed GitHub name fetch (no sidebar to display it)
+    // Navbar and scroll logic
+    document.addEventListener('DOMContentLoaded', function() {
+      // Removed all redirections for home and contact nav links
+      // Only enable desktop nav logic if not
+      if (window.innerWidth > 768) {
+        const navbar = document.getElementById('rectiangleNavbar');
+        const navItems = document.querySelectorAll("#rectiangleNavbar .page-nav li");
+        const highlight = document.querySelector("#rectiangleNavbar .highlight");
+        const sectionMap = [
+          { id: "home", label: "Home" },
+          { id: "about", label: "About" },
+          { id: "skills", label: "Skills" },
+          { id: "certificates", label: "Certificates" },
+          { id: "projects", label: "Projects" },
+          { id: "contact", label: "Contact" }
+        ];
+        // Insert scroll anchors for navigation
+        function insertScrollAnchors() {
+          const mainContent = document.querySelector('.main-content');
+          if (!mainContent) return;
+          // Helper to insert anchor before a given iframe
+          function insertAnchor(id, beforeIframeSrc) {
+            const anchor = document.createElement('div');
+            anchor.className = 'scroll-anchor';
+            anchor.id = id;
+            const iframe = mainContent.querySelector(`iframe[src="${beforeIframeSrc}"]`);
+            if (iframe) {
+              mainContent.insertBefore(anchor, iframe);
+            } else {
+              mainContent.appendChild(anchor);
+            }
+          }
+          // Home anchor at top
+          const homeAnchor = document.createElement('div');
+          homeAnchor.className = 'scroll-anchor';
+          homeAnchor.id = 'home';
+          mainContent.insertBefore(homeAnchor, mainContent.firstChild);
+          insertAnchor('about', 'info.html');
+          insertAnchor('skills', 'skill.html');
+          insertAnchor('certificates', 'certificate.html');
+          insertAnchor('projects', 'project.html');
+          // Contact anchor at end
+          const contactAnchor = document.createElement('div');
+          contactAnchor.className = 'scroll-anchor';
+          contactAnchor.id = 'contact';
+          mainContent.appendChild(contactAnchor);
+        }
+        insertScrollAnchors();
+        const sections = sectionMap.map(s => document.getElementById(s.id));
+        navItems.forEach(item => {
+          const section = item.getAttribute("data-section");
+          if (section === "home" || section === "contact") return;
+          item.addEventListener("click", function(event) {
+            event.preventDefault();
+            const targetId = this.getAttribute("data-section");
+            const targetAnchor = document.getElementById(targetId);
+            if (targetAnchor) {
+              let sectionIndex = sectionMap.findIndex(s => s.id === targetId);
+              let nextAnchor = null;
+              if (sectionIndex !== -1 && sectionIndex + 1 < sectionMap.length) {
+                nextAnchor = document.getElementById(sectionMap[sectionIndex + 1].id);
+              }
+              let sectionTop = targetAnchor.getBoundingClientRect().top + window.scrollY;
+              let sectionBottom = nextAnchor
+                ? nextAnchor.getBoundingClientRect().top + window.scrollY
+                : document.body.scrollHeight;
+              let sectionHeight = sectionBottom - sectionTop;
+              let scrollTo = sectionTop - navbar.offsetHeight - 20;
+              let viewportHeight = window.innerHeight;
+              if (sectionHeight < viewportHeight) {
+                scrollTo = sectionTop - navbar.offsetHeight - 20 - (viewportHeight - sectionHeight) / 2;
+                if (scrollTo < 0) scrollTo = 0;
+              }
+              window.scrollTo({ top: scrollTo, behavior: "smooth" });
+            }
+          });
+        });
+        function highlightNavOnScroll() {
+          let currentSection = sectionMap[0].id;
+          let maxVisible = 0;
+          let maxSection = currentSection;
+          for (let i = 0; i < sections.length; i++) {
+            const section = sections[i];
+            if (!section) continue;
+            let sectionTop = section.getBoundingClientRect().top + window.scrollY;
+            let nextAnchor = (i + 1 < sections.length) ? sections[i + 1] : null;
+            let sectionBottom = nextAnchor
+              ? nextAnchor.getBoundingClientRect().top + window.scrollY
+              : document.body.scrollHeight;
+            let sectionHeight = sectionBottom - sectionTop;
+            let viewportTop = window.scrollY;
+            let viewportBottom = window.scrollY + window.innerHeight;
+            let visibleTop = Math.max(sectionTop, viewportTop);
+            let visibleBottom = Math.min(sectionBottom, viewportBottom);
+            let visibleHeight = Math.max(0, visibleBottom - visibleTop);
+            let visibleRatio = visibleHeight / window.innerHeight;
+            if (visibleRatio > 0.5 && visibleRatio > maxVisible) {
+              maxVisible = visibleRatio;
+              maxSection = section.id;
+            }
+          }
+          navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('data-section') === maxSection) {
+              item.classList.add('active');
+            }
+          });
+          updateHighlight();
+        }
+        function updateHighlight() {
+          const activeItem = document.querySelector("#rectiangleNavbar .page-nav li.active");
+          if (activeItem) {
+            const { offsetLeft, offsetWidth, offsetHeight } = activeItem;
+            highlight.style.left = offsetLeft + "px";
+            highlight.style.width = offsetWidth + "px";
+            highlight.style.height = offsetHeight + "px";
+            highlight.style.backgroundColor = "#fff";
+          }
+        }
+        navItems.forEach(item => {
+          item.addEventListener('mouseenter', function() {
+            if (this.classList.contains('active')) {
+              highlight.style.backgroundColor = "#fff";
+            }
+          });
+          item.addEventListener('mouseleave', function() {
+            if (this.classList.contains('active')) {
+              highlight.style.backgroundColor = "#fff";
+            }
+          });
+        });
+        window.addEventListener('scroll', highlightNavOnScroll);
+        window.addEventListener('resize', highlightNavOnScroll);
+        highlightNavOnScroll();
+        setTimeout(function() {
+          var aboutAnchor = document.getElementById('about');
+          if (aboutAnchor) {
+            let sectionTop = aboutAnchor.getBoundingClientRect().top + window.scrollY;
+            let nextAnchor = document.getElementById('skills');
+            let sectionBottom = nextAnchor
+              ? nextAnchor.getBoundingClientRect().top + window.scrollY
+              : document.body.scrollHeight;
+            let sectionHeight = sectionBottom - sectionTop;
+            let scrollTo = sectionTop - navbar.offsetHeight - 20;
+            let viewportHeight = window.innerHeight;
+            if (sectionHeight < viewportHeight) {
+              scrollTo = sectionTop - navbar.offsetHeight - 20 - (viewportHeight - sectionHeight) / 2;
+              if (scrollTo < 0) scrollTo = 0;
+            }
+            window.scrollTo({ top: scrollTo, behavior: "auto" });
+          }
+        }, 0);
+      }
+      // AI overlay on scroll to bottom (no redirection)
+      window.addEventListener('scroll', function() {
+        const overlay = document.getElementById('ai-fullscreen-overlay');
+        const aiText = document.getElementById('ai-text');
+        const scrollProgress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+        if ((window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 2)) {
+          overlay.style.display = 'flex';
+          setTimeout(() => {
+            overlay.style.opacity = '1';
+          }, 100);
+          setTimeout(() => {
+            aiText.style.opacity = scrollProgress.toFixed(2);
+          }, 500);
+          // Removed redirection to contact.html
+        }
+      });
+    });
+    // Removed scroll to top redirection to mobile.html
+
+    // Custom vertical scrollbar logic with draggable thumb
+    (() => {
+      const track = document.getElementById('right-vertical-scrollbar-track');
+      const thumb = document.getElementById('right-vertical-scrollbar-thumb');
+      const trackHeight = 100;
+      const thumbHeight = 18;
+      let isDragging = false;
+      let dragStartY = 0;
+      let thumbStartTop = 0;
+      function getMaxThumbTop() {
+        return trackHeight - thumbHeight;
+      }
+      function getScrollMax() {
+        return document.documentElement.scrollHeight - window.innerHeight;
+      }
+      function updateThumbPosition() {
+        const docHeight = getScrollMax();
+        const scrollY = window.scrollY;
+        let progress = docHeight > 0 ? Math.min(Math.max(scrollY / docHeight, 0), 1) : 0;
+        const maxThumbTop = getMaxThumbTop();
+        const thumbTop = progress * maxThumbTop;
+        thumb.style.top = `${thumbTop}px`;
+      }
+      function scrollToThumbPosition(thumbTop) {
+        const maxThumbTop = getMaxThumbTop();
+        let progress = maxThumbTop > 0 ? Math.min(Math.max(thumbTop / maxThumbTop, 0), 1) : 0;
+        const docHeight = getScrollMax();
+        const targetScroll = progress * docHeight;
+        window.scrollTo({ top: targetScroll, behavior: "auto" });
+      }
+      thumb.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        dragStartY = e.clientY;
+        thumbStartTop = parseFloat(thumb.style.top) || 0;
+        document.body.style.userSelect = "none";
+      });
+      document.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        const deltaY = e.clientY - dragStartY;
+        let newTop = thumbStartTop + deltaY;
+        const maxThumbTop = getMaxThumbTop();
+        newTop = Math.max(0, Math.min(newTop, maxThumbTop));
+        thumb.style.top = `${newTop}px`;
+        scrollToThumbPosition(newTop);
+      });
+      document.addEventListener('mouseup', function() {
+        if (isDragging) {
+          isDragging = false;
+          document.body.style.userSelect = "";
+        }
+      });
+      thumb.addEventListener('touchstart', function(e) {
+        if (e.touches.length !== 1) return;
+        isDragging = true;
+        dragStartY = e.touches[0].clientY;
+        thumbStartTop = parseFloat(thumb.style.top) || 0;
+      }, {passive: false});
+      document.addEventListener('touchmove', function(e) {
+        if (!isDragging || e.touches.length !== 1) return;
+        const deltaY = e.touches[0].clientY - dragStartY;
+        let newTop = thumbStartTop + deltaY;
+        const maxThumbTop = getMaxThumbTop();
+        newTop = Math.max(0, Math.min(newTop, maxThumbTop));
+        thumb.style.top = `${newTop}px`;
+        scrollToThumbPosition(newTop);
+        e.preventDefault();
+      }, {passive: false});
+      document.addEventListener('touchend', function(e) {
+        if (isDragging) {
+          isDragging = false;
+        }
+      });
+      window.addEventListener('scroll', function() {
+        if (!isDragging) updateThumbPosition();
+      });
+      window.addEventListener('resize', function() {
+        if (!isDragging) updateThumbPosition();
+      });
+      updateThumbPosition();
+    })();
+  </script>
+</body>
+</html>
