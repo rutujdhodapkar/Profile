@@ -87,6 +87,7 @@
       padding: 0;
       margin: 0;
       position: relative;
+      align-items: center;
     }
     #rectiangleNavbar .page-nav li {
       cursor: pointer;
@@ -96,6 +97,10 @@
       position: relative;
       font-family: 'Inter', monospace, sans-serif !important;
       color: #fff !important; /* Make text white on header */
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
     }
     #rectiangleNavbar .page-nav li.active {
       background-color: #fff !important; /* selection box white */
@@ -106,6 +111,35 @@
       color: #fff !important;
       transform: scale(1.1);
     }
+
+    /* Resume button special styling */
+    #rectiangleNavbar .page-nav li#resume-nav-btn {
+      background: transparent !important;
+      color: #fff !important;
+      font-weight: bold;
+      border: 1.2px solid #fff !important;
+      box-shadow: 0 2px 10px 0 rgba(0,0,0,0.04);
+      transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+      margin-left: 10px;
+      margin-right: 0;
+      padding: 5px 18px;
+      position: relative;
+    }
+
+    /* Remove arrow style for Resume and its on-hover animation */
+    /* Removed: 
+    #rectiangleNavbar .page-nav li#resume-nav-btn .resume-arrow {}
+    #rectiangleNavbar .page-nav li#resume-nav-btn:hover {}
+    */
+    #rectiangleNavbar .page-nav li#resume-nav-btn:hover {
+      /* remove all special on-hover styles - keep same as default, so nothing here */
+      background: transparent !important;
+      color: #fff !important;
+      box-shadow: 0 2px 10px 0 rgba(0,0,0,0.04);
+      transform: none;
+      border: 1.2px solid #fff !important;
+    }
+
     .highlight {
       position: absolute;
       top: -4px; /* make highlight a bit taller */
@@ -121,6 +155,8 @@
       text-decoration: none;
       color: inherit;
       font-family: 'Inter', monospace, sans-serif !important;
+      display: flex;
+      align-items: center;
     }
 
     .scroll-anchor {
@@ -172,7 +208,6 @@
       opacity: 0;
       transition: opacity 1s ease;
     }
-
   </style>
 </head>
 <body>
@@ -186,6 +221,12 @@
         <li data-section="certificates"><a href="#certificates"><strong>Certificates</strong></a></li>
         <li data-section="projects"><a href="#projects"><strong>Projects</strong></a></li>
         <li data-section="contact"><a href="#contact" id="contact-nav-link"><strong>Contact</strong></a></li>
+        <li data-section="resume" id="resume-nav-btn">
+          <a href="#" id="resume-nav-link">
+            <strong>Resume</strong>
+            <!-- Arrow removed -->
+          </a>
+        </li>
         <div class="highlight"></div>
       </ul>
     </nav>
@@ -216,12 +257,21 @@
         });
       }
 
+      // Resume nav click: open resume.html in new window/tab
+      var resumeNavLink = document.getElementById('resume-nav-link');
+      if (resumeNavLink) {
+        resumeNavLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.open('resume.html', '_blank');
+        });
+      }
+
       if (window.innerWidth > 768) {
         const navbar = document.getElementById('rectiangleNavbar');
         const navItems = document.querySelectorAll("#rectiangleNavbar .page-nav li");
         const highlight = document.querySelector("#rectiangleNavbar .highlight");
 
-        // Section map
+        // Section map, resume is not an actual scroll section
         const sectionMap = [
           { id: "home", label: "Home" },
           { id: "about", label: "About" },
@@ -272,23 +322,24 @@
           contactAnchor.className = 'scroll-anchor';
           contactAnchor.id = 'contact';
           document.body.appendChild(contactAnchor);
+
+          // No anchor for resume, as it's not a scroll section
         }
 
         insertScrollAnchors();
 
-        // Get all anchors as sections
+        // Get all anchors as sections (note: no resume in list)
         const sections = sectionMap.map(s => document.getElementById(s.id));
 
         // --- Fix: Smooth scroll to section so that section is centered in viewport ---
         navItems.forEach(item => {
           const section = item.getAttribute("data-section");
-          if (section === "home" || section === "contact") return;
+          if (section === "home" || section === "contact" || section === "resume") return;
           item.addEventListener("click", function(event) {
             event.preventDefault();
             const targetId = this.getAttribute("data-section");
             const targetAnchor = document.getElementById(targetId);
             if (targetAnchor) {
-              // Find the next anchor or end of page to determine section height
               let sectionIndex = sectionMap.findIndex(s => s.id === targetId);
               let nextAnchor = null;
               if (sectionIndex !== -1 && sectionIndex + 1 < sectionMap.length) {
