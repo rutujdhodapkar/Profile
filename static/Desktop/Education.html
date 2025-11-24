@@ -44,16 +44,14 @@
       max-width: 1200px;
       text-align: left;
       align-items: stretch;
-      height: 38vh; /* Reduced height for smaller boxes */
-      min-height: 220px;
-      max-height: 340px;
+      height: 44vh; /* Slightly increased height for text */
+      min-height: 250px;
+      max-height: 370px;
     }
     .box {
       background: #1e1e1e;
       box-shadow: 0 4px 32px 0 #2424242e;
       border: 2px solid #606060;
-
-
       border-radius: 1.2em;
       padding: 1.2em 1.5em 1em 1.5em;
       box-sizing: border-box;
@@ -67,13 +65,13 @@
       position: relative;
       text-align: left;
       height: 100%; /* Fill container height */
-      max-height: 340px;
+      max-height: 370px;
     }
     .container > .box {
       height: 100%;
-      max-height: 340px;
+      max-height: 370px;
     }
-    /* Ensure both boxes are the same size and fill the container equally */
+    /* Ensure all boxes are the same size and fill the container equally */
     .container > .box {
       flex: 1 1 0;
       min-width: 0;
@@ -97,7 +95,13 @@
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
+      gap: 1.6em;
+    }
+    .education-entry {
+      display: flex;
+      flex-direction: column;
+      gap: 0.05em;
     }
     .education-details .degree {
       font-size: 1.18rem;
@@ -168,14 +172,14 @@
         width: 100%;
         align-items: flex-start;
         text-align: left;
-        min-height: 120px;
-        height: 32vh;
-        max-height: 220px;
+        min-height: 140px;
+        height: 36vh;
+        max-height: 270px;
         padding: 1em 1em 0.8em 1em;
       }
       .container > .box {
-        height: 32vh;
-        max-height: 220px;
+        height: 36vh;
+        max-height: 270px;
       }
       .box-title {
         text-align: left;
@@ -190,7 +194,7 @@
       }
       .box {
         padding: 0.8em 0.7em 0.6em 0.7em;
-        min-height: 80px;
+        min-height: 90px;
         height: auto;
         max-height: none;
       }
@@ -222,9 +226,16 @@
     <div class="box">
       <div class="box-title">Education</div>
       <div class="education-details">
-        <span class="degree">Diploma in Artificial Intelligence &amp; Machine Learning</span>
-        <span class="institute">K. K. Wagh Polytechnic.</span>
-        <span class="years">2022-2025</span>
+        <div class="education-entry">
+          <span class="degree">Diploma in Artificial Intelligence &amp; Machine Learning</span>
+          <span class="institute">K. K. Wagh Polytechnic.</span>
+          <span class="years">2022-2025</span>
+        </div>
+        <div class="education-entry">
+          <span class="degree">B.Tech Artificial Intelligence and Machine Learning</span>
+          <span class="institute">JSPM University.</span>
+          <span class="years">2025-2028</span>
+        </div>
       </div>
     </div>
     <div class="box" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start; height: 100%;">
@@ -232,7 +243,10 @@
       <ul class="exploring-list" style="flex: 1 1 auto; justify-content: center; height: 100%;">
         <li>Advance Artificial Intelligence</li>
         <li>Machine Learning</li>
-        <li>Data Science</li>
+        <li>Deep Learning</li>
+        <li>Neural Networks</li>
+        <li>AI Agents</li>
+        <li>Quantom Mechanics(just started)</li>
       </ul>
     </div>
   </div>

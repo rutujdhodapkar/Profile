@@ -244,7 +244,8 @@
       if (homeNavLink) {
         homeNavLink.addEventListener('click', function(e) {
           e.preventDefault();
-          window.location.href = "Main.html";
+          // Instead of redirecting to Main.html, scroll to top of the page
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
       }
 
@@ -433,24 +434,9 @@
         // Initial highlight
         highlightNavOnScroll();
 
-        // --- Always show page from 1st frame (scroll to first frame on load) ---
+        // Start page from the very top on load
         setTimeout(function() {
-          var aboutAnchor = document.getElementById('about');
-          if (aboutAnchor) {
-            let sectionTop = aboutAnchor.getBoundingClientRect().top + window.scrollY;
-            let nextAnchor = document.getElementById('skills');
-            let sectionBottom = nextAnchor
-              ? nextAnchor.getBoundingClientRect().top + window.scrollY
-              : document.body.scrollHeight;
-            let sectionHeight = sectionBottom - sectionTop;
-            let scrollTo = sectionTop - document.getElementById('rectiangleNavbar').offsetHeight - 20;
-            let viewportHeight = window.innerHeight;
-            if (sectionHeight < viewportHeight) {
-              scrollTo = sectionTop - document.getElementById('rectiangleNavbar').offsetHeight - 20 - (viewportHeight - sectionHeight) / 2;
-              if (scrollTo < 0) scrollTo = 0;
-            }
-            window.scrollTo({ top: scrollTo, behavior: "auto" });
-          }
+          window.scrollTo({ top: 0, behavior: "auto" });
         }, 0);
       }
 
@@ -486,14 +472,37 @@
     });
 
     // Redirect to Main.html when user scrolls to the very top of the page
-    window.addEventListener('scroll', function() {
-      if (window.scrollY <= 0) {
-        window.location.href = "Main.html";
-      }
-    });
+    // Removed automatic redirect to Main.html on scroll-to-top per user request.
   </script>
 
   <!-- Main content iframes -->
+  <!-- Top frame containing Main.html (rounded, slightly inset from edges) -->
+  <style>
+    .top-frame {
+      width: calc(100% - 120px); /* slightly bigger (less inset) */
+      max-width: 1300px;
+      margin: 100px auto 30px auto; /* 50px from top as requested */
+      border-radius: 28px; /* more curved edges */
+      overflow: hidden;
+      box-shadow: 0 10px 36px rgba(0,0,0,0.6);
+      border: 1.4px solid rgba(255,255,255,0.9); /* small white border */
+      background: #070707;
+      box-sizing: border-box;
+    }
+    .top-frame iframe {
+      width: 100%;
+      height: 520px; /* increased height */
+      border: none;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .top-frame { width: calc(100% - 48px); margin: 30px auto; border-radius: 18px; }
+      .top-frame iframe { height: 380px; }
+    }
+  </style>
+  <div class="top-frame" id="top-frame">
+    <iframe src="Main.html" scrolling="no" title="Main"></iframe>
+  </div>
   <div class="frame-spacer-top"></div>
   <iframe src="info.html" style="width:100%; height:690px; border:none; overflow:hidden;" scrolling="no"></iframe>
   <style>
@@ -743,214 +752,3 @@ html {
 </style>
 
 </html>
-
-<style>
-  #left-vertical-black-box {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 70px;
-    height: 100vh;
-    background: #0f0f0f00;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    z-index: 10000;
-    border-right: 1px solid #ffffff5e;
-    border-top: none;
-    border-bottom: none;
-    border-left: none;
-    pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  }
-  #left-vertical-black-box-white-line {
-    position: fixed;
-    left: 35px; /* center of 70px box */
-    /* Start 30% from bottom, so top = 70% */
-    top: 57vh;
-    width: 2.5px;
-    height: 50vh;
-    background: #fff;
-    border-radius: 2px;
-    z-index: 10001;
-    pointer-events: none;
-  }
-  #left-vertical-black-box-name {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    font-family: 'BitmapFont', Arial, sans-serif;
-    font-size: 2.1rem;
-    font-weight: 300;
-    color: #fff;
-    letter-spacing: 0.14em;
-    margin-top: 24px;
-    margin-bottom: 0;
-    pointer-events: none;
-    user-select: none;
-    opacity: 0.97;
-    text-shadow: 0 2px 8px #0008, 0 0 2px #fff2;
-  }
-</style>
-<div id="left-vertical-black-box">
-  <div id="left-vertical-black-box-name" data-github-name></div>
-</div>
-<div id="left-vertical-black-box-white-line"></div>
-<script>
-  // Fetch GitHub user data and set the "name" column
-  // Replace 'rutujdhodapkar' with your actual GitHub username if needed
-  fetch('https://api.github.com/users/rutujdhodapkar')
-    .then(response => response.json())
-    .then(data => {
-      const name = data.name || data.login || "Unknown";
-      document.querySelector('[data-github-name]').textContent = name;
-    })
-    .catch(() => {
-      document.querySelector('[data-github-name]').textContent = "Unknown";
-    });
-</script>
-
-<style>
-  #right-vertical-scrollbar-container {
-    position: fixed;
-    right: 35px;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 100px;
-    width: 24px;
-    z-index: 10001;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none; /* Prevent accidental interaction on container */
-  }
-  #right-vertical-scrollbar-track {
-    position: relative;
-    width: 2px;
-    height: 100px;
-    background: #ffffff80;
-    border-radius: 2px;
-    box-shadow: 0 0 6px #0004;
-  }
-  #right-vertical-scrollbar-thumb {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 18px;
-    height: 18px;
-    background: #fff;
-    border: 2.5px solid #000;
-    border-radius: 50%;
-    box-shadow: 0 2px 8px #0004, 0 0 2px #fff2;
-    transition: background 0.18s;
-    top: 0;
-    cursor: pointer;
-    pointer-events: auto;
-    touch-action: none;
-    user-select: none;
-  }
-</style>
-<div id="right-vertical-scrollbar-container">
-  <div id="right-vertical-scrollbar-track">
-    <div id="right-vertical-scrollbar-thumb"></div>
-  </div>
-</div>
-<script>
-  // Custom vertical scrollbar logic with draggable thumb
-  (function() {
-    const track = document.getElementById('right-vertical-scrollbar-track');
-    const thumb = document.getElementById('right-vertical-scrollbar-thumb');
-    const trackHeight = 100; // px
-    const thumbHeight = 18; // px
-    let isDragging = false;
-    let dragStartY = 0;
-    let thumbStartTop = 0;
-
-    function getMaxThumbTop() {
-      return trackHeight - thumbHeight;
-    }
-
-    function getScrollMax() {
-      return document.documentElement.scrollHeight - window.innerHeight;
-    }
-
-    function updateThumbPosition() {
-      const docHeight = getScrollMax();
-      const scrollY = window.scrollY;
-      let progress = docHeight > 0 ? Math.min(Math.max(scrollY / docHeight, 0), 1) : 0;
-      const maxThumbTop = getMaxThumbTop();
-      const thumbTop = progress * maxThumbTop;
-      thumb.style.top = `${thumbTop}px`;
-    }
-
-    function scrollToThumbPosition(thumbTop) {
-      const maxThumbTop = getMaxThumbTop();
-      let progress = maxThumbTop > 0 ? Math.min(Math.max(thumbTop / maxThumbTop, 0), 1) : 0;
-      const docHeight = getScrollMax();
-      const targetScroll = progress * docHeight;
-      window.scrollTo({ top: targetScroll, behavior: "auto" });
-    }
-
-    // Mouse events
-    thumb.addEventListener('mousedown', function(e) {
-      isDragging = true;
-      dragStartY = e.clientY;
-      thumbStartTop = parseFloat(thumb.style.top) || 0;
-      document.body.style.userSelect = "none";
-    });
-
-    document.addEventListener('mousemove', function(e) {
-      if (!isDragging) return;
-      const deltaY = e.clientY - dragStartY;
-      let newTop = thumbStartTop + deltaY;
-      const maxThumbTop = getMaxThumbTop();
-      newTop = Math.max(0, Math.min(newTop, maxThumbTop));
-      thumb.style.top = `${newTop}px`;
-      scrollToThumbPosition(newTop);
-    });
-
-    document.addEventListener('mouseup', function() {
-      if (isDragging) {
-        isDragging = false;
-        document.body.style.userSelect = "";
-      }
-    });
-
-    // Touch events
-    thumb.addEventListener('touchstart', function(e) {
-      if (e.touches.length !== 1) return;
-      isDragging = true;
-      dragStartY = e.touches[0].clientY;
-      thumbStartTop = parseFloat(thumb.style.top) || 0;
-    }, {passive: false});
-
-    document.addEventListener('touchmove', function(e) {
-      if (!isDragging || e.touches.length !== 1) return;
-      const deltaY = e.touches[0].clientY - dragStartY;
-      let newTop = thumbStartTop + deltaY;
-      const maxThumbTop = getMaxThumbTop();
-      newTop = Math.max(0, Math.min(newTop, maxThumbTop));
-      thumb.style.top = `${newTop}px`;
-      scrollToThumbPosition(newTop);
-      e.preventDefault();
-    }, {passive: false});
-
-    document.addEventListener('touchend', function(e) {
-      if (isDragging) {
-        isDragging = false;
-
-      }
-    });
-
-    window.addEventListener('scroll', function() {
-      if (!isDragging) updateThumbPosition();
-    });
-    window.addEventListener('resize', function() {
-      if (!isDragging) updateThumbPosition();
-    });
-
-    // Initial position
-    updateThumbPosition();
-  })();
-</script>

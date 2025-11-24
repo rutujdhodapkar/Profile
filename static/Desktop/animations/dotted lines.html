@@ -19,6 +19,11 @@
   .rain-dot.on {
     opacity: 1;
   }
+
+  .rain-dot.always-on {
+    opacity: 1 !important;
+    /* Can't be turned off by .on removal */
+  }
 </style>
 
 <script>
@@ -29,6 +34,7 @@
 
   const SPACING_X = 12, SPACING_Y = 12, DOT_SIZE = 8;
   const MIN_COLS = 28, MIN_ROWS = 28;
+  const ALWAYS_ON_ROWS = 4; // Top 4 lines always on
 
   function placeGridDots() {
     rainDots.forEach(dot => dot.remove());
@@ -60,6 +66,11 @@
         dot.style.width = DOT_SIZE + 'px';
         dot.style.height = DOT_SIZE + 'px';
 
+        // Mark top 4 rows as always-on
+        if (row < ALWAYS_ON_ROWS) {
+          dot.classList.add('always-on', 'on');
+        }
+
         frag.appendChild(dot);
         rainDots.push(dot);
         dotPositions.push({ row, col });
@@ -68,12 +79,22 @@
 
     document.body.appendChild(frag);
     lastStates = new Array(rainDots.length).fill(false);
+    // Set the lastStates for always-on dots (so animation logic doesn't interfere)
+    for (let i = 0; i < rainDots.length; i++) {
+      if (dotPositions[i].row < ALWAYS_ON_ROWS) {
+        lastStates[i] = true;
+      }
+    }
   }
 
   function animatePattern() {
     setTimeout(() => {
       for (let i = 0; i < rainDots.length; i++) {
         const { row, col } = dotPositions[i];
+
+        // Dots in the top 4 lines: always on, skip animation logic
+        if (row < ALWAYS_ON_ROWS) continue;
+
         const phase = (row + col) / 10 - t;
         const on = Math.sin(phase) > 0.6;
 
@@ -97,5 +118,3 @@
     placeGridDots();
   });
 </script>
-
-
