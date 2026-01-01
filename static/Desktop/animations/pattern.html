@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Selective Dot Emergence</title>
+<title>Selective Dot Emergence – Inverted, Left=UltraLow, Mid=VeryLow, Right=High</title>
 
 <style>
   html, body {
@@ -10,9 +10,8 @@
     padding: 0;
     overflow: auto;
     background: #0f0f0f;
-    /* hide native scrollbars but keep scrolling enabled */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   .dot {
@@ -24,12 +23,10 @@
     will-change: width, height;
   }
 
-/* WebKit scrollbar hide */
-html::-webkit-scrollbar, body::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
-}
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+  }
 </style>
 </head>
 
@@ -42,23 +39,21 @@ const SPACING_Y = 12;
 
 const HIDDEN_SIZE = 0;
 const AMBIENT_SIZE = 1.2;
-const RAIN_SIZE = 6.5;
 const WATER_SIZE = 6.8;
 const FOAM_SIZE  = 8.5;
 
 const SEA_HEIGHT_ROWS = 10;
 const FOAM_THICKNESS = 2;
 
-// Increased for "little more rain drops"
-const RAIN_COLUMNS = 0.07;
-// SLOW DOWN: Lower rain speed for slower drops
-const RAIN_SPEED = 0.17; // ORIGINAL 0.35, now slower
+// Lower left and middle even more, keep right as is
+const RIGHT_EXTRA = 36;    // high wave at far right (unchanged!)
+const LEFT_EXTRA  = 0.02;  // ultra low at far left
+const MID_EXTRA   = 0.15;  // very low at mid (much less than before)
 
 const AMBIENT_CHANCE = 0.04;
 
 const MIN_COLS = 28;
 const MIN_ROWS = 28;
-// Add a small number of extra rows so new rows below the viewport are created
 const EXTRA_ROWS = 5;
 
 /* ---------------- STATE ---------------- */
@@ -67,7 +62,6 @@ let dots = [];
 let positions = [];
 let cols = 0;
 let rows = 0;
-let rainDrops = [];
 
 /* ---------------- GRID ---------------- */
 
@@ -75,13 +69,10 @@ function createGrid() {
   dots.forEach(d => d.remove());
   dots = [];
   positions = [];
-  rainDrops = [];
 
   cols = Math.max(Math.floor(innerWidth / SPACING_X), MIN_COLS);
-  // Allocate a few extra rows beyond the viewport so the user can scroll down
   rows = Math.max(Math.floor(innerHeight / SPACING_Y) + EXTRA_ROWS, MIN_ROWS);
 
-  // Ensure the document body is tall enough to reveal the extra rows (enables scrollbar)
   document.body.style.minHeight = rows * SPACING_Y + "px";
 
   const frag = document.createDocumentFragment();
@@ -95,41 +86,12 @@ function createGrid() {
       dot.style.width = HIDDEN_SIZE + "px";
       dot.style.height = HIDDEN_SIZE + "px";
 
+      if (Math.random() < AMBIENT_CHANCE) dot._ambient = true;
+
       frag.appendChild(dot);
       dots.push(dot);
       positions.push({ r, c });
-
-      if (Math.random() < AMBIENT_CHANCE) {
-        dot._ambient = true;
-      }
     }
-  }
-
-  // FIX: Make rain drop probability uniform (not left-leaning)
-  // Instead of Math.random() per column, use a deterministic, evenly distributed assignment with some randomness
-  // The point: make sure the *expected* number of drops is about the same, but the distribution is not skewed
-  // (e.g. due to Math.random() idiosyncrasies in low/high indices)
-
-  // Calculate target number of columns with rain drops
-  const numRainColumns = Math.round(cols * RAIN_COLUMNS);
-
-  // Pick numRainColumns unique columns with uniform randomness
-  let rainColsArr = [];
-  for (let c = 0; c < cols; c++) rainColsArr.push(c);
-  // Shuffle (Fisher-Yates)
-  for (let i = rainColsArr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [rainColsArr[i], rainColsArr[j]] = [rainColsArr[j], rainColsArr[i]];
-  }
-  rainColsArr = rainColsArr.slice(0, numRainColumns);
-
-  for (const c of rainColsArr) {
-    rainDrops.push({
-      col: c,
-      y: Math.random() * rows * 0.5,
-      // Slow down the drops: reduce the max random speed as well
-      speed: RAIN_SPEED + Math.random() * 0.13 // was 0.25
-    });
   }
 
   document.body.appendChild(frag);
@@ -140,51 +102,66 @@ function createGrid() {
 function animate() {
   const t = performance.now() * 0.001;
 
-  // reset everything
+  // reset
   for (let dot of dots) {
     const size = dot._ambient ? AMBIENT_SIZE : HIDDEN_SIZE;
     dot.style.width = size + "px";
     dot.style.height = size + "px";
   }
 
-  // wave surface
+  // Generate heightBoost profile: left ultra low, mid very low, right high
   const surface = new Array(cols);
   for (let c = 0; c < cols; c++) {
+    const leftNorm = cols < 2 ? 0 : c / (cols - 1);
+
+    // Make left and mid much flatter, right unchanged
+    let heightBoost;
+    if (leftNorm <= 0.33) {
+      // Fade from LEFT_EXTRA up to MID_EXTRA over left third (both ultra low and very low)
+      heightBoost = LEFT_EXTRA + (MID_EXTRA - LEFT_EXTRA) * (leftNorm / 0.33);
+    } else if (leftNorm < 0.66) {
+      // Flat very low in middle
+      heightBoost = MID_EXTRA;
+    } else {
+      // Fade from MID_EXTRA up to RIGHT_EXTRA over right third
+      heightBoost = MID_EXTRA + (RIGHT_EXTRA - MID_EXTRA) * ((leftNorm - 0.66)/ (1 - 0.66));
+    }
+
+    const currentSeaHeight = SEA_HEIGHT_ROWS + heightBoost;
+
     surface[c] =
-      rows - SEA_HEIGHT_ROWS +
+      currentSeaHeight +
       Math.sin(c * 0.12 + t * 0.8) * 2.4 +
       Math.sin(c * 0.27 - t * 1.1) * 1.2 +
       Math.cos(c * 0.18 + t) * 0.6;
   }
 
-  // rain
-  for (let drop of rainDrops) {
-    drop.y += drop.speed;
-    if (drop.y > rows) drop.y = -8;
-
-    for (let r = Math.floor(drop.y); r > drop.y - 6; r--) {
-      if (r < 0 || r >= rows) continue;
-      const idx = r * cols + drop.col;
-      dots[idx].style.width = RAIN_SIZE + "px";
-      dots[idx].style.height = RAIN_SIZE + "px";
-    }
-  }
-
-  // sea
+  // inverted sea
   for (let i = 0; i < dots.length; i++) {
     const { r, c } = positions[i];
     const s = surface[c];
+    const leftNorm = cols < 2 ? 0 : c / (cols - 1);
 
-    if (r > s) {
-      const depth = Math.min(1, (r - s) / SEA_HEIGHT_ROWS);
+    // Recompute the *local* heightBoost for this column, exactly as above
+    let heightBoost;
+    if (leftNorm <= 0.33) {
+      heightBoost = LEFT_EXTRA + (MID_EXTRA - LEFT_EXTRA) * (leftNorm / 0.33);
+    } else if (leftNorm < 0.66) {
+      heightBoost = MID_EXTRA;
+    } else {
+      heightBoost = MID_EXTRA + (RIGHT_EXTRA - MID_EXTRA) * ((leftNorm - 0.66)/ (1 - 0.66));
+    }
+    const localSeaHeight = SEA_HEIGHT_ROWS + heightBoost;
+
+    if (r < s) {
+      const depth = Math.min(1, (s - r) / localSeaHeight);
       const pulse = Math.sin(t * 1.4 + r * 0.4 + c * 0.3) * 0.6;
       const size = WATER_SIZE * (1 - depth * 0.35) + pulse;
 
       dots[i].style.width = size + "px";
       dots[i].style.height = size + "px";
     }
-
-    else if (r >= s - FOAM_THICKNESS && r <= s + 0.3) {
+    else if (r <= s + FOAM_THICKNESS && r >= s - 0.3) {
       const size =
         FOAM_SIZE +
         Math.sin(t * 7 + c * 0.9 + r) * 1.5 +
@@ -204,7 +181,6 @@ addEventListener("load", () => {
   createGrid();
   animate();
 });
-
 addEventListener("resize", createGrid);
 </script>
 </body>

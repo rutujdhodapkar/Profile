@@ -12,6 +12,10 @@
       font-weight: 300;
       font-style: normal;
     }
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
     body {
       margin: 0;
       padding: 0;
@@ -23,8 +27,34 @@
       text-align: center;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      position: relative;
+      min-height: 100vh;
+      width: 100vw;
+      z-index: 1;
     }
-    
+    .background-frame-pattern {
+      position: fixed;
+      z-index: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      border: none;
+      margin: 0;
+      padding: 0;
+      display: block;
+      min-width: 100vw;
+      min-height: 100vh;
+      background: transparent;
+      opacity: 0;
+      transition: opacity 0.8s cubic-bezier(0.4,0.3,0.3,1);
+      /* Will change to opacity: 1 after 5s */
+    }
+    .background-frame-pattern.visible {
+      opacity: 1 !important;
+      transition: opacity 0.8s cubic-bezier(0.4,0.3,0.3,1);
+    }
     /* New box above experience box */
     .above-experience-box {
       width: 100%;
@@ -47,6 +77,25 @@
       padding: 0 18px;
       font-weight: 300;
     }
+    /* Blurred, semi-transparent box for About Me heading */
+    .aboutme-blurbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 0.9em auto;
+      padding: 0.22em 2.1em 0.22em 2.1em;
+      background: rgba(30, 30, 32, 0.393);
+      border-radius: 20px;
+      box-shadow: 0 2px 28px 0 #2424242e;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      width: fit-content;
+      min-width: 190px;
+      max-width: 97vw;
+      z-index: 20;
+      /* Optional border */
+      border: 1px solid rgba(240, 240, 240, 0.089);
+    }
     /* Layout for about + experience box */
     .main-flex-container {
       display: flex;
@@ -59,6 +108,7 @@
       position: relative;
       min-height: 600px;
       gap: 40px;
+      z-index: 1;
     }
     .about-container {
       max-width: 800px;
@@ -228,6 +278,13 @@
         margin-left: auto;
         margin-right: auto;
       }
+      .aboutme-blurbox {
+        min-width: 0;
+        max-width: 95vw;
+        padding-left: 8vw;
+        padding-right: 8vw;
+        font-size: 2.1rem !important;
+      }
     }
     @media (max-width: 600px) {
       .main-flex-container {
@@ -261,6 +318,13 @@
         min-width: 0;
         font-size: 0.92rem;
         padding: 0 4px;
+      }
+      .aboutme-blurbox {
+        min-width: 0;
+        max-width: 98vw;
+        padding-left: 5vw;
+        padding-right: 5vw;
+        font-size: 1.41rem !important;
       }
     }
     /* Typing animation styles */
@@ -333,11 +397,23 @@
   </style>
 </head>
 <body>
-  
+  <!-- Fixed full-screen background frame (behind content) -->
+  <iframe src="animations/pattern.html"
+          class="background-frame-pattern"
+          frameborder="0"
+          scrolling="no"
+          allowfullscreen
+          aria-hidden="true"
+          tabindex="-1">
+  </iframe>
+
   <div class="main-flex-container">
     <div class="about-container">
       <img src="profile.jpg" alt="Rutuj Dhodapkar" class="profile-pic" onerror="this.style.display='none'">
-      <h1 style="font-family: 'inter', Arial, sans-serif; text-align:center;">About Me</h1>
+      <!-- Add blurred box for About Me heading -->
+      <div class="aboutme-blurbox">
+        <h1 style="font-family: 'inter', Arial, sans-serif; text-align:center; margin:0; color:#fff; background:transparent; font-size:2.8rem; font-weight:700; letter-spacing:2px;">About Me</h1>
+      </div>
       <style>
         .edge-tech-line {
           font-family:'BitmapFont', sans-serif;
@@ -354,7 +430,6 @@
         ~$ whoami
       </div>
 
-      
       <div id="about-paragraphs" style="text-align:left;">
         <!-- About paragraphs will be loaded here -->
       </div>
@@ -538,6 +613,16 @@
         // Fallback if fetch fails or no data
         // window.location.href = "error.html";
       });
+
+    // Show the background frame after 5 seconds
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        var bgFrame = document.querySelector('.background-frame-pattern');
+        if (bgFrame) {
+          bgFrame.classList.add('visible');
+        }
+      }, 5000);
+    });
   </script>
 </body>
 
