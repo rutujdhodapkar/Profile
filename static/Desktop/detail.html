@@ -19,6 +19,7 @@
       -webkit-backdrop-filter: blur(20px);
       transition: background 1.2s cubic-bezier(.4,0,.2,1), backdrop-filter 1.2s cubic-bezier(.4,0,.2,1);
       pointer-events: none;
+      will-change: background, backdrop-filter;
     }
     html, body {
       width: 100vw;
@@ -32,6 +33,9 @@
       padding: 0;
       overflow-x: hidden;
       background-color: #0f0f0f;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      will-change: background-color;
     }
     .frame-stack {
       width: 100vw;
@@ -106,6 +110,7 @@
       /* Added shadow to header */
       box-shadow: 0 6px 32px 0 rgba(0,0,0,0.18), 0 1.5px 8px 0 rgba(0,0,0,0.10);
       border: 1px solid rgba(255,255,255,0.35); /* 1px border */
+      will-change: background-color;
     }
     #rectiangleNavbar:hover {
       background: rgba(255,255,255,0.16) !important;
@@ -129,7 +134,7 @@
     #rectiangleNavbar .page-nav li {
       cursor: pointer;
       padding: 5px 12px;
-      transition: background-color 0.3s, color 0.3s, transform 0.3s;
+      transition: background-color 0.3s, color 0.3s, transform 0.22s cubic-bezier(.36,1,.1,1);
       border-radius: 50px;
       position: relative;
       font-family: 'Inter', monospace, sans-serif !important;
@@ -138,6 +143,7 @@
       border: none;
       display: flex;
       align-items: center;
+      will-change: background-color, color, transform;
     }
     #rectiangleNavbar .page-nav li.active {
       background-color: #fff !important; /* selection box white */
@@ -150,7 +156,8 @@
     #rectiangleNavbar .page-nav li:hover:not(.active) {
       background-color: rgba(255,255,255,0.18) !important;
       color: #fff !important;
-      transform: scale(1.1);
+      transform: scale(1.07);
+      will-change: background-color, color, transform;
     }
     #rectiangleNavbar .page-nav li:not(.active) strong {
       color: #fff !important;
@@ -168,6 +175,7 @@
       margin-right: 0;
       padding: 5px 18px;
       position: relative;
+      will-change: background-color, color, border;
     }
 
     #rectiangleNavbar .page-nav li#resume-nav-btn:hover {
@@ -186,9 +194,10 @@
       background-color: #fff !important;
       border-radius: 50px;
       z-index: 1;
-      transition: left 0.3s, width 0.3s, height 0.3s, background-color 0.3s;
+      transition: left 0.33s cubic-bezier(.36,1,.1,1), width 0.3s cubic-bezier(.36,1,.1,1), height 0.3s cubic-bezier(.36,1,.1,1), background-color 0.3s;
       pointer-events: none;
       box-shadow: 0 2px 14px 0 rgba(0,0,0,0.10);
+      will-change: left, width, height, background-color;
     }
     #rectiangleNavbar a {
       text-decoration: none;
@@ -223,9 +232,10 @@
       z-index: 9999;
       display: none;
       opacity: 0;
-      transition: opacity 1s ease;
+      transition: opacity 1s cubic-bezier(.36,1,.1,1);
       justify-content: center;
       align-items: center;
+      will-change: opacity;
     }
     #ai-text {
       color: white;
@@ -235,23 +245,27 @@
       text-align: center;
       max-width: 80%;
       opacity: 0;
-      transition: opacity 1s ease;
+      transition: opacity 1s cubic-bezier(.36,1,.1,1);
+      will-change: opacity;
     }
   </style>
   <div id="startup-blur-overlay"></div>
   <script>
+    // Optimize overlay transitions: only use setTimeouts, don't thrash layout
     window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(function() {
-        const overlay = document.getElementById('startup-blur-overlay');
-        if (overlay) {
-          overlay.style.background = 'rgba(255,255,255,0)';
-          overlay.style.backdropFilter = 'blur(0px)';
-          overlay.style.webkitBackdropFilter = 'blur(0px)';
-          setTimeout(function() {
-            overlay.parentNode && overlay.parentNode.removeChild(overlay);
-          }, 1300);
-        }
-      }, 100);
+      requestAnimationFrame(function(){
+        setTimeout(function() {
+          const overlay = document.getElementById('startup-blur-overlay');
+          if (overlay) {
+            overlay.style.background = 'rgba(255,255,255,0)';
+            overlay.style.backdropFilter = 'blur(0px)';
+            overlay.style.webkitBackdropFilter = 'blur(0px)';
+            setTimeout(function() {
+              overlay.parentNode && overlay.parentNode.removeChild(overlay);
+            }, 1300);
+          }
+        }, 100);
+      });
     });
   </script>
 </head>
@@ -283,6 +297,7 @@
   </div>
 
   <script>
+    // Smoother main nav highlight - reduce work on scroll and layout calls. Debounced/throttled
     document.addEventListener('DOMContentLoaded', function() {
       // Step 2: Define REAL SECTION_MAP
       const SECTION_MAP = [
@@ -294,6 +309,8 @@
         { id: "projects", el: document.querySelector('iframe[src="project section.html"]') },
         { id: "contact", el: document.querySelector('iframe[src="contact.html"]') }
       ];
+
+      var ticking = false;
 
       // Home navigation click: scroll to top
       var homeNavLink = document.getElementById('home-nav-link');
@@ -317,6 +334,8 @@
         const navbar = document.getElementById('rectiangleNavbar');
         const navItems = document.querySelectorAll("#rectiangleNavbar .page-nav li");
         const highlight = document.querySelector("#rectiangleNavbar .highlight");
+        let lastActiveSection = null;
+        let highlightCache = { left: null, width: null, height: null };
 
         // Step 4: Replace nav click scrolling logic
         navItems.forEach(item => {
@@ -339,15 +358,17 @@
           });
         });
 
-        // Use 55% of viewport as marker for highlight
+        // Use 55% of viewport as marker for highlight - now throttled with rAF for smoothness
         function highlightNavOnScroll() {
-          // The y-coordinate in the document at 55% of viewport (relative to page, not just viewport)
+          if (!ticking) {
+            window.requestAnimationFrame(_update);
+            ticking = true;
+          }
+        }
+        function _update() {
           const viewportMarkerY = window.scrollY + window.innerHeight * 0.55;
-
-          // Find only frames that are *actually visible* (el is not null and is on page)
           let activeSection = null;
           let foundAny = false;
-
           for (const section of SECTION_MAP) {
             if (!section.el) continue;
             const rect = section.el.getBoundingClientRect();
@@ -359,43 +380,45 @@
               break;
             }
           }
-          // --- CHANGE: if no frame covers marker, keep highlight on the current highlight position (do not remove highlight) ---
-          // We'll keep track of last activeSection.
-          if (typeof highlightNavOnScroll.lastActiveSection === "undefined") {
-            highlightNavOnScroll.lastActiveSection = null;
-          }
           if (foundAny) {
-            highlightNavOnScroll.lastActiveSection = activeSection;
+            lastActiveSection = activeSection;
           } else {
-            activeSection = highlightNavOnScroll.lastActiveSection;
+            activeSection = lastActiveSection;
           }
-
           navItems.forEach(item => {
             const section = item.getAttribute("data-section");
             const isActive = section === activeSection;
             item.classList.toggle("active", isActive);
           });
-
           updateHighlight();
+          ticking = false;
         }
 
-        window.addEventListener("scroll", highlightNavOnScroll);
+        window.addEventListener("scroll", highlightNavOnScroll, { passive: true });
         window.addEventListener("resize", highlightNavOnScroll);
 
-        // Highlight position/animation on header
+        // Optimized highlight position/animation on header - avoid layout thrash, only update if needed
         function updateHighlight() {
           const activeItem = document.querySelector("#rectiangleNavbar .page-nav li.active");
           if (activeItem) {
             const { offsetLeft, offsetWidth, offsetHeight } = activeItem;
-            highlight.style.left = (offsetLeft - 4) + "px";
-            highlight.style.width = (offsetWidth + 8) + "px";
-            highlight.style.height = (offsetHeight + 8) + "px";
-            highlight.style.backgroundColor = "#fff";
-            highlight.style.display = 'block';
+            if (highlightCache.left !== offsetLeft-4 || highlightCache.width !== offsetWidth+8 || highlightCache.height !== offsetHeight+8) {
+              highlight.style.left = (offsetLeft - 4) + "px";
+              highlight.style.width = (offsetWidth + 8) + "px";
+              highlight.style.height = (offsetHeight + 8) + "px";
+              highlight.style.backgroundColor = "#fff";
+              highlight.style.display = 'block';
+              highlightCache = {
+                left: offsetLeft-4,
+                width: offsetWidth+8,
+                height: offsetHeight+8
+              };
+            }
           } else {
             highlight.style.display = 'none';
           }
         }
+
         navItems.forEach(item => {
           item.addEventListener('mouseenter', function() {
             if (this.classList.contains('active')) {
@@ -414,7 +437,6 @@
           window.scrollTo({ top: 0, behavior: "auto" });
           highlightNavOnScroll();
         }, 0);
-
       }
       // 1. Contact redirection logic removed as instructed.
     });
@@ -465,6 +487,7 @@
     flex-direction: column;
     gap: 0;
     justify-content: center;
+    will-change: transform;
   }
   .scroll-move-text {
     position: absolute;
@@ -520,25 +543,29 @@
   </div>
 </div>
 <script>
+  // Smoother, throttled scroll-move animation
   (function() {
-    const SPEED_FACTOR = 2.0;  // change possition of alignment
+    const SPEED_FACTOR = 2.0;
     const text1 = document.getElementById('scrollMoveText1');
     const text2 = document.getElementById('scrollMoveText2');
     const text3 = document.getElementById('scrollMoveText3');
     const container = document.querySelector('.scroll-move-text-container');
     let prevProgress = -1;
-    let animationFrame = null;
+    let ticking = false;
+
     function updateTextPosition() {
       if (!container.offsetWidth) {
-        if (animationFrame) cancelAnimationFrame(animationFrame);
-        animationFrame = requestAnimationFrame(updateTextPosition);
+        requestAnimationFrame(updateTextPosition);
         return;
       }
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       let progress = docHeight > 0 ? Math.min(Math.max(scrollTop / docHeight, 0), 1) : 0;
       progress = Math.min(progress * SPEED_FACTOR, 1);
-      if (Math.abs(progress - prevProgress) < 0.001) return;
+      if (Math.abs(progress - prevProgress) < 0.001) {
+        ticking = false;
+        return;
+      }
       prevProgress = progress;
       const containerW = container.offsetWidth;
       const text1Width = text1.offsetWidth;
@@ -546,27 +573,33 @@
       const end1 = -text1Width;
       const translateX1 = start1 + (end1 - start1) * progress;
       text1.style.transform = `translateY(-50%) translateX(${translateX1}px)`;
+
       const text2Width = text2.offsetWidth;
       const start2 = -text2Width;
       const end2 = containerW;
       const translateX2 = start2 + (end2 - start2) * progress;
       text2.style.transform = `translateY(-50%) translateX(${translateX2}px)`;
+
       const text3Width = text3.offsetWidth;
       const start3 = containerW;
       const end3 = -text3Width;
       const translateX3 = start3 + (end3 - start3) * progress;
       text3.style.transform = `translateY(-40%) translateX(${translateX3}px)`;
+
+      ticking = false;
     }
-    function requestAnimationUpdate() {
-      if (animationFrame) cancelAnimationFrame(animationFrame);
-      animationFrame = requestAnimationFrame(updateTextPosition);
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateTextPosition);
+        ticking = true;
+      }
     }
-    window.addEventListener('scroll', requestAnimationUpdate);
+    window.addEventListener('scroll', requestTick, { passive: true });
     window.addEventListener('resize', function() {
       prevProgress = -1;
-      requestAnimationUpdate();
+      requestTick();
     });
-    setTimeout(requestAnimationUpdate, 150);
+    setTimeout(requestTick, 150);
   })();
 </script>
   
