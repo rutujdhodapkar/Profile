@@ -62,6 +62,8 @@ let dots = [];
 let positions = [];
 let cols = 0;
 let rows = 0;
+let animationRunning = false;
+let animationFrameId = null;
 
 /* ---------------- GRID ---------------- */
 
@@ -99,8 +101,13 @@ function createGrid() {
 
 /* ---------------- ANIMATION ---------------- */
 
+// Make the sea animation a little slower
 function animate() {
-  const t = performance.now() * 0.001;
+  // Don't run animation logic if paused
+  if (!animationRunning) return;
+
+  const SEA_ANIMATION_SPEED = 0.40; // Lowered to make motion slower
+  const t = performance.now() * 0.001 * SEA_ANIMATION_SPEED;
 
   // reset
   for (let dot of dots) {
@@ -172,16 +179,36 @@ function animate() {
     }
   }
 
-  requestAnimationFrame(animate);
+  animationFrameId = requestAnimationFrame(animate);
+}
+
+/* ---------------- VISIBILITY HANDLING ---------------- */
+
+function onVisibilityChange() {
+  if (document.visibilityState === "visible") {
+    if (!animationRunning) {
+      animationRunning = true;
+      animate();
+    }
+  } else {
+    animationRunning = false;
+    if (animationFrameId !== null) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+  }
 }
 
 /* ---------------- INIT ---------------- */
 
 addEventListener("load", () => {
   createGrid();
+  animationRunning = true;
   animate();
+  document.addEventListener("visibilitychange", onVisibilityChange);
 });
 addEventListener("resize", createGrid);
+
 </script>
 </body>
 </html>

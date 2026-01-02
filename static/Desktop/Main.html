@@ -32,8 +32,7 @@
       align-items: center;
       justify-content: flex-start;
     }
-    /* --- 3-dot menu styles removed --- */
-    /* Rain pattern overlay styles */
+   
     #rain-pattern-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -82,7 +81,6 @@
       margin-top: 0.2em;
       line-height: 1.4;
       max-width: 700px;
-      /* Responsive font size for mobile */
     }
     @media (max-width: 600px) {
       .mdesc1 {
@@ -92,7 +90,7 @@
     }
     .name-box {
       background: #ffffffdb;
-      color: #000;
+      color: #0f0f0f;
       -webkit-backdrop-filter: blur(5px);
       backdrop-filter: blur(5px);
       padding: 0.5em 0.5em 0.5em 1.2em;
@@ -100,7 +98,7 @@
       font-size: 3.2rem;
       font-weight: bold;
       display: inline-block;
-      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
+      box-shadow: 0 2px 16px 0 #00000014;
       min-width: 2ch;
       position: relative;
       white-space: pre;
@@ -112,8 +110,8 @@
       width: 0.55em;
       height: 0.55em;
       border-radius: 50%;
-      background: #000;
-      color: #000;
+      background: #0f0f0f;
+      color: #0f0f0f;
       margin-left: 0.15em;
       margin-bottom: 0.35em;
       animation: blink-caret 1s steps(1) infinite;
@@ -128,126 +126,6 @@
     @keyframes blink-caret {
       0%, 49% { opacity: 1; }
       50%, 100% { opacity: 0; }
-    }
-    .get-connected-container {
-      margin-top: 2.2rem;
-      pointer-events: auto;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 0.7em;
-    }
-    .get-connected-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.7em;
-      font-family: 'BitmapFont', 'Krona One', Arial, sans-serif;
-      font-size: 1.25rem;
-      font-weight: bold;
-      color: #fff;
-      background: transparent;
-      border: 2px solid #fff;
-      border-radius: 2em;
-      padding: 0.55em 1.5em 0.55em 1.2em;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s, border-color 0.18s;
-      outline: none;
-      position: relative;
-      z-index: 2;
-      box-shadow: 0 2px 16px 0 #00000011;
-      backdrop-filter: blur(5px);
-      user-select: none;
-      overflow: hidden;
-    }
-    .get-connected-btn .light-effect {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -60%;
-      width: 60%;
-      height: 100%;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.151) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.195) 100%);
-      opacity: 0.85;
-      pointer-events: none;
-      z-index: 1;
-      transform: skewX(-18deg);
-      transition: left 0.45s cubic-bezier(.4,1.2,.6,1);
-    }
-    .get-connected-btn:hover .light-effect,
-    .get-connected-btn:focus .light-effect {
-      left: 110%;
-      transition: left 0.45s cubic-bezier(.4,1.2,.6,1);
-    }
-    .get-connected-btn:hover, .get-connected-btn:focus {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      border-color: #fff;
-    }
-    .arrow-inside-btn {
-      display: inline-block;
-      width: 1.3em;
-      height: 1.3em;
-      vertical-align: middle;
-      z-index: 2;
-      position: relative;
-    }
-    .blogs-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6em;
-      font-family: 'BitmapFont', 'Krona One', Arial, sans-serif;
-      font-size: 1.13rem;
-      font-weight: bold;
-      color: #000;
-      background: #fff;
-      border: 2px solid #fff;
-      border-radius: 2em;
-      padding: 0.48em 1.3em 0.48em 1.1em;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s, border-color 0.18s;
-      outline: none;
-      position: relative;
-      z-index: 2;
-      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
-      user-select: none;
-      overflow: hidden;
-    }
-    .blogs-btn:hover, .blogs-btn:focus {
-      background: #f5f5f5;
-      color: #000;
-      border-color: #fff;
-    }
-    .arrow-topright-btn {
-      display: inline-block;
-      width: 1.1em;
-      height: 1.1em;
-      vertical-align: middle;
-      z-index: 2;
-      position: relative;
-    }
-    @media (max-width: 600px) {
-      .get-connected-btn {
-        font-size: 1rem;
-        padding: 0.45em 1.1em 0.45em 1em;
-      }
-      .arrow-inside-btn {
-        width: 1em;
-        height: 1em;
-      }
-      .blogs-btn {
-        font-size: 0.95rem;
-        padding: 0.38em 1em 0.38em 0.8em;
-      }
-      .arrow-topright-btn {
-        width: 0.9em;
-        height: 0.9em;
-      }
-    }
-
-    /* --- MODIFIED CIRCLE REVEAL STYLES --- */
-    /* .circle-reveal and related styles can be removed if desired, but left for now in case of future use */
-    .circle-reveal {
-      display: none !important;
     }
     .content {
       position: relative;
@@ -273,43 +151,6 @@
       opacity: 0.3;
       z-index: 2002;
     }
-
-    .sign-up-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      font-family: 'BitmapFont', Arial, sans-serif;
-      font-size: 1rem;
-      font-weight: bold;
-      color: #fff;
-      background: transparent;
-      border: 2px solid #fff;
-      border-radius: 2em;
-      padding: 0.5em 1.2em;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s, border-color 0.18s;
-      outline: none;
-      z-index: 3;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5em;
-    }
-    .sign-up-btn:hover, .sign-up-btn:focus {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      border-color: #fff;
-    }
-    .arrow-topright-signup {
-      display: inline-block;
-      width: 1em;
-      height: 1em;
-      vertical-align: middle;
-      z-index: 2;
-      position: relative;
-    }
-
-    /* Removed .scroll-prompt and related styles */
-
     .black-fade-overlay {
       position: fixed;
       z-index: 10000;
@@ -325,7 +166,6 @@
       opacity: 0;
       transition: opacity 1s linear;
     }
-
     .blur-overlay {
       position: fixed;
       z-index: 9999;
@@ -361,9 +201,6 @@
       bottom: 0;
       transition: height 0.6s cubic-bezier(.4,1.2,.6,1), bottom 0.6s cubic-bezier(.4,1.2,.6,1);
     }
-
-   
-    /* Bottom center prompt style */
     .bottom-center-prompt {
       position: fixed;
       left: 50%;
@@ -372,7 +209,7 @@
       z-index: 13;
       background: #00000011;
       backdrop-filter: blur(8px);
-      border: 2px solid #ffffff; /* Increased border thickness from 1px to 3px */
+      border: 2px solid #ffffff;
       color: #fff;
       font-family: 'BitmapFont', Arial, sans-serif;
       font-size: 1.15rem;
@@ -409,8 +246,6 @@
   </script>
 </head>
 <body>
-  <!-- 3-dot menu removed -->
-
   <!-- Black fade overlay for 1s fade out -->
   <div class="black-fade-overlay" id="blackFadeOverlay"></div>
   <!-- Rain pattern overlay (hidden initially) -->
@@ -425,27 +260,14 @@
       <div style="font-size: 3.2rem; font-weight: bold; font-family: 'Krona One', Arial, sans-serif;">
         I'm <span class="name-box"><b id="typed-name"></b><span class="typing-caret"></span></span>
       </div>
-      <!-- Insert mdesc1 here -->
       <div id="mdesc1" class="mdesc1" style="display:none;"></div>
       <div style="font-size: 1.1rem; color: #fff; margin-top: 0.2em; margin-bottom: 0.2em; font-family: 'BitmapFont', Arial, sans-serif;">
         Building systems that can talk think and improve itself.
       </div>
-
     </div>
   </div>
-  <!-- Right-side image, only visible if width >= 1140px -->
 
-  <!-- Removed circle-reveal element and scroll logic -->
-  <div class="content">
-    <div style="font-size:1.2rem; margin-top:2em;"></div>
-  </div>
-  <div class="number"></div>
-
-  <!-- Removed scroll-prompt and its content -->
   <script>
-    // --- 3-dot menu logic removed ---
-
-    // Black overlay fade out for 1s on load
     window.addEventListener('DOMContentLoaded', function() {
       const blackFade = document.getElementById('blackFadeOverlay');
       setTimeout(() => {
@@ -456,7 +278,6 @@
       }, 1010);
     });
 
-    // Blur out animation on load
     window.addEventListener('DOMContentLoaded', function() {
       const blur = document.getElementById('blurOverlay');
       setTimeout(() => {
@@ -471,7 +292,6 @@
     fetch('https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv', {cache: "no-store"})
       .then(response => {
         if (!response.ok) {
-          // If response is not ok, redirect to error.html
           window.location.href = "error.html";
           throw new Error('Network response was not ok');
         }
@@ -483,7 +303,6 @@
         const nameIndex = headers.indexOf('name');
         const mdesc1Index = headers.indexOf('mdesc1');
         if (nameIndex === -1 || rows.length < 2) {
-          // If data is not as expected, redirect to error.html
           window.location.href = "error.html";
           return;
         }
@@ -500,20 +319,15 @@
           }
         }
         if (!nameToType) {
-          // If name is not found, redirect to error.html
           window.location.href = "error.html";
           return;
         }
-
-        // Typing animation for name
         const typedNameElem = document.getElementById('typed-name');
         const caretElem = document.querySelector('.typing-caret');
         let idx = 0;
         let caretStableTimeout = null;
         let caretHideTimeout = null;
-
         const baseDelays = Array.from(nameToType).map(char => char === ' ' ? 920 : 300);
-
         function setCaretStable() {
           caretElem.style.animation = "none";
           caretElem.style.opacity = "1";
@@ -526,7 +340,6 @@
           caretElem.style.animation = "none";
           caretElem.style.opacity = "0";
         }
-
         function typeName() {
           if (idx <= nameToType.length) {
             typedNameElem.textContent = nameToType.slice(0, idx);
@@ -534,7 +347,6 @@
               setCaretStable();
               if (caretStableTimeout) clearTimeout(caretStableTimeout);
               caretStableTimeout = setTimeout(setCaretBlinking, 500);
-
               let delay = baseDelays[idx] || 300;
               idx++;
               setTimeout(typeName, delay);
@@ -546,8 +358,6 @@
           }
         }
         setTimeout(typeName, 700);
-
-        // Show mdesc1
         if (mdesc1) {
           const mdesc1Elem = document.getElementById('mdesc1');
           mdesc1Elem.textContent = mdesc1;
@@ -555,13 +365,8 @@
         }
       })
       .catch(error => {
-        // On any error (network, parsing, etc), redirect to error.html
         window.location.href = "error.html";
-        // Optionally log error for debugging
-        // console.error('Error fetching the name:', error);
       });
-
-    // Removed circle reveal scroll logic and redirection
 
     setTimeout(function() {
       var overlay = document.getElementById('rain-pattern-overlay');
@@ -584,330 +389,244 @@
     }, 5000);
   </script>
 </body>
-
-
-
-
-<style>
-  /* Custom typing cursor animation */
-  .custom-cursor {
-    position: relative;
-    display: inline-block;
-    width: 350px; /* Broader width */
-  }
-  .custom-cursor input {
-    background: transparent;
-    border: none;
-    color: #fff;
-    outline: none;
-    width: 100%;
-    font-family: 'BitmapFont', Arial, sans-serif;
-    font-size: 1.4rem;
-    margin-left: 5px;
-    caret-color: transparent; /* Hide default caret */
-    position: relative;
-    z-index: 1;
-  }
-  .typing-cursor {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 1.4em;
-    width: 2px;
-    background: #fff;
-    animation: blink-cursor 1s steps(1) infinite;
-    pointer-events: none;
-    z-index: 2;
-  }
-  @keyframes blink-cursor {
-    0%, 49% { opacity: 1; }
-    50%, 100% { opacity: 0; }
-  }
-</style>
-
 <script>
   // Listen for user typing "help" anywhere on the page
   (function() {
     let buffer = '';
     let timeout = null;
-
     document.addEventListener('keydown', function(e) {
-      // Only consider a-z, ignore modifier keys
       if (e.key.length === 1 && /^[a-zA-Z]$/.test(e.key)) {
         buffer += e.key.toLowerCase();
-        // Keep buffer at max length 4
         if (buffer.length > 4) buffer = buffer.slice(-4);
-
-        // If "help" is typed, open resume.html in the same tab
         if (buffer === 'help') {
           window.location.href = 'resume.html';
           buffer = '';
         }
-
-        // Reset buffer if user pauses for more than 2 seconds
         clearTimeout(timeout);
         timeout = setTimeout(() => { buffer = ''; }, 2000);
       }
     });
   })();
 </script>
-
-
-<!-- Hide scrollbars cross-browser -->
 <style>
-  /* Hide scrollbars for Chrome, Safari and Opera */
   ::-webkit-scrollbar {
     display: none;
     width: 0 !important;
     background: transparent !important;
   }
-
-  /* Hide scrollbars for Firefox */
   html {
     scrollbar-width: none !important;
-    -ms-overflow-style: none; /* IE and Edge */
+    -ms-overflow-style: none;
   }
-
   body {
-    -ms-overflow-style: none; /* IE and Edge */
+    -ms-overflow-style: none;
     scrollbar-width: none !important;
   }
-
-
   ::selection {
-      background: #fff;
-      color: #000;
-    }
-  </style>
-  
-  </html>
-
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&display=swap" rel="stylesheet">
-  <style>
-    #fullscreen-black-box {
-      position: fixed;
-      left: 0;
-      bottom: -100vh;
-      width: 100vw;
-      height: 100vh;
-      background: #ffffff;
-      z-index: 999999;
-      transition: bottom 0.7s cubic-bezier(0.77,0,0.175,1);
-      pointer-events: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    #fullscreen-black-box.active {
-      bottom: 0;
-    }
+    background: #fff;
+    color: #000;
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&display=swap" rel="stylesheet">
+<style>
+  #fullscreen-black-box {
+    position: fixed;
+    left: 0;
+    bottom: -100vh;
+    width: 100vw;
+    height: 100vh;
+    background: #ffffff;
+    z-index: 999999;
+    transition: bottom 0.7s cubic-bezier(0.77,0,0.175,1);
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  #fullscreen-black-box.active {
+    bottom: 0;
+  }
+  #ai-message {
+    color: #fff;
+    font-size: 8vw;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-weight: 100;
+    letter-spacing: 0.04em;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(60px) scale(0.98);
+    transition:
+      opacity 0.7s cubic-bezier(0.77,0,0.175,1),
+      transform 0.7s cubic-bezier(0.77,0,0.175,1);
+    min-height: 1.2em;
+    line-height: 1.1;
+    white-space: pre-line;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    will-change: opacity, transform;
+    user-select: none;
+  }
+  #fullscreen-black-box.active #ai-message {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: 0.1s;
+  }
+  #fullscreen-black-box:not(.active) #ai-message {
+    opacity: 0;
+    transform: translateY(-60px) scale(0.98);
+    transition-delay: 0s;
+  }
+  .typing-cursor {
+    display: inline-block;
+    width: 1ch;
+    animation: blink 1s steps(1) infinite;
+    color: #fff;
+  }
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+  @media (max-width: 600px) {
     #ai-message {
-      color: #fff;
-      font-size: 8vw;
-      font-family: 'Inter', 'Arial', sans-serif;
-      font-weight: 100;
-      letter-spacing: 0.04em;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(60px) scale(0.98);
-      transition:
-        opacity 0.7s cubic-bezier(0.77,0,0.175,1),
-        transform 0.7s cubic-bezier(0.77,0,0.175,1);
-      min-height: 1.2em;
-      line-height: 1.1;
-      white-space: pre-line;
-      width: 100vw;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      will-change: opacity, transform;
-      user-select: none;
+      font-size: 11vw;
     }
-    #fullscreen-black-box.active #ai-message {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      transition-delay: 0.1s;
-    }
-    #fullscreen-black-box:not(.active) #ai-message {
-      opacity: 0;
-      transform: translateY(-60px) scale(0.98);
-      transition-delay: 0s;
-    }
-    .typing-cursor {
-      display: inline-block;
-      width: 1ch;
-      animation: blink 1s steps(1) infinite;
-      color: #fff;
-    }
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0; }
-    }
-    @media (max-width: 600px) {
-      #ai-message {
-        font-size: 11vw;
-      }
-    }
-  </style>
-
-  <div id="fullscreen-black-box">
-    <span id="ai-message"></span>
-  </div>
-  <script>
-    (function() {
-      let box = document.getElementById('fullscreen-black-box');
-      let messageEl = document.getElementById('ai-message');
-      let lastScroll = window.scrollY;
-      let ticking = false;
-      const message = "";
-      let typingTimeout;
-      let cursorSpan;
-      let redirectTimeout = null;
-      let hasRedirected = false;
-
-      function showMessageWithTyping() {
-        if (!messageEl) return;
-        messageEl.textContent = '';
-        if (cursorSpan) cursorSpan.remove();
-        let i = 0;
-        function typeChar() {
-          if (i <= message.length) {
-            messageEl.textContent = message.slice(0, i);
-            if (!cursorSpan) {
-              cursorSpan = document.createElement('span');
-              cursorSpan.className = 'typing-cursor';
-              cursorSpan.textContent = '|';
-              messageEl.appendChild(cursorSpan);
-            }
-            i++;
-            typingTimeout = setTimeout(typeChar, 45);
-          } else {
-            if (cursorSpan) cursorSpan.remove();
+  }
+</style>
+<div id="fullscreen-black-box">
+  <span id="ai-message"></span>
+</div>
+<script>
+  (function() {
+    let box = document.getElementById('fullscreen-black-box');
+    let messageEl = document.getElementById('ai-message');
+    let lastScroll = window.scrollY;
+    let ticking = false;
+    const message = "";
+    let typingTimeout;
+    let cursorSpan;
+    let redirectTimeout = null;
+    let hasRedirected = false;
+    function showMessageWithTyping() {
+      if (!messageEl) return;
+      messageEl.textContent = '';
+      if (cursorSpan) cursorSpan.remove();
+      let i = 0;
+      function typeChar() {
+        if (i <= message.length) {
+          messageEl.textContent = message.slice(0, i);
+          if (!cursorSpan) {
+            cursorSpan = document.createElement('span');
+            cursorSpan.className = 'typing-cursor';
+            cursorSpan.textContent = '|';
+            messageEl.appendChild(cursorSpan);
           }
+          i++;
+          typingTimeout = setTimeout(typeChar, 45);
+        } else {
+          if (cursorSpan) cursorSpan.remove();
         }
-        typeChar();
       }
-
-      function clearMessage() {
-        if (typingTimeout) clearTimeout(typingTimeout);
-        if (messageEl) messageEl.textContent = '';
-        if (cursorSpan) cursorSpan.remove();
-      }
-
-      function onScroll() {
-        let currentScroll = window.scrollY;
-        if (currentScroll > lastScroll) {
-          // Scrolling down
-          box.classList.add('active');
-          setTimeout(showMessageWithTyping, 120); // Wait for font animation
-        } else if (currentScroll < lastScroll) {
-          // Scrolling up
-          box.classList.remove('active');
-          clearMessage();
-          // Cancel redirect if user scrolls up before redirect
-          if (redirectTimeout) {
-            clearTimeout(redirectTimeout);
-            redirectTimeout = null;
-          }
-        }
-        lastScroll = currentScroll;
-        ticking = false;
-      }
-
-      window.addEventListener('scroll', function() {
-        if (!ticking) {
-          window.requestAnimationFrame(onScroll);
-          ticking = true;
-        }
-      });
-
-      // Listen for the transition end to know when box covers full screen
-      box.addEventListener('transitionend', function(e) {
-        if (
-          e.propertyName === 'bottom' &&
-          box.classList.contains('active') &&
-          !hasRedirected
-        ) {
-          // Now box covers full screen, start 1s timer to redirect
-          redirectTimeout = setTimeout(function() {
-            hasRedirected = true;
-            window.location.href = "detail.html";
-          }, 500);
-        }
-      });
-
-      // On page load, ensure message is hidden
-      clearMessage();
-    })();
-  </script>
-
-
-
-
-   <style>
-     @media (max-width: 1370px) {
-       .side-image-container {
-         display: none !important;
-       }
-     }
-   </style>
-
-   <!-- Side image removed as per instruction -->
-
-  <style>
-    .white-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #fff;
-      opacity: 1;
-      z-index: 99999;
-      pointer-events: none;
-      transition: opacity 0.4s;
+      typeChar();
     }
-    .white-overlay.hide {
-      opacity: 0;
-      transition: opacity 0.4s;
+    function clearMessage() {
+      if (typingTimeout) clearTimeout(typingTimeout);
+      if (messageEl) messageEl.textContent = '';
+      if (cursorSpan) cursorSpan.remove();
     }
-  </style>
-  <div id="whiteOverlay" class="white-overlay hide"></div>
-  <script>
-    (function() {
-      let overlay = document.getElementById('whiteOverlay');
-      let overlayTimeout = null;
-      let delayTimeout = null;
-      let lastScrollY = window.scrollY;
-
-      function showWhiteOverlayWithDelay() {
-        if (delayTimeout) clearTimeout(delayTimeout);
-        if (overlayTimeout) clearTimeout(overlayTimeout);
-
-        delayTimeout = setTimeout(() => {
-          overlay.classList.remove('hide');
-          overlayTimeout = setTimeout(() => {
-            overlay.classList.add('hide');
-          }, 3000);
+    function onScroll() {
+      let currentScroll = window.scrollY;
+      if (currentScroll > lastScroll) {
+        box.classList.add('active');
+        setTimeout(showMessageWithTyping, 120);
+      } else if (currentScroll < lastScroll) {
+        box.classList.remove('active');
+        clearMessage();
+        if (redirectTimeout) {
+          clearTimeout(redirectTimeout);
+          redirectTimeout = null;
+        }
+      }
+      lastScroll = currentScroll;
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    });
+    box.addEventListener('transitionend', function(e) {
+      if (
+        e.propertyName === 'bottom' &&
+        box.classList.contains('active') &&
+        !hasRedirected
+      ) {
+        redirectTimeout = setTimeout(function() {
+          hasRedirected = true;
+          window.location.href = "detail.html";
         }, 500);
       }
-
-      let ticking = false;
-      window.addEventListener('scroll', function() {
-        if (!ticking) {
-          window.requestAnimationFrame(function() {
-            if (window.scrollY !== lastScrollY) {
-              showWhiteOverlayWithDelay();
-              lastScrollY = window.scrollY;
-            }
-            ticking = false;
-          });
-          ticking = true;
-        }
-      });
-    })();
-  </script>
-
+    });
+    clearMessage();
+  })();
+</script>
+<style>
+  @media (max-width: 1370px) {
+    .side-image-container {
+      display: none !important;
+    }
+  }
+</style>
+<style>
+  .white-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    opacity: 1;
+    z-index: 99999;
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  .white-overlay.hide {
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+</style>
+<div id="whiteOverlay" class="white-overlay hide"></div>
+<script>
+  (function() {
+    let overlay = document.getElementById('whiteOverlay');
+    let overlayTimeout = null;
+    let delayTimeout = null;
+    let lastScrollY = window.scrollY;
+    function showWhiteOverlayWithDelay() {
+      if (delayTimeout) clearTimeout(delayTimeout);
+      if (overlayTimeout) clearTimeout(overlayTimeout);
+      delayTimeout = setTimeout(() => {
+        overlay.classList.remove('hide');
+        overlayTimeout = setTimeout(() => {
+          overlay.classList.add('hide');
+        }, 3000);
+      }, 500);
+    }
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(function() {
+          if (window.scrollY !== lastScrollY) {
+            showWhiteOverlayWithDelay();
+            lastScrollY = window.scrollY;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  })();
+</script>

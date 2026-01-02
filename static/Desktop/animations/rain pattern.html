@@ -137,7 +137,19 @@ function createGrid() {
 
 /* ---------------- ANIMATION ---------------- */
 
+// Even slower sea animation multipliers
+const SEA_WAVE_SPEED1 = 0.3;   // was 0.5, now slower
+const SEA_WAVE_SPEED2 = 0.4;   // was 0.7, now slower
+const SEA_WAVE_SPEED3 = 0.3;   // was 0.5, now slower
+const SEA_PULSE_SPEED = 0.7;   // was 1.0, now slower
+const FOAM_WAVE_SPEED = 2.7;   // was 4.0, now slower
+
+let animationPaused = false;
+let animFrameHandle = null;
+
 function animate() {
+  if (animationPaused) return;
+
   const t = performance.now() * 0.001;
 
   // reset everything
@@ -152,9 +164,9 @@ function animate() {
   for (let c = 0; c < cols; c++) {
     surface[c] =
       rows - SEA_HEIGHT_ROWS +
-      Math.sin(c * 0.12 + t * 0.8) * 2.4 +
-      Math.sin(c * 0.27 - t * 1.1) * 1.2 +
-      Math.cos(c * 0.18 + t) * 0.6;
+      Math.sin(c * 0.12 + t * SEA_WAVE_SPEED1) * 2.4 +
+      Math.sin(c * 0.27 - t * SEA_WAVE_SPEED2) * 1.2 +
+      Math.cos(c * 0.18 + t * SEA_WAVE_SPEED3) * 0.6;
   }
 
   // rain
@@ -177,7 +189,7 @@ function animate() {
 
     if (r > s) {
       const depth = Math.min(1, (r - s) / SEA_HEIGHT_ROWS);
-      const pulse = Math.sin(t * 1.4 + r * 0.4 + c * 0.3) * 0.6;
+      const pulse = Math.sin(t * SEA_PULSE_SPEED + r * 0.4 + c * 0.3) * 0.6;
       const size = WATER_SIZE * (1 - depth * 0.35) + pulse;
 
       dots[i].style.width = size + "px";
@@ -187,7 +199,7 @@ function animate() {
     else if (r >= s - FOAM_THICKNESS && r <= s + 0.3) {
       const size =
         FOAM_SIZE +
-        Math.sin(t * 7 + c * 0.9 + r) * 1.5 +
+        Math.sin(t * FOAM_WAVE_SPEED + c * 0.9 + r) * 1.5 +
         Math.random() * 0.8;
 
       dots[i].style.width = size + "px";
@@ -195,8 +207,26 @@ function animate() {
     }
   }
 
-  requestAnimationFrame(animate);
+  animFrameHandle = requestAnimationFrame(animate);
 }
+
+/* ---------------- VISIBILITY HANDLING ---------------- */
+
+function onVisibilityChange() {
+  if (document.hidden) {
+    animationPaused = true;
+    if (animFrameHandle !== null) {
+      cancelAnimationFrame(animFrameHandle);
+      animFrameHandle = null;
+    }
+  } else {
+    if (animationPaused) {
+      animationPaused = false;
+      animate();
+    }
+  }
+}
+document.addEventListener("visibilitychange", onVisibilityChange);
 
 /* ---------------- INIT ---------------- */
 

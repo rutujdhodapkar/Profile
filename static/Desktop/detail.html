@@ -6,7 +6,7 @@
   <title>Portfolio</title>
   <!-- Added Inter font for header -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  
+
   <style>
     #startup-blur-overlay {
       position: fixed;
@@ -141,12 +141,19 @@
     }
     #rectiangleNavbar .page-nav li.active {
       background-color: #fff !important; /* selection box white */
-      color: #000 !important; /* text inside selection black */
+      color: #070707 !important; /* Make text inside highlight dark */
+      z-index: 2;
+    }
+    #rectiangleNavbar .page-nav li.active strong {
+      color: #070707 !important; /* For strong-Home, About, ... */
     }
     #rectiangleNavbar .page-nav li:hover:not(.active) {
       background-color: rgba(255,255,255,0.18) !important;
       color: #fff !important;
       transform: scale(1.1);
+    }
+    #rectiangleNavbar .page-nav li:not(.active) strong {
+      color: #fff !important;
     }
 
     /* Resume button special styling */
@@ -178,9 +185,10 @@
       height: calc(100% + 8px);
       background-color: #fff !important;
       border-radius: 50px;
-      z-index: -1;
+      z-index: 1;
       transition: left 0.3s, width 0.3s, height 0.3s, background-color 0.3s;
       pointer-events: none;
+      box-shadow: 0 2px 14px 0 rgba(0,0,0,0.10);
     }
     #rectiangleNavbar a {
       text-decoration: none;
@@ -255,6 +263,7 @@
         <li data-section="home"><a href="#home" id="home-nav-link"><strong>Home</strong></a></li>
         <li data-section="about"><a href="#about"><strong>About</strong></a></li>
         <li data-section="skills"><a href="#skills"><strong>Skills</strong></a></li>
+        <li data-section="education"><a href="#education"><strong>Education</strong></a></li>
         <li data-section="certificates"><a href="#certificates"><strong>Certificates</strong></a></li>
         <li data-section="projects"><a href="#projects"><strong>Projects</strong></a></li>
         <li data-section="contact"><a href="#contact" id="contact-nav-link"><strong>Contact</strong></a></li>
@@ -275,7 +284,18 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Home nav click: scroll to top
+      // Step 2: Define REAL SECTION_MAP
+      const SECTION_MAP = [
+        { id: "home", el: document.getElementById("top-frame") },
+        { id: "about", el: document.querySelector('iframe[src="info.html"]') },
+        { id: "skills", el: document.querySelector('iframe[src="skill.html"]') },
+        { id: "education", el: document.querySelector('iframe[src="Education.html"]') },
+        { id: "certificates", el: document.querySelector('iframe[src="certificate.html"]') },
+        { id: "projects", el: document.querySelector('iframe[src="project section.html"]') },
+        { id: "contact", el: document.querySelector('iframe[src="contact.html"]') }
+      ];
+
+      // Home navigation click: scroll to top
       var homeNavLink = document.getElementById('home-nav-link');
       if (homeNavLink) {
         homeNavLink.addEventListener('click', function(e) {
@@ -283,13 +303,8 @@
           window.scrollTo({ top: 0, behavior: 'smooth' });
         });
       }
-      var contactNavLink = document.getElementById('contact-nav-link');
-      if (contactNavLink) {
-        contactNavLink.addEventListener('click', function(e) {
-          e.preventDefault();
-          window.location.href = "contact.html";
-        });
-      }
+
+      // Resume navigation click: open resume.html in new tab
       var resumeNavLink = document.getElementById('resume-nav-link');
       if (resumeNavLink) {
         resumeNavLink.addEventListener('click', function(e) {
@@ -302,120 +317,72 @@
         const navbar = document.getElementById('rectiangleNavbar');
         const navItems = document.querySelectorAll("#rectiangleNavbar .page-nav li");
         const highlight = document.querySelector("#rectiangleNavbar .highlight");
-        const sectionMap = [
-          { id: "home", label: "Home" },
-          { id: "about", label: "About" },
-          { id: "skills", label: "Skills" },
-          { id: "certificates", label: "Certificates" },
-          { id: "projects", label: "Projects" },
-          { id: "contact", label: "Contact" }
-        ];
 
-        function insertScrollAnchors() {
-          let homeAnchor = document.createElement('div');
-          homeAnchor.className = 'scroll-anchor';
-          homeAnchor.id = 'home';
-          document.body.insertBefore(homeAnchor, document.body.firstChild);
-
-          let aboutAnchor = document.createElement('div');
-          aboutAnchor.className = 'scroll-anchor';
-          aboutAnchor.id = 'about';
-          let firstIframe = document.querySelector('iframe[src="info.html"]');
-          document.body.insertBefore(aboutAnchor, firstIframe);
-
-          let skillsAnchor = document.createElement('div');
-          skillsAnchor.className = 'scroll-anchor';
-          skillsAnchor.id = 'skills';
-          let skillIframe = document.querySelector('iframe[src="skill.html"]');
-          document.body.insertBefore(skillsAnchor, skillIframe);
-
-          let certAnchor = document.createElement('div');
-          certAnchor.className = 'scroll-anchor';
-          certAnchor.id = 'certificates';
-          let certIframe = document.querySelector('iframe[src="certificate.html"]');
-          document.body.insertBefore(certAnchor, certIframe);
-
-          let projAnchor = document.createElement('div');
-          projAnchor.className = 'scroll-anchor';
-          projAnchor.id = 'projects';
-          let projIframe = document.querySelector('iframe[src="project section.html"]');
-          document.body.insertBefore(projAnchor, projIframe);
-
-          let contactAnchor = document.createElement('div');
-          contactAnchor.className = 'scroll-anchor';
-          contactAnchor.id = 'contact';
-          document.body.appendChild(contactAnchor);
-        }
-        insertScrollAnchors();
-        const sections = sectionMap.map(s => document.getElementById(s.id));
-
+        // Step 4: Replace nav click scrolling logic
         navItems.forEach(item => {
-          const section = item.getAttribute("data-section");
-          if (section === "home" || section === "contact" || section === "resume") return;
-          item.addEventListener("click", function(event) {
-            event.preventDefault();
-            const targetId = this.getAttribute("data-section");
-            const targetAnchor = document.getElementById(targetId);
-            if (targetAnchor) {
-              let sectionIndex = sectionMap.findIndex(s => s.id === targetId);
-              let nextAnchor = null;
-              if (sectionIndex !== -1 && sectionIndex + 1 < sectionMap.length) {
-                nextAnchor = document.getElementById(sectionMap[sectionIndex + 1].id);
-              }
-              let sectionTop = targetAnchor.getBoundingClientRect().top + window.scrollY;
-              let sectionBottom = nextAnchor
-                ? nextAnchor.getBoundingClientRect().top + window.scrollY
-                : document.body.scrollHeight;
-              let sectionHeight = sectionBottom - sectionTop;
+          const sectionId = item.getAttribute("data-section");
+          if (!sectionId || sectionId === "resume") return;
 
-              let scrollTo = sectionTop - document.getElementById('rectiangleNavbar').offsetHeight - 20;
-              let viewportHeight = window.innerHeight;
-              if (sectionHeight < viewportHeight) {
-                scrollTo = sectionTop - document.getElementById('rectiangleNavbar').offsetHeight - 20 - (viewportHeight - sectionHeight) / 2;
-                if (scrollTo < 0) scrollTo = 0;
-              }
-              window.scrollTo({ top: scrollTo, behavior: "smooth" });
-            }
+          item.addEventListener("click", e => {
+            e.preventDefault();
+
+            const section = SECTION_MAP.find(s => s.id === sectionId);
+            if (!section || !section.el) return;
+
+            const top = section.el.getBoundingClientRect().top + window.scrollY;
+            const offset = document.getElementById("rectiangleNavbar").offsetHeight + 20;
+
+            window.scrollTo({
+              top: Math.max(top - offset, 0),
+              behavior: "smooth"
+            });
           });
         });
 
+        // Use 55% of viewport as marker for highlight
         function highlightNavOnScroll() {
-          let currentSection = sectionMap[0].id;
-          let maxVisible = 0;
-          let maxSection = currentSection;
-          for (let i = 0; i < sections.length; i++) {
-            const section = sections[i];
-            if (!section) continue;
-            let sectionTop = section.getBoundingClientRect().top + window.scrollY;
-            let nextAnchor = (i + 1 < sections.length) ? sections[i + 1] : null;
-            let sectionBottom = nextAnchor
-              ? nextAnchor.getBoundingClientRect().top + window.scrollY
-              : document.body.scrollHeight;
-            let sectionHeight = sectionBottom - sectionTop;
+          // The y-coordinate in the document at 55% of viewport (relative to page, not just viewport)
+          const viewportMarkerY = window.scrollY + window.innerHeight * 0.55;
 
-            let viewportTop = window.scrollY;
-            let viewportBottom = window.scrollY + window.innerHeight;
-            let visibleTop = Math.max(sectionTop, viewportTop);
-            let visibleBottom = Math.min(sectionBottom, viewportBottom);
-            let visibleHeight = Math.max(0, visibleBottom - visibleTop);
+          // Find only frames that are *actually visible* (el is not null and is on page)
+          let activeSection = null;
+          let foundAny = false;
 
-            let visibleRatio = visibleHeight / window.innerHeight;
-            if (visibleRatio > 0.5 && visibleRatio > maxVisible) {
-              maxVisible = visibleRatio;
-              maxSection = section.id;
+          for (const section of SECTION_MAP) {
+            if (!section.el) continue;
+            const rect = section.el.getBoundingClientRect();
+            const top = rect.top + window.scrollY;
+            const bottom = top + rect.height;
+            if (viewportMarkerY >= top && viewportMarkerY <= bottom) {
+              activeSection = section.id;
+              foundAny = true;
+              break;
             }
           }
+          // --- CHANGE: if no frame covers marker, keep highlight on the current highlight position (do not remove highlight) ---
+          // We'll keep track of last activeSection.
+          if (typeof highlightNavOnScroll.lastActiveSection === "undefined") {
+            highlightNavOnScroll.lastActiveSection = null;
+          }
+          if (foundAny) {
+            highlightNavOnScroll.lastActiveSection = activeSection;
+          } else {
+            activeSection = highlightNavOnScroll.lastActiveSection;
+          }
+
           navItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('data-section') === maxSection) {
-              item.classList.add('active');
-            }
+            const section = item.getAttribute("data-section");
+            const isActive = section === activeSection;
+            item.classList.toggle("active", isActive);
           });
+
           updateHighlight();
         }
-        window.addEventListener('scroll', highlightNavOnScroll);
-        window.addEventListener('resize', highlightNavOnScroll);
 
+        window.addEventListener("scroll", highlightNavOnScroll);
+        window.addEventListener("resize", highlightNavOnScroll);
+
+        // Highlight position/animation on header
         function updateHighlight() {
           const activeItem = document.querySelector("#rectiangleNavbar .page-nav li.active");
           if (activeItem) {
@@ -424,9 +391,11 @@
             highlight.style.width = (offsetWidth + 8) + "px";
             highlight.style.height = (offsetHeight + 8) + "px";
             highlight.style.backgroundColor = "#fff";
+            highlight.style.display = 'block';
+          } else {
+            highlight.style.display = 'none';
           }
         }
-
         navItems.forEach(item => {
           item.addEventListener('mouseenter', function() {
             if (this.classList.contains('active')) {
@@ -440,30 +409,14 @@
           });
         });
 
-        highlightNavOnScroll();
-
+        // initialize (highlight stays where it is if no frame at 55%, otherwise tracks section)
         setTimeout(function() {
           window.scrollTo({ top: 0, behavior: "auto" });
+          highlightNavOnScroll();
         }, 0);
-      }
 
-      window.addEventListener('scroll', function() {
-        const overlay = document.getElementById('ai-fullscreen-overlay');
-        const aiText = document.getElementById('ai-text');
-        const scrollProgress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-        if ((window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 2)) {
-          overlay.style.display = 'flex';
-          setTimeout(() => {
-            overlay.style.opacity = '1';
-          }, 100);
-          setTimeout(() => {
-            aiText.style.opacity = scrollProgress.toFixed(2);
-          }, 500);
-          setTimeout(() => {
-            window.location.href = "contact.html";
-          }, 2000);
-        }
-      });
+      }
+      // 1. Contact redirection logic removed as instructed.
     });
     // No scroll-to-top redirect (per request)
   </script>
@@ -494,7 +447,7 @@
   </div>
 <br>
 <br>
-  
+
 <style>
   @font-face {
     font-family: 'OutlineFont';
@@ -627,7 +580,7 @@
     </div>
   </div>
   <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
-  <iframe src="Education.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no"></iframe>
+  <iframe src="Education.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no" id="education"></iframe>
   <div class="ai-message-block">
     <div>
       Still doubt if my knowledge is real? Check my:
@@ -674,13 +627,7 @@
       Best AI isn’t defined by intelligence alone, but by its ability to elevate humanity.
     </div>
   </div>
-  <hr style="
-    border: none;
-    border-top: 2px dotted #bbb;
-    margin: 32px 0 32px 10%;
-    width: 80%;
-    opacity: 0.7;
-  ">
+  
   <!-- Google Fonts: Libre Barcode 39 -->
   <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
   <div style="
@@ -711,10 +658,10 @@
 
   <!-- Add contact.html frame at the bottom -->
   <iframe src="contact.html" style="width:100%; height:700px; border:none; overflow:hidden; display:block;" scrolling="no"></iframe>
-</body>
-<script>
+</body><script>
 document.documentElement.style.scrollBehavior = "smooth";
 </script>
+
 <style>
 ::-webkit-scrollbar {
   display: none;
@@ -723,8 +670,5 @@ html {
   scrollbar-width: none;
 }
 </style>
-
-
-
 
 </html>
