@@ -226,13 +226,22 @@ window.addEventListener("resize", () => {
   createGrid();
   // Sync lastDotSizes array after resize
   lastDotSizes = new Array(dots.length).fill(HIDDEN_SIZE);
+
+  // If page is not visible during resize, do not animate
+  if (document.visibilityState === 'visible' && !isAnimating) {
+    isAnimating = true;
+    animate();
+  }
 });
 
 /* ---------------- INIT ---------------- */
 window.addEventListener("load", () => {
   createGrid();
-  isAnimating = true;
-  animate();
+  // Only animate if page is visible when loaded
+  if (document.visibilityState === 'visible') {
+    isAnimating = true;
+    animate();
+  }
 });
 </script>
 </body>

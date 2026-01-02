@@ -126,7 +126,15 @@ function dynamicSeaHeight(r, c, maxRows, maxCols) {
 }
 
 function animate() {
-  if (!animationRunning) return;
+  // Pause animation if page/tab is not visible
+  if (document.visibilityState !== "visible" || !animationRunning) {
+    animationRunning = false;
+    if (animationFrameId !== null) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+    return;
+  }
 
   const SEA_ANIMATION_SPEED = 0.40;
   const t = performance.now() * 0.001 * SEA_ANIMATION_SPEED;
