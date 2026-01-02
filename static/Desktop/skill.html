@@ -1,4 +1,4 @@
-<!-- Skills Squares Section -->
+<!-- Skills Squares Section: ENERGY-EFFICIENT ANIMATION -->
 <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
 <style>
   @font-face {
@@ -92,252 +92,169 @@
     letter-spacing: 1px;
     font-size: 2.8rem; /* Updated font size */
   }
+  ::selection {
+    background: #fff;
+    color: #000;
+  }
 </style>
+
 <div style="text-align:center;">
   <div class="expertise-scroll-wrapper">
     <div class="expertise-container" id="autoScrollExpertiseLeftToRight">
-      <div class="expertise-square">
-        Artificial Intelligence (AI)
-      </div>
-      <div class="expertise-square">
-        Machine Learning
-      </div>
-      <div class="expertise-square">
-        Deep Learning
-      </div>
-      <div class="expertise-square">
-        Data Visualization
-      </div>
-      <div class="expertise-square">
-        Computer Vision
-      </div>
-      <div class="expertise-square">
-        Cloud Computing
-      </div>
+      <div class="expertise-square">Artificial Intelligence (AI)</div>
+      <div class="expertise-square">Machine Learning</div>
+      <div class="expertise-square">Deep Learning</div>
+      <div class="expertise-square">Data Visualization</div>
+      <div class="expertise-square">Computer Vision</div>
+      <div class="expertise-square">Cloud Computing</div>
       <!-- Duplicate for seamless infinite scroll -->
-      <div class="expertise-square">
-        Artificial Intelligence (AI)
-      </div>
-      <div class="expertise-square">
-        Machine Learning
-      </div>
-      <div class="expertise-square">
-        Deep Learning
-      </div>
-      <div class="expertise-square">
-        Data Visualization
-      </div>
-      <div class="expertise-square">
-        Computer Vision
-      </div>
-      <div class="expertise-square">
-        Cloud Computing
-      </div>
+      <div class="expertise-square">Artificial Intelligence (AI)</div>
+      <div class="expertise-square">Machine Learning</div>
+      <div class="expertise-square">Deep Learning</div>
+      <div class="expertise-square">Data Visualization</div>
+      <div class="expertise-square">Computer Vision</div>
+      <div class="expertise-square">Cloud Computing</div>
     </div>
   </div>
 </div>
-<script>
-  // Smoother, hardware-friendly auto horizontal scroll (left to right)
-  (function() {
-    const container = document.getElementById('autoScrollExpertiseLeftToRight');
-    let scrollAmount = 0;
-    let speed = 44; // px per second, NOT px per frame (will use time delta for smoothness)
-    let lastTimestamp = undefined;
-    let reqId;
-    let containerWidth = 0, parentWidth = 0;
-    let running = true;
 
-    // Reduce animation when hardware is low or tab is inactive
-    function isAnimationFramePermitted() {
-      // Pause when page is hidden or reduced-motion is enabled
-      return !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-             document.visibilityState === "visible";
-    }
-    function updateWidths() {
-      containerWidth = container.scrollWidth;
-      parentWidth = container.parentElement.offsetWidth;
-    }
-
-    function animate(timestamp) {
-      if (!running || !isAnimationFramePermitted()) {
-        // When paused, try to resume on next visibility change.
-        reqId = null;
-        lastTimestamp = undefined;
-        return;
-      }
-      if (lastTimestamp !== undefined) {
-        const delta = (timestamp - lastTimestamp) / 1000; // in seconds
-        scrollAmount += speed * delta;
-        if (scrollAmount >= containerWidth / 2) scrollAmount = 0;
-        container.style.transform = `translateX(${-scrollAmount}px)`;
-      }
-      lastTimestamp = timestamp;
-      reqId = requestAnimationFrame(animate);
-    }
-    function visibilityHandler() {
-      if (isAnimationFramePermitted() && !reqId) {
-        running = true;
-        reqId = requestAnimationFrame(animate);
-      } else if (!isAnimationFramePermitted()) {
-        running = false;
-      }
-    }
-    function onResize() {
-      updateWidths();
-    }
-    window.addEventListener('resize', onResize);
-    document.addEventListener('visibilitychange', visibilityHandler);
-    if (window.matchMedia) {
-      window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', visibilityHandler);
-    }
-    updateWidths();
-    running = isAnimationFramePermitted();
-    if (running) reqId = requestAnimationFrame(animate);
-  })();
-</script>
-
-<style>
-  ::selection {
-    background: #fff;
-    color: #000;
-  }
-</style>
-
-<!-- Skills Squares Section -->
-<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-<style>
-  @font-face {
-    font-family: 'BitmapFont';
-    src: url('BitmapFont.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
-  }
-  body {
-    background: rgba(255, 255, 255, 0) !important;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  /* ...duplicate style left, left above... */
-</style>
 <div style="text-align:center;">
   <div class="expertise-scroll-wrapper">
     <div class="expertise-container" id="autoScrollExpertiseRightToLeft">
-      <div class="expertise-square">
-        Python
-      </div>
-      <div class="expertise-square">
-        R
-      </div>
-      <div class="expertise-square">
-        Java
-      </div>
-      <div class="expertise-square">
-        JavaScript
-      </div>
-      <div class="expertise-square">
-        Node.js
-      </div>
-      <div class="expertise-square">
-        HTML/CSS
-      </div>
-      <div class="expertise-square">
-        SQL
-      </div>
-      <div class="expertise-square">
-        C
-      </div>
+      <div class="expertise-square">Python</div>
+      <div class="expertise-square">R</div>
+      <div class="expertise-square">Java</div>
+      <div class="expertise-square">JavaScript</div>
+      <div class="expertise-square">Node.js</div>
+      <div class="expertise-square">HTML/CSS</div>
+      <div class="expertise-square">SQL</div>
+      <div class="expertise-square">C</div>
       <!-- Duplicate for seamless infinite scroll -->
-      <div class="expertise-square">
-        Python
-      </div>
-      <div class="expertise-square">
-        R
-      </div>
-      <div class="expertise-square">
-        Java
-      </div>
-      <div class="expertise-square">
-        JavaScript
-      </div>
-      <div class="expertise-square">
-        Node.js
-      </div>
-      <div class="expertise-square">
-        HTML/CSS
-      </div>
-      <div class="expertise-square">
-        SQL
-      </div>
-      <div class="expertise-square">
-        C
-      </div>
+      <div class="expertise-square">Python</div>
+      <div class="expertise-square">R</div>
+      <div class="expertise-square">Java</div>
+      <div class="expertise-square">JavaScript</div>
+      <div class="expertise-square">Node.js</div>
+      <div class="expertise-square">HTML/CSS</div>
+      <div class="expertise-square">SQL</div>
+      <div class="expertise-square">C</div>
     </div>
   </div>
 </div>
-<script>
-  // Smoother, hardware-friendly auto horizontal scroll (right to left)
-  (function() {
-    const container = document.getElementById('autoScrollExpertiseRightToLeft');
-    let containerWidth = 0, parentWidth = 0;
-    let speed = 44; // px per second (smoother, time-based)
-    let lastTimestamp = undefined;
-    let scrollAmount = 0; // Will initialize on updateWidths
-    let reqId;
-    let running = true;
 
-    function isAnimationFramePermitted() {
-      // Pause when page is hidden or reduced-motion is enabled
-      return !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-             document.visibilityState === "visible";
+<!-- More memory-aware, ultra-low-memory, ultra-smooth animation -->
+<script>
+(function() {
+  // Minimum memory threshold (simulate: 1MB = 1048576 bytes, use navigator.deviceMemory if available)
+  function hasLowMemory() {
+    if ('deviceMemory' in navigator && navigator.deviceMemory && navigator.deviceMemory < 1) return true; // < 1GB
+    // Try to use JS heap check as fallback (approx, not always supported, but best effort)
+    if (window.performance && performance.memory) {
+      // Simulate limit: Max heap size for tab (if < 12MB, declare "low")
+      if (performance.memory.jsHeapSizeLimit && performance.memory.jsHeapSizeLimit < 12*1048576) return true;
+      // Or, if currently <1MB heap free, treat as very low
+      if (performance.memory.totalJSHeapSize && performance.memory.usedJSHeapSize &&
+         (performance.memory.totalJSHeapSize-performance.memory.usedJSHeapSize) < 1048576) return true;
     }
+    return false;
+  }
+
+  // Reduce resource usage if low memory detected
+  const lowMem = hasLowMemory();
+  // Use lowest possible memory mode if lowMem; else, hyper-smooth mode
+
+  function fastAnimationLoop(stepFn, pausedFn, fps, minDelta) {
+    // fallback on setTimeout if memory is very constrained.
+    let stopped = false, lastTime = performance.now();
+    let id;
+    function loop(now) {
+      if (stopped) return;
+      let delta = now - lastTime;
+      if (delta >= minDelta) {
+        stepFn(delta, now);
+        lastTime = now;
+      }
+      if (!stopped) id = requestAnimationFrame(loop);
+    }
+    function start() {
+      stopped = false;
+      lastTime = performance.now();
+      id = requestAnimationFrame(loop);
+    }
+    function stop() {
+      stopped = true;
+      canceled && cancelAnimationFrame(id);
+      if (pausedFn) pausedFn();
+    }
+    let canceled = typeof cancelAnimationFrame !== "undefined";
+    return {start, stop};
+  }
+
+  // Animate function, keeps memory peak extremely low. 
+  function makeScroller(id, direction /* +1/-1 */) {
+    const container = document.getElementById(id);
+    if (!container) return;
+    let containerWidth = 0, parentWidth = 0;
+    // Limit allocations by storing transform string
+    let scrollAmount = (direction===1) ? 0 : 0;
+    let lastTransform = "";
+    let speed = lowMem ? 24 : 60;  // px/sec: lower for lowmem
+    let minDelta = lowMem ? 1000/24 : 1000/70; // ~24fps or ~70fps
+
     function updateWidths() {
       containerWidth = container.scrollWidth;
       parentWidth = container.parentElement.offsetWidth;
-      scrollAmount = containerWidth / 2;
+      if (direction === 1) scrollAmount = 0;
+      else scrollAmount = containerWidth / 2;
     }
-    function animate(timestamp) {
-      if (!running || !isAnimationFramePermitted()) {
-        reqId = null;
-        lastTimestamp = undefined;
-        return;
-      }
-      if (lastTimestamp !== undefined) {
-        const delta = (timestamp - lastTimestamp) / 1000; // in seconds
-        scrollAmount -= speed * delta;
-        if (scrollAmount <= 0) scrollAmount = containerWidth / 2;
-        container.style.transform = `translateX(${-scrollAmount}px)`;
-      }
-      lastTimestamp = timestamp;
-      reqId = requestAnimationFrame(animate);
-    }
-    function visibilityHandler() {
-      if (isAnimationFramePermitted() && !reqId) {
-        running = true;
-        reqId = requestAnimationFrame(animate);
-      } else if (!isAnimationFramePermitted()) {
-        running = false;
-      }
-    }
-    function onResize() {
-      updateWidths();
-    }
-    window.addEventListener('resize', onResize);
-    document.addEventListener('visibilitychange', visibilityHandler);
-    if (window.matchMedia) {
-      window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', visibilityHandler);
-    }
-    updateWidths();
-    running = isAnimationFramePermitted();
-    if (running) reqId = requestAnimationFrame(animate);
-  })();
-</script>
 
-<style>
-  ::selection {
-    background: #fff;
-    color: #000;
+    function step(delta) {
+      let px = speed * delta / 1000;
+      if (direction === 1) {
+        scrollAmount += px;
+        if (scrollAmount >= containerWidth / 2) scrollAmount = 0;
+      } else {
+        scrollAmount -= px;
+        if (scrollAmount <= 0) scrollAmount = containerWidth / 2;
+      }
+      let tr = "translateX(" + -scrollAmount + "px)";
+      if (lastTransform !== tr) { // Only force paint if actually changed (reduce layout thrash/mem)
+        container.style.transform = tr;
+        lastTransform = tr;
+      }
+    }
+    function paused() {
+      // Minimal cleanup - clear style and paint
+      container.style.transform = lastTransform;
+    }
+
+    // Low-mem disables when tab is hidden, etc
+    function isPermitted() {
+      return !window.matchMedia('(prefers-reduced-motion: reduce)').matches && document.visibilityState === "visible";
+    }
+
+    // Use only one allocation for the loop
+    let looper = fastAnimationLoop(step, paused, lowMem ? 24 : 72, minDelta);
+
+    window.addEventListener('resize', updateWidths, {passive:true});
+    document.addEventListener('visibilitychange', function() {
+      if (isPermitted()) looper.start();
+      else looper.stop();
+    });
+    if (window.matchMedia)
+      window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', function() {
+        if (isPermitted()) looper.start();
+        else looper.stop();
+      });
+    updateWidths();
+    if (isPermitted()) looper.start();
   }
-</style>
+
+  // Both directions
+  makeScroller('autoScrollExpertiseLeftToRight', 1);
+  makeScroller('autoScrollExpertiseRightToLeft', -1);
+})();
+</script>
 
 <div id="softskills-tools-message" style="font-family: 'BitmapFont', Arial, sans-serif; font-size: 0.95rem; color: #fff; margin-top: 18px; text-align: left; min-height: 3.5em; width:80%; margin-left:auto; margin-right:auto; font-weight: 300;">
   <span id="softskills-line1"></span><br>
