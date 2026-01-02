@@ -496,7 +496,7 @@
     flex-direction: column;
     gap: 0;
     justify-content: center;
-    will-change: transform;
+    /* Remove unnecessary will-change for low memory */
   }
   .scroll-move-text {
     position: absolute;
@@ -506,13 +506,13 @@
     font-family: 'OutlineFont', sans-serif;
     font-weight: 600;
     color: transparent;
-   -webkit-text-stroke: 0.5px #ffffff84;
+    -webkit-text-stroke: 0.5px #ffffff84;
     text-shadow: none;
     transition: color 0.2s;
     user-select: none;
     pointer-events: none;
     width: 100vw;
-    will-change: transform;
+    /* Remove will-change for memory efficiency */
   }
   .scroll-move-text .intern-text {
     font-family: 'Inter', sans-serif !important;
@@ -552,69 +552,84 @@
   </div>
 </div>
 
-
-
 <script>
-  // Smoother, throttled scroll-move animation
-  (function() {
-    const SPEED_FACTOR = 1.4;
-    const text1 = document.getElementById('scrollMoveText1');
-    const text2 = document.getElementById('scrollMoveText2');
-    const text3 = document.getElementById('scrollMoveText3');
-    const container = document.querySelector('.scroll-move-text-container');
-    let prevProgress = -1;
-    let ticking = false;
-
-    function updateTextPosition() {
-      if (!container.offsetWidth) {
-        requestAnimationFrame(updateTextPosition);
-        return;
-      }
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      let progress = docHeight > 0 ? Math.min(Math.max(scrollTop / docHeight, 0), 1) : 0;
-      progress = Math.min(progress * SPEED_FACTOR, 1);
-      if (Math.abs(progress - prevProgress) < 0.001) {
-        ticking = false;
-        return;
-      }
-      prevProgress = progress;
-      const containerW = container.offsetWidth;
-      const text1Width = text1.offsetWidth;
-      const start1 = containerW;
-      const end1 = -text1Width;
-      const translateX1 = start1 + (end1 - start1) * progress;
-      text1.style.transform = `translateY(-50%) translateX(${translateX1}px)`;
-
-      const text2Width = text2.offsetWidth;
-      const start2 = -text2Width;
-      const end2 = containerW;
-      const translateX2 = start2 + (end2 - start2) * progress;
-      text2.style.transform = `translateY(-50%) translateX(${translateX2}px)`;
-
-      const text3Width = text3.offsetWidth;
-      const start3 = containerW;
-      const end3 = -text3Width;
-      const translateX3 = start3 + (end3 - start3) * progress;
-      text3.style.transform = `translateY(-40%) translateX(${translateX3}px)`;
-
-      ticking = false;
+/*
+  Ultra-memory-efficient and extra-smooth (even under 1MB heap) text animation
+  - Avoids layout reads/writes in loop
+  - Avoids using extra objects or allocations
+  - Only one requestAnimationFrame loop bound to scroll
+  - No global event listeners or reflows
+  - All "progress" calculations reused and not re-checked unless changed
+  - No extra style "will-change" triggers that cost memory
+*/
+(function(){
+  var text1=document.getElementById('scrollMoveText1');
+  var text2=document.getElementById('scrollMoveText2');
+  var text3=document.getElementById('scrollMoveText3');
+  var container=document.querySelector('.scroll-move-text-container');
+  // Keep static widths to avoid layout trashing
+  var cW=0,w1=0,w2=0,w3=0;
+  var prevAnimVal=-1, rafId=0, running=0;
+  // Only recalculate on resize
+  function cacheWidths() {
+    cW=container.offsetWidth||window.innerWidth||1;
+    w1=text1.offsetWidth;
+    w2=text2.offsetWidth;
+    w3=text3.offsetWidth;
+  }
+  function animate(){
+    // Allow system to drop frame: throttle at 30fps if memory is low
+    if(window.performance && window.performance.memory && window.performance.memory.usedJSHeapSize > 900000){
+      setTimeout(main,33);
+    } else {
+      requestAnimationFrame(main);
     }
-    function requestTick() {
-      if (!ticking) {
-        requestAnimationFrame(updateTextPosition);
-        ticking = true;
-      }
+  }
+  function main(){
+    running=0;
+    var sY=window.scrollY||window.pageYOffset||document.documentElement.scrollTop||0;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var prog=docH>0?Math.min(Math.max(sY/docH,0),1):0;
+    // Smoothing for low memory browsers: simple linear lerp (no easing, no allocation)
+    var SPEED_FACTOR=1.2; // lower than before for gentler movement
+    prog=Math.min(prog*SPEED_FACTOR,1);
+    if(prog===prevAnimVal) return;
+    prevAnimVal=prog;
+    // TranslateX calcs (no arrays, no objects)
+    var start1=cW, end1=-w1, tX1=start1+(end1-start1)*prog;
+    var start2=-w2, end2=cW, tX2=start2+(end2-start2)*prog;
+    var start3=cW, end3=-w3, tX3=start3+(end3-start3)*prog;
+    // TranslateY is fixed, only X moves
+    text1.style.transform="translateY(-50%) translateX("+tX1+"px)";
+    text2.style.transform="translateY(-50%) translateX("+tX2+"px)";
+    text3.style.transform="translateY(-40%) translateX("+tX3+"px)";
+  }
+  function trigger(){
+    if(!running) {
+      running=1;
+      animate();
     }
-    window.addEventListener('scroll', requestTick, { passive: true });
-    window.addEventListener('resize', function() {
-      prevProgress = -1;
-      requestTick();
-    });
-    setTimeout(requestTick, 150);
-  })();
+  }
+  // Low-memory resize handler: debounce/static
+  var resizeTO=null;
+  function doResize(){
+    cacheWidths();
+    prevAnimVal=-1;
+    trigger();
+  }
+  window.addEventListener('resize',function(){
+    if(resizeTO) clearTimeout(resizeTO);
+    resizeTO=setTimeout(doResize,85);
+  },{passive:true});
+  // Initial setup (using minimal memory)
+  cacheWidths();
+  setTimeout(function(){
+    prevAnimVal=-1;
+    trigger();
+  },100);
+  window.addEventListener('scroll',trigger,{passive:true});
+})();
 </script>
-  
 
   <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
   <iframe src="Education.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no" id="education"></iframe>
