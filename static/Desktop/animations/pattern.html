@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Selective Dot Emergence – Inverted, Left=UltraLow, Mid=VeryLow, Right=High</title>
+<title>Selective Dot Emergence – Inverted, Dynamic Row Adaptation</title>
 
 <style>
   html, body {
@@ -45,16 +45,14 @@ const FOAM_SIZE  = 8.5;
 const SEA_HEIGHT_ROWS = 10;
 const FOAM_THICKNESS = 2;
 
+// Make right/left/mid extra dynamic for each row
 const RIGHT_EXTRA = 36;
 const LEFT_EXTRA  = 0.02;
 const MID_EXTRA   = 0.15;
 
 const AMBIENT_CHANCE = 0.04;
 
-// Commented out the minimums so grid will only cover viewport
-// const MIN_COLS = 28;
-// const MIN_ROWS = 28;
-const EXTRA_ROWS = 0; // removed extra rows for exact viewport fit
+const EXTRA_ROWS = 0;
 
 /* ---------------- STATE ---------------- */
 
@@ -68,14 +66,12 @@ let animationFrameId = null;
 /* ---------------- GRID ---------------- */
 
 function createGrid() {
+  // Remove old dots
   dots.forEach(d => d.remove());
   dots = [];
   positions = [];
-
-  // Only make enough cols/rows for viewport
   cols = Math.ceil(window.innerWidth / SPACING_X);
-  rows = Math.ceil(window.innerHeight / SPACING_Y);
-
+  rows = Math.ceil(window.innerHeight / SPACING_Y) + EXTRA_ROWS;
   document.body.style.minHeight = (rows * SPACING_Y) + "px";
 
   const frag = document.createDocumentFragment();
@@ -89,7 +85,6 @@ function createGrid() {
       dot.style.width = HIDDEN_SIZE + "px";
       dot.style.height = HIDDEN_SIZE + "px";
       dot._size = HIDDEN_SIZE;
-
       if (Math.random() < AMBIENT_CHANCE) dot._ambient = true;
 
       frag.appendChild(dot);
@@ -97,13 +92,10 @@ function createGrid() {
       positions.push({ r, c });
     }
   }
-
   document.body.appendChild(frag);
 }
 
-// Utility function: only update if value changed (for style.width/height)
 function setDotSize(dot, size) {
-  // Use a property to cache last set value for efficiency
   if (dot._size !== size) {
     dot.style.width = size + "px";
     dot.style.height = size + "px";
@@ -113,63 +105,71 @@ function setDotSize(dot, size) {
 
 /* ---------------- ANIMATION ---------------- */
 
+// The following function adapts sea heights dynamically PER ROW based on row-normalized position
+function dynamicSeaHeight(r, c, maxRows, maxCols) {
+  // Row/Col normalized values (0 to 1)
+  const rowNorm = maxRows < 2 ? 0 : (r / (maxRows - 1));
+  const colNorm = maxCols < 2 ? 0 : (c / (maxCols - 1));
+  // Example: increase right boost as go down for more dynamic feel
+  let rowLeft = LEFT_EXTRA + (0.18 * rowNorm);   // slightly increase left
+  let rowMid  = MID_EXTRA + (0.33 * rowNorm);    // slightly increase mid
+  let rowRight = RIGHT_EXTRA * (0.6 + 0.4 * rowNorm); // scale right more dramatically
+  let boost;
+  if (colNorm <= 0.33) {
+    boost = rowLeft + (rowMid - rowLeft) * (colNorm / 0.33);
+  } else if (colNorm < 0.66) {
+    boost = rowMid;
+  } else {
+    boost = rowMid + (rowRight - rowMid) * ((colNorm - 0.66) / (1 - 0.66));
+  }
+  return SEA_HEIGHT_ROWS + boost;
+}
+
 function animate() {
   if (!animationRunning) return;
 
   const SEA_ANIMATION_SPEED = 0.40;
   const t = performance.now() * 0.001 * SEA_ANIMATION_SPEED;
 
-  // Precompute the surface, and also localSeaHeight for each col, to avoid recomputation
-  const surface = new Array(cols);
-  const localSeaHeights = new Array(cols);
-
-  for (let c = 0; c < cols; c++) {
-    const leftNorm = cols < 2 ? 0 : c / (cols - 1);
-
-    let heightBoost;
-    if (leftNorm <= 0.33) {
-      heightBoost = LEFT_EXTRA + (MID_EXTRA - LEFT_EXTRA) * (leftNorm / 0.33);
-    } else if (leftNorm < 0.66) {
-      heightBoost = MID_EXTRA;
-    } else {
-      heightBoost = MID_EXTRA + (RIGHT_EXTRA - MID_EXTRA) * ((leftNorm - 0.66) / (1 - 0.66));
+  // Recompute surface per row/col dynamically
+  // Since we apply to each row dynamically, we cache per row/col heights
+  // This supports very large or dynamically changing areas
+  let surface = new Array(rows);
+  for (let r = 0; r < rows; r++) {
+    surface[r] = new Array(cols);
+    for (let c = 0; c < cols; c++) {
+      // Dynamically calculate the sea height/boost for this row
+      let currentSeaHeight = dynamicSeaHeight(r, c, rows, cols);
+      surface[r][c] =
+        currentSeaHeight +
+        Math.sin(c * 0.12 + r * 0.14 + t * 0.8) * 2.4 +
+        Math.sin(c * 0.27 + r * 0.21 - t * 1.1) * 1.2 +
+        Math.cos(c * 0.18 + r * 0.09 + t) * 0.6;
     }
-    localSeaHeights[c] = SEA_HEIGHT_ROWS + heightBoost;
-    const currentSeaHeight = localSeaHeights[c];
-    surface[c] =
-      currentSeaHeight +
-      Math.sin(c * 0.12 + t * 0.8) * 2.4 +
-      Math.sin(c * 0.27 - t * 1.1) * 1.2 +
-      Math.cos(c * 0.18 + t) * 0.6;
   }
 
-  // Animate each dot: only update size if necessary, and batch calculations where possible
+  // Animate each dot (apply dynamic effect row-wise as well)
   for (let i = 0; i < dots.length; i++) {
     const dot = dots[i];
     const { r, c } = positions[i];
+    // Calculate local sea height for this dot
+    let localSeaHeight = dynamicSeaHeight(r, c, rows, cols);
+    let s = surface[r][c];
 
-    const s = surface[c];
-    const localSeaHeight = localSeaHeights[c];
-
-    // Only update ambient dots if size actually changes
     if (dot._ambient) {
       if (r >= s && r > s + FOAM_THICKNESS) {
-        // Only show ambient if not sea or foam
         setDotSize(dot, AMBIENT_SIZE);
         continue;
       }
     }
 
-    // Efficiently only set to hidden if not sea, not foam, not ambient
     if (r < s) {
       const depth = Math.min(1, (s - r) / localSeaHeight);
       const pulse = Math.sin(t * 1.4 + r * 0.4 + c * 0.3) * 0.6;
       const size = WATER_SIZE * (1 - depth * 0.35) + pulse;
-
       setDotSize(dot, size);
     }
     else if (r <= s + FOAM_THICKNESS && r >= s - 0.3) {
-      // Only compute foam's randomness if actually in foam
       const size =
         FOAM_SIZE +
         Math.sin(t * 7 + c * 0.9 + r) * 1.5 +
@@ -185,6 +185,8 @@ function animate() {
 }
 
 /* ---------------- VISIBILITY HANDLING ---------------- */
+
+// Will pause the animation when page not visible and resume when visible
 function onVisibilityChange() {
   if (document.visibilityState === "visible") {
     if (!animationRunning) {
@@ -208,8 +210,16 @@ addEventListener("load", () => {
   animate();
   document.addEventListener("visibilitychange", onVisibilityChange);
 });
-addEventListener("resize", createGrid);
+addEventListener("resize", () => {
+  createGrid();
+  // Safely restart the animation if window is resized & visible
+  if (document.visibilityState === "visible" && !animationRunning) {
+    animationRunning = true;
+    animate();
+  }
+});
 
 </script>
 </body>
 </html>
+

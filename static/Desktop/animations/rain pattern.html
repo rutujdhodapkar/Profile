@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Selective Dot Emergence</title>
+<title>Dynamic Rain Pattern - Dot Animation</title>
 
 <style>
   html, body {
@@ -23,7 +23,6 @@
     will-change: width, height;
   }
 
-  /* WebKit scrollbar hide */
   html::-webkit-scrollbar, body::-webkit-scrollbar {
     display: none;
     width: 0;
@@ -31,11 +30,9 @@
   }
 </style>
 </head>
-
 <body>
 <script>
-/* ---------------- CONFIG ---------------- */
-
+/* ---------------- CONFIGURATION ---------------- */
 const SPACING_X = 12;
 const SPACING_Y = 12;
 
@@ -45,44 +42,46 @@ const RAIN_SIZE = 6.5;
 const WATER_SIZE = 6.8;
 const FOAM_SIZE  = 8.5;
 
+// Make sea bottom a little deeper by adding extra rows
+const EXTRA_ROWS = 7; // <<<<<<<< Added for deeper sea
+
 const SEA_HEIGHT_ROWS = 10;
 const FOAM_THICKNESS = 2;
 
-const RAIN_COLUMNS = 0.07;
-const RAIN_SPEED = 0.17; 
-
+const RAIN_COLUMNS_FRACTION = 0.07; // Fraction of columns with rain
+const BASE_RAIN_SPEED = 0.15;       // Base speed for raindrops
 const AMBIENT_CHANCE = 0.04;
 
 /* ---------------- STATE ---------------- */
-
 let dots = [];
 let positions = [];
 let cols = 0;
 let rows = 0;
-let rainDrops = [];
-
-// Cache dot sizes to avoid unnecessary DOM writes
+let rainDropsPerRow = [];
 let lastDotSizes = [];
 
-/* ---------------- GRID ---------------- */
+// Animation control
+let animFrameHandle = null;
+let isAnimating = false;
 
+/* ---------------- GRID & INIT ---------------- */
 function createGrid() {
+  // Remove old
   dots.forEach(d => d.remove());
   dots = [];
   positions = [];
-  rainDrops = [];
   lastDotSizes = [];
-
-  // Only as many columns/rows as fit the visible screen!
+  rainDropsPerRow = [];
+  
+  // Calculate grid size based on viewport
   cols = Math.floor(window.innerWidth / SPACING_X);
-  rows = Math.floor(window.innerHeight / SPACING_Y);
-
-  // For some visual reasons, you may add 1 padding row/col to cover scrollbars, but not much more.
+  // Add extra rows for deeper sea bottom
+  rows = Math.floor(window.innerHeight / SPACING_Y) + EXTRA_ROWS;
   document.body.style.minHeight = rows * SPACING_Y + "px";
   document.body.style.minWidth = cols * SPACING_X + "px";
-
+  
+  // Create dots and keep track of rows/cols
   const frag = document.createDocumentFragment();
-
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       const dot = document.createElement("div");
@@ -91,113 +90,108 @@ function createGrid() {
       dot.style.top  = r * SPACING_Y + "px";
       dot.style.width = HIDDEN_SIZE + "px";
       dot.style.height = HIDDEN_SIZE + "px";
-
       frag.appendChild(dot);
       dots.push(dot);
       positions.push({ r, c });
       lastDotSizes.push(HIDDEN_SIZE);
-
       if (Math.random() < AMBIENT_CHANCE) {
         dot._ambient = true;
       }
     }
   }
-
-  // Calculate target number of columns with rain drops
-  const numRainColumns = Math.max(1, Math.round(cols * RAIN_COLUMNS));
-  // Pick numRainColumns unique columns with uniform randomness
-  let rainColsArr = [];
-  for (let c = 0; c < cols; c++) rainColsArr.push(c);
-  for (let i = rainColsArr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [rainColsArr[i], rainColsArr[j]] = [rainColsArr[j], rainColsArr[i]];
-  }
-  rainColsArr = rainColsArr.slice(0, numRainColumns);
-
-  for (const c of rainColsArr) {
-    rainDrops.push({
-      col: c,
-      y: Math.random() * rows * 0.5,
-      speed: RAIN_SPEED + Math.random() * 0.13
-    });
-  }
-
   document.body.appendChild(frag);
+
+  // Dynamically assign raindrops per row:
+  rainDropsPerRow = [];
+  for (let r = 0; r < rows; r++) {
+    let thisRowDrops = [];
+    // Fraction of columns for rain per row can be dynamic!
+    const thisRowDropCount = Math.max(1, Math.round(cols * (RAIN_COLUMNS_FRACTION + Math.random()*0.02 - 0.01)));
+    // Pick unique columns for this row
+    let colIndices = Array.from({length: cols}, (_, i) => i);
+    // Fisher-Yates shuffle to randomize
+    for (let i = cols - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [colIndices[i], colIndices[j]] = [colIndices[j], colIndices[i]];
+    }
+    for (let d = 0; d < thisRowDropCount; d++) {
+      thisRowDrops.push({
+        col: colIndices[d],
+        y: Math.random()*rows*0.7,
+        speed: BASE_RAIN_SPEED + Math.random()*0.15
+      });
+    }
+    rainDropsPerRow.push(thisRowDrops);
+  }
 }
 
-/* ---------------- ANIMATION ---------------- */
-
-const SEA_WAVE_SPEED1 = 0.3;
-const SEA_WAVE_SPEED2 = 0.4;
-const SEA_WAVE_SPEED3 = 0.3;
+/* ---------------- ANIMATION ENGINE ---------------- */
+// You may adjust wave and foam dynamics below for more/less drama
+const SEA_WAVE_SPEEDS = [0.30, 0.40, 0.30];
 const SEA_PULSE_SPEED = 0.7;
 const FOAM_WAVE_SPEED = 2.7;
 
-let animationPaused = false;
-let animFrameHandle = null;
-
-// Batch DOM updates using requestAnimationFrame and apply only changed styles
 function animate() {
-  if (animationPaused) return;
-
+  if (!isAnimating) return;
   const t = performance.now() * 0.001;
-
-  // Precompute for efficiency
+  // Dynamic surface height for each col (wave effect, not per row)
   const surface = new Array(cols);
   for (let c = 0; c < cols; c++) {
     surface[c] =
-      rows - SEA_HEIGHT_ROWS +
-      Math.sin(c * 0.12 + t * SEA_WAVE_SPEED1) * 2.4 +
-      Math.sin(c * 0.27 - t * SEA_WAVE_SPEED2) * 1.2 +
-      Math.cos(c * 0.18 + t * SEA_WAVE_SPEED3) * 0.6;
+      rows - SEA_HEIGHT_ROWS + 
+      Math.sin(c * 0.12 + t * SEA_WAVE_SPEEDS[0]) * 2.4 +
+      Math.sin(c * 0.27 - t * SEA_WAVE_SPEEDS[1]) * 1.2 +
+      Math.cos(c * 0.18 + t * SEA_WAVE_SPEEDS[2]) * 0.6;
   }
 
-  // Generate frame dotSize array, default to 0 (hidden)
+  // Create blank size map for all dots
   const newDotSizes = new Float32Array(dots.length);
-  for (let i = 0; i < dots.length; i++) {
-    newDotSizes[i] = HIDDEN_SIZE;
-  }
+  for (let i = 0; i < dots.length; i++) newDotSizes[i] = HIDDEN_SIZE;
 
-  // Set ambient
-  for (let i = 0; i < dots.length; i++) {
-    if(dots[i]._ambient) newDotSizes[i] = AMBIENT_SIZE;
-  }
+  // 1. Ambient: lowest priority, but only sets if empty
+  for (let i = 0; i < dots.length; i++)
+    if (dots[i]._ambient) newDotSizes[i] = AMBIENT_SIZE;
 
-  // Rain
-  for (let drop of rainDrops) {
-    drop.y += drop.speed;
-    if (drop.y > rows) drop.y = -8;
-    for (let r = Math.floor(drop.y); r > drop.y - 6; r--) {
-      if (r < 0 || r >= rows) continue;
-      const idx = r * cols + drop.col;
-      if (idx < newDotSizes.length)
-        newDotSizes[idx] = Math.max(newDotSizes[idx], RAIN_SIZE);
+  // 2. Rain: apply to each row DYNAMICALLY based on generated drops
+  for (let r = 0; r < rows; r++) {
+    if (!rainDropsPerRow[r]) continue;
+    for (let drop of rainDropsPerRow[r]) {
+      drop.y += drop.speed;
+      if (drop.y > rows) drop.y = -6 - Math.random()*4; // restart from above
+      // Raindrop is only visible for a short "tail"
+      for (let tail = 0; tail < 6; tail++) {
+        const ry = Math.floor(drop.y) - tail;
+        if (ry !== r) continue; // only if this is the current row
+        if (ry < 0 || ry >= rows) continue;
+        const i = ry * cols + drop.col;
+        if (i >= 0 && i < newDotSizes.length)
+          newDotSizes[i] = Math.max(newDotSizes[i], RAIN_SIZE);
+      }
     }
   }
 
-  // Sea/water/foam
-  for (let i = 0; i < dots.length; i++) {
-    const { r, c } = positions[i];
+  // 3. Water and foam layer (per row/col)
+  for (let idx = 0; idx < dots.length; idx++) {
+    const { r, c } = positions[idx];
     const s = surface[c];
-
-    // Water
+    // Water below surface
     if (r > s) {
       const depth = Math.min(1, (r - s) / SEA_HEIGHT_ROWS);
       const pulse = Math.sin(t * SEA_PULSE_SPEED + r * 0.4 + c * 0.3) * 0.6;
       const size = WATER_SIZE * (1 - depth * 0.35) + pulse;
-      newDotSizes[i] = Math.max(newDotSizes[i], size);
+      newDotSizes[idx] = Math.max(newDotSizes[idx], size);
     }
-    // Foam
+    // Foam, on surface
     else if (r >= s - FOAM_THICKNESS && r <= s + 0.3) {
       const size =
         FOAM_SIZE +
         Math.sin(t * FOAM_WAVE_SPEED + c * 0.9 + r) * 1.5 +
         Math.random() * 0.8;
-      newDotSizes[i] = Math.max(newDotSizes[i], size);
+      newDotSizes[idx] = Math.max(newDotSizes[idx], size);
     }
   }
 
-  // Apply size changes efficiently (only when changed)
+  // Efficient DOM updates (only if changed)
   for (let i = 0; i < dots.length; i++) {
     const size = newDotSizes[i];
     if (lastDotSizes[i] !== size) {
@@ -206,39 +200,39 @@ function animate() {
       lastDotSizes[i] = size;
     }
   }
-
   animFrameHandle = requestAnimationFrame(animate);
 }
 
-/* ---------------- VISIBILITY HANDLING ---------------- */
-
-function onVisibilityChange() {
-  if (document.hidden) {
-    animationPaused = true;
-    if (animFrameHandle !== null) {
+/* ---------------- VISIBILITY & WINDOW HANDLING ---------------- */
+// Pause animation when page/tab is not visible!
+function handleVisibility() {
+  if (document.visibilityState === 'visible') {
+    if (!isAnimating) {
+      isAnimating = true;
+      animate();
+    }
+  } else {
+    isAnimating = false;
+    if (animFrameHandle != null) {
       cancelAnimationFrame(animFrameHandle);
       animFrameHandle = null;
     }
-  } else {
-    if (animationPaused) {
-      animationPaused = false;
-      animate();
-    }
   }
 }
-document.addEventListener("visibilitychange", onVisibilityChange);
+document.addEventListener('visibilitychange', handleVisibility);
 
-/* ---------------- INIT ---------------- */
-
-addEventListener("load", () => {
+/* ---------------- RESIZE HANDLING ---------------- */
+window.addEventListener("resize", () => {
   createGrid();
-  animate();
+  // Sync lastDotSizes array after resize
+  lastDotSizes = new Array(dots.length).fill(HIDDEN_SIZE);
 });
 
-addEventListener("resize", () => {
+/* ---------------- INIT ---------------- */
+window.addEventListener("load", () => {
   createGrid();
-  // Keep lastDotSizes array in sync after resize
-  lastDotSizes = new Array(dots.length).fill(HIDDEN_SIZE);
+  isAnimating = true;
+  animate();
 });
 </script>
 </body>
