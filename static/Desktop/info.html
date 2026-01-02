@@ -351,15 +351,7 @@
   </style>
 </head>
 <body>
-  <!-- Fixed full-screen background frame (behind content) -->
-  <iframe src="animations/pattern.html"
-          class="background-frame-pattern"
-          frameborder="0"
-          scrolling="no"
-          allowfullscreen
-          aria-hidden="true"
-          tabindex="-1">
-  </iframe>
+  <!-- Background frame will be inserted here dynamically -->
 
   <div class="main-flex-container">
     <div class="about-container">
@@ -411,6 +403,82 @@
     </div>
   </div>
   <script>
+    // Utility: Check if element is in viewport
+    function isElementOnScreen(el) {
+      if (!el) return false;
+      const rect = el.getBoundingClientRect();
+      return (
+        rect.top < window.innerHeight &&
+        rect.bottom > 0 &&
+        rect.left < window.innerWidth &&
+        rect.right > 0
+      );
+    }
+
+    // -- BACKGROUND FRAME LIFECYCLE CONTROLLER --
+    (function() {
+      // Configuration
+      var FRAME_CLASS = 'background-frame-pattern';
+      var FRAME_SRC = 'animations/pattern.html';
+      var FRAME_ID = 'dynamic-bg-frame-managed';
+
+      // Utilities for add/remove iframe
+      function createFrame() {
+        if (document.getElementById(FRAME_ID)) return;
+        var iframe = document.createElement("iframe");
+        iframe.src = FRAME_SRC;
+        iframe.className = FRAME_CLASS;
+        iframe.id = FRAME_ID;
+        iframe.setAttribute("frameborder", "0");
+        iframe.setAttribute("scrolling", "no");
+        iframe.setAttribute("allowfullscreen", "");
+        iframe.setAttribute("aria-hidden", "true");
+        iframe.setAttribute("tabindex", "-1");
+        document.body.insertBefore(iframe, document.body.firstChild);
+        // Animation with .visible
+        setTimeout(function() {
+          iframe.classList.add('visible');
+        }, 250);
+      }
+      function removeFrame() {
+        var f = document.getElementById(FRAME_ID);
+        if (f) {
+          f.remove();
+        }
+      }
+      // Track visibility of body
+      var prevVisible = true; // Assume first render is visible
+      var setupCheck;
+      function checkAndToggleBgFrame() {
+        // Check if body or mainFlex is visible in viewport at all
+        var mainFlex = document.querySelector('.main-flex-container');
+        var shouldShow = isElementOnScreen(mainFlex || document.body);
+        if (shouldShow) {
+          if (!document.getElementById(FRAME_ID)) {
+            createFrame();
+          }
+        } else {
+          removeFrame();
+        }
+        prevVisible = shouldShow;
+      }
+
+      // Setup visibility events
+      window.addEventListener('scroll', checkAndToggleBgFrame, {passive: true});
+      window.addEventListener('resize', checkAndToggleBgFrame);
+      document.addEventListener('visibilitychange', checkAndToggleBgFrame);
+
+      // Also, recheck every few seconds in case of overlay/UI popup etc
+      setupCheck = setInterval(checkAndToggleBgFrame, 3000);
+
+      // On ready, launch background if visible
+      window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(checkAndToggleBgFrame, 300);
+      });
+    })();
+
+    // --- END BACKGROUND FRAME LIFECYCLE CONTROLLER ---
+
     // Fetch data.csv from GitHub and extract "apara1" and "apara2" columns for about paragraphs
     fetch('https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv')
       .then(response => {
@@ -513,16 +581,6 @@
         // Fallback if fetch fails or no data
         // window.location.href = "error.html";
       });
-
-    // Show the background frame after 5 seconds
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(function() {
-        var bgFrame = document.querySelector('.background-frame-pattern');
-        if (bgFrame) {
-          bgFrame.classList.add('visible');
-        }
-      }, 5000);
-    });
   </script>
 </body>
 

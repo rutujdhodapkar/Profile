@@ -248,7 +248,7 @@
 <body>
   <!-- Black fade overlay for 1s fade out -->
   <div class="black-fade-overlay" id="blackFadeOverlay"></div>
-  <!-- Rain pattern overlay (hidden initially) -->
+  <!-- Rain pattern overlay (hidden initially, frame will be lazy-managed) -->
   <div id="rain-pattern-overlay"></div>
   <div class="blur-overlay" id="blurOverlay"></div>
   <!-- Project transition overlay for Projects menu click -->
@@ -368,11 +368,19 @@
         window.location.href = "error.html";
       });
 
-    setTimeout(function() {
-      var overlay = document.getElementById('rain-pattern-overlay');
-      if (overlay) {
-        if (!overlay.hasChildNodes()) {
-          var obj = document.createElement('object');
+    // --- BEGIN OPTIMIZED RAIN PATTERN OVERLAY FRAME LOGIC ---
+    // Make rain pattern background frame only alive (present in DOM, consuming memory) when visible.
+    (function() {
+      const overlay = document.getElementById('rain-pattern-overlay');
+      let rainFrameLoaded = false;
+      let currentFrame = null;
+      let observer = null;
+
+      // Helper: create frame
+      function mountRainFrame() {
+        // Only mount if not already mounted
+        if (!rainFrameLoaded && overlay && !currentFrame) {
+          const obj = document.createElement('object');
           obj.type = 'text/html';
           obj.data = 'animations/rain pattern.html';
           obj.style.width = '100vw';
@@ -383,10 +391,71 @@
           obj.style.top = '0';
           obj.style.left = '0';
           overlay.appendChild(obj);
+          overlay.classList.add('active');
+          rainFrameLoaded = true;
+          currentFrame = obj;
         }
-        overlay.classList.add('active');
       }
-    }, 5000);
+      // Helper: remove frame to free up memory
+      function unmountRainFrame() {
+        if (overlay && currentFrame) {
+          overlay.classList.remove('active');
+          overlay.removeChild(currentFrame);
+          currentFrame = null;
+          rainFrameLoaded = false;
+        }
+      }
+
+      // Intersection Observer callback: maintain frame only if visible
+      function handleVisibilityChange(entries) {
+        if (!Array.isArray(entries)) return;
+        for (const entry of entries) {
+          if (entry.target === overlay) {
+            if (entry.intersectionRatio > 0) {
+              mountRainFrame();
+            } else {
+              unmountRainFrame();
+            }
+          }
+        }
+      }
+
+      // Initialize visibility observer/logic after small delay
+      setTimeout(function() {
+        // If already present, clean up existing children
+        while (overlay && overlay.firstChild) overlay.removeChild(overlay.firstChild);
+        overlay.classList.remove('active');
+
+        // If supported, use IntersectionObserver for best results
+        if (window.IntersectionObserver) {
+          observer = new IntersectionObserver(handleVisibilityChange, {
+            root: null,
+            threshold: 0.01
+          });
+          if (overlay) {
+            observer.observe(overlay);
+          }
+        } else {
+          // Fallback: frame follows document visibility
+          function handleDocVisChange() {
+            if (document.visibilityState === 'visible') {
+              mountRainFrame();
+            } else {
+              unmountRainFrame();
+            }
+          }
+          document.addEventListener('visibilitychange', handleDocVisChange);
+          // Initial
+          if (document.visibilityState === 'visible') mountRainFrame();
+        }
+      }, 5000); // retain the original 5s delay before first showing
+
+      // Defensive: on page hide/unload, always clean up
+      window.addEventListener('beforeunload', function() {
+        unmountRainFrame();
+      });
+    })();
+    // --- END OPTIMIZED RAIN PATTERN OVERLAY FRAME LOGIC ---
   </script>
 </body>
 <script>
