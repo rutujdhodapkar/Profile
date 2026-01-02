@@ -10,7 +10,6 @@
     padding: 0;
     overflow: auto;
     background: #0f0f0f;
-    /* hide native scrollbars but keep scrolling enabled */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE 10+ */
   }
@@ -49,16 +48,13 @@ const FOAM_SIZE  = 8.5;
 const SEA_HEIGHT_ROWS = 10;
 const FOAM_THICKNESS = 2;
 
-// Increased for "little more rain drops"
 const RAIN_COLUMNS = 0.07;
-// SLOW DOWN: Lower rain speed for slower drops
-const RAIN_SPEED = 0.17; // ORIGINAL 0.35, now slower
+const RAIN_SPEED = 0.17; 
 
 const AMBIENT_CHANCE = 0.04;
 
 const MIN_COLS = 28;
 const MIN_ROWS = 28;
-// Add a small number of extra rows so new rows below the viewport are created
 const EXTRA_ROWS = 5;
 
 /* ---------------- STATE ---------------- */
@@ -69,6 +65,9 @@ let cols = 0;
 let rows = 0;
 let rainDrops = [];
 
+// Cache dot sizes to avoid unnecessary DOM writes
+let lastDotSizes = [];
+
 /* ---------------- GRID ---------------- */
 
 function createGrid() {
@@ -76,12 +75,11 @@ function createGrid() {
   dots = [];
   positions = [];
   rainDrops = [];
+  lastDotSizes = [];
 
   cols = Math.max(Math.floor(innerWidth / SPACING_X), MIN_COLS);
-  // Allocate a few extra rows beyond the viewport so the user can scroll down
   rows = Math.max(Math.floor(innerHeight / SPACING_Y) + EXTRA_ROWS, MIN_ROWS);
 
-  // Ensure the document body is tall enough to reveal the extra rows (enables scrollbar)
   document.body.style.minHeight = rows * SPACING_Y + "px";
 
   const frag = document.createDocumentFragment();
@@ -98,6 +96,7 @@ function createGrid() {
       frag.appendChild(dot);
       dots.push(dot);
       positions.push({ r, c });
+      lastDotSizes.push(HIDDEN_SIZE);
 
       if (Math.random() < AMBIENT_CHANCE) {
         dot._ambient = true;
@@ -105,18 +104,12 @@ function createGrid() {
     }
   }
 
-  // FIX: Make rain drop probability uniform (not left-leaning)
-  // Instead of Math.random() per column, use a deterministic, evenly distributed assignment with some randomness
-  // The point: make sure the *expected* number of drops is about the same, but the distribution is not skewed
-  // (e.g. due to Math.random() idiosyncrasies in low/high indices)
-
   // Calculate target number of columns with rain drops
   const numRainColumns = Math.round(cols * RAIN_COLUMNS);
 
   // Pick numRainColumns unique columns with uniform randomness
   let rainColsArr = [];
   for (let c = 0; c < cols; c++) rainColsArr.push(c);
-  // Shuffle (Fisher-Yates)
   for (let i = rainColsArr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [rainColsArr[i], rainColsArr[j]] = [rainColsArr[j], rainColsArr[i]];
@@ -127,8 +120,7 @@ function createGrid() {
     rainDrops.push({
       col: c,
       y: Math.random() * rows * 0.5,
-      // Slow down the drops: reduce the max random speed as well
-      speed: RAIN_SPEED + Math.random() * 0.13 // was 0.25
+      speed: RAIN_SPEED + Math.random() * 0.13
     });
   }
 
@@ -137,29 +129,22 @@ function createGrid() {
 
 /* ---------------- ANIMATION ---------------- */
 
-// Even slower sea animation multipliers
-const SEA_WAVE_SPEED1 = 0.3;   // was 0.5, now slower
-const SEA_WAVE_SPEED2 = 0.4;   // was 0.7, now slower
-const SEA_WAVE_SPEED3 = 0.3;   // was 0.5, now slower
-const SEA_PULSE_SPEED = 0.7;   // was 1.0, now slower
-const FOAM_WAVE_SPEED = 2.7;   // was 4.0, now slower
+const SEA_WAVE_SPEED1 = 0.3;
+const SEA_WAVE_SPEED2 = 0.4;
+const SEA_WAVE_SPEED3 = 0.3;
+const SEA_PULSE_SPEED = 0.7;
+const FOAM_WAVE_SPEED = 2.7;
 
 let animationPaused = false;
 let animFrameHandle = null;
 
+// Batch DOM updates using requestAnimationFrame and apply only changed styles
 function animate() {
   if (animationPaused) return;
 
   const t = performance.now() * 0.001;
 
-  // reset everything
-  for (let dot of dots) {
-    const size = dot._ambient ? AMBIENT_SIZE : HIDDEN_SIZE;
-    dot.style.width = size + "px";
-    dot.style.height = size + "px";
-  }
-
-  // wave surface
+  // Precompute for efficiency
   const surface = new Array(cols);
   for (let c = 0; c < cols; c++) {
     surface[c] =
@@ -169,41 +154,58 @@ function animate() {
       Math.cos(c * 0.18 + t * SEA_WAVE_SPEED3) * 0.6;
   }
 
-  // rain
+  // Generate frame dotSize array, default to 0 (hidden)
+  const newDotSizes = new Float32Array(dots.length);
+  for (let i = 0; i < dots.length; i++) {
+    newDotSizes[i] = HIDDEN_SIZE;
+  }
+
+  // Set ambient
+  for (let i = 0; i < dots.length; i++) {
+    if(dots[i]._ambient) newDotSizes[i] = AMBIENT_SIZE;
+  }
+
+  // Rain
   for (let drop of rainDrops) {
     drop.y += drop.speed;
     if (drop.y > rows) drop.y = -8;
-
     for (let r = Math.floor(drop.y); r > drop.y - 6; r--) {
       if (r < 0 || r >= rows) continue;
       const idx = r * cols + drop.col;
-      dots[idx].style.width = RAIN_SIZE + "px";
-      dots[idx].style.height = RAIN_SIZE + "px";
+      if (idx < newDotSizes.length)
+        newDotSizes[idx] = Math.max(newDotSizes[idx], RAIN_SIZE);
     }
   }
 
-  // sea
+  // Sea/water/foam
   for (let i = 0; i < dots.length; i++) {
     const { r, c } = positions[i];
     const s = surface[c];
 
+    // Water
     if (r > s) {
       const depth = Math.min(1, (r - s) / SEA_HEIGHT_ROWS);
       const pulse = Math.sin(t * SEA_PULSE_SPEED + r * 0.4 + c * 0.3) * 0.6;
       const size = WATER_SIZE * (1 - depth * 0.35) + pulse;
-
-      dots[i].style.width = size + "px";
-      dots[i].style.height = size + "px";
+      newDotSizes[i] = Math.max(newDotSizes[i], size);
     }
-
+    // Foam
     else if (r >= s - FOAM_THICKNESS && r <= s + 0.3) {
       const size =
         FOAM_SIZE +
         Math.sin(t * FOAM_WAVE_SPEED + c * 0.9 + r) * 1.5 +
         Math.random() * 0.8;
+      newDotSizes[i] = Math.max(newDotSizes[i], size);
+    }
+  }
 
+  // Apply size changes efficiently (only when changed)
+  for (let i = 0; i < dots.length; i++) {
+    const size = newDotSizes[i];
+    if (lastDotSizes[i] !== size) {
       dots[i].style.width = size + "px";
       dots[i].style.height = size + "px";
+      lastDotSizes[i] = size;
     }
   }
 
@@ -235,7 +237,11 @@ addEventListener("load", () => {
   animate();
 });
 
-addEventListener("resize", createGrid);
+addEventListener("resize", () => {
+  createGrid();
+  // Keep lastDotSizes array in sync after resize
+  lastDotSizes = new Array(dots.length).fill(HIDDEN_SIZE);
+});
 </script>
 </body>
 </html>
