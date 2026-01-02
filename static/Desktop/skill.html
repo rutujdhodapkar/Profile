@@ -1,291 +1,206 @@
-<!-- Skills Squares Section: ENERGY-EFFICIENT ANIMATION -->
+<!-- Skill boxes styled/structured to match info.html transparent box style - NO BLUR, no box border, hover fill also transparent -->
 <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
 <style>
   @font-face {
-    font-family: 'BitmapFont';
-    src: url('BitmapFont.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
+    font-family:'BitmapFont';
+    src:url('BitmapFont.ttf') format('truetype');
+    font-weight:300;
+    font-style:normal;
   }
-  body {
-    background: #000 !important;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+  html,body {
+    background:#0f0f0f !important;
+    min-height:100vh;
+    margin:0;
+    padding:0;
+    font-family:'BitmapFont',Arial,sans-serif;
+    color:#fff;
+    /* Remove all blur */
+    /*backdrop-filter:blur(10px);*/
+    /*-webkit-backdrop-filter:blur(10px);*/
+    width:100vw;
   }
-  .expertise-scroll-wrapper {
-    overflow: hidden;
-    width: 100%;
-    position: relative;
-    margin: 0 auto;
-    max-width: 100vw;
+  .skills-flex-container {
+    display:flex;
+    flex-direction:row;
+    gap:40px;
+    justify-content:center;
+    align-items:flex-start;
+    max-width:1200px;
+    margin:0 auto;
+    padding:64px 24px 64px 24px;
+    min-height:500px;
+    z-index:1;
+    width:100%;
   }
-  .expertise-container {
-    display: flex;
-    gap: 32px;
-    margin: 48px 0 32px 0;
-    flex-wrap: nowrap;
-    width: max-content;
-    will-change: transform;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  .skill-blurbox {
+    background:transparent !important; /* fully transparent */
+    border-radius:20px;
+    box-shadow:none; /* remove shadow */
+    /* Remove previous blur/backdrop code */
+    /*backdrop-filter:none;
+    -webkit-backdrop-filter:none;*/
+    /* border removed */
+    border:none;
+    min-width:230px;
+    max-width:380px;
+    padding:32px 28px 28px 28px;
+    color:#fff;
+    text-align:left;
+    font-family:'BitmapFont',Arial,sans-serif;
+    font-size:1.08rem;
+    font-weight:300;
+    margin:0 auto 30px auto;
+    box-sizing:border-box;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    transition:border-color 0.18s, background 0.18s;
   }
-  .expertise-container::-webkit-scrollbar {
-    display: none;
+  .skill-blurbox:hover {
+    /* On hover, remain transparent and border is gone */
+    background:transparent !important;
+    border:none;
+    /* Optionally: add outline or subtle shadow to indicate hover, keeping transparency */
+    /*box-shadow:0 0 0 2px rgba(255,255,255,0.07);*/
   }
-  .expertise-square {
-    background: #fff;
-    border: 2.5px solid #fff;
-    border-radius: 40px;
-    color: #000;
-    min-width: 160px;
-    min-height: 26px;
-    width: 200px;
-    height: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: 'BitmapFont', Arial, sans-serif;
-    font-size: 1.15rem;
-    font-weight: 300;
-    box-shadow: 0 4px 24px 0 rgba(255,255,255,0.08);
-    transition: transform 0.18s cubic-bezier(.77,0,.18,1), box-shadow 0.18s, border-radius 0.18s, background 0.18s, color 0.18s;
-    margin-bottom: 12px;
-    padding: 0 4px;
-    flex-shrink: 0;
+  .skill-blurbox h2 {
+    font-family:'Krona One',Arial,sans-serif !important;
+    font-size:1.32rem;
+    color:#fff;
+    margin:0 0 18px 0;
+    letter-spacing:0.03em;
+    text-align:left;
+    width:100%;
+    padding-bottom:7px;
+    border-bottom:1.5px solid #fff2;
+    background:transparent;
   }
-  .expertise-square:hover {
-    transform: scale(1.06) translateY(-4px);
-    box-shadow: 0 8px 32px 0 rgba(255,255,255,0.16);
-    border-color: #d8d8d8;
-    color: #fff;
-    background: #000;
-    border-radius: 50px;
+  .skill-list {
+    list-style:disc inside;
+    margin:0;
+    padding:0;
+    width:100%;
+    color:#fff;
+    font-size:1.06rem;
+    font-family:'BitmapFont',Arial,sans-serif;
+    font-weight:300;
+    background:transparent;
   }
-  @media (max-width: 700px) {
-    .expertise-scroll-wrapper {
-      padding-left: 0;
-      padding-right: 0;
+  .skill-list li {
+    margin-bottom:0.75em;
+    line-height:1.68;
+    text-align:left;
+    padding-left:0.2em;
+    font-family:'BitmapFont',Arial,sans-serif;
+    font-weight:300;
+    background:transparent;
+    letter-spacing:0.013em;
+  }
+  .skill-blurbox .tree {
+    list-style:none;
+    margin:0;
+    padding:0;
+    font-family:'BitmapFont',Arial,sans-serif;
+    font-size:1.04rem;
+    width:100%;
+  }
+  .skill-blurbox .tree li {
+    margin-bottom:0.46em;
+    color:#fafafa;
+    white-space:pre;
+    letter-spacing:0.01em;
+    font-family:'BitmapFont',Arial,sans-serif;
+    font-weight:300;
+    background:transparent;
+  }
+  .skill-blurbox .branch {
+    color:#a5a5a5;
+    font-family:monospace;
+    margin-right:4px;
+    user-select:none;
+  }
+  @media (max-width:900px) {
+    .skills-flex-container {
+      flex-direction:column;
+      align-items:center;
+      gap:26px;
+      padding:26px 6vw 24px 6vw;
+      max-width:98vw;
     }
-    .expertise-container {
-      gap: 18px;
+    .skill-blurbox {
+      min-width:0;
+      max-width:95vw;
+      padding:20px 6vw 22px 6vw;
+      font-size:1.04rem !important;
     }
-    .expertise-square {
-      min-width: 120px;
-      min-height: 50px;
-      width: 130px;
-      height: 38px;
-      font-size: 0.75rem;
-      padding: 0 2px;
-      border-radius: 28px;
-      margin-bottom: 8px;
-      font-weight: 300;
-    }
-    .expertise-square:hover {
-      border-radius: 36px;
+    .skill-blurbox h2 {
+      font-size:1.12rem;
     }
   }
-  .skills-title {
-    font-family: 'inter', Arial, sans-serif;
-    color: #ffffff;
-    margin-bottom: 18px;
-    letter-spacing: 1px;
-    font-size: 2.8rem; /* Updated font size */
+  @media (max-width:600px) {
+    .skills-flex-container {
+      flex-direction:column;
+      align-items:center;
+      gap:16px;
+      padding:12px 2vw 12px 2vw;
+    }
+    .skill-blurbox {
+      min-width:0;
+      max-width:98vw;
+      padding:12px 4vw 18px 4vw;
+      font-size:0.98rem !important;
+    }
+    .skill-blurbox h2 {
+      font-size:1.02rem;
+    }
   }
   ::selection {
-    background: #fff;
-    color: #000;
+    background:#fff;
+    color:#000;
   }
 </style>
-
-<div style="text-align:center;">
-  <div class="expertise-scroll-wrapper">
-    <div class="expertise-container" id="autoScrollExpertiseLeftToRight">
-      <div class="expertise-square">Artificial Intelligence (AI)</div>
-      <div class="expertise-square">Machine Learning</div>
-      <div class="expertise-square">Deep Learning</div>
-      <div class="expertise-square">Data Visualization</div>
-      <div class="expertise-square">Computer Vision</div>
-      <div class="expertise-square">Cloud Computing</div>
-      <!-- Duplicate for seamless infinite scroll -->
-      <div class="expertise-square">Artificial Intelligence (AI)</div>
-      <div class="expertise-square">Machine Learning</div>
-      <div class="expertise-square">Deep Learning</div>
-      <div class="expertise-square">Data Visualization</div>
-      <div class="expertise-square">Computer Vision</div>
-      <div class="expertise-square">Cloud Computing</div>
-    </div>
-  </div>
-</div>
-
-<div style="text-align:center;">
-  <div class="expertise-scroll-wrapper">
-    <div class="expertise-container" id="autoScrollExpertiseRightToLeft">
-      <div class="expertise-square">Python</div>
-      <div class="expertise-square">R</div>
-      <div class="expertise-square">Java</div>
-      <div class="expertise-square">JavaScript</div>
-      <div class="expertise-square">Node.js</div>
-      <div class="expertise-square">HTML/CSS</div>
-      <div class="expertise-square">SQL</div>
-      <div class="expertise-square">C</div>
-      <!-- Duplicate for seamless infinite scroll -->
-      <div class="expertise-square">Python</div>
-      <div class="expertise-square">R</div>
-      <div class="expertise-square">Java</div>
-      <div class="expertise-square">JavaScript</div>
-      <div class="expertise-square">Node.js</div>
-      <div class="expertise-square">HTML/CSS</div>
-      <div class="expertise-square">SQL</div>
-      <div class="expertise-square">C</div>
-    </div>
-  </div>
-</div>
-
-<!-- More memory-aware, ultra-low-memory, ultra-smooth animation -->
+<div class="skills-flex-container" id="skills-container"></div>
 <script>
-(function() {
-  // Minimum memory threshold (simulate: 1MB = 1048576 bytes, use navigator.deviceMemory if available)
-  function hasLowMemory() {
-    if ('deviceMemory' in navigator && navigator.deviceMemory && navigator.deviceMemory < 1) return true; // < 1GB
-    // Try to use JS heap check as fallback (approx, not always supported, but best effort)
-    if (window.performance && performance.memory) {
-      // Simulate limit: Max heap size for tab (if < 12MB, declare "low")
-      if (performance.memory.jsHeapSizeLimit && performance.memory.jsHeapSizeLimit < 12*1048576) return true;
-      // Or, if currently <1MB heap free, treat as very low
-      if (performance.memory.totalJSHeapSize && performance.memory.usedJSHeapSize &&
-         (performance.memory.totalJSHeapSize-performance.memory.usedJSHeapSize) < 1048576) return true;
-    }
-    return false;
+function generateTreeHtml(skills){
+  let html='<ul class="tree">';
+  html+='<li><span class="branch">|</span></li>';
+  skills.forEach((skill,i)=>{
+    let last=(i===skills.length-1);
+    const branch=last?'└──':'├──';
+    html+=`<li><span class="branch">${branch}</span>${skill}</li>`;
+  });
+  html+='</ul>';
+  return html;
+}
+const skillBoxes=[
+  {
+    heading:'Core Skills',
+    items:[
+      'Artificial Intelligence (AI)',
+      'Machine Learning',
+      'Deep Learning',
+      'Data Visualization',
+      'Computer Vision',
+      'Cloud Computing'
+    ]
+  },
+  {
+    heading:'Programming Languages',
+    items:[
+      'Python',
+      'R',
+      'Java',
+      'JavaScript',
+      'Node.js',
+      'HTML/CSS',
+      'SQL',
+      'C'
+    ]
   }
-
-  // Reduce resource usage if low memory detected
-  const lowMem = hasLowMemory();
-  // Use lowest possible memory mode if lowMem; else, hyper-smooth mode
-
-  function fastAnimationLoop(stepFn, pausedFn, fps, minDelta) {
-    // fallback on setTimeout if memory is very constrained.
-    let stopped = false, lastTime = performance.now();
-    let id;
-    function loop(now) {
-      if (stopped) return;
-      let delta = now - lastTime;
-      if (delta >= minDelta) {
-        stepFn(delta, now);
-        lastTime = now;
-      }
-      if (!stopped) id = requestAnimationFrame(loop);
-    }
-    function start() {
-      stopped = false;
-      lastTime = performance.now();
-      id = requestAnimationFrame(loop);
-    }
-    function stop() {
-      stopped = true;
-      canceled && cancelAnimationFrame(id);
-      if (pausedFn) pausedFn();
-    }
-    let canceled = typeof cancelAnimationFrame !== "undefined";
-    return {start, stop};
-  }
-
-  // Animate function, keeps memory peak extremely low. 
-  function makeScroller(id, direction /* +1/-1 */) {
-    const container = document.getElementById(id);
-    if (!container) return;
-    let containerWidth = 0, parentWidth = 0;
-    // Limit allocations by storing transform string
-    let scrollAmount = (direction===1) ? 0 : 0;
-    let lastTransform = "";
-    let speed = lowMem ? 24 : 60;  // px/sec: lower for lowmem
-    let minDelta = lowMem ? 1000/24 : 1000/70; // ~24fps or ~70fps
-
-    function updateWidths() {
-      containerWidth = container.scrollWidth;
-      parentWidth = container.parentElement.offsetWidth;
-      if (direction === 1) scrollAmount = 0;
-      else scrollAmount = containerWidth / 2;
-    }
-
-    function step(delta) {
-      let px = speed * delta / 1000;
-      if (direction === 1) {
-        scrollAmount += px;
-        if (scrollAmount >= containerWidth / 2) scrollAmount = 0;
-      } else {
-        scrollAmount -= px;
-        if (scrollAmount <= 0) scrollAmount = containerWidth / 2;
-      }
-      let tr = "translateX(" + -scrollAmount + "px)";
-      if (lastTransform !== tr) { // Only force paint if actually changed (reduce layout thrash/mem)
-        container.style.transform = tr;
-        lastTransform = tr;
-      }
-    }
-    function paused() {
-      // Minimal cleanup - clear style and paint
-      container.style.transform = lastTransform;
-    }
-
-    // Low-mem disables when tab is hidden, etc
-    function isPermitted() {
-      return !window.matchMedia('(prefers-reduced-motion: reduce)').matches && document.visibilityState === "visible";
-    }
-
-    // Use only one allocation for the loop
-    let looper = fastAnimationLoop(step, paused, lowMem ? 24 : 72, minDelta);
-
-    window.addEventListener('resize', updateWidths, {passive:true});
-    document.addEventListener('visibilitychange', function() {
-      if (isPermitted()) looper.start();
-      else looper.stop();
-    });
-    if (window.matchMedia)
-      window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', function() {
-        if (isPermitted()) looper.start();
-        else looper.stop();
-      });
-    updateWidths();
-    if (isPermitted()) looper.start();
-  }
-
-  // Both directions
-  makeScroller('autoScrollExpertiseLeftToRight', 1);
-  makeScroller('autoScrollExpertiseRightToLeft', -1);
-})();
+];
+const $skillsContainer=document.getElementById('skills-container');
+$skillsContainer.innerHTML=skillBoxes.map(box=>
+  `<div class="skill-blurbox"><h2>${box.heading}</h2>${generateTreeHtml(box.items)}</div>`
+).join('');
 </script>
-
-<div id="softskills-tools-message" style="font-family: 'BitmapFont', Arial, sans-serif; font-size: 0.95rem; color: #fff; margin-top: 18px; text-align: left; min-height: 3.5em; width:80%; margin-left:auto; margin-right:auto; font-weight: 300;">
-  <span id="softskills-line1"></span><br>
-  <span id="softskills-line2"></span>
-</div>
-<style>
-  #softskills-tools-message {
-    letter-spacing: 0.01em;
-    line-height: 1.5;
-    max-width: 700px;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    color: #fff;
-    font-family: 'BitmapFont', Arial, sans-serif;
-    font-size: 0.95rem;
-    background: #00000000;
-    border-radius: 12px;
-    padding: 10px 18px 10px 18px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0);
-    display: inline-block;
-    text-align: left;
-    font-weight: 300;
-  }
-  @media (max-width: 900px) {
-    #softskills-tools-message {
-      max-width: 98vw;
-      width: 98vw;
-      font-size: 0.82rem;
-      padding: 7px 8px;
-      font-weight: 300;
-    }
-  }
-</style>
