@@ -51,9 +51,10 @@ const MID_EXTRA   = 0.15;
 
 const AMBIENT_CHANCE = 0.04;
 
-const MIN_COLS = 28;
-const MIN_ROWS = 28;
-const EXTRA_ROWS = 5;
+// Commented out the minimums so grid will only cover viewport
+// const MIN_COLS = 28;
+// const MIN_ROWS = 28;
+const EXTRA_ROWS = 0; // removed extra rows for exact viewport fit
 
 /* ---------------- STATE ---------------- */
 
@@ -71,10 +72,11 @@ function createGrid() {
   dots = [];
   positions = [];
 
-  cols = Math.max(Math.floor(innerWidth / SPACING_X), MIN_COLS);
-  rows = Math.max(Math.floor(innerHeight / SPACING_Y) + EXTRA_ROWS, MIN_ROWS);
+  // Only make enough cols/rows for viewport
+  cols = Math.ceil(window.innerWidth / SPACING_X);
+  rows = Math.ceil(window.innerHeight / SPACING_Y);
 
-  document.body.style.minHeight = rows * SPACING_Y + "px";
+  document.body.style.minHeight = (rows * SPACING_Y) + "px";
 
   const frag = document.createDocumentFragment();
 
@@ -110,11 +112,6 @@ function setDotSize(dot, size) {
 }
 
 /* ---------------- ANIMATION ---------------- */
-// Efficiency improvements:
-// - Batch updates on requestAnimationFrame only if changed
-// - Random for foam only generated when needed
-// - Avoid re-setting unchanged .style properties
-// - Use single loop, avoid unnecessary recomputation
 
 function animate() {
   if (!animationRunning) return;

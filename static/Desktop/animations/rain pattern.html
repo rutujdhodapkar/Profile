@@ -23,12 +23,12 @@
     will-change: width, height;
   }
 
-/* WebKit scrollbar hide */
-html::-webkit-scrollbar, body::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
-}
+  /* WebKit scrollbar hide */
+  html::-webkit-scrollbar, body::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
 </style>
 </head>
 
@@ -53,10 +53,6 @@ const RAIN_SPEED = 0.17;
 
 const AMBIENT_CHANCE = 0.04;
 
-const MIN_COLS = 28;
-const MIN_ROWS = 28;
-const EXTRA_ROWS = 5;
-
 /* ---------------- STATE ---------------- */
 
 let dots = [];
@@ -77,10 +73,13 @@ function createGrid() {
   rainDrops = [];
   lastDotSizes = [];
 
-  cols = Math.max(Math.floor(innerWidth / SPACING_X), MIN_COLS);
-  rows = Math.max(Math.floor(innerHeight / SPACING_Y) + EXTRA_ROWS, MIN_ROWS);
+  // Only as many columns/rows as fit the visible screen!
+  cols = Math.floor(window.innerWidth / SPACING_X);
+  rows = Math.floor(window.innerHeight / SPACING_Y);
 
+  // For some visual reasons, you may add 1 padding row/col to cover scrollbars, but not much more.
   document.body.style.minHeight = rows * SPACING_Y + "px";
+  document.body.style.minWidth = cols * SPACING_X + "px";
 
   const frag = document.createDocumentFragment();
 
@@ -105,8 +104,7 @@ function createGrid() {
   }
 
   // Calculate target number of columns with rain drops
-  const numRainColumns = Math.round(cols * RAIN_COLUMNS);
-
+  const numRainColumns = Math.max(1, Math.round(cols * RAIN_COLUMNS));
   // Pick numRainColumns unique columns with uniform randomness
   let rainColsArr = [];
   for (let c = 0; c < cols; c++) rainColsArr.push(c);
