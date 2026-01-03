@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Selective Dot Emergence – Inverted, Dynamic Row Adaptation</title>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    background: #0f0f0f;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .dot {
+    position: absolute;
+    border-radius: 50%;
+    background: #c9c9c9;
+    pointer-events: none;
+    transform-origin: center;
+    will-change: width, height;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+</head>
+
+<body>
+<script>
+/* ---------------- CONFIG ---------------- */
+
+const SPACING_X = 12;
+const SPACING_Y = 12;
+
+const HIDDEN_SIZE = 0;
+const AMBIENT_SIZE = 1.2;
+const WATER_SIZE = 6.8;
+const FOAM_SIZE  = 8.5;
+
+const SEA_HEIGHT_ROWS = 10;
+const FOAM_THICKNESS = 2;
+
+// Make right/left/mid extra dynamic for each row
+const RIGHT_EXTRA = 36;
+const LEFT_EXTRA  = 0.02;
+const MID_EXTRA   = 0.15;
+
+const AMBIENT_CHANCE = 0.04;
+
+const EXTRA_ROWS = 0;
+
+// Performance tuning
+const MAX_DOTS = 18000; // soft cap on DOM nodes
+const MIN_FRAME_INTERVAL_MS = 1000 / 40; // ~40 FPS cap to reduce CPU/GPU usage
+
+/* ---------------- STATE ---------------- */
+
+let dots = [];
+let cols = 0;
+let rows = 0;
+let animationRunning = false;
+let animationFrameId = null;
+let perFrameSizes = null;
+let spacingX = SPACING_X;
+let spacingY = SPACING_Y;
+let lastFrameTime = 0;
+
+/* ---------------- GRID ---------------- */
+
+function createGrid() {
+  // Remove old dots
+  dots.forEach(d => d.remove());
+  dots = [];
+  // adapt spacing to avoid creating too many DOM nodes
+  spacingX = SPACING_X;
+  spacingY = SPACING_Y;
+  let tentativeCols = Math.floor(window.innerWidth / spacingX);
+  let tentativeRows = Math.floor(window.innerHeight / spacingY) + EXTRA_ROWS;
+  const tentativeTotal = tentativeCols * tentativeRows;
+  if (tentativeTotal > MAX_DOTS) {
+    const scale = Math.sqrt(tentativeTotal / MAX_DOTS);
+    const multiplier = Math.ceil(scale);
+    spacingX = SPACING_X * multiplier;
+    spacingY = SPACING_Y * multiplier;
+  }
+  cols = Math.max(1, Math.floor(window.innerWidth / spacingX));
+  rows = Math.max(1, Math.floor(window.innerHeight / spacingY) + EXTRA_ROWS);
+  document.body.style.minHeight = (rows * spacingY) + "px";
+
+  const frag = document.createDocumentFragment();
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const dot = document.createElement("div");
+      dot.className = "dot";
+      dot.style.left = c * spacingX + "px";
+      dot.style.top  = r * spacingY + "px";
+      dot.style.width = HIDDEN_SIZE + "px";
+      dot.style.height = HIDDEN_SIZE + "px";
+      dot._size = HIDDEN_SIZE;
+      if (Math.random() < AMBIENT_CHANCE) dot._ambient = true;
+
+      frag.appendChild(dot);
+      dots.push(dot);
+    }
+  }
+  document.body.appendChild(frag);
+  // reuse typed array buffers to avoid per-frame allocations
+  perFrameSizes = new Float32Array(dots.length);
+}
+
+function setDotSize(dot, size) {
+  if (dot._size !== size) {
+    dot.style.width = size + "px";
+    dot.style.height = size + "px";
+    dot._size = size;
+  }
+}
+
+/* ---------------- ANIMATION ---------------- */
+
+// The following function adapts sea heights dynamically PER ROW based on row-normalized position
+function dynamicSeaHeight(r, c, maxRows, maxCols) {
+  // Row/Col normalized values (0 to 1)
+  const rowNorm = maxRows < 2 ? 0 : (r / (maxRows - 1));
+  const colNorm = maxCols < 2 ? 0 : (c / (maxCols - 1));
+  // Example: increase right boost as go down for more dynamic feel
+  let rowLeft = LEFT_EXTRA + (0.18 * rowNorm);   // slightly increase left
+  let rowMid  = MID_EXTRA + (0.33 * rowNorm);    // slightly increase mid
+  let rowRight = RIGHT_EXTRA * (0.6 + 0.4 * rowNorm); // scale right more dramatically
+  let boost;
+  if (colNorm <= 0.33) {
+    boost = rowLeft + (rowMid - rowLeft) * (colNorm / 0.33);
+  } else if (colNorm < 0.66) {
+    boost = rowMid;
+  } else {
+    boost = rowMid + (rowRight - rowMid) * ((colNorm - 0.66) / (1 - 0.66));
+  }
+  return SEA_HEIGHT_ROWS + boost;
+}
+
+function animate(now) {
+  // Pause animation if page/tab is not visible
+  if (document.visibilityState !== "visible" || !animationRunning) {
+    animationRunning = false;
+    if (animationFrameId !== null) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+    return;
+  }
+  if (!now) now = performance.now();
+  // frame rate cap to reduce CPU on low-end devices
+  if (now - lastFrameTime < MIN_FRAME_INTERVAL_MS) {
+    animationFrameId = requestAnimationFrame(animate);
+    return;
+  }
+  lastFrameTime = now;
+
+  const SEA_ANIMATION_SPEED = 0.40;
+  const t = now * 0.001 * SEA_ANIMATION_SPEED;
+
+  // Avoid allocating large 2D arrays: compute per-dot heights on the fly
+  for (let i = 0; i < dots.length; i++) {
+    const dot = dots[i];
+    const r = Math.floor(i / cols);
+    const c = i % cols;
+    const currentSeaHeight = dynamicSeaHeight(r, c, rows, cols);
+    const s =
+      currentSeaHeight +
+      Math.sin(c * 0.12 + r * 0.14 + t * 0.8) * 2.4 +
+      Math.sin(c * 0.27 + r * 0.21 - t * 1.1) * 1.2 +
+      Math.cos(c * 0.18 + r * 0.09 + t) * 0.6;
+
+    if (dot._ambient) {
+      if (r >= s && r > s + FOAM_THICKNESS) {
+        setDotSize(dot, AMBIENT_SIZE);
+        continue;
+      }
+    }
+
+    if (r < s) {
+      const depth = Math.min(1, (s - r) / currentSeaHeight);
+      const pulse = Math.sin(t * 1.4 + r * 0.4 + c * 0.3) * 0.6;
+      const size = WATER_SIZE * (1 - depth * 0.35) + pulse;
+      setDotSize(dot, size);
+    } else if (r <= s + FOAM_THICKNESS && r >= s - 0.3) {
+      const size = FOAM_SIZE + Math.sin(t * 7 + c * 0.9 + r) * 1.5 + Math.random() * 0.8;
+      setDotSize(dot, size);
+    } else {
+      setDotSize(dot, dot._ambient ? AMBIENT_SIZE : HIDDEN_SIZE);
+    }
+  }
+
+  animationFrameId = requestAnimationFrame(animate);
+}
+
+/* ---------------- VISIBILITY HANDLING ---------------- */
+
+// Will pause the animation when page not visible and resume when visible
+function onVisibilityChange() {
+  if (document.visibilityState === "visible") {
+    if (!animationRunning) {
+      animationRunning = true;
+      animate();
+    }
+  } else {
+    animationRunning = false;
+    if (animationFrameId !== null) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+  }
+}
+
+/* ---------------- INIT ---------------- */
+
+addEventListener("load", () => {
+  createGrid();
+  animationRunning = true;
+  animate();
+  document.addEventListener("visibilitychange", onVisibilityChange);
+});
+addEventListener("resize", () => {
+  createGrid();
+  // Safely restart the animation if window is resized & visible
+  if (document.visibilityState === "visible" && !animationRunning) {
+    animationRunning = true;
+    animate();
+  }
+});
+
+</script>
+</body>
+</html>
+
