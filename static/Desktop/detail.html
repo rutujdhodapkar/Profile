@@ -478,7 +478,6 @@
     </a>
   </div>
 </div>
-
 <style>
   @font-face {
     font-family: 'OutlineFont';
@@ -497,6 +496,9 @@
     gap: 0;
     justify-content: center;
     will-change: transform;
+    /* GPU: promote to own layer */
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   .scroll-move-text {
     position: absolute;
@@ -506,13 +508,19 @@
     font-family: 'OutlineFont', sans-serif;
     font-weight: 600;
     color: transparent;
-   -webkit-text-stroke: 0.5px #ffffff84;
+    -webkit-text-stroke: 0.5px #ffffff84;
     text-shadow: none;
     transition: color 0.2s;
     user-select: none;
     pointer-events: none;
     width: 100vw;
     will-change: transform;
+    /* GPU: promote animation to GPU layer */
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+    /* Avoid subpixel blurring on some browsers */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   .scroll-move-text .intern-text {
     font-family: 'Inter', sans-serif !important;
@@ -552,10 +560,8 @@
   </div>
 </div>
 
-
-
 <script>
-  // Smoother, throttled scroll-move animation
+  // Smoother, throttled scroll-move animation using GPU transforms
   (function() {
     const SPEED_FACTOR = 1.4;
     const text1 = document.getElementById('scrollMoveText1');
@@ -564,6 +570,11 @@
     const container = document.querySelector('.scroll-move-text-container');
     let prevProgress = -1;
     let ticking = false;
+
+    function to3dTransform(yPercent, x) {
+      // Always use translate3d for GPU acceleration
+      return `translateY(${yPercent}) translate3d(${x}px,0,0)`;
+    }
 
     function updateTextPosition() {
       if (!container.offsetWidth) {
@@ -584,28 +595,31 @@
       const start1 = containerW;
       const end1 = -text1Width;
       const translateX1 = start1 + (end1 - start1) * progress;
-      text1.style.transform = `translateY(-50%) translateX(${translateX1}px)`;
+      text1.style.transform = to3dTransform("-50%", translateX1);
 
       const text2Width = text2.offsetWidth;
       const start2 = -text2Width;
       const end2 = containerW;
       const translateX2 = start2 + (end2 - start2) * progress;
-      text2.style.transform = `translateY(-50%) translateX(${translateX2}px)`;
+      text2.style.transform = to3dTransform("-50%", translateX2);
 
       const text3Width = text3.offsetWidth;
       const start3 = containerW;
       const end3 = -text3Width;
       const translateX3 = start3 + (end3 - start3) * progress;
-      text3.style.transform = `translateY(-40%) translateX(${translateX3}px)`;
+      text3.style.transform = to3dTransform("-40%", translateX3);
 
       ticking = false;
     }
+
     function requestTick() {
       if (!ticking) {
         requestAnimationFrame(updateTextPosition);
         ticking = true;
       }
     }
+
+    // Use passive scroll event for less jank, and promote layers for GPU anim
     window.addEventListener('scroll', requestTick, { passive: true });
     window.addEventListener('resize', function() {
       prevProgress = -1;
@@ -614,7 +628,6 @@
     setTimeout(requestTick, 150);
   })();
 </script>
-  
 
   <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
   <iframe src="Education.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no" id="education"></iframe>
