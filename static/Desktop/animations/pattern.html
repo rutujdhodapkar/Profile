@@ -23,6 +23,7 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
+    background: #0f0f0f;
   }
 </style>
 </head>
@@ -132,8 +133,9 @@ function animate(now) {
   const SEA_ANIMATION_SPEED = 0.40;
   const t = now * 0.001 * SEA_ANIMATION_SPEED;
 
-  // compute and draw in one pass
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // compute and draw in one pass — fill background with the chosen dark color (not full black)
+  ctx.fillStyle = "#0f0f0f";
+  ctx.fillRect(0, 0, canvas.width / pixelRatio, canvas.height / pixelRatio);
   ctx.fillStyle = "#c9c9c9";
   for (let i = 0; i < perFrameSizes.length; i++) {
     const r = Math.floor(i / cols);

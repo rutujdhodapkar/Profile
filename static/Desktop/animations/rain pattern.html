@@ -23,6 +23,7 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
+    background: #0f0f0f;
   }
 </style>
 </head>
@@ -181,8 +182,9 @@ function animate(now) {
     }
   }
 
-  // draw to canvas in a single pass
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // draw to canvas in a single pass — fill background with the chosen dark color (not full black)
+  ctx.fillStyle = "#0f0f0f";
+  ctx.fillRect(0, 0, canvas.width / pixelRatio, canvas.height / pixelRatio);
   ctx.fillStyle = "#c9c9c9";
   for (let idx = 0; idx < perFrameSizes.length; idx++) {
     const size = perFrameSizes[idx];
