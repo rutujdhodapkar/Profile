@@ -43,7 +43,9 @@ const WATER_SIZE = 6.8;
 const FOAM_SIZE  = 8.5;
 
 // Make sea bottom a little deeper by adding extra rows
-const EXTRA_ROWS = 7; // <<<<<<<< Added for deeper sea
+// Keep EXTRA_ROWS at 0 so we only create DOM for the visible viewport.
+// If you want a deeper sea effect, tweak SEA_HEIGHT_ROWS instead of adding off-screen rows.
+const EXTRA_ROWS = 0;
 
 const SEA_HEIGHT_ROWS = 10;
 const FOAM_THICKNESS = 2;
@@ -84,8 +86,9 @@ function createGrid() {
   // Start with base spacing
   spacingX = SPACING_X;
   spacingY = SPACING_Y;
+  // Only create dots for the visible viewport — do NOT add extra non-visible rows
   let tentativeCols = Math.floor(window.innerWidth / spacingX);
-  let tentativeRows = Math.floor(window.innerHeight / spacingY) + EXTRA_ROWS;
+  let tentativeRows = Math.floor(window.innerHeight / spacingY); // visible rows only
   // If too many dots, increase spacing to reduce count
   const tentativeTotal = tentativeCols * tentativeRows;
   if (tentativeTotal > MAX_DOTS) {
@@ -94,11 +97,12 @@ function createGrid() {
     spacingX = SPACING_X * multiplier;
     spacingY = SPACING_Y * multiplier;
   }
-  cols = Math.max(1, Math.floor(window.innerWidth / spacingX));
-  // Add extra rows for deeper sea bottom
-  rows = Math.max(1, Math.floor(window.innerHeight / spacingY) + EXTRA_ROWS);
-  document.body.style.minHeight = rows * spacingY + "px";
-  document.body.style.minWidth = cols * spacingX + "px";
+  // Use ceil to ensure coverage of the viewport without creating off-screen rows/cols
+  cols = Math.max(1, Math.ceil(window.innerWidth / spacingX));
+  rows = Math.max(1, Math.ceil(window.innerHeight / spacingY));
+  // Keep body constrained to the viewport to avoid creating off-screen DOM nodes
+  document.body.style.minHeight = window.innerHeight + "px";
+  document.body.style.minWidth = window.innerWidth + "px";
   
   // Create dots and keep track of rows/cols
   const frag = document.createDocumentFragment();

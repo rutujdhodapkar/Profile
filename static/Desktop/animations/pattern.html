@@ -79,8 +79,9 @@ function createGrid() {
   // adapt spacing to avoid creating too many DOM nodes
   spacingX = SPACING_X;
   spacingY = SPACING_Y;
+  // Start with just the visible viewport — do NOT add off-screen rows
   let tentativeCols = Math.floor(window.innerWidth / spacingX);
-  let tentativeRows = Math.floor(window.innerHeight / spacingY) + EXTRA_ROWS;
+  let tentativeRows = Math.floor(window.innerHeight / spacingY); // visible rows only
   const tentativeTotal = tentativeCols * tentativeRows;
   if (tentativeTotal > MAX_DOTS) {
     const scale = Math.sqrt(tentativeTotal / MAX_DOTS);
@@ -88,9 +89,11 @@ function createGrid() {
     spacingX = SPACING_X * multiplier;
     spacingY = SPACING_Y * multiplier;
   }
-  cols = Math.max(1, Math.floor(window.innerWidth / spacingX));
-  rows = Math.max(1, Math.floor(window.innerHeight / spacingY) + EXTRA_ROWS);
-  document.body.style.minHeight = (rows * spacingY) + "px";
+  // Use ceil to ensure we cover the viewport but do not create extra hidden rows
+  cols = Math.max(1, Math.ceil(window.innerWidth / spacingX));
+  rows = Math.max(1, Math.ceil(window.innerHeight / spacingY));
+  // Keep body constrained to the viewport to avoid off-screen DOM creation
+  document.body.style.minHeight = window.innerHeight + "px";
 
   const frag = document.createDocumentFragment();
 
