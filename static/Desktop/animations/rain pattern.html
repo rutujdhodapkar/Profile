@@ -52,13 +52,20 @@ const RAIN_COLUMNS_FRACTION = 0.07; // Fraction of columns with rain
 const BASE_RAIN_SPEED = 0.15;       // Base speed for raindrops
 const AMBIENT_CHANCE = 0.04;
 
+// Memory / performance tuning
+const MAX_DOTS = 18000; // cap total DOM nodes to this target
+const MIN_FRAME_INTERVAL_MS = 1000 / 40; // limit to ~40 FPS to reduce CPU
+
 /* ---------------- STATE ---------------- */
 let dots = [];
-let positions = [];
 let cols = 0;
 let rows = 0;
 let rainDropsPerRow = [];
-let lastDotSizes = [];
+let lastDotSizes = null;
+let perFrameSizes = null; // typed array reused every frame
+let spacingX = SPACING_X;
+let spacingY = SPACING_Y;
+let lastFrameTime = 0;
 
 // Animation control
 let animFrameHandle = null;
@@ -69,16 +76,29 @@ function createGrid() {
   // Remove old
   dots.forEach(d => d.remove());
   dots = [];
-  positions = [];
-  lastDotSizes = [];
+  lastDotSizes = null;
+  perFrameSizes = null;
   rainDropsPerRow = [];
   
   // Calculate grid size based on viewport
-  cols = Math.floor(window.innerWidth / SPACING_X);
+  // Start with base spacing
+  spacingX = SPACING_X;
+  spacingY = SPACING_Y;
+  let tentativeCols = Math.floor(window.innerWidth / spacingX);
+  let tentativeRows = Math.floor(window.innerHeight / spacingY) + EXTRA_ROWS;
+  // If too many dots, increase spacing to reduce count
+  const tentativeTotal = tentativeCols * tentativeRows;
+  if (tentativeTotal > MAX_DOTS) {
+    const scale = Math.sqrt(tentativeTotal / MAX_DOTS);
+    const multiplier = Math.ceil(scale);
+    spacingX = SPACING_X * multiplier;
+    spacingY = SPACING_Y * multiplier;
+  }
+  cols = Math.max(1, Math.floor(window.innerWidth / spacingX));
   // Add extra rows for deeper sea bottom
-  rows = Math.floor(window.innerHeight / SPACING_Y) + EXTRA_ROWS;
-  document.body.style.minHeight = rows * SPACING_Y + "px";
-  document.body.style.minWidth = cols * SPACING_X + "px";
+  rows = Math.max(1, Math.floor(window.innerHeight / spacingY) + EXTRA_ROWS);
+  document.body.style.minHeight = rows * spacingY + "px";
+  document.body.style.minWidth = cols * spacingX + "px";
   
   // Create dots and keep track of rows/cols
   const frag = document.createDocumentFragment();
@@ -86,20 +106,24 @@ function createGrid() {
     for (let c = 0; c < cols; c++) {
       const dot = document.createElement("div");
       dot.className = "dot";
-      dot.style.left = c * SPACING_X + "px";
-      dot.style.top  = r * SPACING_Y + "px";
+      dot.style.left = c * spacingX + "px";
+      dot.style.top  = r * spacingY + "px";
       dot.style.width = HIDDEN_SIZE + "px";
       dot.style.height = HIDDEN_SIZE + "px";
       frag.appendChild(dot);
       dots.push(dot);
-      positions.push({ r, c });
-      lastDotSizes.push(HIDDEN_SIZE);
+      // ambient flag persisted on element
+      if (!dot._ambient && Math.random() < AMBIENT_CHANCE) dot._ambient = true;
       if (Math.random() < AMBIENT_CHANCE) {
         dot._ambient = true;
       }
     }
   }
   document.body.appendChild(frag);
+  // Initialize typed arrays and last sizes
+  lastDotSizes = new Float32Array(dots.length);
+  for (let i = 0; i < lastDotSizes.length; i++) lastDotSizes[i] = HIDDEN_SIZE;
+  perFrameSizes = new Float32Array(dots.length);
 
   // Dynamically assign raindrops per row:
   rainDropsPerRow = [];
@@ -131,69 +155,74 @@ const SEA_WAVE_SPEEDS = [0.30, 0.40, 0.30];
 const SEA_PULSE_SPEED = 0.7;
 const FOAM_WAVE_SPEED = 2.7;
 
-function animate() {
+function animate(now) {
   if (!isAnimating) return;
-  const t = performance.now() * 0.001;
+  if (!now) now = performance.now();
+  // frame cap to reduce CPU on lower-end devices
+  if (now - lastFrameTime < MIN_FRAME_INTERVAL_MS) {
+    animFrameHandle = requestAnimationFrame(animate);
+    return;
+  }
+  lastFrameTime = now;
+  const t = now * 0.001;
+
   // Dynamic surface height for each col (wave effect, not per row)
-  const surface = new Array(cols);
+  const surface = new Float32Array(cols);
   for (let c = 0; c < cols; c++) {
     surface[c] =
-      rows - SEA_HEIGHT_ROWS + 
+      rows - SEA_HEIGHT_ROWS +
       Math.sin(c * 0.12 + t * SEA_WAVE_SPEEDS[0]) * 2.4 +
       Math.sin(c * 0.27 - t * SEA_WAVE_SPEEDS[1]) * 1.2 +
       Math.cos(c * 0.18 + t * SEA_WAVE_SPEEDS[2]) * 0.6;
   }
 
-  // Create blank size map for all dots
-  const newDotSizes = new Float32Array(dots.length);
-  for (let i = 0; i < dots.length; i++) newDotSizes[i] = HIDDEN_SIZE;
+  // Reuse per-frame typed array to avoid allocations
+  if (!perFrameSizes || perFrameSizes.length !== dots.length) perFrameSizes = new Float32Array(dots.length);
+  perFrameSizes.fill(HIDDEN_SIZE);
 
   // 1. Ambient: lowest priority, but only sets if empty
-  for (let i = 0; i < dots.length; i++)
-    if (dots[i]._ambient) newDotSizes[i] = AMBIENT_SIZE;
+  for (let i = 0; i < dots.length; i++) if (dots[i]._ambient) perFrameSizes[i] = AMBIENT_SIZE;
 
   // 2. Rain: apply to each row DYNAMICALLY based on generated drops
   for (let r = 0; r < rows; r++) {
     if (!rainDropsPerRow[r]) continue;
     for (let drop of rainDropsPerRow[r]) {
       drop.y += drop.speed;
-      if (drop.y > rows) drop.y = -6 - Math.random()*4; // restart from above
+      if (drop.y > rows) drop.y = -6 - Math.random() * 4; // restart from above
       // Raindrop is only visible for a short "tail"
       for (let tail = 0; tail < 6; tail++) {
         const ry = Math.floor(drop.y) - tail;
         if (ry !== r) continue; // only if this is the current row
         if (ry < 0 || ry >= rows) continue;
         const i = ry * cols + drop.col;
-        if (i >= 0 && i < newDotSizes.length)
-          newDotSizes[i] = Math.max(newDotSizes[i], RAIN_SIZE);
+        if (i >= 0 && i < perFrameSizes.length) perFrameSizes[i] = Math.max(perFrameSizes[i], RAIN_SIZE);
       }
     }
   }
 
   // 3. Water and foam layer (per row/col)
   for (let idx = 0; idx < dots.length; idx++) {
-    const { r, c } = positions[idx];
+    // compute r,c on the fly to avoid per-dot position objects
+    const r = Math.floor(idx / cols);
+    const c = idx % cols;
     const s = surface[c];
     // Water below surface
     if (r > s) {
       const depth = Math.min(1, (r - s) / SEA_HEIGHT_ROWS);
       const pulse = Math.sin(t * SEA_PULSE_SPEED + r * 0.4 + c * 0.3) * 0.6;
       const size = WATER_SIZE * (1 - depth * 0.35) + pulse;
-      newDotSizes[idx] = Math.max(newDotSizes[idx], size);
+      perFrameSizes[idx] = Math.max(perFrameSizes[idx], size);
     }
     // Foam, on surface
     else if (r >= s - FOAM_THICKNESS && r <= s + 0.3) {
-      const size =
-        FOAM_SIZE +
-        Math.sin(t * FOAM_WAVE_SPEED + c * 0.9 + r) * 1.5 +
-        Math.random() * 0.8;
-      newDotSizes[idx] = Math.max(newDotSizes[idx], size);
+      const size = FOAM_SIZE + Math.sin(t * FOAM_WAVE_SPEED + c * 0.9 + r) * 1.5 + Math.random() * 0.8;
+      perFrameSizes[idx] = Math.max(perFrameSizes[idx], size);
     }
   }
 
   // Efficient DOM updates (only if changed)
   for (let i = 0; i < dots.length; i++) {
-    const size = newDotSizes[i];
+    const size = perFrameSizes[i];
     if (lastDotSizes[i] !== size) {
       dots[i].style.width = size + "px";
       dots[i].style.height = size + "px";
@@ -224,8 +253,9 @@ document.addEventListener('visibilitychange', handleVisibility);
 /* ---------------- RESIZE HANDLING ---------------- */
 window.addEventListener("resize", () => {
   createGrid();
-  // Sync lastDotSizes array after resize
-  lastDotSizes = new Array(dots.length).fill(HIDDEN_SIZE);
+  // Sync lastDotSizes array after resize (typed array)
+  lastDotSizes = new Float32Array(dots.length);
+  for (let i = 0; i < lastDotSizes.length; i++) lastDotSizes[i] = HIDDEN_SIZE;
 
   // If page is not visible during resize, do not animate
   if (document.visibilityState === 'visible' && !isAnimating) {

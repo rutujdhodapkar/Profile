@@ -54,14 +54,21 @@ const AMBIENT_CHANCE = 0.04;
 
 const EXTRA_ROWS = 0;
 
+// Performance tuning
+const MAX_DOTS = 18000; // soft cap on DOM nodes
+const MIN_FRAME_INTERVAL_MS = 1000 / 40; // ~40 FPS cap to reduce CPU/GPU usage
+
 /* ---------------- STATE ---------------- */
 
 let dots = [];
-let positions = [];
 let cols = 0;
 let rows = 0;
 let animationRunning = false;
 let animationFrameId = null;
+let perFrameSizes = null;
+let spacingX = SPACING_X;
+let spacingY = SPACING_Y;
+let lastFrameTime = 0;
 
 /* ---------------- GRID ---------------- */
 
@@ -69,10 +76,21 @@ function createGrid() {
   // Remove old dots
   dots.forEach(d => d.remove());
   dots = [];
-  positions = [];
-  cols = Math.ceil(window.innerWidth / SPACING_X);
-  rows = Math.ceil(window.innerHeight / SPACING_Y) + EXTRA_ROWS;
-  document.body.style.minHeight = (rows * SPACING_Y) + "px";
+  // adapt spacing to avoid creating too many DOM nodes
+  spacingX = SPACING_X;
+  spacingY = SPACING_Y;
+  let tentativeCols = Math.floor(window.innerWidth / spacingX);
+  let tentativeRows = Math.floor(window.innerHeight / spacingY) + EXTRA_ROWS;
+  const tentativeTotal = tentativeCols * tentativeRows;
+  if (tentativeTotal > MAX_DOTS) {
+    const scale = Math.sqrt(tentativeTotal / MAX_DOTS);
+    const multiplier = Math.ceil(scale);
+    spacingX = SPACING_X * multiplier;
+    spacingY = SPACING_Y * multiplier;
+  }
+  cols = Math.max(1, Math.floor(window.innerWidth / spacingX));
+  rows = Math.max(1, Math.floor(window.innerHeight / spacingY) + EXTRA_ROWS);
+  document.body.style.minHeight = (rows * spacingY) + "px";
 
   const frag = document.createDocumentFragment();
 
@@ -80,8 +98,8 @@ function createGrid() {
     for (let c = 0; c < cols; c++) {
       const dot = document.createElement("div");
       dot.className = "dot";
-      dot.style.left = c * SPACING_X + "px";
-      dot.style.top  = r * SPACING_Y + "px";
+      dot.style.left = c * spacingX + "px";
+      dot.style.top  = r * spacingY + "px";
       dot.style.width = HIDDEN_SIZE + "px";
       dot.style.height = HIDDEN_SIZE + "px";
       dot._size = HIDDEN_SIZE;
@@ -89,10 +107,11 @@ function createGrid() {
 
       frag.appendChild(dot);
       dots.push(dot);
-      positions.push({ r, c });
     }
   }
   document.body.appendChild(frag);
+  // reuse typed array buffers to avoid per-frame allocations
+  perFrameSizes = new Float32Array(dots.length);
 }
 
 function setDotSize(dot, size) {
@@ -125,7 +144,7 @@ function dynamicSeaHeight(r, c, maxRows, maxCols) {
   return SEA_HEIGHT_ROWS + boost;
 }
 
-function animate() {
+function animate(now) {
   // Pause animation if page/tab is not visible
   if (document.visibilityState !== "visible" || !animationRunning) {
     animationRunning = false;
@@ -135,34 +154,28 @@ function animate() {
     }
     return;
   }
+  if (!now) now = performance.now();
+  // frame rate cap to reduce CPU on low-end devices
+  if (now - lastFrameTime < MIN_FRAME_INTERVAL_MS) {
+    animationFrameId = requestAnimationFrame(animate);
+    return;
+  }
+  lastFrameTime = now;
 
   const SEA_ANIMATION_SPEED = 0.40;
-  const t = performance.now() * 0.001 * SEA_ANIMATION_SPEED;
+  const t = now * 0.001 * SEA_ANIMATION_SPEED;
 
-  // Recompute surface per row/col dynamically
-  // Since we apply to each row dynamically, we cache per row/col heights
-  // This supports very large or dynamically changing areas
-  let surface = new Array(rows);
-  for (let r = 0; r < rows; r++) {
-    surface[r] = new Array(cols);
-    for (let c = 0; c < cols; c++) {
-      // Dynamically calculate the sea height/boost for this row
-      let currentSeaHeight = dynamicSeaHeight(r, c, rows, cols);
-      surface[r][c] =
-        currentSeaHeight +
-        Math.sin(c * 0.12 + r * 0.14 + t * 0.8) * 2.4 +
-        Math.sin(c * 0.27 + r * 0.21 - t * 1.1) * 1.2 +
-        Math.cos(c * 0.18 + r * 0.09 + t) * 0.6;
-    }
-  }
-
-  // Animate each dot (apply dynamic effect row-wise as well)
+  // Avoid allocating large 2D arrays: compute per-dot heights on the fly
   for (let i = 0; i < dots.length; i++) {
     const dot = dots[i];
-    const { r, c } = positions[i];
-    // Calculate local sea height for this dot
-    let localSeaHeight = dynamicSeaHeight(r, c, rows, cols);
-    let s = surface[r][c];
+    const r = Math.floor(i / cols);
+    const c = i % cols;
+    const currentSeaHeight = dynamicSeaHeight(r, c, rows, cols);
+    const s =
+      currentSeaHeight +
+      Math.sin(c * 0.12 + r * 0.14 + t * 0.8) * 2.4 +
+      Math.sin(c * 0.27 + r * 0.21 - t * 1.1) * 1.2 +
+      Math.cos(c * 0.18 + r * 0.09 + t) * 0.6;
 
     if (dot._ambient) {
       if (r >= s && r > s + FOAM_THICKNESS) {
@@ -172,19 +185,14 @@ function animate() {
     }
 
     if (r < s) {
-      const depth = Math.min(1, (s - r) / localSeaHeight);
+      const depth = Math.min(1, (s - r) / currentSeaHeight);
       const pulse = Math.sin(t * 1.4 + r * 0.4 + c * 0.3) * 0.6;
       const size = WATER_SIZE * (1 - depth * 0.35) + pulse;
       setDotSize(dot, size);
-    }
-    else if (r <= s + FOAM_THICKNESS && r >= s - 0.3) {
-      const size =
-        FOAM_SIZE +
-        Math.sin(t * 7 + c * 0.9 + r) * 1.5 +
-        Math.random() * 0.8;
+    } else if (r <= s + FOAM_THICKNESS && r >= s - 0.3) {
+      const size = FOAM_SIZE + Math.sin(t * 7 + c * 0.9 + r) * 1.5 + Math.random() * 0.8;
       setDotSize(dot, size);
-    }
-    else {
+    } else {
       setDotSize(dot, dot._ambient ? AMBIENT_SIZE : HIDDEN_SIZE);
     }
   }
