@@ -447,10 +447,11 @@
   <div class="frame-stack">
     <!-- Both frames with a 2px space between them -->
     <div class="top-frame" id="top-frame">
-      <iframe src="Main.html" scrolling="no" title="Main"></iframe>
+      <!-- Adding allow="none" as no special features needed, add sandbox -->
+      <iframe src="Main.html" scrolling="no" title="Main" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
     </div>
     <div class="frame-gap-2px"></div>
-    <iframe class="frame-no-gap" src="info.html" style="width:100vw;height:690px;min-height:400px;max-width:100vw;border:none;overflow:hidden;display:block;padding:0;margin:0;" scrolling="no"></iframe>
+    <iframe class="frame-no-gap" src="info.html" style="width:100vw;height:690px;min-height:400px;max-width:100vw;border:none;overflow:hidden;display:block;padding:0;margin:0;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
   </div>
   <style>
     .edge-tech-line {
@@ -470,7 +471,7 @@
 <br>
 <br>
 <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
-<iframe src="skill.html" style="width:100%; height:450px; border:none; overflow:hidden;" scrolling="no"></iframe>
+<iframe src="skill.html" style="width:100%; height:450px; border:none; overflow:hidden;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
  <div class="ai-message-block">
   <div>
     and... sometimes I get a lot on my mind so I write it out as 
@@ -630,14 +631,14 @@
 </script>
 
   <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
-  <iframe src="Education.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no" id="education"></iframe>
+  <iframe src="Education.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" id="education" data-memory-limit="50mb"></iframe>
   <div class="ai-message-block">
     <div>
       Still doubt if my knowledge is real? Check my:
     </div>
   </div>
   <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
-  <iframe src="certificate.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no"></iframe>  
+  <iframe src="certificate.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>  
   <style>
     .edge-tech-line {
       font-family:'BitmapFont', sans-serif;
@@ -650,7 +651,7 @@
       color: #ffffffa3;
     }
   </style>
-  <iframe src="project section.html" style="width:100%; height:1270px; border:none; overflow:hidden; display:block;" scrolling="no"></iframe>
+  <iframe src="project section.html" style="width:100%; height:1270px; border:none; overflow:hidden; display:block;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
   <style>
     @font-face {
       font-family: 'BitmapFont';
@@ -707,7 +708,7 @@
   </div>
 
   <!-- Add contact.html frame at the bottom -->
-  <iframe src="contact.html" style="width:100%; height:700px; border:none; overflow:hidden; display:block;" scrolling="no"></iframe>
+  <iframe src="contact.html" style="width:100%; height:700px; border:none; overflow:hidden; display:block;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
 </body><script>
 document.documentElement.style.scrollBehavior = "smooth";
 </script>
