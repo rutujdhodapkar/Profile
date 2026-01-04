@@ -38,8 +38,9 @@
       top: 0; left: 0; width: 100vw; height: 100vh;
       z-index: 1;
       pointer-events: none;
-      opacity: 0;
-      transition: opacity 1s;
+      opacity: 1;
+      /* show immediately, no transition */
+      transition: none;
     }
     #rain-pattern-overlay.active {
       opacity: 1;
@@ -152,38 +153,10 @@
       z-index: 2002;
     }
     .black-fade-overlay {
-      position: fixed;
-      z-index: 10000;
-      top: 0; left: 0; right: 0; bottom: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
-      opacity: 1;
-      pointer-events: none;
-      transition: opacity 1s linear;
-    }
-    .black-fade-overlay.transparent {
-      opacity: 0;
-      transition: opacity 1s linear;
+      display: none !important;
     }
     .blur-overlay {
-      position: fixed;
-      z-index: 9999;
-      top: 0; left: 0; right: 0; bottom: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      background: rgba(0,0,0,0.18);
-      backdrop-filter: blur(32px);
-      -webkit-backdrop-filter: blur(32px);
-      opacity: 1;
-      transition: opacity 1.2s cubic-bezier(.4,1.2,.6,1);
-      will-change: opacity;
-    }
-    .blur-overlay.hide {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 1.2s cubic-bezier(.4,1.2,.6,1);
+      display: none !important;
     }
     .project-transition-overlay {
       position: fixed;
@@ -231,26 +204,14 @@
       }
     }
   </style>
-  <script>
-    // Always open page at top
-    window.addEventListener('beforeunload', function () {
-      window.scrollTo(0, 0);
-    });
-    window.addEventListener('DOMContentLoaded', function () {
-      setTimeout(function() {
-        window.scrollTo(0, 0);
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-      }, 0);
-    });
-  </script>
+  <!-- Removed initial scroll to top effects and overlays JS -->
 </head>
 <body>
-  <!-- Black fade overlay for 1s fade out -->
-  <div class="black-fade-overlay" id="blackFadeOverlay"></div>
-  <!-- Rain pattern overlay (hidden initially, frame will be lazy-managed) -->
+  <!-- Black fade overlay for 1s fade out (REMOVED on start) -->
+  <div class="black-fade-overlay" id="blackFadeOverlay" style="display:none"></div>
+  <!-- Rain pattern overlay (SHOWN IMMEDIATELY) -->
   <div id="rain-pattern-overlay"></div>
-  <div class="blur-overlay" id="blurOverlay"></div>
+  <div class="blur-overlay" id="blurOverlay" style="display:none"></div>
   <!-- Project transition overlay for Projects menu click -->
   <div class="project-transition-overlay" id="projectTransitionOverlay"></div>
 
@@ -268,26 +229,6 @@
   </div>
 
   <script>
-    window.addEventListener('DOMContentLoaded', function() {
-      const blackFade = document.getElementById('blackFadeOverlay');
-      setTimeout(() => {
-        blackFade.classList.add('transparent');
-      }, 10);
-      setTimeout(() => {
-        blackFade.style.display = 'none';
-      }, 1010);
-    });
-
-    window.addEventListener('DOMContentLoaded', function() {
-      const blur = document.getElementById('blurOverlay');
-      setTimeout(() => {
-        blur.classList.add('hide');
-      }, 900);
-      setTimeout(() => {
-        blur.style.display = 'none';
-      }, 2200);
-    });
-
     // Fetch name, mdesc1 from GitHub raw CSV and use for typing animation and description
     fetch('https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv', {cache: "no-store"})
       .then(response => {
@@ -368,17 +309,14 @@
         window.location.href = "error.html";
       });
 
-    // --- BEGIN OPTIMIZED RAIN PATTERN OVERLAY FRAME LOGIC ---
-    // Make rain pattern background frame only alive (present in DOM, consuming memory) when visible.
+    // --- RAIN PATTERN OVERLAY FRAME LOGIC: Show Frame Immediately ---
     (function() {
       const overlay = document.getElementById('rain-pattern-overlay');
       let rainFrameLoaded = false;
       let currentFrame = null;
-      let observer = null;
 
-      // Helper: create frame
+      // Create and mount frame IMMEDIATELY
       function mountRainFrame() {
-        // Only mount if not already mounted
         if (!rainFrameLoaded && overlay && !currentFrame) {
           const obj = document.createElement('object');
           obj.type = 'text/html';
@@ -396,7 +334,7 @@
           currentFrame = obj;
         }
       }
-      // Helper: remove frame to free up memory
+      // Remove frame to free up memory (if desired)
       function unmountRainFrame() {
         if (overlay && currentFrame) {
           overlay.classList.remove('active');
@@ -406,56 +344,17 @@
         }
       }
 
-      // Intersection Observer callback: maintain frame only if visible
-      function handleVisibilityChange(entries) {
-        if (!Array.isArray(entries)) return;
-        for (const entry of entries) {
-          if (entry.target === overlay) {
-            if (entry.intersectionRatio > 0) {
-              mountRainFrame();
-            } else {
-              unmountRainFrame();
-            }
-          }
-        }
-      }
-
-      // Initialize visibility observer/logic after small delay
-      setTimeout(function() {
-        // If already present, clean up existing children
-        while (overlay && overlay.firstChild) overlay.removeChild(overlay.firstChild);
-        overlay.classList.remove('active');
-
-        // If supported, use IntersectionObserver for best results
-        if (window.IntersectionObserver) {
-          observer = new IntersectionObserver(handleVisibilityChange, {
-            root: null,
-            threshold: 0.01
-          });
-          if (overlay) {
-            observer.observe(overlay);
-          }
-        } else {
-          // Fallback: frame follows document visibility
-          function handleDocVisChange() {
-            if (document.visibilityState === 'visible') {
-              mountRainFrame();
-            } else {
-              unmountRainFrame();
-            }
-          }
-          document.addEventListener('visibilitychange', handleDocVisChange);
-          // Initial
-          if (document.visibilityState === 'visible') mountRainFrame();
-        }
-      }, 5000); // retain the original 5s delay before first showing
+      // Instead of observing, just mount immediately
+      while (overlay && overlay.firstChild) overlay.removeChild(overlay.firstChild);
+      overlay.classList.remove('active');
+      mountRainFrame();
 
       // Defensive: on page hide/unload, always clean up
       window.addEventListener('beforeunload', function() {
         unmountRainFrame();
       });
     })();
-    // --- END OPTIMIZED RAIN PATTERN OVERLAY FRAME LOGIC ---
+    // --- END RAIN PATTERN OVERLAY FRAME LOGIC ---
   </script>
 </body>
 <script>
@@ -669,6 +568,7 @@
 </style>
 <div id="whiteOverlay" class="white-overlay hide"></div>
 <script>
+  // White overlay logic retained for scroll, but not on start.
   (function() {
     let overlay = document.getElementById('whiteOverlay');
     let overlayTimeout = null;

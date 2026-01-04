@@ -1,142 +1,158 @@
 <style>
-    body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: #0f0f0f;
-    }
-  
-    .rain-dot {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: #fff;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0; /* Hide gray dots completely (transparent) */
-      transition: opacity 0.2s;
-    }
-  
-    .rain-dot.on {
-      opacity: 1; /* Only white dots (on) are visible */
-    }
-</style>
-  
-<script>
-  // 1️⃣ Glitch zone variable configs
-  const GLITCH_START_ROWS = 8;   // how deep glitch influence starts
-
-  // GLITCH_END_ROWS and MAX_DEAD_PROB are now set dynamically inside placeGridDots
-
-  let rainDots = [];
-  let dotPositions = [];
-  let lastStates = [];
-  let t = 0;
-
-  const SPACING_X = 12;
-  const SPACING_Y = 12;
-  const DOT_SIZE = 8;
-
-  const MIN_COLS = 28;
-  const MIN_ROWS = 28;
-
-  function placeGridDots() {
-    rainDots.forEach(d => d.remove());
-    rainDots = [];
-    dotPositions = [];
-    lastStates = [];
-
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
-    const cols = Math.max(Math.floor((width - DOT_SIZE) / SPACING_X) + 1, MIN_COLS);
-    const rows = Math.max(Math.floor((height - DOT_SIZE) / SPACING_Y) + 1, MIN_ROWS);
-
-    // Keep these assignments as instructed
-    const GLITCH_END_ROWS = Math.floor(rows * 0.82); // 🔥 now ~82% of screen
-    const MAX_DEAD_PROB = 0.995; // basically nuked at the top
-
-    const gridWidth = (cols - 1) * SPACING_X + DOT_SIZE;
-    const gridHeight = (rows - 1) * SPACING_Y + DOT_SIZE;
-
-    const offsetX = Math.max(0, (width - gridWidth) / 2);
-    const offsetY = Math.max(0, (height - gridHeight) / 2);
-
-    const frag = document.createDocumentFragment();
-
-    // 2️⃣ Updated dead-dot logic
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        const dot = document.createElement('div');
-        dot.className = 'rain-dot';
-        dot.style.left = offsetX + col * SPACING_X + 'px';
-        dot.style.top = offsetY + row * SPACING_Y + 'px';
-
-        // Replace dead-dot logic with the new instructions
-        let isDead = false;
-
-        if (row < GLITCH_END_ROWS) {
-          const n = 1 - row / GLITCH_END_ROWS; // 1 top → 0 deep
-
-          // density + persistence
-          const curved =
-            Math.pow(n, 5.2) * 0.6 +   // VERY dense at top
-            Math.pow(n, 1.1) * 0.4;    // keeps it dense longer
-
-          // column bias to thicken the field
-          const columnBias = (Math.sin(col * 0.9) + 1) * 0.15;
-
-          const deadProb = Math.min(
-            1,
-            MAX_DEAD_PROB * curved + columnBias
-          );
-
-          if (Math.random() < deadProb) {
-            isDead = true;
-          }
-        }
-
-        lastStates.push(false);
-        frag.appendChild(dot);
-        rainDots.push(dot);
-        dotPositions.push({ row, col, isDead });
-      }
-    }
-
-    document.body.appendChild(frag);
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #0f0f0f;
   }
+  canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    pointer-events: none;
+    background: #0f0f0f;
+  }
+</style>
 
-  // 3️⃣ animatePattern stays EXACTLY this
-  function animatePattern() {
-    for (let i = 0; i < rainDots.length; i++) {
-      const { row, col, isDead } = dotPositions[i];
+<canvas id="dotted-lines-stage"></canvas>
+<script>
+// Memory-efficient: uses canvas, NOT a div per dot
 
-      // ☠️ permanently dead dots
-      if (isDead) {
-        if (lastStates[i] !== false) {
-          rainDots[i].classList.remove('on');
-          lastStates[i] = false;
+const SPACING_X = 12;
+const SPACING_Y = 12;
+const DOT_SIZE = 8;
+
+const MIN_COLS = 28;
+const MIN_ROWS = 28;
+
+let cols = 0, rows = 0;
+let grid = null; // Only store "dead" or not (bit array)
+let offsetX = 0, offsetY = 0;
+let lastW = 0, lastH = 0;
+let animationRunning = false;
+
+// Calculate grid and dead-dot field ONCE (not per frame), only keep 1 bit per dot for "dead"
+function computeGrid() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  cols = Math.max(Math.floor((width - DOT_SIZE) / SPACING_X) + 1, MIN_COLS);
+  rows = Math.max(Math.floor((height - DOT_SIZE) / SPACING_Y) + 1, MIN_ROWS);
+
+  const GLITCH_END_ROWS = Math.floor(rows * 0.82);
+  const MAX_DEAD_PROB = 0.995;
+
+  const gridWidth = (cols - 1) * SPACING_X + DOT_SIZE;
+  const gridHeight = (rows - 1) * SPACING_Y + DOT_SIZE;
+
+  offsetX = Math.max(0, (width - gridWidth) / 2);
+  offsetY = Math.max(0, (height - gridHeight) / 2);
+
+  // Store as flat 0/1 array (bit array also possible, but this is simple + light)
+  grid = new Uint8Array(cols * rows);
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      let isDead = 0;
+      if (row < GLITCH_END_ROWS) {
+        const n = 1 - row / GLITCH_END_ROWS;
+        const curved =
+          Math.pow(n, 5.2) * 0.6 +
+          Math.pow(n, 1.1) * 0.4;
+        const columnBias = (Math.sin(col * 0.9) + 1) * 0.15;
+        const deadProb = Math.min(
+          1,
+          MAX_DEAD_PROB * curved + columnBias
+        );
+        if (Math.random() < deadProb) {
+          isDead = 1;
         }
-        continue;
       }
+      grid[row * cols + col] = isDead;
+    }
+  }
+}
 
+function drawDots(ctx, t) {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.save();
+  ctx.translate(offsetX, offsetY);
+  ctx.fillStyle = "#fff";
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (grid[row * cols + col]) continue; // dead, skip
+      // pattern
       const phase = (row + col) / 10 - t;
       const on = Math.sin(phase) > 0.6;
-
-      if (lastStates[i] !== on) {
-        rainDots[i].classList.toggle('on', on);
-        lastStates[i] = on;
-      }
+      if (!on) continue;
+      const x = col * SPACING_X;
+      const y = row * SPACING_Y;
+      ctx.beginPath();
+      ctx.arc(x, y, DOT_SIZE/2, 0, Math.PI * 2);
+      ctx.fill();
     }
+  }
+  ctx.restore();
+}
 
-    t += 0.05;
-    requestAnimationFrame(animatePattern);
+function doResize(canvas, ctx) {
+  // Only recompute if size changed
+  const w = window.innerWidth, h = window.innerHeight;
+  if (w === lastW && h === lastH && grid) return;
+  lastW = w; lastH = h;
+  // Set canvas size (hiDPI aware)
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + "px";
+  canvas.style.height = h + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  // Update grid
+  computeGrid();
+}
+
+(function() {
+  const canvas = document.getElementById("dotted-lines-stage");
+  const ctx = canvas.getContext("2d", {alpha:false});
+  let t = 0;
+
+  function animate() {
+    if (!animationRunning) return;
+    drawDots(ctx, t);
+    t += 0.015; // SLOWER: was 0.05, now 0.015
+    requestAnimationFrame(animate);
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    placeGridDots();
-    animatePattern();
+  function start() {
+    doResize(canvas, ctx);
+    animationRunning = true;
+    requestAnimationFrame(animate);
+  }
+  function stop() {
+    animationRunning = false;
+  }
+
+  window.addEventListener("DOMContentLoaded", start);
+  window.addEventListener("resize", function() {
+    doResize(canvas, ctx);
   });
 
-  window.addEventListener('resize', placeGridDots);
+  // Memory-efficient pause/resume on tab visibility
+  document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === "visible") {
+      if (!animationRunning) {
+        doResize(canvas, ctx);
+        animationRunning = true;
+        requestAnimationFrame(animate);
+      }
+    } else {
+      animationRunning = false;
+      // Free memory: remove grid, clear canvas
+      grid = null;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  });
+})();
 </script>
