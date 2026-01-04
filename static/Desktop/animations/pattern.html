@@ -25,11 +25,38 @@
     pointer-events: none;
     background: #0f0f0f;
   }
+  #pause-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    background: rgba(255,255,255,0.97);
+    color: #222;
+    z-index: 9999;
+    font-family: 'Segoe UI',sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: all;
+    transition: opacity 0.25s;
+  }
+  #pause-overlay.visible {
+    display: flex;
+    opacity: 1;
+  }
 </style>
 </head>
 
 <body>
 <canvas id="stage"></canvas>
+<div id="pause-overlay">
+  <div>
+    <span>Animation Paused to Save Memory</span><br><br>
+    <button id="resume-btn" style="margin-top:1.1em;padding:0.6em 1.8em;font-size:1.2em;border:none;border-radius:2em;background:#222;color:#fff;cursor:pointer;">Resume</button>
+  </div>
+</div>
 <script>
 /* ---------------- CONFIG ---------------- */
 const SPACING_X = 12;
@@ -63,6 +90,27 @@ let lastFrameTime = 0;
 let perFrameSizes = null;
 let ambientFlags = null;
 let animationRunning = false;
+
+// --- White overlay pause handling ---
+const overlay = document.getElementById("pause-overlay");
+const resumeBtn = document.getElementById("resume-btn");
+let pauseManually = false;
+let pausedDueToHidden = false;
+
+function showOverlay() {
+  overlay.classList.add("visible");
+}
+function hideOverlay() {
+  overlay.classList.remove("visible");
+}
+resumeBtn.addEventListener("click", function() {
+  pauseManually = false;
+  if (!animationRunning) {
+    hideOverlay();
+    animationRunning = true;
+    requestAnimationFrame(animate);
+  }
+});
 
 /* ---------------- GRID ---------------- */
 function resizeCanvas() {
@@ -120,7 +168,8 @@ function dynamicSeaHeight(r, c, maxRows, maxCols) {
 
 /* ---------------- ANIMATION ---------------- */
 function animate(now) {
-  if (document.visibilityState !== "visible" || !animationRunning) {
+  // Pause animation in memory if overlay visible or either pause flag up
+  if (!animationRunning || pauseManually || pausedDueToHidden) {
     animationRunning = false;
     return;
   }
@@ -181,18 +230,35 @@ function animate(now) {
   requestAnimationFrame(animate);
 }
 
-/* ---------------- VISIBILITY & RESIZE ---------------- */
+/* ---------------- PAUSE MECHANISM ---------------- */
+// Pause when tab/window is hidden
 function onVisibilityChange() {
   if (document.visibilityState === "visible") {
-    if (!animationRunning) {
+    pausedDueToHidden = false;
+    if (!pauseManually && !animationRunning) {
+      hideOverlay();
       animationRunning = true;
       requestAnimationFrame(animate);
     }
   } else {
+    pausedDueToHidden = true;
     animationRunning = false;
+    showOverlay();
   }
 }
 
+// Allow user to pause with a key, show overlay white
+window.addEventListener("keydown", function(e) {
+  // Spacebar or "P" to pause (do not catch if focused on input etc)
+  if ((e.code === "Space" || e.key === "p" || e.key === "P") && !pauseManually) {
+    pauseManually = true;
+    animationRunning = false;
+    showOverlay();
+    e.preventDefault();
+  }
+});
+
+/* ---------------- INIT/RESUME/RESIZE ---------------- */
 addEventListener("load", () => {
   createGrid();
   animationRunning = true;
@@ -206,5 +272,3 @@ addEventListener("resize", () => {
 </script>
 </body>
 </html>
-
-

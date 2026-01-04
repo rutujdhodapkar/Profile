@@ -10,8 +10,8 @@
     padding: 0;
     overflow: hidden;
     background: #0f0f0f;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     height: 100%;
     width: 100%;
   }
@@ -24,11 +24,45 @@
     height: 100%;
     pointer-events: none;
     background: #0f0f0f;
+    transition: background 0.3s;
+  }
+  /* Overlay for "paused" message */
+  #rain-pause-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.97);
+    color: #222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    font-family: system-ui, Arial, sans-serif;
+    font-size: 2.4rem;
+    letter-spacing: 0.08em;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    text-align: center;
+  }
+  #rain-pause-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+  #rain-pause-overlay .subtitle {
+    font-size: 1.05rem;
+    margin-top: 0.7em;
+    color: #555;
+    letter-spacing: 0.02em;
   }
 </style>
 </head>
 <body>
 <canvas id="stage"></canvas>
+<div id="rain-pause-overlay">
+  Animation paused<br>
+  <span class="subtitle">(invisible tab or window to save resources)</span>
+</div>
 <script>
 /* ---------------- CONFIGURATION ---------------- */
 const SPACING_X = 12;
@@ -54,6 +88,7 @@ const MIN_FRAME_INTERVAL_MS = 1000 / 40; // ~40 FPS cap
 /* ---------------- STATE ---------------- */
 const canvas = document.getElementById("stage");
 const ctx = canvas.getContext("2d", { alpha: false });
+const overlay = document.getElementById("rain-pause-overlay");
 let pixelRatio = Math.max(1, window.devicePixelRatio || 1);
 let cols = 0, rows = 0;
 let spacingX = SPACING_X, spacingY = SPACING_Y;
@@ -63,6 +98,10 @@ let ambientFlags = null;  // Uint8Array storing ambient flag per cell
 let rainDropsPerRow = [];
 let isAnimating = false;
 
+/* To remember last animation state for smooth resumption without recalculation */
+let lastMemorySnapshot = null;
+
+/* ----- CANVAS & GRID ----- */
 function resizeCanvas() {
   pixelRatio = Math.max(1, window.devicePixelRatio || 1);
   const cssW = Math.max(1, window.innerWidth);
@@ -75,7 +114,6 @@ function resizeCanvas() {
 }
 
 function createGrid() {
-  // adapt spacing to avoid creating too many render cells
   spacingX = SPACING_X;
   spacingY = SPACING_Y;
   let tentativeCols = Math.floor(window.innerWidth / spacingX);
@@ -103,7 +141,6 @@ function createGrid() {
   rainDropsPerRow = [];
   for (let r = 0; r < rows; r++) {
     const thisRowDropCount = Math.max(1, Math.round(cols * (RAIN_COLUMNS_FRACTION + Math.random()*0.02 - 0.01)));
-    // pick unique columns by simple random sampling without heavy arrays
     const chosen = new Set();
     while (chosen.size < thisRowDropCount) {
       chosen.add(Math.floor(Math.random() * cols));
@@ -202,29 +239,63 @@ function animate(now) {
   requestAnimationFrame(animate);
 }
 
-/* ---------------- VISIBILITY & RESIZE ---------------- */
-function onVisibilityChange() {
-  if (document.visibilityState === "visible") {
-    if (!isAnimating) {
-      isAnimating = true;
-      requestAnimationFrame(animate);
-    }
-  } else {
-    isAnimating = false;
+/* --------- PAUSE/RESUME & VISIBILITY -------- */
+function pauseRainAnimation() {
+  isAnimating = false;
+  if (overlay) overlay.classList.add("visible");
+  // Save memory: optionally clear drop arrays etc. [but let's just store a snapshot]
+  lastMemorySnapshot = {
+    // These can be used to restore state if needed
+    perFrameSizes: perFrameSizes ? perFrameSizes.slice() : null,
+    rainDropsPerRow: rainDropsPerRow ? JSON.parse(JSON.stringify(rainDropsPerRow)) : null,
+    ambientFlags: ambientFlags ? ambientFlags.slice() : null,
+    cols, rows, spacingX, spacingY
+  };
+}
+
+function resumeRainAnimation() {
+  if (overlay) overlay.classList.remove("visible");
+  // Optionally restore state if lastMemorySnapshot available
+  if (lastMemorySnapshot) {
+    perFrameSizes = lastMemorySnapshot.perFrameSizes;
+    rainDropsPerRow = lastMemorySnapshot.rainDropsPerRow;
+    ambientFlags = lastMemorySnapshot.ambientFlags;
+    cols = lastMemorySnapshot.cols;
+    rows = lastMemorySnapshot.rows;
+    spacingX = lastMemorySnapshot.spacingX;
+    spacingY = lastMemorySnapshot.spacingY;
+    lastMemorySnapshot = null;
+  }
+  if (!isAnimating) {
+    isAnimating = true;
+    requestAnimationFrame(animate);
   }
 }
 
+function onVisibilityChange() {
+  if (document.visibilityState === "visible") {
+    resumeRainAnimation();
+  } else {
+    pauseRainAnimation();
+  }
+}
+
+/* --------------- EVENTS --------------- */
 window.addEventListener("resize", () => {
   createGrid();
 });
 document.addEventListener("visibilitychange", onVisibilityChange);
 
-/* ---------------- INIT ---------------- */
+/* ------------- INIT ------------- */
 window.addEventListener("load", () => {
   createGrid();
   if (document.visibilityState === "visible") {
     isAnimating = true;
     requestAnimationFrame(animate);
+    if (overlay) overlay.classList.remove("visible");
+  } else {
+    if (overlay) overlay.classList.add("visible");
+    isAnimating = false;
   }
 });
 </script>
