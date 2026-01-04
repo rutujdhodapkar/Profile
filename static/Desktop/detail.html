@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio</title>
+  <!-- Added Inter font for header -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
@@ -85,6 +86,7 @@
         border-radius: 0;
       }
     }
+    /* Add a 2px space/gap between the two frames */
     .frame-gap-2px {
       width: 100vw;
       height: 2px;
@@ -98,15 +100,16 @@
       transform: translateX(-50%);
       width: fit-content;
       padding: 9px 20px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.08); /* transparent blur */
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-radius: 200px;
       z-index: 9999;
       transition: background-color 0.3s;
       font-family: 'Inter', monospace, sans-serif !important;
+      /* Added shadow to header */
       box-shadow: 0 6px 32px 0 rgba(0,0,0,0.18), 0 1.5px 8px 0 rgba(0,0,0,0.10);
-      border: 1px solid rgba(255,255,255,0.35);
+      border: 1px solid rgba(255,255,255,0.35); /* 1px border */
       will-change: background-color;
     }
     #rectiangleNavbar:hover {
@@ -135,7 +138,7 @@
       border-radius: 50px;
       position: relative;
       font-family: 'Inter', monospace, sans-serif !important;
-      color: #fff !important;
+      color: #fff !important; /* Make text white on header */
       background: none;
       border: none;
       display: flex;
@@ -143,12 +146,12 @@
       will-change: background-color, color, transform;
     }
     #rectiangleNavbar .page-nav li.active {
-      background-color: #fff !important;
-      color: #070707 !important;
+      background-color: #fff !important; /* selection box white */
+      color: #070707 !important; /* Make text inside highlight dark */
       z-index: 2;
     }
     #rectiangleNavbar .page-nav li.active strong {
-      color: #070707 !important;
+      color: #070707 !important; /* For strong-Home, About, ... */
     }
     #rectiangleNavbar .page-nav li:hover:not(.active) {
       background-color: rgba(255,255,255,0.18) !important;
@@ -159,6 +162,8 @@
     #rectiangleNavbar .page-nav li:not(.active) strong {
       color: #fff !important;
     }
+
+    /* Resume button special styling */
     #rectiangleNavbar .page-nav li#resume-nav-btn {
       background: transparent !important;
       color: #fff !important;
@@ -172,6 +177,7 @@
       position: relative;
       will-change: background-color, color, border;
     }
+
     #rectiangleNavbar .page-nav li#resume-nav-btn:hover {
       background: transparent !important;
       color: #fff !important;
@@ -179,6 +185,7 @@
       transform: none;
       border: 1.2px solid #fff !important;
     }
+
     .highlight {
       position: absolute;
       top: -4px;
@@ -199,6 +206,7 @@
       display: flex;
       align-items: center;
     }
+
     .scroll-anchor {
       display: block;
       position: relative;
@@ -207,10 +215,13 @@
       margin: 0;
       padding: 0;
     }
+
     ::selection {
       background: #fff;
       color: #000;
     }
+
+    /* New styles for full-screen black overlay with AI text */
     #ai-fullscreen-overlay {
       position: fixed;
       top: 0;
@@ -240,6 +251,7 @@
   </style>
   <div id="startup-blur-overlay"></div>
   <script>
+    // Optimize overlay transitions: only use setTimeouts, don't thrash layout
     window.addEventListener('DOMContentLoaded', function() {
       requestAnimationFrame(function(){
         setTimeout(function() {
@@ -285,8 +297,9 @@
   </div>
 
   <script>
-    // Nav highlight logic preserved...
+    // Smoother main nav highlight - reduce work on scroll and layout calls. Debounced/throttled
     document.addEventListener('DOMContentLoaded', function() {
+      // Step 2: Define REAL SECTION_MAP
       const SECTION_MAP = [
         { id: "home", el: document.getElementById("top-frame") },
         { id: "about", el: document.querySelector('iframe[src="info.html"]') },
@@ -296,7 +309,10 @@
         { id: "projects", el: document.querySelector('iframe[src="project section.html"]') },
         { id: "contact", el: document.querySelector('iframe[src="contact.html"]') }
       ];
+
       var ticking = false;
+
+      // Home navigation click: scroll to top
       var homeNavLink = document.getElementById('home-nav-link');
       if (homeNavLink) {
         homeNavLink.addEventListener('click', function(e) {
@@ -304,6 +320,8 @@
           window.scrollTo({ top: 0, behavior: 'smooth' });
         });
       }
+
+      // Resume navigation click: open resume.html in new tab
       var resumeNavLink = document.getElementById('resume-nav-link');
       if (resumeNavLink) {
         resumeNavLink.addEventListener('click', function(e) {
@@ -311,27 +329,36 @@
           window.open('resume.html', '_blank');
         });
       }
+
       if (window.innerWidth > 768) {
         const navbar = document.getElementById('rectiangleNavbar');
         const navItems = document.querySelectorAll("#rectiangleNavbar .page-nav li");
         const highlight = document.querySelector("#rectiangleNavbar .highlight");
         let lastActiveSection = null;
         let highlightCache = { left: null, width: null, height: null };
+
+        // Step 4: Replace nav click scrolling logic
         navItems.forEach(item => {
           const sectionId = item.getAttribute("data-section");
           if (!sectionId || sectionId === "resume") return;
+
           item.addEventListener("click", e => {
             e.preventDefault();
+
             const section = SECTION_MAP.find(s => s.id === sectionId);
             if (!section || !section.el) return;
+
             const top = section.el.getBoundingClientRect().top + window.scrollY;
             const offset = document.getElementById("rectiangleNavbar").offsetHeight + 20;
+
             window.scrollTo({
               top: Math.max(top - offset, 0),
               behavior: "smooth"
             });
           });
         });
+
+        // Use 55% of viewport as marker for highlight - now throttled with rAF for smoothness
         function highlightNavOnScroll() {
           if (!ticking) {
             window.requestAnimationFrame(_update);
@@ -366,8 +393,11 @@
           updateHighlight();
           ticking = false;
         }
+
         window.addEventListener("scroll", highlightNavOnScroll, { passive: true });
         window.addEventListener("resize", highlightNavOnScroll);
+
+        // Optimized highlight position/animation on header - avoid layout thrash, only update if needed
         function updateHighlight() {
           const activeItem = document.querySelector("#rectiangleNavbar .page-nav li.active");
           if (activeItem) {
@@ -388,6 +418,7 @@
             highlight.style.display = 'none';
           }
         }
+
         navItems.forEach(item => {
           item.addEventListener('mouseenter', function() {
             if (this.classList.contains('active')) {
@@ -400,122 +431,23 @@
             }
           });
         });
+
+        // initialize (highlight stays where it is if no frame at 55%, otherwise tracks section)
         setTimeout(function() {
           window.scrollTo({ top: 0, behavior: "auto" });
           highlightNavOnScroll();
         }, 0);
       }
-
-      // --- Dynamic frame removal/restore logic ---
-      var hasRemovedFrames = false;
-      var frameStack = null;
-      var topFrameDiv = null;
-      var frameGap = null;
-      var infoFrame = null;
-
-      function setupFramesVars() {
-        frameStack = document.querySelector(".frame-stack");
-        topFrameDiv = document.getElementById("top-frame");
-        frameGap = frameStack ? frameStack.querySelector(".frame-gap-2px") : null;
-        infoFrame = frameStack ? frameStack.querySelector('iframe[src="info.html"]') : null;
-      }
-      // Removes top two frames
-      function removeFirst2Frames() {
-        if (!frameStack) return;
-        if (topFrameDiv && frameStack.contains(topFrameDiv)) {
-          frameStack.removeChild(topFrameDiv);
-        }
-        if (frameGap && frameStack.contains(frameGap)) {
-          frameStack.removeChild(frameGap);
-        }
-        if (infoFrame && frameStack.contains(infoFrame)) {
-          frameStack.removeChild(infoFrame);
-        }
-        hasRemovedFrames = true;
-      }
-      // Restores top two frames
-      function restoreFirst2Frames() {
-        if (!frameStack) return;
-        // Only restore if not there
-        if (!frameStack.querySelector("#top-frame")) {
-          var topDiv = document.createElement("div");
-          topDiv.className = "top-frame";
-          topDiv.id = "top-frame";
-          var mainIframe = document.createElement("iframe");
-          mainIframe.src = "Main.html";
-          mainIframe.scrolling = "no";
-          mainIframe.title = "Main";
-          mainIframe.setAttribute("allow", "none");
-          mainIframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
-          mainIframe.setAttribute("data-memory-limit", "50mb");
-          topDiv.appendChild(mainIframe);
-          // Insert as first child
-          frameStack.insertBefore(topDiv, frameStack.firstChild);
-        }
-        if (!frameStack.querySelector(".frame-gap-2px")) {
-          var gapDiv = document.createElement("div");
-          gapDiv.className = "frame-gap-2px";
-          frameStack.insertBefore(gapDiv, frameStack.children[1]);
-        }
-        if (!frameStack.querySelector('iframe[src="info.html"]')) {
-          var infoIframe = document.createElement("iframe");
-          infoIframe.className = "frame-no-gap";
-          infoIframe.src = "info.html";
-          infoIframe.style.width = "100vw";
-          infoIframe.style.height = "690px";
-          infoIframe.style.minHeight = "400px";
-          infoIframe.style.maxWidth = "100vw";
-          infoIframe.style.border = "none";
-          infoIframe.style.overflow = "hidden";
-          infoIframe.style.display = "block";
-          infoIframe.style.padding = "0";
-          infoIframe.style.margin = "0";
-          infoIframe.setAttribute("scrolling", "no");
-          infoIframe.setAttribute("allow", "none");
-          infoIframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
-          infoIframe.setAttribute("data-memory-limit", "50mb");
-          frameStack.insertBefore(infoIframe, frameStack.children[2]);
-        }
-        hasRemovedFrames = false;
-      }
-      var lastScrollY = window.scrollY;
-      function framesCheckScroll() {
-        var educationIframe = document.getElementById("education");
-        if (!educationIframe) return;
-        var eduRect = educationIframe.getBoundingClientRect();
-        var eduTop = eduRect.top + window.scrollY;
-        var eduBottom = eduTop + eduRect.height;
-        var viewportTop = window.scrollY;
-        var viewportBottom = viewportTop + window.innerHeight;
-        setupFramesVars();
-        // If user is at or below education frame: remove top frames
-        if (
-          viewportTop >= eduTop - 10 // tolerance
-        ) {
-          if (!hasRemovedFrames) {
-            removeFirst2Frames();
-          }
-        } else {
-          if (hasRemovedFrames && viewportTop < eduTop - 50) {
-            restoreFirst2Frames();
-          }
-        }
-        lastScrollY = viewportTop;
-      }
-      window.addEventListener("scroll", framesCheckScroll, { passive: true });
-      window.addEventListener("resize", framesCheckScroll);
-
-      // Initial setup
-      window.addEventListener("DOMContentLoaded", function() {
-        setTimeout(framesCheckScroll, 700);
-      });
+      // 1. Contact redirection logic removed as instructed.
     });
+    // No scroll-to-top redirect (per request)
   </script>
 
   <!-- Main content -->
   <div class="frame-stack">
-    <!-- The top-frame and info.html iframe will be dynamically removed/restored by JS scroll logic -->
+    <!-- Both frames with a 2px space between them -->
     <div class="top-frame" id="top-frame">
+      <!-- Adding allow="none" as no special features needed, add sandbox -->
       <iframe src="Main.html" scrolling="no" title="Main" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
     </div>
     <div class="frame-gap-2px"></div>
@@ -547,6 +479,157 @@
     </a>
   </div>
 </div>
+<style>
+  @font-face {
+    font-family: 'OutlineFont';
+    src: url('OutlineFont-Regular.ttf') format('truetype');
+  }
+  .scroll-move-text-container {
+    position: relative;
+    width: 100vw;
+    height: 320px;
+    overflow: hidden;
+    margin: 40px 0 30px 0;
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    justify-content: center;
+    will-change: transform;
+    /* GPU: promote to own layer */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  .scroll-move-text {
+    position: absolute;
+    left: 0;
+    white-space: nowrap;
+    font-size: 4.5rem;
+    font-family: 'OutlineFont', sans-serif;
+    font-weight: 600;
+    color: transparent;
+    -webkit-text-stroke: 0.5px #ffffff84;
+    text-shadow: none;
+    transition: color 0.2s;
+    user-select: none;
+    pointer-events: none;
+    width: 100vw;
+    will-change: transform;
+    /* GPU: promote animation to GPU layer */
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+    /* Avoid subpixel blurring on some browsers */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .scroll-move-text .intern-text {
+    font-family: 'Inter', sans-serif !important;
+    color: #fff !important;
+    -webkit-text-stroke: 0 !important;
+    text-shadow: none !important;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    background: none;
+    padding: 0;
+    display: inline;
+  }
+  .scroll-move-text.line1 { top: 20%; }
+  .scroll-move-text.line2 { top: 50%; }
+  .scroll-move-text.line3 { top: 80%; }
+  @media (max-width: 700px) {
+    .scroll-move-text {
+      font-size: 2.2rem;
+    }
+    .scroll-move-text-container {
+      height: 160px;
+    }
+    .scroll-move-text.line1 { top: 20%; }
+    .scroll-move-text.line2 { top: 50%; }
+    .scroll-move-text.line3 { top: 80%; }
+  }
+</style>
+<div class="scroll-move-text-container">
+  <div class="scroll-move-text line1" id="scrollMoveText1">
+    Building <span class="intern-text">Artificial Intelligence</span> Systems
+  </div>
+  <div class="scroll-move-text line2" id="scrollMoveText2">
+    To Build <span class="intern-text">Next Generation</span> of <span class="intern-text">Humanity</span>
+  </div>
+  <div class="scroll-move-text line3" id="scrollMoveText3">
+    With <span class="intern-text">Creativity</span> and <span class="intern-text">Precision</span>
+  </div>
+</div>
+
+<script>
+  // Smoother, throttled scroll-move animation using GPU transforms
+  (function() {
+    const SPEED_FACTOR = 1.4;
+    const text1 = document.getElementById('scrollMoveText1');
+    const text2 = document.getElementById('scrollMoveText2');
+    const text3 = document.getElementById('scrollMoveText3');
+    const container = document.querySelector('.scroll-move-text-container');
+    let prevProgress = -1;
+    let ticking = false;
+
+    function to3dTransform(yPercent, x) {
+      // Always use translate3d for GPU acceleration
+      return `translateY(${yPercent}) translate3d(${x}px,0,0)`;
+    }
+
+    function updateTextPosition() {
+      if (!container.offsetWidth) {
+        requestAnimationFrame(updateTextPosition);
+        return;
+      }
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      let progress = docHeight > 0 ? Math.min(Math.max(scrollTop / docHeight, 0), 1) : 0;
+      progress = Math.min(progress * SPEED_FACTOR, 1);
+      if (Math.abs(progress - prevProgress) < 0.001) {
+        ticking = false;
+        return;
+      }
+      prevProgress = progress;
+      const containerW = container.offsetWidth;
+      const text1Width = text1.offsetWidth;
+      const start1 = containerW;
+      const end1 = -text1Width;
+      const translateX1 = start1 + (end1 - start1) * progress;
+      text1.style.transform = to3dTransform("-50%", translateX1);
+
+      const text2Width = text2.offsetWidth;
+      const start2 = -text2Width;
+      const end2 = containerW;
+      const translateX2 = start2 + (end2 - start2) * progress;
+      text2.style.transform = to3dTransform("-50%", translateX2);
+
+      const text3Width = text3.offsetWidth;
+      const start3 = containerW;
+      const end3 = -text3Width;
+      const translateX3 = start3 + (end3 - start3) * progress;
+      text3.style.transform = to3dTransform("-40%", translateX3);
+
+      ticking = false;
+    }
+
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateTextPosition);
+        ticking = true;
+      }
+    }
+
+    // Use passive scroll event for less jank, and promote layers for GPU anim
+    window.addEventListener('scroll', requestTick, { passive: true });
+    window.addEventListener('resize', function() {
+      prevProgress = -1;
+      requestTick();
+    });
+    setTimeout(requestTick, 150);
+  })();
+</script>
+
   <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
   <iframe src="Education.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" id="education" data-memory-limit="50mb"></iframe>
   <div class="ai-message-block">
@@ -596,6 +679,7 @@
     </div>
   </div>
   
+  <!-- Google Fonts: Libre Barcode 39 -->
   <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
   <div style="
     margin: 0 auto;
@@ -623,6 +707,7 @@
     <br>
   </div>
 
+  <!-- Add contact.html frame at the bottom -->
   <iframe src="contact.html" style="width:100%; height:700px; border:none; overflow:hidden; display:block;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
 </body><script>
 document.documentElement.style.scrollBehavior = "smooth";
@@ -638,3 +723,4 @@ html {
 </style>
 
 </html>
+

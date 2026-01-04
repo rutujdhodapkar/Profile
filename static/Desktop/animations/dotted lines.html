@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: #0f0f0f;
+    background: #0f0f0f; /* dark, not full black */
   }
   canvas {
     position: fixed;
@@ -12,7 +12,7 @@
     height: 100vh;
     display: block;
     pointer-events: none;
-    background: #0f0f0f;
+    background: #0f0f0f; /* match not-quite-black background */
   }
 </style>
 
@@ -75,7 +75,13 @@ function computeGrid() {
 }
 
 function drawDots(ctx, t) {
-  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  // Fill background with #0f0f0f (not full black)
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0); // reset any transforms
+  ctx.fillStyle = "#0f0f0f";
+  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.restore();
+
   ctx.save();
   ctx.translate(offsetX, offsetY);
   ctx.fillStyle = "#fff";
@@ -121,7 +127,7 @@ function doResize(canvas, ctx) {
   function animate() {
     if (!animationRunning) return;
     drawDots(ctx, t);
-    t += 0.015; // SLOWER: was 0.05, now 0.015
+    t += 0.005; // MADE EVEN SLOWER for "make speed slow"
     requestAnimationFrame(animate);
   }
 
@@ -152,6 +158,11 @@ function doResize(canvas, ctx) {
       // Free memory: remove grid, clear canvas
       grid = null;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Also refill with #0f0f0f, so blank frame isn't pure black
+      ctx.save();
+      ctx.fillStyle = "#0f0f0f";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.restore();
     }
   });
 })();
