@@ -25,38 +25,17 @@
     pointer-events: none;
     background: #0f0f0f;
   }
+  /* Overlay completely hidden for memory auto-pause */
   #pause-overlay {
-    position: fixed;
-    inset: 0;
-    display: none;
-    background: rgba(255,255,255,0.97);
-    color: #222;
-    z-index: 9999;
-    font-family: 'Segoe UI',sans-serif;
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    pointer-events: all;
-    transition: opacity 0.25s;
-  }
-  #pause-overlay.visible {
-    display: flex;
-    opacity: 1;
+    display: none !important;
   }
 </style>
 </head>
 
 <body>
 <canvas id="stage"></canvas>
-<div id="pause-overlay">
-  <div>
-    <span>Animation Paused to Save Memory</span><br><br>
-    <button id="resume-btn" style="margin-top:1.1em;padding:0.6em 1.8em;font-size:1.2em;border:none;border-radius:2em;background:#222;color:#fff;cursor:pointer;">Resume</button>
-  </div>
-</div>
+<!-- Overlay removed from DOM to prevent a white screen on memory pause -->
+
 <script>
 /* ---------------- CONFIG ---------------- */
 const SPACING_X = 12;
@@ -91,26 +70,9 @@ let perFrameSizes = null;
 let ambientFlags = null;
 let animationRunning = false;
 
-// --- White overlay pause handling ---
-const overlay = document.getElementById("pause-overlay");
-const resumeBtn = document.getElementById("resume-btn");
+// --- Memory-pause handling ---
 let pauseManually = false;
 let pausedDueToHidden = false;
-
-function showOverlay() {
-  overlay.classList.add("visible");
-}
-function hideOverlay() {
-  overlay.classList.remove("visible");
-}
-resumeBtn.addEventListener("click", function() {
-  pauseManually = false;
-  if (!animationRunning) {
-    hideOverlay();
-    animationRunning = true;
-    requestAnimationFrame(animate);
-  }
-});
 
 /* ---------------- GRID ---------------- */
 function resizeCanvas() {
@@ -140,12 +102,17 @@ function createGrid() {
   rows = Math.max(1, Math.ceil(window.innerHeight / spacingY));
   resizeCanvas();
 
+  // Instead of re-allocating every frame, reuse buffers for memory efficiency.
   const total = cols * rows;
-  perFrameSizes = new Float32Array(total);
-  ambientFlags = new Uint8Array(total);
-  for (let i = 0; i < total; i++) {
-    perFrameSizes[i] = HIDDEN_SIZE;
-    ambientFlags[i] = Math.random() < AMBIENT_CHANCE ? 1 : 0;
+  if (!perFrameSizes || perFrameSizes.length !== total) {
+    perFrameSizes = new Float32Array(total);
+    ambientFlags = new Uint8Array(total);
+    for (let i = 0; i < total; i++) {
+      perFrameSizes[i] = HIDDEN_SIZE;
+      ambientFlags[i] = Math.random() < AMBIENT_CHANCE ? 1 : 0;
+    }
+  } else {
+    perFrameSizes.fill(HIDDEN_SIZE);
   }
 }
 
@@ -168,7 +135,6 @@ function dynamicSeaHeight(r, c, maxRows, maxCols) {
 
 /* ---------------- ANIMATION ---------------- */
 function animate(now) {
-  // Pause animation in memory if overlay visible or either pause flag up
   if (!animationRunning || pauseManually || pausedDueToHidden) {
     animationRunning = false;
     return;
@@ -182,7 +148,6 @@ function animate(now) {
   const SEA_ANIMATION_SPEED = 0.40;
   const t = now * 0.001 * SEA_ANIMATION_SPEED;
 
-  // compute and draw in one pass — fill background with the chosen dark color (not full black)
   ctx.fillStyle = "#0f0f0f";
   ctx.fillRect(0, 0, canvas.width / pixelRatio, canvas.height / pixelRatio);
   ctx.fillStyle = "#c9c9c9";
@@ -196,7 +161,6 @@ function animate(now) {
       Math.sin(c * 0.27 + r * 0.21 - t * 1.1) * 1.2 +
       Math.cos(c * 0.18 + r * 0.09 + t) * 0.6;
 
-    // ambient fallback
     if (ambientFlags[i]) {
       if (r >= s && r > s + FOAM_THICKNESS) {
         perFrameSizes[i] = AMBIENT_SIZE;
@@ -215,7 +179,6 @@ function animate(now) {
       perFrameSizes[i] = ambientFlags[i] ? AMBIENT_SIZE : HIDDEN_SIZE;
     }
 
-    // draw circle if visible
     const size = perFrameSizes[i];
     if (size > 0.001) {
       const x = c * spacingX + spacingX * 0.5;
@@ -230,30 +193,28 @@ function animate(now) {
   requestAnimationFrame(animate);
 }
 
-/* ---------------- PAUSE MECHANISM ---------------- */
-// Pause when tab/window is hidden
+/* ---------------- MEMORY-EFFICIENT PAUSE ---------------- */
+// Pause animation in memory when tab/window is not visible (but do NOT show overlay)
 function onVisibilityChange() {
   if (document.visibilityState === "visible") {
     pausedDueToHidden = false;
     if (!pauseManually && !animationRunning) {
-      hideOverlay();
       animationRunning = true;
       requestAnimationFrame(animate);
     }
   } else {
     pausedDueToHidden = true;
     animationRunning = false;
-    showOverlay();
+    // Overlay intentionally not shown for memory auto-pause
   }
 }
 
-// Allow user to pause with a key, show overlay white
+// Allow user to pause with a key, but DO NOT show overlay (just stop animation)
 window.addEventListener("keydown", function(e) {
-  // Spacebar or "P" to pause (do not catch if focused on input etc)
   if ((e.code === "Space" || e.key === "p" || e.key === "P") && !pauseManually) {
     pauseManually = true;
     animationRunning = false;
-    showOverlay();
+    // Overlay intentionally not shown so memory pause is silent
     e.preventDefault();
   }
 });
@@ -268,7 +229,6 @@ addEventListener("load", () => {
 addEventListener("resize", () => {
   createGrid();
 });
-
 </script>
 </body>
 </html>

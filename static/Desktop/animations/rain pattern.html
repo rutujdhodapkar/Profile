@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Dynamic Rain Pattern - Canvas Renderer (memory optimized)</title>
+<title>Dynamic Rain Pattern - Canvas Renderer (memory optimized, white pause)</title>
 
 <style>
   html, body {
@@ -26,11 +26,11 @@
     background: #0f0f0f;
     transition: background 0.3s;
   }
-  /* Overlay for "paused" message */
+  /* Overlay for "paused" message (also acts as memory-optimized white-out) */
   #rain-pause-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(255,255,255,0.97);
+    background: #fff; /* white overlay when paused */
     color: #222;
     display: flex;
     flex-direction: column;
@@ -42,7 +42,7 @@
     letter-spacing: 0.08em;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.2s;
+    transition: opacity 0.18s;
     text-align: center;
   }
   #rain-pause-overlay.visible {
@@ -61,7 +61,7 @@
 <canvas id="stage"></canvas>
 <div id="rain-pause-overlay">
   Animation paused<br>
-  <span class="subtitle">(invisible tab or window to save resources)</span>
+  <span class="subtitle">(tab/window not visible - memory and power saved)</span>
 </div>
 <script>
 /* ---------------- CONFIGURATION ---------------- */
@@ -74,7 +74,6 @@ const RAIN_SIZE = 6.5;
 const WATER_SIZE = 6.8;
 const FOAM_SIZE  = 8.5;
 
-const EXTRA_ROWS = 0;
 const SEA_HEIGHT_ROWS = 10;
 const FOAM_THICKNESS = 2;
 
@@ -89,17 +88,17 @@ const MIN_FRAME_INTERVAL_MS = 1000 / 40; // ~40 FPS cap
 const canvas = document.getElementById("stage");
 const ctx = canvas.getContext("2d", { alpha: false });
 const overlay = document.getElementById("rain-pause-overlay");
+
 let pixelRatio = Math.max(1, window.devicePixelRatio || 1);
 let cols = 0, rows = 0;
 let spacingX = SPACING_X, spacingY = SPACING_Y;
+
 let lastFrameTime = 0;
-let perFrameSizes = null; // Float32Array of length cols*rows
-let ambientFlags = null;  // Uint8Array storing ambient flag per cell
+let perFrameSizes = null;
+let ambientFlags = null;
 let rainDropsPerRow = [];
 let isAnimating = false;
-
-/* To remember last animation state for smooth resumption without recalculation */
-let lastMemorySnapshot = null;
+let paused = false;
 
 /* ----- CANVAS & GRID ----- */
 function resizeCanvas() {
@@ -137,7 +136,6 @@ function createGrid() {
     ambientFlags[i] = Math.random() < AMBIENT_CHANCE ? 1 : 0;
   }
 
-  // assign rain drops per row (lightweight objects)
   rainDropsPerRow = [];
   for (let r = 0; r < rows; r++) {
     const thisRowDropCount = Math.max(1, Math.round(cols * (RAIN_COLUMNS_FRACTION + Math.random()*0.02 - 0.01)));
@@ -159,7 +157,7 @@ const SEA_PULSE_SPEED = 0.7;
 const FOAM_WAVE_SPEED = 2.7;
 
 function animate(now) {
-  if (!isAnimating) return;
+  if (!isAnimating || paused) return;
   if (!now) now = performance.now();
   if (now - lastFrameTime < MIN_FRAME_INTERVAL_MS) {
     requestAnimationFrame(animate);
@@ -168,7 +166,6 @@ function animate(now) {
   lastFrameTime = now;
   const t = now * 0.001;
 
-  // surface per column (Float32Array allocation kept small)
   const surface = new Float32Array(cols);
   for (let c = 0; c < cols; c++) {
     surface[c] =
@@ -178,15 +175,12 @@ function animate(now) {
       Math.cos(c * 0.18 + t * SEA_WAVE_SPEEDS[2]) * 0.6;
   }
 
-  // reset per-frame sizes once (fast fill)
   perFrameSizes.fill(HIDDEN_SIZE);
 
-  // ambient
   for (let i = 0; i < perFrameSizes.length; i++) {
     if (ambientFlags[i]) perFrameSizes[i] = AMBIENT_SIZE;
   }
 
-  // rain tail updates (mutates small drop objects only)
   for (let r = 0; r < rows; r++) {
     const drops = rainDropsPerRow[r];
     if (!drops) continue;
@@ -203,7 +197,6 @@ function animate(now) {
     }
   }
 
-  // water & foam
   for (let idx = 0; idx < perFrameSizes.length; idx++) {
     const r = Math.floor(idx / cols);
     const c = idx % cols;
@@ -219,7 +212,6 @@ function animate(now) {
     }
   }
 
-  // draw to canvas in a single pass — fill background with the chosen dark color (not full black)
   ctx.fillStyle = "#0f0f0f";
   ctx.fillRect(0, 0, canvas.width / pixelRatio, canvas.height / pixelRatio);
   ctx.fillStyle = "#c9c9c9";
@@ -239,37 +231,33 @@ function animate(now) {
   requestAnimationFrame(animate);
 }
 
-/* --------- PAUSE/RESUME & VISIBILITY -------- */
+
+/* --------- MEMORY-EFFICIENT PAUSE/RESUME & VISIBILITY -------- */
+
+// Destroys heavy data structures and shows white overlay when not visible
 function pauseRainAnimation() {
+  paused = true;
   isAnimating = false;
+
+  // Show overlay (white pause-out)
   if (overlay) overlay.classList.add("visible");
-  // Save memory: optionally clear drop arrays etc. [but let's just store a snapshot]
-  lastMemorySnapshot = {
-    // These can be used to restore state if needed
-    perFrameSizes: perFrameSizes ? perFrameSizes.slice() : null,
-    rainDropsPerRow: rainDropsPerRow ? JSON.parse(JSON.stringify(rainDropsPerRow)) : null,
-    ambientFlags: ambientFlags ? ambientFlags.slice() : null,
-    cols, rows, spacingX, spacingY
-  };
+
+  // Memory optimization: clear canvas and destroy large arrays to release memory
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  perFrameSizes = null;
+  ambientFlags = null;
+  rainDropsPerRow = null;
 }
 
+// Re-creates memory only when visible again
 function resumeRainAnimation() {
+  if (!paused) return;
+  paused = false;
   if (overlay) overlay.classList.remove("visible");
-  // Optionally restore state if lastMemorySnapshot available
-  if (lastMemorySnapshot) {
-    perFrameSizes = lastMemorySnapshot.perFrameSizes;
-    rainDropsPerRow = lastMemorySnapshot.rainDropsPerRow;
-    ambientFlags = lastMemorySnapshot.ambientFlags;
-    cols = lastMemorySnapshot.cols;
-    rows = lastMemorySnapshot.rows;
-    spacingX = lastMemorySnapshot.spacingX;
-    spacingY = lastMemorySnapshot.spacingY;
-    lastMemorySnapshot = null;
-  }
-  if (!isAnimating) {
-    isAnimating = true;
-    requestAnimationFrame(animate);
-  }
+  createGrid();
+  isAnimating = true;
+  requestAnimationFrame(animate);
 }
 
 function onVisibilityChange() {
@@ -282,20 +270,26 @@ function onVisibilityChange() {
 
 /* --------------- EVENTS --------------- */
 window.addEventListener("resize", () => {
-  createGrid();
+  if (!paused) createGrid();
 });
 document.addEventListener("visibilitychange", onVisibilityChange);
 
 /* ------------- INIT ------------- */
 window.addEventListener("load", () => {
-  createGrid();
   if (document.visibilityState === "visible") {
+    paused = false;
+    createGrid();
     isAnimating = true;
     requestAnimationFrame(animate);
     if (overlay) overlay.classList.remove("visible");
   } else {
-    if (overlay) overlay.classList.add("visible");
+    paused = true;
     isAnimating = false;
+    if (overlay) overlay.classList.add("visible");
+    perFrameSizes = null;
+    ambientFlags = null;
+    rainDropsPerRow = null;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 });
 </script>
