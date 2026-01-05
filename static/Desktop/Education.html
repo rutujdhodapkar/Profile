@@ -43,10 +43,10 @@
       width: 90vw;
       max-width: 1200px;
       text-align: left;
-      align-items: stretch;
-      height: 44vh; /* Slightly increased height for text */
-      min-height: 250px;
-      max-height: 370px;
+      /* Let the container grow/shrink with its content so boxes size to text */
+      height: auto;
+      min-height: 0;
+      max-height: none;
     }
     .box {
       background: #1e1e1e;
@@ -64,14 +64,16 @@
       align-items: flex-start;
       position: relative;
       text-align: left;
-      height: 100%; /* Fill container height */
-      max-height: 370px;
+      /* Allow each box to size according to its content */
+      height: auto;
+      max-height: none;
     }
     .container > .box {
-      height: 100%;
-      max-height: 370px;
+      /* keep boxes flexible but allow content to determine height */
+      height: auto;
+      max-height: none;
     }
-    /* Ensure all boxes are the same size and fill the container equally */
+    /* Ensure boxes share available width but height follows content */
     .container > .box {
       flex: 1 1 0;
       min-width: 0;
@@ -135,10 +137,10 @@
       text-align: left;
       display: flex;
       flex-direction: column;
-      flex: 1 1 auto;
-      justify-content: center;
-      /* Make the list fill the box vertically */
-      height: 100%;
+      flex: 0 1 auto;
+      justify-content: flex-start;
+      /* Let the list height follow content rather than forcing full box height */
+      height: auto;
     }
     .exploring-list li {
       text-align: left;
@@ -194,12 +196,12 @@
       }
       .box {
         padding: 0.8em 0.7em 0.6em 0.7em;
-        min-height: 90px;
-        height: auto;
+        min-height: 250px;
+        height: 70vh;
         max-height: none;
       }
       .container > .box {
-        height: auto;
+        height: 70vh;
         max-height: none;
       }
       .box-title {
@@ -241,7 +243,7 @@
 
       </div>
     </div>
-    <div class="box" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start; height: 100%;">
+    <div class="box" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start;">
       <div class="box-title">Currently Exploring</div>
       <ul class="exploring-list" style="flex: 1 1 auto; justify-content: center; height: 100%;">
         <li>Advance Artificial Intelligence</li>

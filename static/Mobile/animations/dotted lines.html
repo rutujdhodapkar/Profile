@@ -3,133 +3,167 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: #000000;
+    background: #0f0f0f; /* dark, not full black */
   }
-  .rain-dot {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: #fff;
-    border-radius: 50%;
+  canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    display: block;
     pointer-events: none;
-    opacity: 0.13;
-    box-shadow: none;
-    z-index: 1;
-    transition: opacity 0.12s cubic-bezier(.6,0,.4,1);
-    /* Slightly longer transition for less GPU load */
-  }
-  .rain-dot.on {
-    opacity: 1;
-    background: #fff;
-    box-shadow: none;
+    background: #0f0f0f; /* match not-quite-black background */
   }
 </style>
+
+<canvas id="dotted-lines-stage"></canvas>
 <script>
-  // Hardware-friendly: reduce dot count, animation rate, and DOM updates
+// Memory-efficient: uses canvas, NOT a div per dot
 
-  // Responsive spacing and dot size based on screen width
-  function getDotConfig() {
-    const w = window.innerWidth;
-    if (w < 500) {
-      // Mobile: make dots dense (smaller spacing, more columns/rows)
-      return { SPACING_X: 10, SPACING_Y: 10, DOT_SIZE: 8, MIN_COLS: 20, MIN_ROWS: 32 };
-    } else if (w < 900) {
-      // Tablet/small desktop - make circles more dense than before
-      return { SPACING_X: 10, SPACING_Y: 10, DOT_SIZE: 8, MIN_COLS: 24, MIN_ROWS: 28 };
-    } else if (w < 1600) {
-      // Large desktop (default density)
-      return { SPACING_X: 12, SPACING_Y: 12, DOT_SIZE: 8, MIN_COLS: 28, MIN_ROWS: 28 };
-    } else {
-      // Extra large screens: make circles even more dense
-      return { SPACING_X: 8, SPACING_Y: 8, DOT_SIZE: 7, MIN_COLS: 40, MIN_ROWS: 40 };
-    }
-  }
+const SPACING_X = 12;
+const SPACING_Y = 12;
+const DOT_SIZE = 8;
 
-  let rainDots = [];
-  let cols = 0, rows = 0;
-  let SPACING_X = 16, SPACING_Y = 16, DOT_SIZE = 8, MIN_COLS = 22, MIN_ROWS = 22;
+const MIN_COLS = 28;
+const MIN_ROWS = 28;
 
-  function placeGridDots() {
-    // Remove old dots
-    rainDots.forEach(dot => dot.remove());
-    rainDots = [];
+let cols = 0, rows = 0;
+let grid = null; // Only store "dead" or not (bit array)
+let offsetX = 0, offsetY = 0;
+let lastW = 0, lastH = 0;
+let animationRunning = false;
 
-    // Get config for current screen size
-    const config = getDotConfig();
-    SPACING_X = config.SPACING_X;
-    SPACING_Y = config.SPACING_Y;
-    DOT_SIZE = config.DOT_SIZE;
-    MIN_COLS = config.MIN_COLS;
-    MIN_ROWS = config.MIN_ROWS;
+// Calculate grid and dead-dot field ONCE (not per frame), only keep 1 bit per dot for "dead"
+function computeGrid() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+  cols = Math.max(Math.floor((width - DOT_SIZE) / SPACING_X) + 1, MIN_COLS);
+  rows = Math.max(Math.floor((height - DOT_SIZE) / SPACING_Y) + 1, MIN_ROWS);
 
-    cols = Math.floor((width - DOT_SIZE) / SPACING_X) + 1;
-    rows = Math.floor((height - DOT_SIZE) / SPACING_Y) + 1;
-    if (cols < MIN_COLS) cols = MIN_COLS;
-    if (rows < MIN_ROWS) rows = MIN_ROWS;
+  const GLITCH_END_ROWS = Math.floor(rows * 0.82);
+  const MAX_DEAD_PROB = 0.995;
 
-    // Calculate the grid's total width/height to center it
-    const gridWidth = (cols - 1) * SPACING_X + DOT_SIZE;
-    const gridHeight = (rows - 1) * SPACING_Y + DOT_SIZE;
-    const offsetX = Math.max(0, (width - gridWidth) / 2);
-    const offsetY = Math.max(0, (height - gridHeight) / 2);
+  const gridWidth = (cols - 1) * SPACING_X + DOT_SIZE;
+  const gridHeight = (rows - 1) * SPACING_Y + DOT_SIZE;
 
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        const x = offsetX + col * SPACING_X;
-        const y = offsetY + row * SPACING_Y;
-        const dot = document.createElement('div');
-        dot.className = 'rain-dot';
-        dot.style.left = x + 'px';
-        dot.style.top = y + 'px';
-        dot.style.width = DOT_SIZE + 'px';
-        dot.style.height = DOT_SIZE + 'px';
-        document.body.appendChild(dot);
-        rainDots.push(dot);
-      }
-    }
-  }
+  offsetX = Math.max(0, (width - gridWidth) / 2);
+  offsetY = Math.max(0, (height - gridHeight) / 2);
 
-  // Hardware-friendly animation: lower frame rate, only update if state changes
-  let t = 0;
-  let lastStates = [];
-  function animatePattern() {
-    if (!rainDots.length) return;
-
-    // Lower frame rate: ~20fps (50ms)
-    setTimeout(() => {
-      for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < cols; col++) {
-          let idx = row * cols + col;
-          let dot = rainDots[idx];
-          if (!dot) continue;
-          // Diagonal wave: use sine function for animation
-          let phase = (row + col) / 10 - t; // slower, less frequent toggling
-          let on = Math.sin(phase) > 0.6;
-          if (lastStates[idx] !== on) {
-            if (on) {
-              dot.classList.add('on');
-            } else {
-              dot.classList.remove('on');
-            }
-            lastStates[idx] = on;
-          }
+  // Store as flat 0/1 array (bit array also possible, but this is simple + light)
+  grid = new Uint8Array(cols * rows);
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      let isDead = 0;
+      if (row < GLITCH_END_ROWS) {
+        const n = 1 - row / GLITCH_END_ROWS;
+        const curved =
+          Math.pow(n, 5.2) * 0.6 +
+          Math.pow(n, 1.1) * 0.4;
+        const columnBias = (Math.sin(col * 0.9) + 1) * 0.15;
+        const deadProb = Math.min(
+          1,
+          MAX_DEAD_PROB * curved + columnBias
+        );
+        if (Math.random() < deadProb) {
+          isDead = 1;
         }
       }
-      t += 0.05; // slower animation
-      requestAnimationFrame(animatePattern);
-    }, 50);
+      grid[row * cols + col] = isDead;
+    }
+  }
+}
+
+function drawDots(ctx, t) {
+  // Fill background with #0f0f0f (not full black)
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0); // reset any transforms
+  ctx.fillStyle = "#0f0f0f";
+  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.restore();
+
+  ctx.save();
+  ctx.translate(offsetX, offsetY);
+  ctx.fillStyle = "#fff";
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (grid[row * cols + col]) continue; // dead, skip
+      // pattern
+      const phase = (row + col) / 10 - t;
+      const on = Math.sin(phase) > 0.6;
+      if (!on) continue;
+      const x = col * SPACING_X;
+      const y = row * SPACING_Y;
+      ctx.beginPath();
+      ctx.arc(x, y, DOT_SIZE/2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  ctx.restore();
+}
+
+function doResize(canvas, ctx) {
+  // Only recompute if size changed
+  const w = window.innerWidth, h = window.innerHeight;
+  if (w === lastW && h === lastH && grid) return;
+  lastW = w; lastH = h;
+  // Set canvas size (hiDPI aware)
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + "px";
+  canvas.style.height = h + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  // Update grid
+  computeGrid();
+}
+
+(function() {
+  const canvas = document.getElementById("dotted-lines-stage");
+  const ctx = canvas.getContext("2d", {alpha:false});
+  let t = 0;
+
+  function animate() {
+    if (!animationRunning) return;
+    drawDots(ctx, t);
+    t += 0.005; // MADE EVEN SLOWER for "make speed slow"
+    requestAnimationFrame(animate);
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    placeGridDots();
-    lastStates = [];
-    animatePattern();
+  function start() {
+    doResize(canvas, ctx);
+    animationRunning = true;
+    requestAnimationFrame(animate);
+  }
+  function stop() {
+    animationRunning = false;
+  }
+
+  window.addEventListener("DOMContentLoaded", start);
+  window.addEventListener("resize", function() {
+    doResize(canvas, ctx);
   });
-  window.addEventListener('resize', () => {
-    placeGridDots();
-    lastStates = [];
+
+  // Memory-efficient pause/resume on tab visibility
+  document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === "visible") {
+      if (!animationRunning) {
+        doResize(canvas, ctx);
+        animationRunning = true;
+        requestAnimationFrame(animate);
+      }
+    } else {
+      animationRunning = false;
+      // Free memory: remove grid, clear canvas
+      grid = null;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Also refill with #0f0f0f, so blank frame isn't pure black
+      ctx.save();
+      ctx.fillStyle = "#0f0f0f";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.restore();
+    }
   });
+})();
 </script>

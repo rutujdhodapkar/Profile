@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Education - Rutuj Dhodapkar</title>
-  <!-- Krona One from Google Fonts -->
+  <!-- inter from Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
   <style>
@@ -11,6 +11,7 @@
       font-family: 'BitmapFont';
       src: url('BitmapFont.ttf') format('truetype');
       font-display: swap;
+      font-weight: 200;
     }
     html, body {
       height: 100%;
@@ -23,6 +24,7 @@
       background: transprent;
       color: #fff;
       font-family: 'BitmapFont', Arial, sans-serif;
+      font-weight: 300;
       min-height: 100vh;
       min-width: 100vw;
       display: flex;
@@ -41,15 +43,15 @@
       width: 90vw;
       max-width: 1200px;
       text-align: left;
-      align-items: stretch;
-      height: 50vh; /* Increased height for larger boxes */
-      min-height: 220px;
-      max-height: 440px;
+      /* Let the container grow/shrink with its content so boxes size to text */
+      height: auto;
+      min-height: 0;
+      max-height: none;
     }
     .box {
-      background: #00000000;
-      box-shadow: 0 4px 32px 0 #00000000;
-      border: 2px solid #00000000;
+      background: #1e1e1e;
+      box-shadow: 0 4px 32px 0 #2424242e;
+      border: 2px solid #606060;
       border-radius: 1.2em;
       padding: 1.2em 1.5em 1em 1.5em;
       box-sizing: border-box;
@@ -62,14 +64,16 @@
       align-items: flex-start;
       position: relative;
       text-align: left;
-      height: 100%; /* Fill container height */
-      max-height: 440px;
+      /* Allow each box to size according to its content */
+      height: auto;
+      max-height: none;
     }
     .container > .box {
-      height: 100%;
-      max-height: 440px;
+      /* keep boxes flexible but allow content to determine height */
+      height: auto;
+      max-height: none;
     }
-    /* Ensure both boxes are the same size and fill the container equally */
+    /* Ensure boxes share available width but height follows content */
     .container > .box {
       flex: 1 1 0;
       min-width: 0;
@@ -80,19 +84,26 @@
       margin: 0 0 0.7em 0;
       letter-spacing: 0.04em;
       color: #fff;
-      font-family: 'Krona One', Arial, sans-serif;
+      font-family: 'inter', Arial, sans-serif;
       text-align: left;
       width: 100%;
     }
     .education-details {
       text-align: left;
-      color: #fff;
+      color: #eee;
       font-family: 'BitmapFont', Arial, sans-serif;
+      font-weight: 300;
       margin-top: 0.5em;
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
+      gap: 1.6em;
+    }
+    .education-entry {
+      display: flex;
+      flex-direction: column;
+      gap: 0.05em;
     }
     .education-details .degree {
       font-size: 1.18rem;
@@ -104,15 +115,34 @@
     }
     .education-details .institute {
       font-size: 1.05rem;
-      color: #fff;
+      color: #ccc;
       margin-bottom: 0.1em;
       display: block;
       text-align: left;
     }
     .education-details .years {
       font-size: 0.98rem;
-      color: #fff;
+      color: #aaa;
       display: block;
+      text-align: left;
+    }
+    .exploring-list {
+      font-size: 1.18rem;
+      color: #ccc;
+      margin: 0.5em 0 0 0;
+      padding: 0 0 0 1.2em;
+      list-style: disc;
+      font-family: 'BitmapFont', Arial, sans-serif;
+      font-weight: 300;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      flex: 0 1 auto;
+      justify-content: flex-start;
+      /* Let the list height follow content rather than forcing full box height */
+      height: auto;
+    }
+    .exploring-list li {
       text-align: left;
     }
     .number {
@@ -120,7 +150,7 @@
       font-size: 180px;
       font-weight: 900;
       color: transparent;
-      -webkit-text-stroke: 2px #fff;
+      -webkit-text-stroke: 2px #ffffff;
       opacity: 0.3;
       position: absolute;
       top: 0;
@@ -144,13 +174,14 @@
         width: 100%;
         align-items: flex-start;
         text-align: left;
-        height: 50vh; /* Maintain height for larger boxes */
-        max-height: 440px;
+        min-height: 140px;
+        height: 36vh;
+        max-height: 270px;
         padding: 1em 1em 0.8em 1em;
       }
       .container > .box {
-        height: 50vh;
-        max-height: 440px;
+        height: 36vh;
+        max-height: 270px;
       }
       .box-title {
         text-align: left;
@@ -165,15 +196,19 @@
       }
       .box {
         padding: 0.8em 0.7em 0.6em 0.7em;
-        height: 50vh; /* Maintain height for larger boxes */
-        max-height: 440px;
+        min-height: 250px;
+        height: 70vh;
+        max-height: none;
       }
       .container > .box {
-        height: 50vh;
-        max-height: 440px;
+        height: 70vh;
+        max-height: none;
       }
       .box-title {
         font-size: 1.1rem;
+      }
+      .exploring-list {
+        font-size: 0.98rem;
       }
       .education-details .degree {
         font-size: 0.98rem;
@@ -188,16 +223,75 @@
   </style>
 </head>
 <body>
-  <div class="number">03</div>
+
   <div class="container">
     <div class="box">
       <div class="box-title">Education</div>
       <div class="education-details">
-        <span class="degree">Diploma in Artificial Intelligence &amp; Machine Learning</span>
-        <span class="institute">K. K. Wagh Polytechnic, Nashik.</span>
-        <span class="years">2022-2025</span>
+
+        <div class="education-entry">
+          <span class="degree">B.Tech- <br> Artificial Intelligence and Machine Learning</span>
+          <span class="institute">JSPM University.</span>
+          <span class="years">2025-2028</span>
+        </div>
+
+        <div class="education-entry">
+          <span class="degree">Diploma- <br> Artificial Intelligence &amp; Machine Learning</span>
+          <span class="institute">K. K. Wagh Polytechnic.</span>
+          <span class="years">2022-2025</span>
+        </div>
+
       </div>
     </div>
+    <div class="box" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start;">
+      <div class="box-title">Currently Exploring</div>
+      <ul class="exploring-list" style="flex: 1 1 auto; justify-content: center; height: 100%;">
+        <li>Advance Artificial Intelligence</li>
+        <li>Machine Learning</li>
+        <li>Deep Learning</li>
+        <li>Neural Networks</li>
+        <li>AI Agents</li>
+        <li>Generative Neural Networks</li>
+
+      </ul>
+    </div>
   </div>
+
 </body>
+
+<style>
+  .edge-tech-line {
+    font-family: 'BitmapFont', sans-serif;
+    font-weight: 300;
+    width: 100%;
+    text-align: center;
+    font-size: 1em;
+    margin: 32px 0 18px 0;
+    letter-spacing: 1px;
+    color: #ffffffa3;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background: #00000000;
+    z-index: 100;
+    padding: 10px 0;
+  }
+  @media (max-width: 600px) {
+    .edge-tech-line {
+      font-size: 0.85em;
+      padding: 8px 0;
+    }
+  }
+</style>
+<div class="edge-tech-line">
+  My exploring never ends, This is just 0.001% of my exploration
+</div>
+
+<style>
+  ::selection {
+    background: #fff;
+    color: #000;
+  }
+</style>
+
 </html>

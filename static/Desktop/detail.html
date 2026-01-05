@@ -10,7 +10,6 @@
 
   <style>
     #startup-blur-overlay {
-
       position: fixed;
       z-index: 99999;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -105,11 +104,10 @@
       background: rgba(255,255,255,0.08); /* transparent blur */
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-radius: 999px;
+      border-radius: 250px;
       z-index: 9999;
       transition: background-color 0.3s;
       font-family: 'Inter', monospace, sans-serif !important;
-      /* Added shadow to header */
       box-shadow: 0 6px 32px 0 #0000002e, 0 1.5px 8px 0 #0000001a;
       border: 1px solid #ffffff59; /* 1px border */
       will-change: background-color;
@@ -137,10 +135,10 @@
       cursor: pointer;
       padding: 5px 12px;
       transition: background-color 0.3s, color 0.3s, transform 0.22s cubic-bezier(.36,1,.1,1);
-      border-radius: 80px;
+      border-radius: 50px;
       position: relative;
       font-family: 'Inter', monospace, sans-serif !important;
-      color: #fff !important; /* Make text white on header */
+      color: #fff !important;
       background: none;
       border: none;
       display: flex;
@@ -148,12 +146,12 @@
       will-change: background-color, color, transform;
     }
     #rectiangleNavbar .page-nav li.active {
-      background-color: #fff !important; /* selection box white */
-      color: #070707 !important; /* Make text inside highlight dark */
+      background-color: #fff !important;
+      color: #070707 !important;
       z-index: 2;
     }
     #rectiangleNavbar .page-nav li.active strong {
-      color: #070707 !important; /* For strong-Home, About, ... */
+      color: #070707 !important;
     }
     #rectiangleNavbar .page-nav li:hover:not(.active) {
       background-color: rgba(255,255,255,0.18) !important;
@@ -165,7 +163,6 @@
       color: #fff !important;
     }
 
-    /* Resume button special styling */
     #rectiangleNavbar .page-nav li#resume-nav-btn {
       background: transparent !important;
       color: #fff !important;
@@ -177,7 +174,6 @@
       margin-right: 0;
       padding: 5px 18px;
       position: relative;
-      border-radius: 120px;
       will-change: background-color, color, border;
     }
 
@@ -188,14 +184,13 @@
       transform: none;
       border: 1.2px solid #fff !important;
     }
-
     .highlight {
       position: absolute;
       top: -4px;
       left: 0;
       height: calc(100% + 8px);
       background-color: #fff !important;
-      border-radius: 80px;
+      border-radius: 50px;
       z-index: 1;
       transition: left 0.33s cubic-bezier(.36,1,.1,1), width 0.3s cubic-bezier(.36,1,.1,1), height 0.3s cubic-bezier(.36,1,.1,1), background-color 0.3s;
       pointer-events: none;
@@ -224,7 +219,6 @@
       color: #000;
     }
 
-    /* New styles for full-screen black overlay with AI text */
     #ai-fullscreen-overlay {
       position: fixed;
       top: 0;
@@ -251,6 +245,128 @@
       transition: opacity 1s cubic-bezier(.36,1,.1,1);
       will-change: opacity;
     }
+
+    /* Top-left transparent calendar box styling */
+    #calendar-event-tipbox {
+      position: fixed;
+      top: 22px;
+      left: 22px;
+      min-width: 270px;
+      max-width: 300px;
+      min-height: 38px;
+      background: #0f0f0f61;
+      border-radius: 27px;
+      z-index: 10030;
+      box-shadow: 0 2.5px 28px 0 #0001, 0 1px 4px 0 #0001;
+      padding: 18px 22px 12px 16px;
+      font-size: 1em;
+      color: #e1e1e1;
+      border: 1.0px solid #fff3;
+      font-family: 'Inter', 'BitmapFont', monospace, sans-serif;
+      pointer-events: auto;
+      transition: background 0.3s, box-shadow 0.2s;
+      overflow-x: hidden;
+      overflow-y: auto;
+      backdrop-filter: blur(9px);
+    }
+    /* Floating / background SVG icons inside tipbox */
+    #calendar-event-tipbox {
+      /* ensure the tipbox forms a stacking context for the icons */
+      position: fixed;
+      contain: paint;
+    }
+    #calendar-event-tipbox .floating-icons {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    /* Ensure text/content sits above the icons */
+    #calendar-event-tipbox .calendar-label,
+    #calendar-event-tipbox .calendar-typed-line {
+      position: relative;
+      z-index: 2;
+    }
+    #calendar-event-tipbox .floating-icons svg {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      opacity: 0.9;
+      will-change: transform, opacity, top, left;
+      stroke: rgba(255,255,255,0.85);
+      transform: translate3d(0,0,0);
+    }
+    /* falling effect (like raindrops) */
+    @keyframes fall {
+      0% { transform: translateY(-20%) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(120%) rotate(360deg); opacity: 0.06; }
+    }
+    /* slow float/bubble upward */
+    @keyframes floatUp {
+      0% { transform: translateY(110%) scale(0.9); opacity: 0; }
+      15% { opacity: 0.9; }
+      100% { transform: translateY(-120%) scale(1.05); opacity: 0; }
+    }
+    .floating-icons .falling {
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-duration: var(--dur, 6s);
+      animation-delay: var(--delay, 0s);
+    }
+    .floating-icons .bubbling {
+      animation-name: floatUp;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      animation-duration: var(--dur, 8s);
+      animation-delay: var(--delay, 0s);
+    }
+    /* smaller sizes variation */
+    /* Adjusted sizes for rain look: more small drops, a few medium/large */
+    /* Larger sizes for more visible raindrops */
+    /* Increased sizes as requested (scale by size, not stroke) - bumped further */
+    .floating-icons .size-sm { width: 140px; height: 140px; opacity: 0.96; }
+    .floating-icons .size-md { width: 200px; height: 200px; opacity: 0.92; }
+    .floating-icons .size-lg { width: 280px; height: 280px; opacity: 0.86; }
+    #calendar-event-tipbox .calendar-label {
+      font-size: .89em;
+      color: #aaa;
+      letter-spacing: 2px;
+      font-family:'Inter',sans-serif;
+      font-weight: 500;
+      margin-bottom: 0.33em;
+      background: none;
+      display: block;
+    }
+    #calendar-event-tipbox .calendar-typed-line {
+      font-family:'BitmapFont',consolas,monospace;
+      font-size: 1em;
+      white-space: pre-line;
+      margin-top: .15em;
+      margin-bottom: .1em;
+      color: #ffffff;
+      background: none;
+      display: block;
+      min-height: 1.5em;
+      text-shadow: 0 1px 2px #0005;
+      letter-spacing: 1px;
+    }
+    @media (max-width:690px) {
+      #calendar-event-tipbox {
+        left: 0;
+        top: 0;
+        min-width: 130px;
+        max-width: 100vw;
+        border-radius: 0 0 16px 0;
+        padding: 7px 10px 7px 10px;
+        font-size: .99em;
+      }
+    }
   </style>
   <div id="startup-blur-overlay"></div>
   <script>
@@ -273,6 +389,15 @@
   </script>
 </head>
 <body>
+  <!-- Top-left calendar transparent box -->
+  <div id="calendar-event-tipbox" style="display:block">
+    <div class="floating-icons" aria-hidden="true"></div>
+    <span class="calendar-label">
+      
+    </span>
+    <span class="calendar-typed-line" id="calendarTypedText"></span>
+  </div>
+
   <!-- Navigation -->
   <div id="rectiangleNavbar" class="rectriangle">
     <nav class="page-nav">
@@ -298,6 +423,278 @@
   <div id="ai-fullscreen-overlay">
     <div id="ai-text"></div>
   </div>
+
+  <script>
+    // demo english calendar events - would be replaced by a real calendar API/events in production
+    // each event contains {date: YYYY-MM-DD, text: "..."}
+    const englishCalendarEvents = [
+
+    // ─── JANUARY ─────────────────────────────────────────
+    { date: "2024-01-01", text: "// Happy New Year — New timeline unlocked. Execute better decisions." },
+    { date: "2024-01-15", text: "// MLK Day — Dream louder, act harder, stay human." },
+    { date: "2024-01-26", text: "// Happy Republic Day India" },
+
+    // ─── FEBRUARY ────────────────────────────────────────
+    { date: "2024-02-04", text: "// World Cancer Day — Strength, hope, and science saving lives." },
+    { date: "2024-02-11", text: "// Women & Girls in Science Day — Brains over stereotypes. Always." },
+    { date: "2024-02-14", text: "// Happy Valentine’s Day " },
+
+    // ─── MARCH ───────────────────────────────────────────
+    { date: "2024-03-08", text: "// International Women’s Day — Power, resilience, zero apologies." },
+    { date: "2024-03-14", text: "// Pi Day — Infinite decimals. Finite tolerance for bad math." },
+    { date: "2024-03-22", text: "// World Water Day — Water is life. Treat it like one." },
+    { date: "2024-03-26", text: "// Bangladesh Independence Day — Freedom remembered. History respected." },
+
+    // ─── APRIL ───────────────────────────────────────────
+    { date: "2024-04-22", text: "// Happy Earth Day" },
+    { date: "2024-04-23", text: "// World Book Day — Read more. Think deeper. Argue smarter." },
+
+    // ─── MAY ─────────────────────────────────────────────
+    { date: "2024-05-17", text: "// World Telecommunication Day" },
+
+    // ─── JUNE ────────────────────────────────────────────
+    { date: "2024-06-05", text: "// World Environment Day — Nature is not optional." },
+    { date: "2024-06-16", text: "// Happy Birthday Dr.Oppenheimer Sir" },
+    { date: "2024-06-21", text: "// International Yoga Day — Align body. Debug mind." },
+
+    // ─── JULY ────────────────────────────────────────────
+    { date: "2024-07-04", text: "// Happy Independence Day USA" },
+    { date: "2024-07-16", text: "// Trinity Test Day — First nuclear explosion. A line crossed forever." },
+    { date: "2024-07-14", text: "// Bastille Day — Revolution energy. Liberty still trending." },
+
+    // ─── AUGUST ──────────────────────────────────────────
+    { date: "2024-08-06", text: "// Hiroshima Day — Remember the cost of power. Choose peace." },
+    { date: "2024-08-09", text: "// Nagasaki Day — Never forget. Never repeat." },
+    { date: "2024-08-12", text: "// International Youth Day — The future is compiling." },
+    { date: "2024-08-15", text: "// Happy Independence Day India" },
+
+    // ─── SEPTEMBER ───────────────────────────────────────
+    { date: "2024-09-21", text: "// International Peace Day — Silence weapons. Amplify empathy." },
+
+    // ─── OCTOBER ─────────────────────────────────────────
+    { date: "2024-10-01", text: "// China National Day — Nation reset. History preserved." },
+    { date: "2024-10-10", text: "// World Mental Health Day — Rest is productive. Feelings are valid." },
+    { date: "2024-10-31", text: "// Happy Halloween" },
+
+    // ─── NOVEMBER ────────────────────────────────────────
+    { date: "2024-11-14", text: "// Children’s Day — Protect curiosity. Kill ignorance." },
+    { date: "2024-11-28", text: "// Thanksgiving — Gratitude over ego." },
+    { date: "2024-11-30", text: "// Happy Birthday ChatGPT" },
+
+    // ─── DECEMBER ────────────────────────────────────────
+    { date: "2024-12-02", text: "// National AI Day — Machines learn. Humans must evolve." },
+    { date: "2024-12-06", text: "// Finland Independence Day — Quiet strength. Strong systems." },
+    { date: "2024-12-10", text: "// Human Rights Day — Dignity is not negotiable." },
+    { date: "2024-12-25", text: "// Merry Christmas" },
+    { date: "2024-12-31", text: "// Happy New Year" }
+    ];
+
+
+    // helper: days between (UTC)
+    function daysBetween(date1, date2) {
+      const dt1 = typeof date1==="string"?new Date(date1):date1;
+      const dt2 = typeof date2==="string"?new Date(date2):date2;
+      const t1 = Date.UTC(dt1.getUTCFullYear(),dt1.getUTCMonth(),dt1.getUTCDate());
+      const t2 = Date.UTC(dt2.getUTCFullYear(),dt2.getUTCMonth(),dt2.getUTCDate());
+      return Math.floor((t2-t1)/86400000);
+    }
+
+    // Custom check for Dec 15 to Jan 15 (inclusive)
+    function isNewYearPeriod(date) {
+      const year = date.getUTCFullYear();
+      const month = date.getUTCMonth(); // 0 = Jan, 11 = Dec
+      const day = date.getUTCDate();
+      if (month === 11 && day >= 15) {
+        // December 15-31
+        return true;
+      }
+      if (month === 0 && day <= 15) {
+        // January 1-15
+        return true;
+      }
+      return false;
+    }
+
+    // Find a relevant event: today or "within 4 days ahead", favor soonest event in range
+    function getUpcomingEvent(events, now) {
+      // Show Happy New Year if in the period Dec 15-Jan 15
+      if (isNewYearPeriod(now)) {
+        return { text: "//Happy new year" };
+      }
+      let soonest = null, soonestOffset = 99;
+      for (const ev of events) {
+        const offset = daysBetween(now, ev.date);
+        if (offset >= 0 && offset <= 4) {
+          if (offset < soonestOffset) { soonest = ev; soonestOffset = offset; }
+        } else if (offset >= -1 && offset <= -0) { // today (should catch as 0 above)
+          soonest = ev; soonestOffset = 0;
+        }
+      }
+      // fallback: nearest future event, if in the future
+      if (!soonest) {
+        let furthest = null, futOffset = 9999;
+        for (const ev of events) {
+          const offset = daysBetween(now, ev.date);
+          if (offset > 0 && offset < futOffset) {
+            furthest = ev; futOffset = offset;
+          }
+        }
+        return furthest;
+      }
+      return soonest;
+    }
+
+    // Typing effect for the event line (slower typing)
+    function typeWrite(toEl, text, speed, callback) {
+      toEl.textContent = "";
+      let idx = 0;
+      function typeNext() {
+        if (idx <= text.length) {
+          toEl.textContent = text.substring(0, idx);
+          idx++;
+          if (idx > text.length) {
+            if (callback) callback();
+            return;
+          }
+          setTimeout(typeNext, speed);
+        }
+      }
+      typeNext();
+    }
+
+    // New: Animate over upcoming events in order every 2s (after finishing type each)
+    document.addEventListener("DOMContentLoaded", function() {
+      const tipbox = document.getElementById("calendar-event-tipbox");
+      const typedEl = document.getElementById("calendarTypedText");
+      const today = new Date();
+
+      // Get all events with today<=date<=today+4, sorted by soonest
+      function getDisplayEvents(events, now) {
+        // Special: New year period, only show that message
+        if (isNewYearPeriod(now)) {
+          return [{ text: "//Happy new year" }];
+        }
+        let selectedEvents = [];
+        // Prefer within 4 days ahead (>=0 and <=4)
+        for (const ev of events) {
+          const offset = daysBetween(now, ev.date);
+          if (offset >= 0 && offset <= 4) selectedEvents.push({ ...ev, offset });
+        }
+        // If none, fallback to nearest future event only
+        if (selectedEvents.length === 0) {
+          let furthest = null, futOffset = 9999;
+          for (const ev of events) {
+            const offset = daysBetween(now, ev.date);
+            if (offset > 0 && offset < futOffset) {
+              furthest = { ...ev, offset };
+              futOffset = offset;
+            }
+          }
+          if (furthest) selectedEvents.push(furthest);
+        }
+        // If still none, fallback to dummy text
+        if (selectedEvents.length === 0)
+          selectedEvents.push({ text: "// No major events in the next few days." });
+        // Sort by offset ascending:
+        selectedEvents.sort((a,b)=>a.offset-b.offset);
+        return selectedEvents;
+      }
+
+      // Slower type effect (change speed to 48ms per char for "little slow")
+      // Animation for each event, 2 sec after finish typing the line
+      const SHOW_DELAY = 2000;  // 2s after finish each line
+      const TYPE_SPEED = 48;    // ms per character, a bit slower than 28 (original)
+
+      let eventsToShow = getDisplayEvents(englishCalendarEvents, today);
+      let currIdx = 0;
+
+      function showNextEvent() {
+        let ev = eventsToShow[currIdx % eventsToShow.length];
+        typeWrite(typedEl, ev.text, TYPE_SPEED, function(){
+          setTimeout(() => {
+            currIdx++;
+            showNextEvent();
+          }, SHOW_DELAY);
+        });
+      }
+
+      showNextEvent();
+    });
+  </script>
+
+  <script>
+    // Generate slightly bigger animated SVG icons inside the tipbox (falls / bubbles)
+    (function createTipboxIcons() {
+      const tipbox = document.getElementById('calendar-event-tipbox');
+      if (!tipbox) return;
+      const container = tipbox.querySelector('.floating-icons');
+      if (!container) return;
+
+      // Make SVG viewBox same, but scale up default size below
+      const SVG_MARKUP = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g><path d="M11.9994 3V7M11.9994 7V17M11.9994 7L8.99943 4M11.9994 7L14.9994 4M11.9994 17V21M11.9994 17L8.99943 20M11.9994 17L14.9994 20M4.20624 7.49999L7.67034 9.49999M7.67034 9.49999L16.3306 14.5M7.67034 9.49999L3.57227 10.5981M7.67034 9.49999L6.57227 5.40191M16.3306 14.5L19.7947 16.5M16.3306 14.5L17.4287 18.5981M16.3306 14.5L20.4287 13.4019M4.2067 16.5L7.6708 14.5M7.6708 14.5L16.3311 9.49999M7.6708 14.5L3.57273 13.4019M7.6708 14.5L6.57273 18.5981M16.3311 9.49999L19.7952 7.49999M16.3311 9.49999L17.4291 5.40192M16.3311 9.49999L20.4291 10.5981" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>';
+
+      // Rain-only pattern: lower count as requested
+      const COUNT = 18;
+      for (let i = 0; i < COUNT; i++) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'icon-wrapper';
+        wrapper.innerHTML = SVG_MARKUP;
+        const svg = wrapper.firstElementChild;
+        svg.style.position = 'absolute';
+
+        // Randomize horizontal position across the tipbox width
+        const left = Math.random() * 100;
+        svg.style.left = left + '%';
+
+        // Start slightly above or inside the box so drops fall naturally
+        const startTop = -40 + Math.random() * 140; // -40% .. 100%
+        svg.style.top = startTop + '%';
+
+        // Force falling behavior for rain
+        svg.classList.add('falling');
+
+        // Make SVGs larger than before
+        const r = Math.random();
+        // Old: sm = 36px, md = 46px, lg = 58px
+        // Now: sm = 44px, md = 60px, lg = 78px
+        let sizeClass, sizePx;
+        if (r < 0.55) {
+          sizeClass = 'size-sm';
+          sizePx = 44;
+        } else if (r < 0.95) {
+          sizeClass = 'size-md';
+          sizePx = 60;
+        } else {
+          sizeClass = 'size-lg';
+          sizePx = 78;
+        }
+        svg.classList.add(sizeClass);
+
+        // Actually apply width/height directly for even bigger SVGs
+        svg.setAttribute('width', sizePx);
+        svg.setAttribute('height', sizePx);
+
+        // Adjust opacity for depth
+        svg.style.opacity = (0.85 + Math.random() * 0.2).toFixed(2);
+
+        // Durations: larger drops fall slower (lengthened to match much larger visuals)
+        let dur;
+        if (sizeClass === 'size-sm') dur = (4.0 + Math.random() * 1.6).toFixed(2) + 's';
+        else if (sizeClass === 'size-md') dur = (6.5 + Math.random() * 2.4).toFixed(2) + 's';
+        else dur = (11.0 + Math.random() * 3.0).toFixed(2) + 's';
+
+        const delay = (-Math.random() * parseFloat(dur)).toFixed(2) + 's';
+        svg.style.setProperty('--dur', dur);
+        svg.style.setProperty('--delay', delay);
+
+        svg.style.color = 'rgba(255,255,255,0.95)';
+        svg.style.pointerEvents = 'none';
+
+        container.appendChild(svg);
+      }
+      container.style.pointerEvents = 'none';
+    })();
+  </script>
 
   <script>
     // Smoother main nav highlight - reduce work on scroll and layout calls. Debounced/throttled
@@ -361,7 +758,6 @@
           });
         });
 
-        // Use 55% of viewport as marker for highlight - now throttled with rAF for smoothness
         function highlightNavOnScroll() {
           if (!ticking) {
             window.requestAnimationFrame(_update);
@@ -400,7 +796,6 @@
         window.addEventListener("scroll", highlightNavOnScroll, { passive: true });
         window.addEventListener("resize", highlightNavOnScroll);
 
-        // Optimized highlight position/animation on header - avoid layout thrash, only update if needed
         function updateHighlight() {
           const activeItem = document.querySelector("#rectiangleNavbar .page-nav li.active");
           if (activeItem) {
@@ -435,22 +830,18 @@
           });
         });
 
-        // initialize (highlight stays where it is if no frame at 55%, otherwise tracks section)
         setTimeout(function() {
           window.scrollTo({ top: 0, behavior: "auto" });
           highlightNavOnScroll();
         }, 0);
       }
-      // 1. Contact redirection logic removed as instructed.
     });
-    // No scroll-to-top redirect (per request)
   </script>
 
   <!-- Main content -->
   <div class="frame-stack">
     <!-- Both frames with a 2px space between them -->
     <div class="top-frame" id="top-frame">
-      <!-- Adding allow="none" as no special features needed, add sandbox -->
       <iframe src="Main.html" scrolling="no" title="Main" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
     </div>
     <div class="frame-gap-2px"></div>
@@ -500,7 +891,6 @@
     gap: 0;
     justify-content: center;
     will-change: transform;
-    /* GPU: promote to own layer */
     transform: translateZ(0);
     backface-visibility: hidden;
   }
@@ -519,10 +909,8 @@
     pointer-events: none;
     width: 100vw;
     will-change: transform;
-    /* GPU: promote animation to GPU layer */
     transform: translate3d(0,0,0);
     backface-visibility: hidden;
-    /* Avoid subpixel blurring on some browsers */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -576,7 +964,6 @@
     let ticking = false;
 
     function to3dTransform(yPercent, x) {
-      // Always use translate3d for GPU acceleration
       return `translateY(${yPercent}) translate3d(${x}px,0,0)`;
     }
 
@@ -623,7 +1010,6 @@
       }
     }
 
-    // Use passive scroll event for less jank, and promote layers for GPU anim
     window.addEventListener('scroll', requestTick, { passive: true });
     window.addEventListener('resize', function() {
       prevProgress = -1;
@@ -730,17 +1116,13 @@
     <br>
   </div>
 
-  <!-- Add contact.html frame at the bottom -->
   <iframe src="contact.html" style="width:100%; height:700px; border:none; overflow:hidden; display:block;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
-<!-- NOTE: animation is now inlined above (no separate animation iframe) -->
-
 </body>
 <script>
 document.documentElement.style.scrollBehavior = "smooth";
 (function(){
   const animFrame = document.getElementById('animation-frame');
   function broadcastScroll() {
-    // Forward scroll state to inline animation if present, otherwise fallback to iframe messaging
     const cert = document.getElementById('certificate-frame');
     const rect = cert ? cert.getBoundingClientRect() : { top: 0, left: 0, width: 0, height: 0 };
     const certTopInDoc = rect.top + window.scrollY;
@@ -752,7 +1134,6 @@ document.documentElement.style.scrollBehavior = "smooth";
       viewportHeight: window.innerHeight
     };
     if (typeof window.setInlineAnimationTarget === 'function') {
-      // Inline animation present — call its setter directly
       window.setInlineAnimationTarget(payload);
     } else if (animFrame && animFrame.contentWindow) {
       animFrame.contentWindow.postMessage(Object.assign({ type: 'scroll-sync' }, payload), '*');
@@ -771,7 +1152,6 @@ document.documentElement.style.scrollBehavior = "smooth";
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', broadcastScroll);
   if (animFrame) animFrame.addEventListener('load', broadcastScroll);
-  // Track last mouse pos and forward wheel deltas only when pointer is over certificate frame
   let lastMouse = { x: 0, y: 0 };
   window.addEventListener('mousemove', function(e){ lastMouse.x = e.clientX; lastMouse.y = e.clientY; }, { passive: true });
   window.addEventListener('wheel', function(e){
@@ -780,7 +1160,6 @@ document.documentElement.style.scrollBehavior = "smooth";
     const rect = cert.getBoundingClientRect();
     const isOver = lastMouse.x >= rect.left && lastMouse.x <= rect.right && lastMouse.y >= rect.top && lastMouse.y <= rect.bottom;
     if (isOver) {
-      // If pointer is directly over the certificate iframe, let the iframe receive wheel events
       const elAtPointer = document.elementFromPoint(lastMouse.x, lastMouse.y);
       if (elAtPointer && (elAtPointer.id === 'certificateIframe' || (elAtPointer.tagName === 'IFRAME' && elAtPointer.parentElement && elAtPointer.parentElement.id === 'certificate-frame'))) {
         return;
@@ -794,9 +1173,7 @@ document.documentElement.style.scrollBehavior = "smooth";
   }, { passive: true });
 })();
 </script>
-<!-- Inline animated pattern CSS + JS (was previously in a separate iframe) -->
 <style>
-  /* Animated pattern styles (constrained to #certificate-frame) */
   #certificate-frame { position: relative; overflow: hidden; }
   #certificate-frame .wrap {
     position: absolute;
@@ -820,7 +1197,6 @@ document.documentElement.style.scrollBehavior = "smooth";
     font-size: 64px;
     font-weight: 700;
     color: #fff;
-    /* Prevent BitmapFont from applying here — use Inter/system fallback */
     font-family: 'Inter', system-ui, Arial, sans-serif;
     opacity: 0.96;
     will-change: transform;
@@ -843,7 +1219,6 @@ document.documentElement.style.scrollBehavior = "smooth";
     );
     z-index: 4;
   }
-  /* Certificate iframe (interactive full-featured) */
   #certificate-frame > #certificateIframe {
     position: absolute;
     top: 0;
@@ -855,9 +1230,14 @@ document.documentElement.style.scrollBehavior = "smooth";
     z-index: 6;
     background: transparent;
   }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  html {
+    scrollbar-width: none;
+  }
 </style>
 <script>
-  // Inlined animated infinite rows (adapted from animations/new pattern.html)
   (function() {
     const container = document.getElementById("certificate-frame");
     const wrap = container && container.querySelector("#wrap");
@@ -881,7 +1261,6 @@ document.documentElement.style.scrollBehavior = "smooth";
       rowData.push({
         el: row,
         dir: i % 2 === 0 ? 1 : -1,
-        // Lower base speeds so overall motion is slower
         speed: 0.12 + Math.random() * 0.08,
         offset: Math.random() * 10000,
         width: 0
@@ -892,32 +1271,23 @@ document.documentElement.style.scrollBehavior = "smooth";
       rowData.forEach(r => { r.width = r.el.scrollWidth / 2; });
     });
 
-    // Exposed API for the parent document to forward scroll state and wheel deltas
-    // Reduce wheel multiplier slightly for smoother motion, and make small changes more responsive.
-    // Impulse-based input model: wheel and sync messages add velocity directly.
-    // This produces a sliding-on-ice feel (move then slowly stop).
-    // Lower impulses and max velocity to reduce overall speed
     const WHEEL_IMPULSE = 0.35;
     const SYNC_IMPULSE_SCALE = 0.25;
     const DAMPING = 0.96;
     let lastRelativeY = null;
     window.inlineAnimationWheelDelta = function(deltaY) {
-      // Apply immediate impulse to velocity; positive deltaY -> move down/right
       velocity += (deltaY || 0) * WHEEL_IMPULSE;
     };
     window.setInlineAnimationTarget = function(data) {
       if (data && typeof data === 'object' && typeof data.relativeY === 'number') {
-        // If we don't have a last value, just record and don't apply impulse
         if (lastRelativeY === null) {
           lastRelativeY = data.relativeY;
           return;
         }
         const delta = data.relativeY - lastRelativeY;
-        // Add scaled impulse based on how much the page scrolled past the certificate area
         velocity += delta * SYNC_IMPULSE_SCALE;
         lastRelativeY = data.relativeY;
       } else if (data && typeof data === 'object' && typeof data.scrollY === 'number') {
-        // Fallback: drive by change of scrollY
         if (lastRelativeY === null) {
           lastRelativeY = data.scrollY;
           return;
@@ -928,17 +1298,12 @@ document.documentElement.style.scrollBehavior = "smooth";
       }
     };
 
-    // Velocity-based sliding: inputs provide impulses; velocity decays via damping.
     let velocity = 0;
     const MAX_VEL = 120;
     function animate() {
-      // Integrate velocity into position
       smoothScroll += velocity;
-      // Apply damping so the motion slowly comes to rest (slippery)
       velocity *= DAMPING;
-      // Prevent infinitesimal oscillation
       if (Math.abs(velocity) < 0.01) velocity = 0;
-      // Clamp velocity just in case
       if (velocity > MAX_VEL) velocity = MAX_VEL;
       if (velocity < -MAX_VEL) velocity = -MAX_VEL;
 
@@ -950,28 +1315,13 @@ document.documentElement.style.scrollBehavior = "smooth";
       requestAnimationFrame(animate);
     }
     animate();
-    // Recompute row widths on resize/visibility changes to keep transform math accurate
     function recomputeWidths() {
       rowData.forEach(r => { r.width = r.el.scrollWidth / 2 || r.width || 1; });
     }
     window.addEventListener('resize', function() {
-      // Recompute widths after layout settles
       setTimeout(recomputeWidths, 60);
     }, { passive: true });
-    // Also recalc when container becomes visible or fonts load
     document.fonts && document.fonts.ready && document.fonts.ready.then(recomputeWidths);
   })();
 </script>
-
-<style>
-::-webkit-scrollbar {
-  display: none;
-}
-html {
-  scrollbar-width: none;
-}
-</style>
-
-
 </html>
-

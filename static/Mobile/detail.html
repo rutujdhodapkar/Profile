@@ -10,29 +10,22 @@
     @font-face {
       font-family: 'BitmapFont';
       src: url('BitmapFont.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
       font-display: swap;
     }
-    @font-face {
-      font-family: 'OutlineFont';
-      src: url('OutlineFont-Regular.ttf') format('truetype');
-      font-display: swap;
-    }
-    html {
-      scrollbar-width: none;
-      background: #0f0f0f;
-      color: #fff;
-      scroll-behavior: smooth;
-    }
-    ::-webkit-scrollbar { display: none; }
     body {
       font-family: 'BitmapFont', monospace, sans-serif;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
-      background-color: #0f0f0f00000;
-      color: #fff;
+      background-color: #0f0f0f;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    html, body {
+      width: 100vw;
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+      overscroll-behavior: none;
     }
     #startup-blur-overlay {
       position: fixed;
@@ -40,104 +33,528 @@
       top: 0; left: 0; right: 0; bottom: 0;
       width: 100vw;
       height: 100vh;
-      background: #0f0f0f00000;
+      background: rgba(255,255,255,1);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       transition: background 1.2s cubic-bezier(.4,0,.2,1), backdrop-filter 1.2s cubic-bezier(.4,0,.2,1);
       pointer-events: none;
+      will-change: background, backdrop-filter;
     }
-    .main-layout {
-      display: flex;
-      flex-direction: row;
-      min-height: 100vh;
+    /* --- Floating Box for Calendar Announcements --- */
+    #calendar-announce-bar {
+      position: fixed;
+      top: 0; left: 0;
       width: 100vw;
-      background: #0f0f0f00000;
-    }
-    .main-content {
-      margin-left: 0;
-      width: 100vw;
-      min-height: 100vh;
-      background: #0f0f0f00000;
-      position: relative;
-      z-index: 1;
+      min-height: 52px;
+      z-index: 50000;
+      pointer-events: none;
+      background: linear-gradient(90deg, #00000000 60%, #00000000 100%);
+      color: #fff;
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: 'BitmapFont', monospace, 'Inter', sans-serif;
+      font-size: 1.35em;
+      letter-spacing: 1.8px;
+      padding: 0.65em 2.2em;
+      backdrop-filter: blur(4px) saturate(1.3);
+      border-bottom: 1.5px solid #00000000;
+      box-shadow: 0 10px 34px 0 #00000000;
+      opacity: 0.99;
+      user-select: none;
+      transition: background 0.6s, color 0.18s;
     }
-    .scroll-anchor {
+    @media (max-width: 600px) {
+      #calendar-announce-bar {
+        font-size: 0.97em;
+        padding: 0.47em 0.88em;
+        min-height: 36px;
+      }
+    }
+    #calendar-announce-message {
+      min-width: 1em;
+      min-height: 1em;
+      pointer-events: auto;
+      white-space: pre-line;
+      text-shadow: 1px 1.5px 4px #00000029;
+      overflow: hidden;
+      max-width: 98vw;
+      transition: color 0.6s, text-shadow 0.6s;
+      font-weight: 400;
+    }
+    /* End floating box css */
+
+    /* SVG menu icon button styling */
+    #menu-dot-btn {
+      position: fixed;
+      top: 52px; /* slightly less from top so menu is visually a bit lower too */
+      left: 24px;
+      width: 40px;
+      height: 40px;
+      z-index: 20000;
+      background: none;
+      border: none;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+    #menu-dot-btn svg {
+      width: 28px;
+      height: 28px;
       display: block;
-      position: relative;
-      visibility: hidden;
-      height: 0;
+      transition: filter 0.15s;
+      user-select: none;
+      pointer-events: none;
+    }
+    #menu-dot-btn:active svg, #menu-dot-btn:focus svg {
+      filter: brightness(0.7);
+    }
+    /* dropdown index menu */
+    #menu-dropdown {
+      position: fixed;
+      top: 68px; /* move menu further down for lower height on page (was 54px) */
+      left: 17px;
+      min-width: 176px;
+      background: #fff;
+      color: #0f0f0f;
+      border-radius: 12px;
+      box-shadow: 0 6px 36px 0 #07070733;
+      font-family: 'BitmapFont', monospace, sans-serif;
+      font-size: 1.17em;
+      letter-spacing: 0.1em;
+      z-index: 24000;
+      padding: 11px 0;  /* a bit less vertical padding */
+      border: 1.5px solid #bbb;
+      display: none;
+      flex-direction: column;
+      animation: fadein .13s cubic-bezier(.36,1,.1,1);
+      user-select: none;
+      transition: box-shadow .13s, border .12s;
+    }
+    #menu-dropdown.active {
+      display: flex;
+    }
+    #menu-dropdown ul {
+      list-style: none;
       margin: 0;
       padding: 0;
     }
-    ::selection {
-      background: #fff;
+    #menu-dropdown li {
+      font-family: 'BitmapFont', monospace, sans-serif;
+      padding: 10px 20px 10px 20px;
+      cursor: pointer;
+      transition: background 0.09s, color 0.09s;
+      border: none;
+      outline: none;
+      font-size: 1em;
+      color: #0f0f0f;
+      border-radius: 6px;
+    }
+    #menu-dropdown li:hover, #menu-dropdown li:active {
+      background: #ececec;
       color: #0f0f0f;
     }
-    #ai-fullscreen-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #0f0f0f;
-      z-index: 9999;
+    #menu-dropdown li:focus {
+      background: #e0e0e0;
+    }
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(-6px);}
+      to   { opacity: 1; transform: translateY(0);}
+    }
+    ::-webkit-scrollbar {
       display: none;
-      opacity: 0;
-      transition: opacity 1s ease;
-      justify-content: center;
-      align-items: center;
     }
-    #ai-text {
-      color: #fff;
-      font-family: 'BitmapFont', sans-serif;
-      font-weight: 100;
-      font-size: 3rem;
-      text-align: center;
-      max-width: 80%;
-      opacity: 0;
-      transition: opacity 1s ease;
+    html {
+      scrollbar-width: none;
     }
-    #right-vertical-scrollbar-container {
-      position: fixed;
-      right: 35px;
-      top: 50%;
-      transform: translateY(-50%);
-      height: 100px;
-      width: 24px;
-      z-index: 10001;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      color: #fff;
+
+    .frame-stack {
+      width: 100vw;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    #right-vertical-scrollbar-track {
+    .top-frame {
+      width: 100vw;
+      min-height: 0;
       position: relative;
-      width: 2px;
-      height: 100px;
-      background: #fff;
-      border-radius: 2px;
-      box-shadow: 0 0 6px #0f0f0f4;
+      z-index: 1;
+      display: block;
+      border: none;
+      margin: 0;
+      padding: 0;
+      background: #0f0f0f;
     }
-    #right-vertical-scrollbar-thumb {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 18px;
-      height: 18px;
-      background: #fff;
-      border: 2.5px solid #0f0f0f;
-      border-radius: 50%;
-      box-shadow: 0 2px 8px #0f0f0f4, 0 0 2px #fff2;
-      transition: background 0.18s;
-      top: 0;
-      cursor: pointer;
-      pointer-events: auto;
-      touch-action: none;
-      user-select: none;
+    .top-frame iframe {
+      width: 100vw;
+      height: 800px;
+      max-width: 100vw;
+      min-width: 0;
+      min-height: 250px;
+      border: none;
+      display: block;
+      margin: 0 auto;
+      padding: 0;
+      background: transparent;
+      box-sizing: border-box;
+      border-radius: 0;
     }
+    .frame-gap-2px {
+      width: 100vw;
+      height: 1vw;
+      min-height: 18px;
+      max-height: 38px;
+      background: transparent;
+      display: block;
+    }
+    .frame-no-gap {
+      width: 100vw !important;
+      min-width: 0;
+      max-width: 100vw;
+      min-height: 320px;
+      border: none;
+      display: block;
+      overflow-x: hidden;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+    }
+
+    @media (max-width:600px) {
+      #menu-dot-btn {
+        top: 10px; /* moved up by 4px for consistency with new menu top */
+        left: 10px;
+        width: 28px;
+        height: 28px;
+      }
+      #menu-dot-btn svg {
+        width: 22px;
+        height: 22px;
+      }
+      #menu-dropdown {
+        min-width: 130px;
+        font-size: 0.98em;
+        top: 36px; /* lower on page, was 40px */
+        left: 7px;
+        padding: 7px 0; /* less padding mobile for height */
+      }
+      #menu-dropdown li {
+        padding: 8px 12px 8px 12px;
+        font-size: 0.96em;
+      }
+      .top-frame iframe {
+        width: 100vw;
+        max-width: 100vw;
+        min-width: 0;
+        height: 800px !important;
+        min-height: 100px;
+        padding: 0;
+      }
+      .frame-gap-2px {
+        min-height: 9px;
+        max-height: 17px;
+        height: 2.8vw;
+      }
+      .frame-no-gap {
+        min-height: 180px;
+      }
+    }
+  </style>
+  <div id="startup-blur-overlay"></div>
+  <div id="calendar-announce-bar">
+    <div id="calendar-announce-message"></div>
+  </div>
+  <script>
+    // Typing animation for calendar-announce-message
+    function typeWriterEffect(element, text, delay=28, callback=null) {
+      element.textContent = "";
+      let idx = 0;
+      function typeNext() {
+        if (idx <= text.length) {
+          element.textContent = text.slice(0, idx);
+          idx++;
+          setTimeout(typeNext, delay + Math.random()*14);
+        } else if (callback) {
+          callback();
+        }
+      }
+      typeNext();
+    }
+
+    // Simple EN calendar events, (could use an API, here is a small static list for demonstration)
+    const EN_EVENTS = [
+// ─── JANUARY ─────────────────────────────────────────
+{ date: "2024-01-01", text: "// Happy New Year — New timeline unlocked. Execute better decisions." },
+{ date: "2024-01-15", text: "// MLK Day — Dream louder, act harder, stay human." },
+{ date: "2024-01-26", text: "// Happy Republic Day India" },
+
+// ─── FEBRUARY ────────────────────────────────────────
+{ date: "2024-02-04", text: "// World Cancer Day — Strength, hope, and science saving lives." },
+{ date: "2024-02-11", text: "// Women & Girls in Science Day — Brains over stereotypes. Always." },
+{ date: "2024-02-14", text: "// Happy Valentine’s Day " },
+
+// ─── MARCH ───────────────────────────────────────────
+{ date: "2024-03-08", text: "// International Women’s Day — Power, resilience, zero apologies." },
+{ date: "2024-03-14", text: "// Pi Day — Infinite decimals. Finite tolerance for bad math." },
+{ date: "2024-03-22", text: "// World Water Day — Water is life. Treat it like one." },
+{ date: "2024-03-26", text: "// Bangladesh Independence Day — Freedom remembered. History respected." },
+
+// ─── APRIL ───────────────────────────────────────────
+{ date: "2024-04-22", text: "// Happy Earth Day" },
+{ date: "2024-04-23", text: "// World Book Day — Read more. Think deeper. Argue smarter." },
+
+// ─── MAY ─────────────────────────────────────────────
+{ date: "2024-05-17", text: "// World Telecommunication Day" },
+
+// ─── JUNE ────────────────────────────────────────────
+{ date: "2024-06-05", text: "// World Environment Day — Nature is not optional." },
+{ date: "2024-06-16", text: "// Happy Birthday Dr.Oppenheimer Sir" },
+{ date: "2024-06-21", text: "// International Yoga Day — Align body. Debug mind." },
+
+// ─── JULY ────────────────────────────────────────────
+{ date: "2024-07-04", text: "// Happy Independence Day USA" },
+{ date: "2024-07-16", text: "// Trinity Test Day — First nuclear explosion. A line crossed forever." },
+{ date: "2024-07-14", text: "// Bastille Day — Revolution energy. Liberty still trending." },
+
+// ─── AUGUST ──────────────────────────────────────────
+{ date: "2024-08-06", text: "// Hiroshima Day — Remember the cost of power. Choose peace." },
+{ date: "2024-08-09", text: "// Nagasaki Day — Never forget. Never repeat." },
+{ date: "2024-08-12", text: "// International Youth Day — The future is compiling." },
+{ date: "2024-08-15", text: "// Happy Independence Day India" },
+
+// ─── SEPTEMBER ───────────────────────────────────────
+{ date: "2024-09-21", text: "// International Peace Day — Silence weapons. Amplify empathy." },
+
+// ─── OCTOBER ─────────────────────────────────────────
+{ date: "2024-10-01", text: "// China National Day — Nation reset. History preserved." },
+{ date: "2024-10-10", text: "// World Mental Health Day — Rest is productive. Feelings are valid." },
+{ date: "2024-10-31", text: "// Happy Halloween" },
+
+// ─── NOVEMBER ────────────────────────────────────────
+{ date: "2024-11-14", text: "// Children’s Day — Protect curiosity. Kill ignorance." },
+{ date: "2024-11-28", text: "// Thanksgiving — Gratitude over ego." },
+{ date: "2024-11-30", text: "// Happy Birthday ChatGPT" },
+
+// ─── DECEMBER ────────────────────────────────────────
+{ date: "2024-12-02", text: "// National AI Day — Machines learn. Humans must evolve." },
+{ date: "2024-12-06", text: "// Finland Independence Day — Quiet strength. Strong systems." },
+{ date: "2024-12-10", text: "// Human Rights Day — Dignity is not negotiable." },
+{ date: "2024-12-25", text: "// Merry Christmas" },
+{ date: "2024-12-31", text: "// Happy New Year" }
+    ];
+
+    function getTodayOrUpcomingEvent(events, maxOffset=2) {
+      const now = new Date();
+      // find events today or in next 2 days (chronologically earliest)
+      let upcoming = [];
+      for (let evt of events) {
+        let eventDate = new Date(now.getFullYear(), evt.month-1, evt.day);
+        let diff = Math.floor((eventDate - now)/(1000*3600*24));
+        if (diff >= 0 && diff <= maxOffset) {
+          upcoming.push({event: evt, diff});
+        }
+      }
+      // sort by day difference for proper order
+      upcoming.sort((a, b) => a.diff - b.diff);
+      return upcoming.length > 0 ? upcoming : null;
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+      requestAnimationFrame(function(){
+        setTimeout(function() {
+          const overlay = document.getElementById('startup-blur-overlay');
+          if (overlay) {
+            overlay.style.background = 'rgba(255,255,255,0)';
+            overlay.style.backdropFilter = 'blur(0px)';
+            overlay.style.webkitBackdropFilter = 'blur(0px)';
+            setTimeout(function() {
+              overlay.parentNode && overlay.parentNode.removeChild(overlay);
+            }, 1300);
+          }
+        }, 100);
+
+        // Calendar message
+        const msgDiv = document.getElementById('calendar-announce-message');
+        let outputs = [];
+        let upcomings = getTodayOrUpcomingEvent(EN_EVENTS, 2);
+        if (upcomings && upcomings.length > 0) {
+          for (let item of upcomings) outputs.push(item.event.label);
+        } else {
+          outputs.push("//happy new year");
+        }
+        
+        // Type each message animating with slow style after each 2s
+        let idx = 0;
+        function showNextMsg() {
+          msgDiv.classList.remove('smlow');
+          typeWriterEffect(msgDiv, outputs[idx], 36, function() {
+            // add .smlow style after typing done, then after 2s switch to next message
+            setTimeout(() => {
+              msgDiv.classList.add('smlow');
+              setTimeout(() => {
+                msgDiv.classList.remove('smlow');
+                idx = (idx + 1) % outputs.length;
+                showNextMsg();
+              }, 2000);
+            }, 200); // short delay after typing before "smlow" style flashes
+          });
+        }
+        showNextMsg();
+      });
+    });
+  </script>
+</head>
+<body style="padding-top:56px;">
+  <!-- SVG hamburger(menu) button -->
+  <button id="menu-dot-btn" aria-label="Open navigation menu" type="button">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+      <g id="SVGRepo_iconCarrier">
+        <path d="M4 6H20M4 12H14M4 18H9" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </svg>
+  </button>
+  <nav id="menu-dropdown" aria-label="Section index menu">
+    <ul>
+      <li data-goto="home">Home</li>
+      <li data-goto="about">About</li>
+      <li data-goto="skills">Skills</li>
+      <li data-goto="education">Education</li>
+      <li data-goto="certificates">Certificates</li>
+      <li data-goto="projects">Projects</li>
+      <li data-goto="contact">Contact</li>
+      <li data-goto="resume">Resume</li>
+    </ul>
+  </nav>
+  <script>
+    // Menu: open on button, close if click anywhere else or scrolls (or menu item).
+    (function(){
+      const btn = document.getElementById('menu-dot-btn');
+      const menu = document.getElementById('menu-dropdown');
+
+      // Improve accessibility: close menu if tabbing out
+      menu.addEventListener('focusout', function(e) {
+        setTimeout(() => {
+          if (!menu.contains(document.activeElement) && menu.classList.contains('active')) {
+            menu.classList.remove('active');
+          }
+        }, 0);
+      });
+
+      // Open/close menu on button, keep open if menu itself is clicked (bubble prevention)
+      btn.addEventListener('click', function(e){
+        menu.classList.toggle('active');
+        // Focus first item for accessibility
+        if (menu.classList.contains('active')) {
+          setTimeout(() => {
+            const firstItem = menu.querySelector('li[data-goto]');
+            if(firstItem) firstItem.focus && firstItem.focus();
+          }, 15);
+        }
+        e.stopPropagation();
+      });
+
+      // Close menu if clicking anywhere else (except the button or the menu)
+      document.addEventListener('click', function(e){
+        if (
+          menu.classList.contains('active') &&
+          e.target !== menu &&
+          !menu.contains(e.target) &&
+          e.target !== btn &&
+          !btn.contains(e.target)
+        ) {
+          menu.classList.remove('active');
+        }
+      });
+
+      // Close menu if user scrolls while menu is open
+      window.addEventListener('scroll', function() {
+        if(menu.classList.contains('active')) {
+          menu.classList.remove('active');
+        }
+      }, { passive: true });
+
+      // Prevent menu interactions from bubbling up
+      menu.addEventListener('click', function(e){ e.stopPropagation(); });
+
+      // Keyboard nav support
+      btn.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          menu.classList.toggle('active');
+          if(menu.classList.contains('active')) {
+            // Focus first item for a11y
+            setTimeout(() => {
+              const firstItem = menu.querySelector('li[data-goto]');
+              if(firstItem) firstItem.focus && firstItem.focus();
+            }, 15);
+          }
+          e.preventDefault();
+        }
+      });
+
+      // Navigation handling
+      menu.addEventListener('click', function(e){
+        if(e.target && e.target.matches('li[data-goto]')) {
+          let goto = e.target.getAttribute('data-goto');
+          menu.classList.remove('active');
+          if(!goto) return;
+          if(goto === 'resume'){
+            window.open('resume.html', '_blank');
+            return;
+          }
+          let target;
+          switch(goto){
+            case 'home':
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              return;
+            case 'about':
+              target = document.querySelector('iframe[src="info.html"]');
+              break;
+            case 'skills':
+              target = document.querySelector('iframe[src="skill.html"]');
+              break;
+            case 'education':
+              target = document.querySelector('iframe[src="Education.html"]');
+              break;
+            case 'certificates':
+              target = document.querySelector('iframe[src="certificate.html"]');
+              break;
+            case 'projects':
+              target = document.querySelector('iframe[src="project section.html"]');
+              break;
+            case 'contact':
+              target = document.querySelector('iframe[src="contact.html"]');
+              break;
+            default:
+              target = null;
+              break;
+          }
+          if(target){
+            // Try to scroll to it
+            const rect = target.getBoundingClientRect();
+            // Find offset taking menu into account
+            window.scrollTo({
+              top: rect.top + window.scrollY - 22,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    })();
+  </script>
+  
+  <!-- Main content (first frame improved for mobile) -->
+  <div class="frame-stack">
+    <div class="top-frame" id="top-frame">
+      <iframe src="Main.html" scrolling="no" title="Main" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
+    </div>
+    <div class="frame-gap-1.5px"></div>
+    <iframe class="frame-no-gap" src="info.html" style="width:100vw;height:800px;min-height:400px;max-width:100vw;border:none;overflow:hidden;display:block;padding:0;margin:0;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
+  </div>
+  <style>
     .edge-tech-line {
       font-family:'BitmapFont', sans-serif;
       width: 100%;
@@ -146,62 +563,65 @@
       font-weight: 500;
       margin: 32px 0 18px 0;
       letter-spacing: 1px;
-      color: #fff;
+      color: #ffffff;
     }
-    .scroll-move-text-container {
-      position: relative;
-      width: 100vw;
-      height: 320px;
-      overflow: hidden;
-      margin: 40px 0 30px 0;
-      z-index: 10;
-      pointer-events: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      justify-content: center;
-      color: #fff;
-    }
-    .scroll-move-text {
-      position: absolute;
-      left: 0;
-      white-space: nowrap;
-      font-size: 4.5rem;
-      font-family: 'OutlineFont', sans-serif;
-      font-weight: 600;
-      color: transparent;
-      -webkit-text-stroke: 0.5px #fff;
-      text-shadow: none;
-      transition: color 0.2s;
-      user-select: none;
-      pointer-events: none;
-      width: 100vw;
-    }
-    .scroll-move-text .intern-text {
-      font-family: 'Inter', sans-serif !important;
-      color: #fff !important;
-      -webkit-text-stroke: 0 !important;
-      text-shadow: none !important;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      background: none;
-      padding: 0;
-      display: inline;
-    }
-    .scroll-move-text.line1 { top: 20%; }
-    .scroll-move-text.line2 { top: 50%; }
-    .scroll-move-text.line3 { top: 80%; }
-    @media (max-width: 700px) {
-      .scroll-move-text {
-        font-size: 2.2rem;
+  </style>
+  <div class="edge-tech-line">
+    I don't just code — I build sht that pushes the edge of tech*.
+  </div>
+  <br><br>
+  <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
+  <iframe src="skill.html" style="width:100%; height:450px; border:none; overflow:hidden;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
+  <div class="ai-message-block">
+    <div>
+      and... sometimes I get a lot on my mind so I write it out as 
+      <a href="https://researchrutujdhodapkar.vercel.app" target="_blank" rel="noopener noreferrer" style="color:#fff; text-decoration:underline; text-underline-offset:3px; font-weight:500;">blogs
+      </a>
+    </div>
+  </div>
+ 
+  <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
+  <iframe src="Education.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" id="education" data-memory-limit="50mb"></iframe>
+  <div class="ai-message-block">
+    <div>
+      Still doubt if my knowledge is real? Check my:
+    </div>
+  </div>
+  <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
+  <div id="certificate-frame" style="width:100%; height:700px; border:none; overflow:hidden; position:relative; z-index:5;">
+    <div class="wrap" id="wrap"></div>
+    <div class="fade"></div>
+    <iframe
+      id="certificateIframe"
+      src="certificate.html"
+      title="Certificates"
+      style="width:100%;height:100%;border:none;display:block;"
+      scrolling="yes"
+      allow="fullscreen; autoplay; clipboard-read; encrypted-media"
+      sandbox="allow-same-origin allow-scripts allow-popups"
+    ></iframe>
+  </div>
+  <script>
+    window.addEventListener("message", function(event) {
+      if(typeof event.data === "object" && event.data.type === "open-in-new-tab" && event.data.url) {
+        window.open(event.data.url, "_blank", "noopener");
       }
-      .scroll-move-text-container {
-        height: 160px;
-      }
-      .scroll-move-text.line1 { top: 20%; }
-      .scroll-move-text.line2 { top: 50%; }
-      .scroll-move-text.line3 { top: 80%; }
+    });
+  </script>
+  <style>
+    .edge-tech-line {
+      font-family:'BitmapFont', sans-serif;
+      width: 100%;
+      text-align: center;
+      font-size: 1em;
+      font-weight: 500;
+      margin: 32px 0 18px 0;
+      letter-spacing: 1px;
+      color: #ffffffa3;
     }
+  </style>
+  <iframe src="project section.html" style="width:100%; height:1300px; border:none; overflow:hidden; display:block;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
+  <style>
     .ai-message-block {
       width: 90%;
       margin: 24px auto 0 auto;
@@ -209,7 +629,7 @@
       letter-spacing: 1.5px;
       font-size: 1em;
       color: #aaa;
-      font-family: 'BitmapFont', 'Inter', sans-serif;
+      font-family: 'BitmapFont', 'inter', sans-serif;
       opacity: 0.92;
     }
     .ai-message-block > div {
@@ -217,381 +637,236 @@
       margin-bottom: 6px;
     }
   </style>
-</head>
-<body>
-  <div id="startup-blur-overlay"></div>
-  <div class="main-layout">
-    <div class="main-content">
-
-      <!-- New full-screen overlay for AI text -->
-      <div id="ai-fullscreen-overlay">
-        <div id="ai-text"></div>
-      </div>
-      <!-- Main content iframes and sections -->
-
-
-      <iframe 
-        src="info.html" 
-        style="width:100%; height:1050px; min-height:60vh; border:none; overflow:hidden; color:#fff; background:#0f0f0f;" 
-        scrolling="no">
-      </iframe>
-      <div class="edge-tech-line">
-        I don't just code — I build sht that pushes the edge of tech*.
-      </div>
-
-      <script>
-        // 1st line: right to left, 2nd: left to right, 3rd: right to left
-        (() => {
-          const text1 = document.getElementById('scrollMoveText1');
-          const text2 = document.getElementById('scrollMoveText2');
-          const text3 = document.getElementById('scrollMoveText3');
-          const container = document.querySelector('.scroll-move-text-container');
-          function updateTextPosition() {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const progress = docHeight > 0 ? scrollTop / docHeight : 0;
-            let fastProgress = Math.min(progress * 2.5, 1);
-
-          }
-          window.addEventListener('scroll', updateTextPosition);
-          window.addEventListener('resize', updateTextPosition);
-        })();
-      </script>
-      
-      <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#fff; font-family: 'BitmapFont', 'Inter', sans-serif;"></div>
-      <div class="ai-message-block">
-
-        <div>
-          and... sometimes I get a lot on my mind so I write it out as 
-          <a href="https://researchrutujdhodapkar.vercel.app" target="_blank" rel="noopener noreferrer" style="color:#fff; text-decoration:underline; text-underline-offset:3px; font-weight:500;">blogs
-          </a>
-        </div>
-      </div>
-      
-      <iframe src="skill.html" style="width:100%; height:350px; border:none; overflow:hidden; color:#fff; background:#0f0f0f;" scrolling="no"></iframe>
-      <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#fff; font-family: 'BitmapFont', 'Inter', sans-serif;"></div>
-      <div class="edge-tech-line">
-        Still doubt if my knowledge is real? Check my:
-      </div>
-
-      <iframe src="certificate.html" style="width:100%; height:700px; border:none; overflow:hidden; color:#fff; background:#0f0f0f;" scrolling="no"></iframe>
-      <div class="edge-tech-line">
-        I love these two certificates more than others.
-      </div>
-      <iframe src="project.html" style="width:100%; height:1270px; border:none; overflow:hidden; color:#fff; background:#0f0f0f;" scrolling="no"></iframe>
-      <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#fff; font-family: 'BitmapFont', 'Inter', sans-serif;">......</div>
-      <div class="ai-message-block">
-        <div>
-          Best AI isn’t defined by intelligence alone, but by its ability to elevate humanity.
-        </div>
-      </div>
-      <hr style="
-        border: none;
-        border-top: 2px dotted #bbb;
-        margin: 32px 0 32px 10%;
-        width: 80%;
-        opacity: 0.7;
-      ">
-      <div style="
-        margin: 0 auto;
-        width: fit-content;
-        z-index: 2;
-        font-family: 'Libre Barcode 39', cursive, sans-serif;
-        font-size: 2.5rem;
-        color: #fff;
-        background: #0f0f0f;
-        border-radius: 10px;
-        padding: 10px 28px;
-        box-shadow: #0f0f0f;
-        letter-spacing: 2px;
-        font-weight: 400;
-        text-align: center;
-        backdrop-filter: blur(8px);
-        position: static;
-        display: block;
-      ">
-        I just wanna study/research in AI
-        <br><br>
-      </div>
-
-
-
-      <!-- Right custom scrollbar -->
-      <div id="right-vertical-scrollbar-container">
-        <div id="right-vertical-scrollbar-track">
-          <div id="right-vertical-scrollbar-thumb"></div>
-        </div>
-      </div>
+  <div class="ai-message-block">
+    <div>
+      Best AI isn’t defined by intelligence alone, but by its ability to elevate humanity.
     </div>
-  <script>
-    // Startup blur overlay fade out
-    window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        const overlay = document.getElementById('startup-blur-overlay');
-        if (overlay) {
-          overlay.style.background = 'rgba(0,0,0,0)';
-          overlay.style.backdropFilter = 'blur(0px)';
-          overlay.style.webkitBackdropFilter = 'blur(0px)';
-          setTimeout(() => {
-            overlay.parentNode && overlay.parentNode.removeChild(overlay);
-          }, 1300);
-        }
-      }, 100);
-    });
-
-    // Removed GitHub name fetch (no sidebar to display it)
-    // Navbar and scroll logic
-    document.addEventListener('DOMContentLoaded', function() {
-      // Removed all redirections for home and contact nav links
-      // Only enable desktop nav logic if not
-      if (window.innerWidth > 768) {
-        const navbar = document.getElementById('rectiangleNavbar');
-        const navItems = document.querySelectorAll("#rectiangleNavbar .page-nav li");
-        const highlight = document.querySelector("#rectiangleNavbar .highlight");
-        const sectionMap = [
-          { id: "home", label: "Home" },
-          { id: "about", label: "About" },
-          { id: "skills", label: "Skills" },
-          { id: "certificates", label: "Certificates" },
-          { id: "projects", label: "Projects" },
-          { id: "contact", label: "Contact" }
-        ];
-        // Insert scroll anchors for navigation
-        function insertScrollAnchors() {
-          const mainContent = document.querySelector('.main-content');
-          if (!mainContent) return;
-          // Helper to insert anchor before a given iframe
-          function insertAnchor(id, beforeIframeSrc) {
-            const anchor = document.createElement('div');
-            anchor.className = 'scroll-anchor';
-            anchor.id = id;
-            const iframe = mainContent.querySelector(`iframe[src="${beforeIframeSrc}"]`);
-            if (iframe) {
-              mainContent.insertBefore(anchor, iframe);
-            } else {
-              mainContent.appendChild(anchor);
-            }
-          }
-          // Home anchor at top
-          const homeAnchor = document.createElement('div');
-          homeAnchor.className = 'scroll-anchor';
-          homeAnchor.id = 'home';
-          mainContent.insertBefore(homeAnchor, mainContent.firstChild);
-          insertAnchor('about', 'info.html');
-          insertAnchor('skills', 'skill.html');
-          insertAnchor('certificates', 'certificate.html');
-          insertAnchor('projects', 'project.html');
-          // Contact anchor at end
-          const contactAnchor = document.createElement('div');
-          contactAnchor.className = 'scroll-anchor';
-          contactAnchor.id = 'contact';
-          mainContent.appendChild(contactAnchor);
-        }
-        insertScrollAnchors();
-        const sections = sectionMap.map(s => document.getElementById(s.id));
-        navItems.forEach(item => {
-          const section = item.getAttribute("data-section");
-          if (section === "home" || section === "contact") return;
-          item.addEventListener("click", function(event) {
-            event.preventDefault();
-            const targetId = this.getAttribute("data-section");
-            const targetAnchor = document.getElementById(targetId);
-            if (targetAnchor) {
-              let sectionIndex = sectionMap.findIndex(s => s.id === targetId);
-              let nextAnchor = null;
-              if (sectionIndex !== -1 && sectionIndex + 1 < sectionMap.length) {
-                nextAnchor = document.getElementById(sectionMap[sectionIndex + 1].id);
-              }
-              let sectionTop = targetAnchor.getBoundingClientRect().top + window.scrollY;
-              let sectionBottom = nextAnchor
-                ? nextAnchor.getBoundingClientRect().top + window.scrollY
-                : document.body.scrollHeight;
-              let sectionHeight = sectionBottom - sectionTop;
-              let scrollTo = sectionTop - navbar.offsetHeight - 20;
-              let viewportHeight = window.innerHeight;
-              if (sectionHeight < viewportHeight) {
-                scrollTo = sectionTop - navbar.offsetHeight - 20 - (viewportHeight - sectionHeight) / 2;
-                if (scrollTo < 0) scrollTo = 0;
-              }
-              window.scrollTo({ top: scrollTo, behavior: "smooth" });
-            }
-          });
-        });
-        function highlightNavOnScroll() {
-          let currentSection = sectionMap[0].id;
-          let maxVisible = 0;
-          let maxSection = currentSection;
-          for (let i = 0; i < sections.length; i++) {
-            const section = sections[i];
-            if (!section) continue;
-            let sectionTop = section.getBoundingClientRect().top + window.scrollY;
-            let nextAnchor = (i + 1 < sections.length) ? sections[i + 1] : null;
-            let sectionBottom = nextAnchor
-              ? nextAnchor.getBoundingClientRect().top + window.scrollY
-              : document.body.scrollHeight;
-            let sectionHeight = sectionBottom - sectionTop;
-            let viewportTop = window.scrollY;
-            let viewportBottom = window.scrollY + window.innerHeight;
-            let visibleTop = Math.max(sectionTop, viewportTop);
-            let visibleBottom = Math.min(sectionBottom, viewportBottom);
-            let visibleHeight = Math.max(0, visibleBottom - visibleTop);
-            let visibleRatio = visibleHeight / window.innerHeight;
-            if (visibleRatio > 0.5 && visibleRatio > maxVisible) {
-              maxVisible = visibleRatio;
-              maxSection = section.id;
-            }
-          }
-          navItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('data-section') === maxSection) {
-              item.classList.add('active');
-            }
-          });
-          updateHighlight();
-        }
-        function updateHighlight() {
-          const activeItem = document.querySelector("#rectiangleNavbar .page-nav li.active");
-          if (activeItem) {
-            const { offsetLeft, offsetWidth, offsetHeight } = activeItem;
-            highlight.style.left = offsetLeft + "px";
-            highlight.style.width = offsetWidth + "px";
-            highlight.style.height = offsetHeight + "px";
-            highlight.style.backgroundColor = "#fff";
-          }
-        }
-        navItems.forEach(item => {
-          item.addEventListener('mouseenter', function() {
-            if (this.classList.contains('active')) {
-              highlight.style.backgroundColor = "#fff";
-            }
-          });
-          item.addEventListener('mouseleave', function() {
-            if (this.classList.contains('active')) {
-              highlight.style.backgroundColor = "#fff";
-            }
-          });
-        });
-        window.addEventListener('scroll', highlightNavOnScroll);
-        window.addEventListener('resize', highlightNavOnScroll);
-        highlightNavOnScroll();
-        setTimeout(function() {
-          var aboutAnchor = document.getElementById('about');
-          if (aboutAnchor) {
-            let sectionTop = aboutAnchor.getBoundingClientRect().top + window.scrollY;
-            let nextAnchor = document.getElementById('skills');
-            let sectionBottom = nextAnchor
-              ? nextAnchor.getBoundingClientRect().top + window.scrollY
-              : document.body.scrollHeight;
-            let sectionHeight = sectionBottom - sectionTop;
-            let scrollTo = sectionTop - navbar.offsetHeight - 20;
-            let viewportHeight = window.innerHeight;
-            if (sectionHeight < viewportHeight) {
-              scrollTo = sectionTop - navbar.offsetHeight - 20 - (viewportHeight - sectionHeight) / 2;
-              if (scrollTo < 0) scrollTo = 0;
-            }
-            window.scrollTo({ top: scrollTo, behavior: "auto" });
-          }
-        }, 0);
-      }
-      // AI overlay on scroll to bottom (no redirection)
-      window.addEventListener('scroll', function() {
-        const overlay = document.getElementById('ai-fullscreen-overlay');
-        const aiText = document.getElementById('ai-text');
-        const scrollProgress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-        if ((window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 2)) {
-          overlay.style.display = 'flex';
-          setTimeout(() => {
-            overlay.style.opacity = '1';
-          }, 100);
-          setTimeout(() => {
-            aiText.style.opacity = scrollProgress.toFixed(2);
-          }, 500);
-          // Removed redirection to contact.html
-        }
-      });
-    });
-    // Removed scroll to top redirection to mobile.html
-
-    // Custom vertical scrollbar logic with draggable thumb
-    (() => {
-      const track = document.getElementById('right-vertical-scrollbar-track');
-      const thumb = document.getElementById('right-vertical-scrollbar-thumb');
-      const trackHeight = 100;
-      const thumbHeight = 18;
-      let isDragging = false;
-      let dragStartY = 0;
-      let thumbStartTop = 0;
-      function getMaxThumbTop() {
-        return trackHeight - thumbHeight;
-      }
-      function getScrollMax() {
-        return document.documentElement.scrollHeight - window.innerHeight;
-      }
-      function updateThumbPosition() {
-        const docHeight = getScrollMax();
-        const scrollY = window.scrollY;
-        let progress = docHeight > 0 ? Math.min(Math.max(scrollY / docHeight, 0), 1) : 0;
-        const maxThumbTop = getMaxThumbTop();
-        const thumbTop = progress * maxThumbTop;
-        thumb.style.top = `${thumbTop}px`;
-      }
-      function scrollToThumbPosition(thumbTop) {
-        const maxThumbTop = getMaxThumbTop();
-        let progress = maxThumbTop > 0 ? Math.min(Math.max(thumbTop / maxThumbTop, 0), 1) : 0;
-        const docHeight = getScrollMax();
-        const targetScroll = progress * docHeight;
-        window.scrollTo({ top: targetScroll, behavior: "auto" });
-      }
-      thumb.addEventListener('mousedown', function(e) {
-        isDragging = true;
-        dragStartY = e.clientY;
-        thumbStartTop = parseFloat(thumb.style.top) || 0;
-        document.body.style.userSelect = "none";
-      });
-      document.addEventListener('mousemove', function(e) {
-        if (!isDragging) return;
-        const deltaY = e.clientY - dragStartY;
-        let newTop = thumbStartTop + deltaY;
-        const maxThumbTop = getMaxThumbTop();
-        newTop = Math.max(0, Math.min(newTop, maxThumbTop));
-        thumb.style.top = `${newTop}px`;
-        scrollToThumbPosition(newTop);
-      });
-      document.addEventListener('mouseup', function() {
-        if (isDragging) {
-          isDragging = false;
-          document.body.style.userSelect = "";
-        }
-      });
-      thumb.addEventListener('touchstart', function(e) {
-        if (e.touches.length !== 1) return;
-        isDragging = true;
-        dragStartY = e.touches[0].clientY;
-        thumbStartTop = parseFloat(thumb.style.top) || 0;
-      }, {passive: false});
-      document.addEventListener('touchmove', function(e) {
-        if (!isDragging || e.touches.length !== 1) return;
-        const deltaY = e.touches[0].clientY - dragStartY;
-        let newTop = thumbStartTop + deltaY;
-        const maxThumbTop = getMaxThumbTop();
-        newTop = Math.max(0, Math.min(newTop, maxThumbTop));
-        thumb.style.top = `${newTop}px`;
-        scrollToThumbPosition(newTop);
-        e.preventDefault();
-      }, {passive: false});
-      document.addEventListener('touchend', function(e) {
-        if (isDragging) {
-          isDragging = false;
-        }
-      });
-      window.addEventListener('scroll', function() {
-        if (!isDragging) updateThumbPosition();
-      });
-      window.addEventListener('resize', function() {
-        if (!isDragging) updateThumbPosition();
-      });
-      updateThumbPosition();
-    })();
-  </script>
+  </div>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
+  <div style="
+    margin: 0 auto;
+    width: fit-content;
+    z-index: 2;
+    font-family: 'Libre Barcode 39', cursive, sans-serif;
+    font-size: 2.5rem;
+    color: #fff;
+    background: #0f0f0f;
+    border-radius: 10px;
+    padding: 10px 28px;
+    box-shadow: 0 4px 24px 0 #00000000;
+    letter-spacing: 2px;
+    font-weight: 400;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    position: static;
+    display: block;
+  ">
+    I just wanna study.research in AI at Large scale.
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
+  <iframe src="contact.html" style="width:100%; height:700px; border:none; overflow:hidden; display:block;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
 </body>
-</html>
+<script>
+document.documentElement.style.scrollBehavior = "smooth";
+(function(){
+  const animFrame = document.getElementById('animation-frame');
+  function broadcastScroll() {
+    const cert = document.getElementById('certificate-frame');
+    const rect = cert ? cert.getBoundingClientRect() : { top: 0, left: 0, width: 0, height: 0 };
+    const certTopInDoc = rect.top + window.scrollY;
+    const relativeY = window.scrollY - certTopInDoc;
+    const payload = {
+      scrollY: window.scrollY || 0,
+      relativeY: relativeY,
+      certRect: { top: certTopInDoc, left: rect.left + window.scrollX, width: rect.width, height: rect.height },
+      viewportHeight: window.innerHeight
+    };
+    if (typeof window.setInlineAnimationTarget === 'function') {
+      window.setInlineAnimationTarget(payload);
+    } else if (animFrame && animFrame.contentWindow) {
+      animFrame.contentWindow.postMessage(Object.assign({ type: 'scroll-sync' }, payload), '*');
+    }
+  }
+  let ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(function(){
+        broadcastScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', broadcastScroll);
+  if (animFrame) animFrame.addEventListener('load', broadcastScroll);
+  let lastMouse = { x: 0, y: 0 };
+  window.addEventListener('mousemove', function(e){ lastMouse.x = e.clientX; lastMouse.y = e.clientY; }, { passive: true });
+  window.addEventListener('wheel', function(e){
+    const cert = document.getElementById('certificate-frame');
+    if (!cert) return;
+    const rect = cert.getBoundingClientRect();
+    const isOver = lastMouse.x >= rect.left && lastMouse.x <= rect.right && lastMouse.y >= rect.top && lastMouse.y <= rect.bottom;
+    if (isOver) {
+      const elAtPointer = document.elementFromPoint(lastMouse.x, lastMouse.y);
+      if (elAtPointer && (elAtPointer.id === 'certificateIframe' || (elAtPointer.tagName === 'IFRAME' && elAtPointer.parentElement && elAtPointer.parentElement.id === 'certificate-frame'))) {
+        return;
+      }
+      if (typeof window.inlineAnimationWheelDelta === 'function') {
+        window.inlineAnimationWheelDelta(e.deltaY);
+      } else if (animFrame && animFrame.contentWindow) {
+        animFrame.contentWindow.postMessage({ type: 'wheel-delta', deltaY: e.deltaY }, '*');
+      }
+    }
+  }, { passive: true });
+})();
+</script>
+<style>
+  #certificate-frame { position: relative; overflow: hidden; }
+  #certificate-frame .wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 22px;
+    transform: rotate(-28deg);
+    transform-origin: center;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+  }
+  #certificate-frame .row {
+    display: flex;
+    white-space: nowrap;
+    font-size: 64px;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Inter', system-ui, Arial, sans-serif;
+    opacity: 0.96;
+    will-change: transform;
+    pointer-events: none;
+  }
+  #certificate-frame .row span { margin-right: 80px; }
+  #certificate-frame .fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      #0f0f0f 0%,
+      transparent 18%,
+      transparent 82%,
+      #0f0f0f 100%
+    );
+    z-index: 4;
+  }
+  #certificate-frame > #certificateIframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    z-index: 6;
+    background: transparent;
+  }
+</style>
+<script>
+  (function() {
+    const container = document.getElementById("certificate-frame");
+    const wrap = container && container.querySelector("#wrap");
+    if (!wrap || !container) return;
+    const ROWS = 18;
+    const WORD = "Artificial Intelligence";
+    const COPIES = 16;
+    const rowData = [];
+    let targetScroll = 0;
+    let smoothScroll = 0;
+
+    for (let i = 0; i < ROWS; i++) {
+      const row = document.createElement("div");
+      row.className = "row";
+      for (let j = 0; j < COPIES; j++) {
+        const span = document.createElement("span");
+        span.textContent = WORD;
+        row.appendChild(span);
+      }
+      wrap.appendChild(row);
+      rowData.push({
+        el: row,
+        dir: i % 2 === 0 ? 1 : -1,
+        speed: 0.12 + Math.random() * 0.08,
+        offset: Math.random() * 10000,
+        width: 0
+      });
+    }
+
+    requestAnimationFrame(() => {
+      rowData.forEach(r => { r.width = r.el.scrollWidth / 2; });
+    });
+
+    const WHEEL_IMPULSE = 0.35;
+    const SYNC_IMPULSE_SCALE = 0.25;
+    const DAMPING = 0.96;
+    let lastRelativeY = null;
+    window.inlineAnimationWheelDelta = function(deltaY) {
+      velocity += (deltaY || 0) * WHEEL_IMPULSE;
+    };
+    window.setInlineAnimationTarget = function(data) {
+      if (data && typeof data === 'object' && typeof data.relativeY === 'number') {
+        if (lastRelativeY === null) {
+          lastRelativeY = data.relativeY;
+          return;
+        }
+        const delta = data.relativeY - lastRelativeY;
+        velocity += delta * SYNC_IMPULSE_SCALE;
+        lastRelativeY = data.relativeY;
+      } else if (data && typeof data === 'object' && typeof data.scrollY === 'number') {
+        if (lastRelativeY === null) {
+          lastRelativeY = data.scrollY;
+          return;
+        }
+        const delta = data.scrollY - lastRelativeY;
+        velocity += delta * SYNC_IMPULSE_SCALE;
+        lastRelativeY = data.scrollY;
+      }
+    };
+
+    let velocity = 0;
+    const MAX_VEL = 120;
+    function animate() {
+      smoothScroll += velocity;
+      velocity *= DAMPING;
+      if (Math.abs(velocity) < 0.01) velocity = 0;
+      if (velocity > MAX_VEL) velocity = MAX_VEL;
+      if (velocity < -MAX_VEL) velocity = -MAX_VEL;
+
+      rowData.forEach(r => {
+        const raw = (smoothScroll * r.speed + r.offset) * r.dir;
+        const looped = ((raw % r.width) + r.width) % r.width;
+        r.el.style.transform = `translateX(${-looped}px)`;
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+    function recomputeWidths() {
+      rowData.forEach(r => { r.width = r.el.scrollWidth / 2 || r.width || 1; });
+    }
+    window.addEventListener('resize', function() {
+      setTimeout(recomputeWidths, 60);
+    }, { passive: true });
+    document.fonts && document.fonts.ready && document.fonts.ready.then(recomputeWidths);
+  })();
+</script>

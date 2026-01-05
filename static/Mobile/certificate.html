@@ -6,6 +6,7 @@
   <title>Certificates</title>
   <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
   <style>
+    /* ========== FONT AND SELECTION ========== */
     ::selection { background: #fff; color: #0f0f0f; }
     @font-face {
       font-family: 'BitmapFont';
@@ -13,8 +14,10 @@
       font-weight: 300;
       font-style: normal;
     }
+
+    /* ========== PAGE BACKGROUND LAYOUT ========== */
     body {
-      background: #00000000;
+      background: transparent !important;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -23,9 +26,12 @@
       margin: 0;
       font-family: 'BitmapFont', Arial, sans-serif;
       color: #fff;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      box-shadow: none !important;
     }
+
+    /* ========== PAGE TITLE ========== */
     .cert-page-title {
       font-family: 'inter', Arial, sans-serif;
       font-size: 2.8rem;
@@ -34,9 +40,11 @@
       margin-bottom: 36px;
       letter-spacing: 0.04em;
       text-align: center;
-      text-shadow: 0 2px 12px #0f0f0f8, 0 0 2px #fff2;
+      text-shadow: 0 2px 12px #0f0f0f, 0 0 2px rgba(66, 66, 66, 0.095);
       font-weight: 700;
     }
+
+    /* ========== SCROLL WRAPPER (outer container for scroll) ========== */
     .cert-scroll-wrapper {
       position: relative;
       width: 100vw;
@@ -45,6 +53,8 @@
       justify-content: center;
       align-items: center;
     }
+
+    /* ========== CERTIFICATES CONTAINER ========== */
     .container {
       display: flex;
       gap: 40px;
@@ -55,11 +65,13 @@
       overflow-y: hidden;
     }
     .container::-webkit-scrollbar { display: none; }
+
+    /* ========== CERTIFICATE CARD STYLES ========== */
     .white-box {
-      background: rgba(255,255,255,0.1);
-      border: 2px solid #606060;
+      background: rgba(73, 73, 73, 0.18);
+      border: 2px solid #2b2b2b;
       border-radius: 1.5em;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
       width: 340px;
       height: 420px;
       display: flex;
@@ -67,21 +79,23 @@
       justify-content: flex-start;
       align-items: center;
       overflow: hidden;
-      transition: box-shadow 0.2s, background 0.2s, border-color 0.2s;
+      transition: box-shadow 0.2s, background 0.2s, border-color 0.2s, backdrop-filter 0.2s;
       padding: 0 0 24px 0;
       font-family: 'BitmapFont', Arial, sans-serif;
       font-weight: 300 !important;
       flex-shrink: 0;
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       color: #fff;
       cursor: pointer;
     }
     .white-box:hover {
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-      background: rgba(255,255,255,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.16);
+      background: rgba(255,255,255,0.26);
       border-color: #fff;
       filter: brightness(1.08);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
     }
     .white-box img {
       max-width: 90%;
@@ -119,6 +133,8 @@
       font-family: 'BitmapFont', Arial, sans-serif;
       font-weight: 300 !important;
     }
+
+    /* ========== SCROLL ARROWS ========== */
     .scroll-arrow {
       position: absolute;
       top: 50%;
@@ -145,6 +161,8 @@
     .scroll-arrow.left { left: 8px; }
     .scroll-arrow.right { right: 8px; }
     .scroll-arrow[hidden] { display: none !important; }
+
+    /* ========== RESPONSIVE STYLES (MEDIA QUERIES) ========== */
     @media (max-width: 1200px) {
       .cert-page-title {
         font-size: 2.8rem !important;
@@ -157,6 +175,8 @@
         width: 300px;
         height: 390px;
         border-radius: 48px;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
       }
     }
     @media (max-width: 900px) {
@@ -183,6 +203,8 @@
         min-width: 240px;
         border-radius: 45px;
         height: 370px;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
       }
       .scroll-arrow { display: flex; }
     }
@@ -204,6 +226,8 @@
         border-radius: 32px;
         height: 320px;
         padding-bottom: 12px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
       }
       .white-box img {
         max-height: 120px;
@@ -221,6 +245,8 @@
         border-radius: 16px;
       }
     }
+
+    /* ========== "OTHER CERTIFICATES" BUTTON ========== */
     .other-certs-btn {
       margin-top: 40px;
       margin-bottom: 32px;
@@ -246,14 +272,36 @@
   </style>
 </head>
 <body>
-  <div class="cert-page-title">Certificates</div>
+  <!-- ====== TITLE BAR & BACKGROUND EFFECT ====== -->
+  <div style="position: relative; display: inline-block; width: 100%;">
+    <div style="
+      position: absolute;
+      top: 51%;
+      left: 50%;
+      width: 320px;
+      height: 60px;
+      background: #1f1f1f2f;
+      border-radius: 17px;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      pointer-events: none;
+    "></div>
+    <div class="cert-page-title" style="position: relative; z-index: 1;">Certificates</div>
+  </div>
+
+  <!-- ====== MAIN SCROLLABLE CERTIFICATES ROW ====== -->
   <div class="cert-scroll-wrapper">
     <button class="scroll-arrow left" id="scrollLeft" aria-label="Scroll left" hidden>&#8592;</button>
     <div class="container" id="certContainer"></div>
     <button class="scroll-arrow right" id="scrollRight" aria-label="Scroll right" hidden>&#8594;</button>
   </div>
   <button class="other-certs-btn" id="otherCertsBtn" type="button">Other Certificates</button>
+  
+  <!-- ====== JS: DYNAMICALLY LOAD & INTERACT WITH CERTIFICATES ====== -->
   <script>
+    // Create the certificate card DOM
     function createCertBox({cimg, ctitle, cdesc, cissue, clink}) {
       const box = document.createElement('div');
       box.className = 'white-box';
@@ -278,6 +326,7 @@
       issuedDiv.textContent = cissue ? ('Issued on: ' + cissue) : '';
       box.appendChild(issuedDiv);
 
+      // Make box clickable if link exists
       if (clink && clink.trim() !== '') {
         box.style.cursor = 'pointer';
         box.tabIndex = 0;
@@ -303,6 +352,7 @@
       return box;
     }
 
+    // Parse CSV data into JS objects
     function parseCSV(csv, delimiter = ',') {
       const lines = csv.trim().split('\n');
       if (lines.length < 2) return [];
@@ -328,6 +378,7 @@
       });
     }
 
+    // Fetch and render the certificates
     function loadCertificates() {
       const githubRawCSV = "https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv";
       fetch(githubRawCSV)
@@ -348,6 +399,7 @@
         });
     }
 
+    // Enable/disable scroll arrows based on position/width
     function updateArrows() {
       const container = document.getElementById('certContainer');
       const leftArrow = document.getElementById('scrollLeft');
@@ -367,11 +419,13 @@
       }
     }
 
+    // Handle container scroll-by for arrows
     function scrollContainerBy(amount) {
       const container = document.getElementById('certContainer');
       container.scrollBy({ left: amount, behavior: 'smooth' });
     }
 
+    // Arrow click handlers
     document.getElementById('scrollLeft').addEventListener('click', function() {
       const box = document.querySelector('.white-box');
       scrollContainerBy(-(box ? box.offsetWidth + 20 : 300));
@@ -381,15 +435,18 @@
       scrollContainerBy(box ? box.offsetWidth + 20 : 300);
     });
 
+    // Listen for scroll and resize to update arrows
     const certContainer = document.getElementById('certContainer');
     certContainer.addEventListener('scroll', updateArrows);
     window.addEventListener('resize', updateArrows);
 
+    // Initial load
     window.addEventListener('DOMContentLoaded', function() {
       loadCertificates();
       updateArrows();
     });
 
+    // "Other Certificates" button action
     document.getElementById('otherCertsBtn').addEventListener('click', function() {
       window.open('othercert.html', '_blank');
     });

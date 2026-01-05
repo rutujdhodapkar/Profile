@@ -22,7 +22,7 @@
       position: relative;
       overflow: hidden;
       color: #fff;
-      background: #000;
+      background: #0f0f0f;
     }
     .contact-content {
       position: absolute;
@@ -36,14 +36,24 @@
       justify-content: center;
       pointer-events: none;
     }
+    .contact-title-blur-box {
+      display: inline-block;
+      backdrop-filter: blur(8px);
+      background: #1e1e1e52;
+      border-radius: 0.8em;
+      padding: 0.22em 1.5em 0.22em 1.5em;
+      box-shadow: 0 2px 12px 0 #0000001a;
+      margin-bottom: 2.5rem;
+      pointer-events: auto;
+    }
     .contact-title {
       font-family: 'krona one', Arial, sans-serif;
       font-size: 2.8rem;
       color: #fff;
-      margin-bottom: 2.5rem;
       letter-spacing: 0.04em;
       text-align: center;
       text-shadow: 0 2px 12px #0008, 0 0 2px #fff2;
+      /* No margin here, blur box has margin */
       pointer-events: auto;
     }
     .button-row {
@@ -253,23 +263,21 @@
 <body>
   <!-- Back button with SVG icon -->
   <a href="detail.html" class="back-btn-container" id="backBtn" title="Back">
-    <svg class="back-btn-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-      <path d="M15 19L8 12L15 5" stroke="#e3e3e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <span class="back-btn-text">back</span>
   </a>
   <div id="whiteToBlackOverlay"></div>
   <!-- The background iframe will be dynamically set by JS below -->
   <iframe class="rain-bg-iframe" id="rainBgIframe" src="animations/dotted%20lines.html" title="Background Animation" scrolling="no" frameborder="0" aria-hidden="true"></iframe>
   <div class="contact-content">
-    <div class="contact-title">Contact Me</div>
+    <span class="contact-title-blur-box">
+      <span class="contact-title">Contact Me</span>
+    </span>
     <div class="button-row" id="contact-links">
 
       <!-- Contact buttons will be inserted here by JS -->
     </div>
     <!-- Support links above feedback -->
     <div class="support-links-container">
-      <a class="support-link" href="https://www.fiverr.com/s/2K9b4Vk" target="_blank" rel="noopener noreferrer">
+      <a class="support-link" href="https://buymeacoffee.com/rutujdhodapkar" target="_blank" rel="noopener noreferrer">
         Buy me coffee
         <svg class="arrow-top-right" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" fill="none" aria-hidden="true">
           <path d="M6 14L14 6M14 6H7.5M14 6V12.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -309,9 +317,9 @@
       function setRainBgSrc() {
         // If screen width < height, use "rain pattern.html", else "dotted lines.html"
         var w = window.innerWidth, h = window.innerHeight;
-        var Rain = "animations/rain%20pattern.html";
+        var mobileRain = "animations/rain%20pattern.html";
         var desktopDotted = "animations/dotted%20lines.html";
-        var newSrc = (w < h) ? Rain : desktopDotted;
+        var newSrc = (w < h) ? mobileRain : desktopDotted;
         if (rainBg.getAttribute('src') !== newSrc) {
           rainBg.setAttribute('src', newSrc);
         }
@@ -393,35 +401,7 @@
       if (btn) btnRow.appendChild(btn);
     });
 
-    // --- Scroll up to show 2nd page,html ---
-    (function() {
-      let lastScroll = 0;
-      let ticking = false;
-
-      // Since the page is not scrollable, listen to wheel/touch events for "scroll up" intent
-      function handleScrollUp(e) {
-        // For wheel event: deltaY < 0 means scroll up
-        if (e.type === 'wheel' && e.deltaY < 0) {
-          window.location.href = 'detail.html';
-        }
-        // For touch events: detect swipe down (which is scroll up)
-        if (e.type === 'touchstart') {
-          handleScrollUp.touchStartY = e.touches[0].clientY;
-        }
-        if (e.type === 'touchend' && typeof handleScrollUp.touchStartY === 'number') {
-          let endY = e.changedTouches[0].clientY;
-          if (endY - handleScrollUp.touchStartY > 40) { // swipe down
-            window.location.href = 'detail.html';
-          }
-          handleScrollUp.touchStartY = undefined;
-        }
-      }
-
-      window.addEventListener('wheel', handleScrollUp, {passive: true});
-      window.addEventListener('touchstart', handleScrollUp, {passive: true});
-      window.addEventListener('touchend', handleScrollUp, {passive: true});
-    })();
-    // --- End scroll up to show 2nd page,html ---
+    // Removed scroll redirection code as requested.
 
   </script>
 
@@ -509,12 +489,18 @@
     width: fit-content;
   }
 </style>
-  <footer style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #aaa; font-size: 1.05rem; font-family: 'BitmapFont', 'inter', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.5rem; line-height: 1.7;">
-    <div style="margin-bottom: 0.1em;">
-      Made with passion and Bugs
+  <div style="position: fixed; bottom: 0; left: 0; width: 100vw; text-align: center; color: #aaa; font-size: 1.05rem; font-family: 'BitmapFont', 'inter', Arial, sans-serif; letter-spacing: 0.04em; background: transparent; z-index: 10; pointer-events: auto; padding-bottom: 0.5rem; line-height: 1.7;">
+  <div class="footer-blur-box-separate">
+    <div class="footer-blur-line-box">
+      <div class="footer-blur-line">
+        Made with passion and Bugs
+      </div>
     </div>
-    <div id="footer-copyright" style="margin-bottom: 0.1em;">
-      ©2024-<span id="current-year"></span> . Rutuj Dhodapkar Portfolio. All Rights Reserved.
+    <div class="footer-blur-line-box">
+      <div class="footer-blur-line" id="footer-copyright">
+        ©2024-<span id="current-year"></span> . Rutuj Dhodapkar Portfolio. All Rights Reserved.
+
+      </div>
     </div>
     <script>
       // Fetch current year from an online source (WorldTimeAPI as an example)
@@ -529,19 +515,20 @@
           document.getElementById('current-year').textContent = new Date().getFullYear();
         });
     </script>
-    <nav style="display: flex; justify-content: center; align-items: center; gap: 0.2em; width: fit-content; margin: 0 auto;">
-      <span class="footer-link" onclick="window.location.href='Main.html'">Home</span>
-      <span style="color:#555;">|</span>
-      <span class="footer-link" onclick="window.location.href='detail.html'">About</span>
-      <span style="color:#555;">|</span>
-      <span class="footer-link" onclick="window.location.href='detail.html'">Skills</span>
-      <span style="color:#555;">|</span>
-      <span class="footer-link" onclick="window.location.href='detail.html'">Certificates</span>
-      <span style="color:#555;">|</span>
-      <span class="footer-link" onclick="window.location.href='detail.html'">Projects</span>
-    </nav>
-  </footer>
+    <div class="footer-blur-line-box">
+      <div class="footer-blur-line footer-links-group">
+        <span class="footer-link" onclick="window.location.href='Main.html'">Home</span>
+        <span style="color:#555;">|</span>
+        <span class="footer-link" onclick="window.location.href='detail.html'">About</span>
+        <span style="color:#555;">|</span>
+        <span class="footer-link" onclick="window.location.href='detail.html'">Skills</span>
+        <span style="color:#555;">|</span>
+        <span class="footer-link" onclick="window.location.href='detail.html'">Certificates</span>
+        <span style="color:#555;">|</span>
+        <span class="footer-link" onclick="window.location.href='detail.html'">Projects</span>
+      </div>
     </div>
   </div>
 </div>
+
 

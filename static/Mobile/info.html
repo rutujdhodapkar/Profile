@@ -3,55 +3,58 @@
   <meta charset="UTF-8">
   <title>About - Rutuj Dhodapkar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
   <style>
     @font-face {
       font-family: 'BitmapFont';
       src: url('BitmapFont.ttf') format('truetype');
-      font-weight: normal;
+      font-weight: 300;
       font-style: normal;
+    }
+    html, body {
+      height: 100%;
+      width: 100%;
     }
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Krona One', Arial, sans-serif;
-      background: transparent !important;
+      font-family: 'inter', Arial, sans-serif;
+      background: #0f0f0f;
       color: #fff;
       min-height: 100vh;
       overflow-y: auto;
       text-align: center;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: relative;
+      min-height: 100vh;
+      width: 100vw;
+      z-index: 1;
+      transition: background 0.3s;
     }
-    .number-02-topright {
+    .background-frame-pattern {
       position: fixed;
-      top: 20px;
-      right: 0;
       z-index: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
-      user-select: none;
-      -webkit-user-select: none;
+      border: none;
       margin: 0;
       padding: 0;
-      width: 100vw;
-      text-align: right;
-    }
-    .number-02-topright .number {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 220px;
-      font-weight: 900;
-      color: #ffffff00; /* Make text white */
-      background: #fff0; /* Transparent background for the element */
-      -webkit-text-stroke: 2px #fff;
-      opacity: 1;
-      line-height: 0.85;
-      letter-spacing: -0.04em;
-      margin: 0;
-      padding: 0 0.1em 0 0;
-      text-align: left;
-      width: 100vw;
       display: block;
+      min-width: 100vw;
+      min-height: 100vh;
+      background: transparent;
+      opacity: 0;
+      transition: opacity 0.8s cubic-bezier(0.4,0.3,0.3,1);
+    }
+    .background-frame-pattern.visible {
+      opacity: 1 !important;
+      transition: opacity 0.8s cubic-bezier(0.4,0.3,0.3,1);
     }
     .main-flex-container {
       display: flex;
@@ -64,7 +67,7 @@
       position: relative;
       min-height: 600px;
       gap: 40px;
-      background: transparent !important;
+      z-index: 1;
     }
     .about-container {
       max-width: 800px;
@@ -73,36 +76,33 @@
       padding: 0;
       position: relative;
       text-align: center;
-      background: transparent !important;
     }
     h1, h2 {
-      font-family: 'Krona One', Arial, sans-serif !important;
-      color: #fff; /* White text */
+      font-family: 'inter', Arial, sans-serif !important;
+      color: #fff;
       letter-spacing: 2px;
       margin-bottom: 0.5em;
       text-align: center;
       width: 100%;
-      background: transparent !important;
     }
     h1 {
       font-size: 2.8rem;
       margin-top: 0;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 2px;
     }
-    h2 {
-      font-size: 1.5rem;
-      margin-top: 2.5em;
-      letter-spacing: 1px;
-    }
-    p {
+    .dynamic-color-text {
       font-family: 'BitmapFont', Arial, sans-serif;
       font-size: 1.08rem;
       line-height: 1.7;
       margin-bottom: 1.2em;
-      color: #fff; /* White text */
       text-align: left;
       width: 100%;
       display: block;
-      background: transparent !important;
+      font-weight: 300;
+      word-break: break-word;
+      white-space: pre-line;
     }
     .profile-pic {
       float: none;
@@ -114,17 +114,16 @@
       height: 140px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #fff; /* White border */
+      border: 3px solid #fff;
       box-shadow: 0 4px 24px #fff2;
-      background: transparent !important;
+      background: #111;
     }
     a {
-      font-family: 'Krona One', Arial, sans-serif;
-      color: #fff; /* White text */
+      font-family: 'inter', Arial, sans-serif;
+      color: #fff;
       text-decoration: underline;
       text-align: center;
       display: inline-block;
-      background: transparent !important;
     }
     .section-fixed {
       position: absolute;
@@ -132,7 +131,7 @@
       right: 0;
       width: 100%;
       margin: 0 auto;
-      background: transparent !important;
+      background: transparent;
       z-index: 2;
       padding: 0 0 0 0;
       text-align: center;
@@ -144,11 +143,9 @@
         align-items: center;
         gap: 0;
         padding: 18px 6vw 400px 6vw;
-        background: transparent !important;
       }
       .about-container {
         padding-bottom: 0;
-        background: transparent !important;
       }
     }
     @media (max-width: 600px) {
@@ -157,198 +154,208 @@
         align-items: center;
         gap: 0;
         padding: 8px 2vw 200px 2vw;
-        background: transparent !important;
       }
       .about-container {
         padding: 0;
-        background: transparent !important;
       }
       .section-fixed {
         position: static !important;
         margin-top: 32px;
         padding: 0;
-        background: transparent !important;
-      }
-      .number-02-topright .number {
-        font-size: 220px;
-        -webkit-text-stroke: 2px #fff;
       }
     }
-    .typing {
+    /* Metallic shine effect */
+    .metal-shine {
       position: relative;
-      white-space: pre-wrap;
-      overflow-wrap: break-word;
-      min-height: 1.2em;
-      display: inline-block;
-      font-family: 'BitmapFont', Arial, sans-serif;
-      text-align: left;
+      color: #ffffff;
+      background: linear-gradient(
+        110deg,
+        #bfbfbf 0%,
+        #ffffff 40%,
+        #9a9a9a 50%,
+        #ffffff 60%,
+        #bfbfbf 100%
+      );
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .metal-shine.shine {
+      animation: metalShine 5s ease-out forwards;
+    }
+    @keyframes metalShine {
+      0% {
+        background-position: -120% 0;
+      }
+      100% {
+        background-position: 120% 0;
+      }
+    }
+    .edge-tech-line {
+      font-family:'BitmapFont', sans-serif;
       width: 100%;
-      font-size: 1.08rem;
-      background: transparent !important;
-      color: #fff; /* White text */
-    }
-    .typing-caret {
-      display: inline-block;
-      width: 0.95em;
-      height: 1.1em;
-      vertical-align: -0.1em;
-      margin-left: 2px;
-      margin-right: 0;
-      position: relative;
-      background: transparent !important;
-    }
-    .typing-caret-circle {
-      width: 0.55em;
-      height: 0.55em;
-      border-radius: 50%;
-      background: #fff; /* White caret dot */
-      display: inline-block;
-      position: absolute;
-      left: 0.18em;
-      top: 0.22em;
-      box-shadow: 0 0 4px 1px #fff8;
-      transition: background 0.2s;
-    }
-    .typing-caret-blink {
-      animation: caret-blink 0.8s steps(1) infinite;
-    }
-    #shared-typing-caret {
-      display: inline-block;
-      width: 0.95em;
-      height: 1.1em;
-      vertical-align: -0.1em;
-      margin-left: 2px;
-      margin-right: 0;
-      position: relative;
-      background: transparent !important;
-    }
-    #shared-typing-caret .typing-caret-circle {
-      width: 0.55em;
-      height: 0.55em;
-      border-radius: 50%;
-      background: #fff; /* White caret dot */
-      display: inline-block;
-      position: absolute;
-      left: 0.18em;
-      top: 0.22em;
-      box-shadow: 0 0 4px 1px #fff8;
-      transition: background 0.2s;
-    }
-    #shared-typing-caret .typing-caret-blink {
-      animation: caret-blink 0.8s steps(1) infinite;
-    }
-    @keyframes caret-blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+      text-align: center;
+      font-size: 1em;
+      font-weight: 300;
+      margin: 32px 0 18px 0;
+      letter-spacing: 1px;
+      color: #ffffffa3;
     }
   </style>
 </head>
 <body>
-  <!-- 02 number at top-right -->
-  <div class="number-02-topright">
-    <div class="number"></div>
-    
-  </div>
+  <!-- Background frame will be inserted here dynamically -->
+
   <div class="main-flex-container">
     <div class="about-container">
       <img src="profile.jpg" alt="Rutuj Dhodapkar" class="profile-pic" onerror="this.style.display='none'">
-      <h1 style="font-family: 'Krona One', Arial, sans-serif; text-align:center; background:transparent !important; color:#fff;">About Me</h1>
-      <div id="about-paragraphs" style="text-align:left; background:transparent !important;">
+      <h1>About Me</h1>
+      <div class="edge-tech-line">
+        ~$ whoami
+      </div>
+      <div id="about-paragraphs" style="text-align:left;">
         <!-- About paragraphs will be loaded here -->
       </div>
     </div>
   </div>
   <script>
-    // Typing animation function for multiple paragraphs with a single shared typing dot
-    function typeParagraphsWithSharedCaret(paragraphs, containerId, typingClass = "typing", typingSpeed = 18, paragraphDelay = 400) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = ""; // Clear previous content
+    // Utility: Check if element is in viewport
+    function isElementOnScreen(el) {
+      if (!el) return false;
+      const rect = el.getBoundingClientRect();
+      return (
+        rect.top < window.innerHeight &&
+        rect.bottom > 0 &&
+        rect.left < window.innerWidth &&
+        rect.right > 0
+      );
+    }
 
-      // Create paragraph elements and text spans
-      const pElements = [];
-      const textSpans = [];
-      for (let i = 0; i < paragraphs.length; i++) {
-        const p = document.createElement("p");
-        p.className = typingClass;
-        p.style.fontFamily = "'BitmapFont', Arial, sans-serif";
-        p.style.textAlign = "left";
-        p.style.fontSize = "1.08rem";
-        p.style.background = "transparent";
-        p.style.color = "#fff";
-        const textSpan = document.createElement("span");
-        textSpan.style.fontFamily = "'BitmapFont', Arial, sans-serif";
-        textSpan.style.textAlign = "left";
-        textSpan.style.fontSize = "1.08rem";
-        textSpan.style.background = "transparent";
-        textSpan.style.color = "#fff";
-        p.appendChild(textSpan);
-        container.appendChild(p);
-        pElements.push(p);
-        textSpans.push(textSpan);
+    // -- BACKGROUND FRAME LIFECYCLE CONTROLLER --
+    (function() {
+      // Configuration
+      var FRAME_CLASS = 'background-frame-pattern';
+      var FRAME_SRC = 'animations/pattern.html';
+      var FRAME_ID = 'dynamic-bg-frame-managed';
+
+      // Utilities for add/remove iframe
+      function createFrame() {
+        if (document.getElementById(FRAME_ID)) return;
+        var iframe = document.createElement("iframe");
+        iframe.src = FRAME_SRC;
+        iframe.className = FRAME_CLASS;
+        iframe.id = FRAME_ID;
+        iframe.setAttribute("frameborder", "0");
+        iframe.setAttribute("scrolling", "no");
+        iframe.setAttribute("allowfullscreen", "");
+        iframe.setAttribute("aria-hidden", "true");
+        iframe.setAttribute("tabindex", "-1");
+        document.body.insertBefore(iframe, document.body.firstChild);
+        // Animation with .visible
+        setTimeout(function() {
+          iframe.classList.add('visible');
+        }, 250);
       }
-
-      // Create the shared typing caret
-      const sharedCaret = document.createElement("span");
-      sharedCaret.id = "shared-typing-caret";
-      sharedCaret.style.background = "transparent";
-      const caretCircle = document.createElement("span");
-      caretCircle.className = "typing-caret-circle";
-      caretCircle.style.background = "#fff";
-      sharedCaret.appendChild(caretCircle);
-
-      // Helper to move caret to the end of a textSpan
-      function moveCaretTo(span) {
-        if (sharedCaret.parentNode) {
-          sharedCaret.parentNode.removeChild(sharedCaret);
+      function removeFrame() {
+        var f = document.getElementById(FRAME_ID);
+        if (f) {
+          f.remove();
         }
-        span.parentNode.appendChild(sharedCaret);
       }
-
-      // Caret blink control
-      function startCaretBlink() {
-        caretCircle.classList.add("typing-caret-blink");
-      }
-      function stopCaretBlink() {
-        caretCircle.classList.remove("typing-caret-blink");
-      }
-
-      // Typing logic
-      let pIndex = 0;
-      function typeNextParagraph() {
-        if (pIndex >= paragraphs.length) {
-          startCaretBlink();
-          return;
-        }
-        const text = paragraphs[pIndex];
-        const span = textSpans[pIndex];
-        let i = 0;
-        stopCaretBlink();
-        moveCaretTo(span);
-
-        function typeChar() {
-          if (i <= text.length) {
-            span.textContent = text.slice(0, i);
-            moveCaretTo(span);
-            i++;
-            if (i <= text.length) {
-              setTimeout(typeChar, typingSpeed + Math.random()*30);
-            } else {
-              setTimeout(() => {
-                startCaretBlink();
-                setTimeout(() => {
-                  stopCaretBlink();
-                  pIndex++;
-                  typeNextParagraph();
-                }, paragraphDelay);
-              }, 500);
-            }
+      // Track visibility of body
+      var prevVisible = true; // Assume first render is visible
+      var setupCheck;
+      function checkAndToggleBgFrame() {
+        // Check if body or mainFlex is visible in viewport at all
+        var mainFlex = document.querySelector('.main-flex-container');
+        var shouldShow = isElementOnScreen(mainFlex || document.body);
+        if (shouldShow) {
+          if (!document.getElementById(FRAME_ID)) {
+            createFrame();
           }
+        } else {
+          removeFrame();
         }
-        typeChar();
+        prevVisible = shouldShow;
       }
-      if (paragraphs.length > 0) {
-        typeNextParagraph();
+
+      // Setup visibility events
+      window.addEventListener('scroll', checkAndToggleBgFrame, {passive: true});
+      window.addEventListener('resize', checkAndToggleBgFrame);
+      document.addEventListener('visibilitychange', checkAndToggleBgFrame);
+
+      // Also, recheck every few seconds in case of overlay/UI popup etc
+      setupCheck = setInterval(checkAndToggleBgFrame, 3000);
+
+      // On ready, launch background if visible
+      window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(checkAndToggleBgFrame, 300);
+      });
+    })();
+
+    // --- END BACKGROUND FRAME LIFECYCLE CONTROLLER ---
+
+    // Helper: Checks if a color is "dark" (returns true if it's dark)
+    function isColorDark(rgbString) {
+      // Accepts "#RRGGBB", "rgb()", or color keywords ("black", "white")
+      // Simple keyword handling
+      if (typeof rgbString !== "string") return false;
+      const name = rgbString.trim().toLowerCase();
+      if (name === "black") return true;
+      if (name === "white") return false;
+      // Hex: #RRGGBB
+      let r, g, b;
+      if (name[0] === '#') {
+        let hex = name.slice(1);
+        if (hex.length === 3) {
+          r = parseInt(hex[0] + hex[0], 16);
+          g = parseInt(hex[1] + hex[1], 16);
+          b = parseInt(hex[2] + hex[2], 16);
+        } else if (hex.length === 6) {
+          r = parseInt(hex.substring(0,2), 16);
+          g = parseInt(hex.substring(2,4), 16);
+          b = parseInt(hex.substring(4,6), 16);
+        }
       }
+      // rgb() format
+      else if (name.startsWith("rgb")) {
+        const vals = name.replace(/[^\d,]/g, "").split(",");
+        if (vals.length >= 3) {
+          r = parseInt(vals[0],10);
+          g = parseInt(vals[1],10);
+          b = parseInt(vals[2],10);
+        }
+      }
+      if (
+        typeof r === "number" &&
+        typeof g === "number" &&
+        typeof b === "number"
+      ) {
+        // Luminance; ITU BT.601 formula
+        const luminance = 0.299*r + 0.587*g + 0.114*b;
+        return luminance < 128;
+      }
+      // fallback: treat as not dark
+      return false;
+    }
+
+    // Find computed background color of an element
+    function getEffectiveBackgroundColor(elem) {
+      let el = elem;
+      while (el && el !== document.body) {
+        const bg = window.getComputedStyle(el).backgroundColor;
+        if (
+          bg &&
+          bg !== "rgba(0, 0, 0, 0)" &&
+          bg !== "transparent"
+        ) {
+          return bg;
+        }
+        el = el.parentElement;
+      }
+      // fallback: get body bg or default
+      return window.getComputedStyle(document.body).backgroundColor || "#0f0f0f";
     }
 
     // Fetch data.csv from GitHub and extract "apara1" and "apara2" columns for about paragraphs
@@ -397,16 +404,38 @@
           apara2 = data[0]['apara2'] || '';
         }
 
+        // If both are empty, redirect to "error.html"
         if ((!apara1 && !apara2) || (typeof apara1 === "undefined" && typeof apara2 === "undefined")) {
           // window.location.href = "error.html";
         } else {
           const paragraphs = [];
           if (apara1) paragraphs.push(apara1);
           if (apara2) paragraphs.push(apara2);
-          typeParagraphsWithSharedCaret(paragraphs, "about-paragraphs");
+
+          const container = document.getElementById("about-paragraphs");
+          container.innerHTML = "";
+
+          // For each paragraph, create span-per-letter coloring based on background
+          paragraphs.forEach(text => {
+            const p = document.createElement("p");
+            p.className = "dynamic-color-text";
+            // Find background for this container
+            let bgCol = getEffectiveBackgroundColor(container);
+            let dark = isColorDark(bgCol);
+
+            // Per letter, span and set color
+            p.innerHTML = Array.from(text).map(letter => {
+              // Don't wrap whitespace in span for better select/copy.
+              if (letter.trim() === "") return letter;
+              let color = dark ? "#fff" : "#000";
+              return `<span style="color:${color};background:transparent;">${letter}</span>`;
+            }).join("");
+            container.appendChild(p);
+          });
         }
       })
       .catch(err => {
+        // Fallback if fetch fails or no data
         // window.location.href = "error.html";
       });
   </script>
@@ -415,7 +444,11 @@
 <style>
   ::selection {
     background: #fff;
-    color: #0f0f0f;
+    color: #000;
   }
 </style>
 </html>
+      
+
+
+

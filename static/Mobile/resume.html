@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Resume</title>
+  <style>
+    :root { --bg: #0f0f0f; --panel-bg: rgba(255,255,255,0.04); --glass: rgba(255,255,255,0.06); }
+    html,body{height:100%;margin:0;padding:0;background:var(--bg);font-family:Inter, Arial, sans-serif;color:#fff}
+    .container{width:92%;max-width:1200px;margin:40px auto;height:calc(100vh - 80px);position:relative}
+    .panel{position:relative;height:100%;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.04)}
+    .pdf-wrap{position:absolute;left:24px;top:24px;right:120px;bottom:24px;border-radius:12px;overflow:hidden;background:#111}
+    .pdf-wrap iframe, .pdf-wrap embed{width:100%;height:100%;border:none}
+    /* Right-side floating vertical buttons */
+    .side-buttons{position:absolute;right:18px;top:24px;display:flex;flex-direction:column;align-items:flex-end;gap:10px;z-index:20}
+    .side-btn{display:inline-block;white-space:nowrap;padding:8px 14px;border-radius:999px;background:var(--glass);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(255,255,255,0.08);cursor:pointer;font-weight:600}
+    .side-btn.active{background:#fff;color:#000;border-color:rgba(0,0,0,0.08);}
+    /* Small label below top edge for svg preview */
+    .svg-preview{position:absolute;right:18px;bottom:24px;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+    .svg-preview img{max-width:220px;border-radius:10px;filter:drop-shadow(0 6px 18px rgba(0,0,0,0.6));background:transparent}
+    @media (max-width:800px){ .pdf-wrap{right:100px} .svg-preview img{max-width:140px} }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="panel">
+      <div class="pdf-wrap">
+        <!-- Always open black resume by default -->
+        <embed id="resume-pdf" src="svg/resume black.pdf" type="application/pdf">
+      </div>
+
+      <div class="side-buttons" role="toolbar" aria-label="resume actions">
+        <button id="btn-black" class="side-btn active">Light</button>
+        <button id="btn-white" class="side-btn">Dark</button>
+      </div>
+
+      <div class="svg-preview">
+        <img id="resume-svg" src="svg/resume-black.svg" alt="resume svg preview">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const btnBlack = document.getElementById('btn-black');
+      const btnWhite = document.getElementById('btn-white');
+      const svgImg = document.getElementById('resume-svg');
+      const pdfEmbed = document.getElementById('resume-pdf');
+
+      function setActive(active){
+        btnBlack.classList.remove('active');
+        btnWhite.classList.remove('active');
+        if(active==='black') {
+          btnBlack.classList.add('active');
+          svgImg.src = 'svg/resume-black.svg';
+          pdfEmbed.src = 'svg/resume black.pdf';
+        } else {
+          btnWhite.classList.add('active');
+          svgImg.src = 'svg/resume.svg';
+          pdfEmbed.src = 'svg/resume.pdf';
+        }
+      }
+
+      // Always open black resume as default, even if page reloads
+      setActive('black');
+
+      btnBlack.addEventListener('click', function(){ setActive('black'); });
+      btnWhite.addEventListener('click', function(){ setActive('white'); });
+    })();
+  </script>
+</body>
+</html>
