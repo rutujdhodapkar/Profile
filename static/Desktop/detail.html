@@ -6,9 +6,11 @@
   <title>Portfolio</title>
   <!-- Added Inter font for header -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
 
   <style>
     #startup-blur-overlay {
+
       position: fixed;
       z-index: 99999;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -103,13 +105,13 @@
       background: rgba(255,255,255,0.08); /* transparent blur */
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-radius: 200px;
+      border-radius: 999px;
       z-index: 9999;
       transition: background-color 0.3s;
       font-family: 'Inter', monospace, sans-serif !important;
       /* Added shadow to header */
-      box-shadow: 0 6px 32px 0 rgba(0,0,0,0.18), 0 1.5px 8px 0 rgba(0,0,0,0.10);
-      border: 1px solid rgba(255,255,255,0.35); /* 1px border */
+      box-shadow: 0 6px 32px 0 #0000002e, 0 1.5px 8px 0 #0000001a;
+      border: 1px solid #ffffff59; /* 1px border */
       will-change: background-color;
     }
     #rectiangleNavbar:hover {
@@ -135,7 +137,7 @@
       cursor: pointer;
       padding: 5px 12px;
       transition: background-color 0.3s, color 0.3s, transform 0.22s cubic-bezier(.36,1,.1,1);
-      border-radius: 50px;
+      border-radius: 80px;
       position: relative;
       font-family: 'Inter', monospace, sans-serif !important;
       color: #fff !important; /* Make text white on header */
@@ -175,6 +177,7 @@
       margin-right: 0;
       padding: 5px 18px;
       position: relative;
+      border-radius: 120px;
       will-change: background-color, color, border;
     }
 
@@ -192,7 +195,7 @@
       left: 0;
       height: calc(100% + 8px);
       background-color: #fff !important;
-      border-radius: 50px;
+      border-radius: 80px;
       z-index: 1;
       transition: left 0.33s cubic-bezier(.36,1,.1,1), width 0.3s cubic-bezier(.36,1,.1,1), height 0.3s cubic-bezier(.36,1,.1,1), background-color 0.3s;
       pointer-events: none;
@@ -638,7 +641,27 @@
     </div>
   </div>
   <div style="width:90%;margin:12px auto;text-align:center;letter-spacing:4px;font-size:18px;color:#bbb; font-family: 'BitmapFont', 'inter', sans-serif;"></div>
-  <iframe src="certificate.html" style="width:100%; height:700px; border:none; overflow:hidden;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>  
+  <div id="certificate-frame" style="width:100%; height:700px; border:none; overflow:hidden; position:relative; z-index:5;">
+    <div class="wrap" id="wrap"></div>
+    <div class="fade"></div>
+
+    <iframe
+      id="certificateIframe"
+      src="certificate.html"
+      title="Certificates"
+      style="width:100%;height:100%;border:none;display:block;"
+      scrolling="yes"
+      allow="fullscreen; autoplay; clipboard-read; encrypted-media"
+      sandbox="allow-same-origin allow-scripts allow-popups"
+    ></iframe>
+  </div>
+  <script>
+    window.addEventListener("message", function(event) {
+      if(typeof event.data === "object" && event.data.type === "open-in-new-tab" && event.data.url) {
+        window.open(event.data.url, "_blank", "noopener");
+      }
+    });
+  </script>
   <style>
     .edge-tech-line {
       font-family:'BitmapFont', sans-serif;
@@ -651,7 +674,7 @@
       color: #ffffffa3;
     }
   </style>
-  <iframe src="project section.html" style="width:100%; height:1270px; border:none; overflow:hidden; display:block;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
+  <iframe src="project section.html" style="width:100%; height:1300px; border:none; overflow:hidden; display:block;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
   <style>
     @font-face {
       font-family: 'BitmapFont';
@@ -709,8 +732,235 @@
 
   <!-- Add contact.html frame at the bottom -->
   <iframe src="contact.html" style="width:100%; height:700px; border:none; overflow:hidden; display:block;" scrolling="no" allow="none" sandbox="allow-scripts allow-same-origin" data-memory-limit="50mb"></iframe>
-</body><script>
+<!-- NOTE: animation is now inlined above (no separate animation iframe) -->
+
+</body>
+<script>
 document.documentElement.style.scrollBehavior = "smooth";
+(function(){
+  const animFrame = document.getElementById('animation-frame');
+  function broadcastScroll() {
+    // Forward scroll state to inline animation if present, otherwise fallback to iframe messaging
+    const cert = document.getElementById('certificate-frame');
+    const rect = cert ? cert.getBoundingClientRect() : { top: 0, left: 0, width: 0, height: 0 };
+    const certTopInDoc = rect.top + window.scrollY;
+    const relativeY = window.scrollY - certTopInDoc;
+    const payload = {
+      scrollY: window.scrollY || 0,
+      relativeY: relativeY,
+      certRect: { top: certTopInDoc, left: rect.left + window.scrollX, width: rect.width, height: rect.height },
+      viewportHeight: window.innerHeight
+    };
+    if (typeof window.setInlineAnimationTarget === 'function') {
+      // Inline animation present — call its setter directly
+      window.setInlineAnimationTarget(payload);
+    } else if (animFrame && animFrame.contentWindow) {
+      animFrame.contentWindow.postMessage(Object.assign({ type: 'scroll-sync' }, payload), '*');
+    }
+  }
+  let ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(function(){
+        broadcastScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', broadcastScroll);
+  if (animFrame) animFrame.addEventListener('load', broadcastScroll);
+  // Track last mouse pos and forward wheel deltas only when pointer is over certificate frame
+  let lastMouse = { x: 0, y: 0 };
+  window.addEventListener('mousemove', function(e){ lastMouse.x = e.clientX; lastMouse.y = e.clientY; }, { passive: true });
+  window.addEventListener('wheel', function(e){
+    const cert = document.getElementById('certificate-frame');
+    if (!cert) return;
+    const rect = cert.getBoundingClientRect();
+    const isOver = lastMouse.x >= rect.left && lastMouse.x <= rect.right && lastMouse.y >= rect.top && lastMouse.y <= rect.bottom;
+    if (isOver) {
+      // If pointer is directly over the certificate iframe, let the iframe receive wheel events
+      const elAtPointer = document.elementFromPoint(lastMouse.x, lastMouse.y);
+      if (elAtPointer && (elAtPointer.id === 'certificateIframe' || (elAtPointer.tagName === 'IFRAME' && elAtPointer.parentElement && elAtPointer.parentElement.id === 'certificate-frame'))) {
+        return;
+      }
+      if (typeof window.inlineAnimationWheelDelta === 'function') {
+        window.inlineAnimationWheelDelta(e.deltaY);
+      } else if (animFrame && animFrame.contentWindow) {
+        animFrame.contentWindow.postMessage({ type: 'wheel-delta', deltaY: e.deltaY }, '*');
+      }
+    }
+  }, { passive: true });
+})();
+</script>
+<!-- Inline animated pattern CSS + JS (was previously in a separate iframe) -->
+<style>
+  /* Animated pattern styles (constrained to #certificate-frame) */
+  #certificate-frame { position: relative; overflow: hidden; }
+  #certificate-frame .wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 22px;
+    transform: rotate(-28deg);
+    transform-origin: center;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+  }
+  #certificate-frame .row {
+    display: flex;
+    white-space: nowrap;
+    font-size: 64px;
+    font-weight: 700;
+    color: #fff;
+    /* Prevent BitmapFont from applying here — use Inter/system fallback */
+    font-family: 'Inter', system-ui, Arial, sans-serif;
+    opacity: 0.96;
+    will-change: transform;
+    pointer-events: none;
+  }
+  #certificate-frame .row span { margin-right: 80px; }
+  #certificate-frame .fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      #0f0f0f 0%,
+      transparent 18%,
+      transparent 82%,
+      #0f0f0f 100%
+    );
+    z-index: 4;
+  }
+  /* Certificate iframe (interactive full-featured) */
+  #certificate-frame > #certificateIframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    z-index: 6;
+    background: transparent;
+  }
+</style>
+<script>
+  // Inlined animated infinite rows (adapted from animations/new pattern.html)
+  (function() {
+    const container = document.getElementById("certificate-frame");
+    const wrap = container && container.querySelector("#wrap");
+    if (!wrap || !container) return;
+    const ROWS = 18;
+    const WORD = "Artificial Intelligence";
+    const COPIES = 16;
+    const rowData = [];
+    let targetScroll = 0;
+    let smoothScroll = 0;
+
+    for (let i = 0; i < ROWS; i++) {
+      const row = document.createElement("div");
+      row.className = "row";
+      for (let j = 0; j < COPIES; j++) {
+        const span = document.createElement("span");
+        span.textContent = WORD;
+        row.appendChild(span);
+      }
+      wrap.appendChild(row);
+      rowData.push({
+        el: row,
+        dir: i % 2 === 0 ? 1 : -1,
+        // Lower base speeds so overall motion is slower
+        speed: 0.12 + Math.random() * 0.08,
+        offset: Math.random() * 10000,
+        width: 0
+      });
+    }
+
+    requestAnimationFrame(() => {
+      rowData.forEach(r => { r.width = r.el.scrollWidth / 2; });
+    });
+
+    // Exposed API for the parent document to forward scroll state and wheel deltas
+    // Reduce wheel multiplier slightly for smoother motion, and make small changes more responsive.
+    // Impulse-based input model: wheel and sync messages add velocity directly.
+    // This produces a sliding-on-ice feel (move then slowly stop).
+    // Lower impulses and max velocity to reduce overall speed
+    const WHEEL_IMPULSE = 0.35;
+    const SYNC_IMPULSE_SCALE = 0.25;
+    const DAMPING = 0.96;
+    let lastRelativeY = null;
+    window.inlineAnimationWheelDelta = function(deltaY) {
+      // Apply immediate impulse to velocity; positive deltaY -> move down/right
+      velocity += (deltaY || 0) * WHEEL_IMPULSE;
+    };
+    window.setInlineAnimationTarget = function(data) {
+      if (data && typeof data === 'object' && typeof data.relativeY === 'number') {
+        // If we don't have a last value, just record and don't apply impulse
+        if (lastRelativeY === null) {
+          lastRelativeY = data.relativeY;
+          return;
+        }
+        const delta = data.relativeY - lastRelativeY;
+        // Add scaled impulse based on how much the page scrolled past the certificate area
+        velocity += delta * SYNC_IMPULSE_SCALE;
+        lastRelativeY = data.relativeY;
+      } else if (data && typeof data === 'object' && typeof data.scrollY === 'number') {
+        // Fallback: drive by change of scrollY
+        if (lastRelativeY === null) {
+          lastRelativeY = data.scrollY;
+          return;
+        }
+        const delta = data.scrollY - lastRelativeY;
+        velocity += delta * SYNC_IMPULSE_SCALE;
+        lastRelativeY = data.scrollY;
+      }
+    };
+
+    // Velocity-based sliding: inputs provide impulses; velocity decays via damping.
+    let velocity = 0;
+    const MAX_VEL = 120;
+    function animate() {
+      // Integrate velocity into position
+      smoothScroll += velocity;
+      // Apply damping so the motion slowly comes to rest (slippery)
+      velocity *= DAMPING;
+      // Prevent infinitesimal oscillation
+      if (Math.abs(velocity) < 0.01) velocity = 0;
+      // Clamp velocity just in case
+      if (velocity > MAX_VEL) velocity = MAX_VEL;
+      if (velocity < -MAX_VEL) velocity = -MAX_VEL;
+
+      rowData.forEach(r => {
+        const raw = (smoothScroll * r.speed + r.offset) * r.dir;
+        const looped = ((raw % r.width) + r.width) % r.width;
+        r.el.style.transform = `translateX(${-looped}px)`;
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+    // Recompute row widths on resize/visibility changes to keep transform math accurate
+    function recomputeWidths() {
+      rowData.forEach(r => { r.width = r.el.scrollWidth / 2 || r.width || 1; });
+    }
+    window.addEventListener('resize', function() {
+      // Recompute widths after layout settles
+      setTimeout(recomputeWidths, 60);
+    }, { passive: true });
+    // Also recalc when container becomes visible or fonts load
+    document.fonts && document.fonts.ready && document.fonts.ready.then(recomputeWidths);
+  })();
 </script>
 
 <style>
@@ -721,6 +971,7 @@ html {
   scrollbar-width: none;
 }
 </style>
+
 
 </html>
 
