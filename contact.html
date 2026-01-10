@@ -192,6 +192,37 @@
       pointer-events: auto;
       text-decoration: none;
     }
+    /* New style for portfolio button */
+    .portfolio-btn-top-left {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 11000;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 999px;
+      padding: 0.62em 2.1em;
+      font-size: 1.15rem;
+      font-family: 'BitmapFont', monospace, Arial, sans-serif;
+      font-weight: 600;
+      box-shadow: 0 2px 12px #0001;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      outline: none;
+      pointer-events: auto;
+      transition: background 0.18s, color 0.18s;
+    }
+    /* Remove hover/focus for portfolio button for consistency */
+    /* .portfolio-btn-top-left:hover, .portfolio-btn-top-left:focus {
+      background: #f0f0f0;
+      color: #111;
+    } */
+
+    /* To adjust if both buttons needed at top left */
+    .back-btn-container {
+      top: 75px;
+    }
     /* Remove hover/focus effect for .back-btn-container */
     /* .back-btn-container:hover, .back-btn-container:focus {
       text-decoration: none;
@@ -261,9 +292,12 @@
   </style>
 </head>
 <body>
+  <!-- Portfolio button top left -->
+  <button class="portfolio-btn-top-left" onclick="window.location.href='index.html'">
+    Visit Portfolio
+  </button>
   <!-- Back button with SVG icon -->
-  <a href="detail.html" class="back-btn-container" id="backBtn" title="Back">
-  </a>
+  <a href="detail.html" class="back-btn-container" id="backBtn" title="Back"></a>
   <div id="whiteToBlackOverlay"></div>
   <!-- The background iframe will be dynamically set by JS below -->
   <iframe class="rain-bg-iframe" id="rainBgIframe" src="animations/dotted%20lines.html" title="Background Animation" scrolling="no" frameborder="0" aria-hidden="true"></iframe>
