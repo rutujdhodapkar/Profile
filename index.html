@@ -69,12 +69,132 @@
     <meta name="msapplication-TileImage" content="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/icons.png">
 
 
-    
-    <iframe 
-        src="static/frame of index.html" 
-        style="width:100vw; height:100vh; border:none; position:fixed; top:0; left:0; z-index:1; overflow:hidden;" 
-        scrolling="auto">
-    </iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rutuj Dhodapkar</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100vh;
+    }
+
+    .center {
+        text-align: center;
+        margin-top: 15%;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .chat-box {
+        margin-top: 20px;
+    }
+
+    input {
+        padding: 10px;
+        width: 250px;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+    }
+
+    button {
+        padding: 10px 15px;
+        margin-left: 5px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .send-btn {
+        background: #22c55e;
+        color: white;
+    }
+
+    .bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        padding: 15px;
+        background: #111827;
+    }
+
+    .nav-btn {
+        background: white;
+        color: black;
+        font-weight: bold;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="center">
+    <h1>hey!! this is rutuj dhodapkar's website what can i help you</h1>
+
+    <div class="chat-box">
+        <input type="text" id="userInput" placeholder="Type message...">
+        <button class="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+
+    <p id="response"></p>
+</div>
+
+<div class="bottom-nav">
+    <button class="nav-btn" onclick="goTo('contact.html')">Contact</button>
+    <button class="nav-btn" onclick="goTo('index.html')">Portfolio</button>
+    <button class="nav-btn" onclick="goTo('cloude.html')">Cloud Storage</button>
+    <button class="nav-btn" onclick="goTo('msg.html')">Messaging App</button>
+</div>
+
+<script>
+async function sendMessage() {
+    const input = document.getElementById("userInput").value;
+    const responseBox = document.getElementById("response");
+
+    responseBox.innerText = "Thinking...";
+
+    try {
+        const res = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer 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",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                model: "meta/llama-3.1-8b-instruct",
+                messages: [
+                    { role: "user", content: input }
+                ],
+                max_tokens: 200
+            })
+        });
+
+        const data = await res.json();
+        responseBox.innerText = data.choices[0].message.content;
+
+    } catch (error) {
+        responseBox.innerText = "Error: " + error.message;
+    }
+}
+
+function goTo(page) {
+    window.location.href = page;
+}
+</script>
+
+</body>
+</html>
 
     <script>
       // Disable right-click context menu
