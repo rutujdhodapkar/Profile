@@ -69,85 +69,100 @@
     <meta name="msapplication-TileImage" content="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/icons.png">
 
 
-<!DOCTYPE html>
-<html lang="en">
+
+
+
+
+
+
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rutuj Dhodapkar</title>
 
 <style>
-    body {
+    * {
         margin: 0;
-        font-family: Arial, sans-serif;
-        background: #0f172a;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+        background: #0f0f0f;
         color: white;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 100vh;
     }
 
-    .center {
+    .container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         text-align: center;
-        margin-top: 15%;
+        padding: 20px;
     }
 
     h1 {
-        font-size: 24px;
-    }
-
-    .chat-box {
-        margin-top: 20px;
-    }
-
-    input {
-        padding: 10px;
-        width: 250px;
-        border-radius: 5px;
-        border: none;
-        outline: none;
-    }
-
-    button {
-        padding: 10px 15px;
-        margin-left: 5px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .send-btn {
-        background: #22c55e;
-        color: white;
+        font-size: 28px;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #e5e5e5;
     }
 
     .bottom-nav {
         display: flex;
-        justify-content: space-around;
-        padding: 15px;
-        background: #111827;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+        background: #111;
+        border-top: 1px solid #222;
     }
 
     .nav-btn {
-        background: white;
-        color: black;
-        font-weight: bold;
+        background: #ffffff;
+        color: #000;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+        background: #d4d4d4;
+        transform: translateY(-2px);
+    }
+
+    .nav-btn:active {
+        transform: scale(0.95);
+    }
+
+    /* Responsive */
+    @media(max-width: 600px) {
+        h1 {
+            font-size: 20px;
+        }
+
+        .bottom-nav {
+            flex-wrap: wrap;
+        }
     }
 </style>
 </head>
 
 <body>
 
-<div class="center">
-    <h1>hey!! this is rutuj dhodapkar's website what can i help you</h1>
-
-    <div class="chat-box">
-        <input type="text" id="userInput" placeholder="Type message...">
-        <button class="send-btn" onclick="sendMessage()">Send</button>
-    </div>
-
-    <p id="response"></p>
+<div class="container">
+    <h1>
+        hey!! this is rutuj dhodapkar's website<br>
+        what can i help you
+    </h1>
 </div>
 
 <div class="bottom-nav">
@@ -158,43 +173,23 @@
 </div>
 
 <script>
-async function sendMessage() {
-    const input = document.getElementById("userInput").value;
-    const responseBox = document.getElementById("response");
-
-    responseBox.innerText = "Thinking...";
-
-    try {
-        const res = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer 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",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                model: "meta/llama-3.1-8b-instruct",
-                messages: [
-                    { role: "user", content: input }
-                ],
-                max_tokens: 200
-            })
-        });
-
-        const data = await res.json();
-        responseBox.innerText = data.choices[0].message.content;
-
-    } catch (error) {
-        responseBox.innerText = "Error: " + error.message;
-    }
-}
-
 function goTo(page) {
     window.location.href = page;
 }
 </script>
 
 </body>
-</html>
+
+
+
+
+
+
+
+
+
+
+    
 
     <script>
       // Disable right-click context menu
