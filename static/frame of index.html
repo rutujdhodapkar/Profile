@@ -3,7 +3,7 @@
     // Modern, best-practice: Show error if not hosted on the correct domain
     (function() {
       const allowedHost = "rutujdhodapkar.vercel.app";
-      if (window.location.hostname !== allowedHost) {
+      if (window.location.hostname == allowedHost) {
         // Create a full-page error overlay
         const errorOverlay = document.createElement('div');
         errorOverlay.style.position = 'fixed';
