@@ -1,72 +1,693 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Resume</title>
-  <style>
-    :root { --bg: #0f0f0f; --panel-bg: rgba(255,255,255,0.04); --glass: rgba(255,255,255,0.06); }
-    html,body{height:100%;margin:0;padding:0;background:var(--bg);font-family:Inter, Arial, sans-serif;color:#fff}
-    .container{width:92%;max-width:1200px;margin:40px auto;height:calc(100vh - 80px);position:relative}
-    .panel{position:relative;height:100%;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.04)}
-    .pdf-wrap{position:absolute;left:24px;top:24px;right:120px;bottom:24px;border-radius:12px;overflow:hidden;background:#111}
-    .pdf-wrap iframe, .pdf-wrap embed{width:100%;height:100%;border:none}
-    /* Right-side floating vertical buttons */
-    .side-buttons{position:absolute;right:18px;top:24px;display:flex;flex-direction:column;align-items:flex-end;gap:10px;z-index:20}
-    .side-btn{display:inline-block;white-space:nowrap;padding:8px 14px;border-radius:999px;background:var(--glass);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(255,255,255,0.08);cursor:pointer;font-weight:600}
-    .side-btn.active{background:#fff;color:#000;border-color:rgba(0,0,0,0.08);}
-    /* Small label below top edge for svg preview */
-    .svg-preview{position:absolute;right:18px;bottom:24px;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-    .svg-preview img{max-width:220px;border-radius:10px;filter:drop-shadow(0 6px 18px rgba(0,0,0,0.6));background:transparent}
-    @media (max-width:800px){ .pdf-wrap{right:100px} .svg-preview img{max-width:140px} }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rutuj Dhodapkar — CV</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #edeae4;
+    font-family: 'DM Sans', sans-serif;
+    padding: 48px 24px;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .print-btn { display: none !important; }
+    .page { box-shadow: none; max-width: 100%; margin: 0; }
+    .proj-item:hover { box-shadow: none; }
+  }
+
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 24px rgba(0,0,0,0.07);
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    padding: 50px 56px 38px;
+    border-bottom: 1px solid #ebebeb;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: end;
+  }
+
+  .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 46px;
+    font-weight: 500;
+    letter-spacing: -1.5px;
+    line-height: 1;
+    color: #0f0f0f;
+  }
+
+  .title-line {
+    margin-top: 11px;
+    font-size: 11.5px;
+    font-weight: 400;
+    color: #999;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .title-line .sep { color: #ddd; }
+  .title-line .hl { color: #1a73e8; font-weight: 500; }
+
+  .contact-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-end;
+    padding-bottom: 2px;
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11.5px;
+    color: #666;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .contact-row svg {
+    width: 13px; height: 13px;
+    opacity: 0.35;
+    flex-shrink: 0;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .contact-row a { color: #666; text-decoration: none; transition: color 0.15s; }
+  .contact-row a:hover { color: #1a73e8; }
+
+  /* ─── BODY ─── */
+  .body {
+    display: grid;
+    grid-template-columns: 210px 1fr;
+  }
+
+  .sidebar {
+    padding: 34px 26px 44px;
+    border-right: 1px solid #ebebeb;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .main {
+    padding: 34px 50px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  /* ─── SECTION LABEL ─── */
+  .sec {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 14px;
+  }
+
+  /* ─── EDUCATION ─── */
+  .edu-item + .edu-item { margin-top: 15px; }
+  .edu-deg { font-size: 12px; font-weight: 600; color: #111; line-height: 1.4; }
+  .edu-school { font-size: 11px; color: #777; margin-top: 2px; }
+  .edu-year { font-size: 10.5px; color: #bbb; margin-top: 2px; font-family: 'DM Mono', monospace; }
+
+  /* ─── SKILLS ─── */
+  .skill-group + .skill-group { margin-top: 13px; }
+
+  .sg-name {
+    font-size: 8.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ccc;
+    margin-bottom: 7px;
+    font-weight: 500;
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  /* FIXED: uniform pill sizing — no more highlighted ones being bigger */
+  .pill {
+    font-size: 10.5px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    padding: 3px 9px;
+    border: 1px solid #e2e2e2;
+    color: #555;
+    border-radius: 3px;
+    background: #fafafa;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  .pill.hi {
+    border-color: #c5dcf8;
+    color: #1a73e8;
+    background: #f3f8ff;
+    font-weight: 500;
+  }
+
+  /* ─── LANGUAGES (spoken) ─── */
+  .lang-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  .lang-item:last-child { border-bottom: none; }
+  .lang-name { font-size: 11.5px; color: #333; }
+  .lang-level {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: #bbb;
+  }
+
+  /* ─── CERTS ─── */
+  .cert-item {
+    font-size: 11px;
+    color: #555;
+    padding: 6px 0;
+    border-bottom: 1px solid #f2f2f2;
+    line-height: 1.4;
+  }
+  .cert-item:last-child { border-bottom: none; }
+  .cert-iss { font-size: 10px; color: #bbb; margin-top: 1px; font-family: 'DM Mono', monospace; }
+
+  /* ─── PROFILE ─── */
+  .profile-text {
+    font-size: 12.5px;
+    color: #666;
+    line-height: 1.8;
+  }
+  .profile-text strong { color: #111; font-weight: 500; }
+
+  /* ─── EXPERIENCE ─── */
+  .exp-block + .exp-block { margin-top: 22px; }
+
+  .exp-company-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+
+  .exp-company-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #111;
+  }
+
+  .exp-company-meta {
+    font-size: 10.5px;
+    color: #bbb;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .exp-role-item {
+    padding: 10px 12px;
+    border-left: 2px solid #e8e8e8;
+    margin-bottom: 8px;
+  }
+
+  .exp-role-item:last-child { margin-bottom: 0; }
+
+  .exp-role-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+
+  .exp-role-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #1a73e8;
+  }
+
+  .exp-role-date {
+    font-size: 10.5px;
+    color: #bbb;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .exp-bullets li {
+    font-size: 12px;
+    color: #666;
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.55;
+  }
+  .exp-bullets li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: #ccc;
+  }
+
+  /* ─── PROJECTS ─── */
+  .proj-item {
+    padding: 14px 16px;
+    border: 1px solid #eeeeee;
+    border-left: 2.5px solid #1a73e8;
+    margin-bottom: 10px;
+    transition: box-shadow 0.15s;
+  }
+  .proj-item:last-child { margin-bottom: 0; }
+  .proj-item:hover { box-shadow: 0 2px 12px rgba(26,115,232,0.07); }
+
+  .proj-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .proj-name { font-size: 13px; font-weight: 600; color: #111; letter-spacing: -0.2px; }
+
+  .proj-badges { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
+
+  .badge {
+    font-size: 9px;
+    padding: 2px 7px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .b-blue { background: #f0f6ff; color: #1558b0; border: 1px solid #c5dcf8; }
+  .b-green { background: #f0faf4; color: #137333; border: 1px solid #b2dfc4; }
+  .b-gray { background: #f5f5f5; color: #666; border: 1px solid #e2e2e2; }
+
+  .proj-desc { font-size: 11.5px; color: #777; line-height: 1.65; margin-bottom: 9px; }
+
+  .proj-stack { display: flex; flex-wrap: wrap; gap: 5px; }
+  .stag {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: #aaa;
+    background: #f7f7f7;
+    border: 1px solid #eee;
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+
+  /* ─── ACHIEVEMENTS ─── */
+  .ach-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 9px 0;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  .ach-item:last-child { border-bottom: none; }
+
+  .ach-medal {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .medal-gold { background: #fffbee; color: #9a6e00; border: 1px solid #f0d070; }
+  .medal-silver { background: #f4f4f4; color: #888; border: 1px solid #ddd; }
+
+  .ach-text { flex: 1; }
+  .ach-title { font-size: 12px; font-weight: 500; color: #222; }
+  .ach-venue { font-size: 10.5px; color: #bbb; margin-top: 2px; font-family: 'DM Mono', monospace; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    border-top: 1px solid #ebebeb;
+    padding: 14px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-l { font-size: 10px; color: #ccc; font-family: 'DM Mono', monospace; }
+  .footer-r { font-size: 10px; color: #ccc; }
+
+  /* ─── PRINT BTN ─── */
+  .print-btn {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    background: #111;
+    color: #fff;
+    border: none;
+    padding: 11px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 3px;
+    letter-spacing: 0.2px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    transition: background 0.15s;
+    z-index: 999;
+  }
+  .print-btn:hover { background: #1a73e8; }
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="panel">
-      <div class="pdf-wrap">
-        <!-- Always open black resume by default -->
-        <embed id="resume-pdf" src="svg/resume black.pdf" type="application/pdf">
-      </div>
 
-      <div class="side-buttons" role="toolbar" aria-label="resume actions">
-        <button id="btn-black" class="side-btn active">Light</button>
-        <button id="btn-white" class="side-btn">Dark</button>
-      </div>
+<button class="print-btn" onclick="window.print()">↓ Export PDF</button>
 
-      <div class="svg-preview">
-        <img id="resume-svg" src="svg/resume-black.svg" alt="resume svg preview">
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="name">Rutuj Dhodapkar</div>
+      <div class="title-line">
+        <span>AI &amp; ML Engineer</span>
+        <span class="sep">·</span>
+        <span class="hl">Builder</span>
+        <span class="sep">·</span>
+        <span>Pune, India</span>
+      </div>
+    </div>
+    <div class="contact-block">
+      <div class="contact-row">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:rutujdhodapkar@gmail.com">rutujdhodapkar@gmail.com</a>
+      </div>
+      <div class="contact-row">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.1 3.4 2 2 0 0 1 3.09 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16h1z"/></svg>
+        <span>+91 84848 80429</span>
+      </div>
+      <div class="contact-row">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <a href="https://rutujdhodapkar.tech" target="_blank">rutujdhodapkar.tech</a>
+      </div>
+      <div class="contact-row">
+        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        <a href="https://github.com/rutujdhodapkar" target="_blank">github/rutujdhodapkar</a>
+      </div>
+      <div class="contact-row">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        <a href="https://linkedin.com/in/rutujdhodapkar" target="_blank">linkedin/rutujdhodapkar</a>
       </div>
     </div>
   </div>
 
-  <script>
-    (function(){
-      const btnBlack = document.getElementById('btn-black');
-      const btnWhite = document.getElementById('btn-white');
-      const svgImg = document.getElementById('resume-svg');
-      const pdfEmbed = document.getElementById('resume-pdf');
+  <!-- BODY -->
+  <div class="body">
 
-      function setActive(active){
-        btnBlack.classList.remove('active');
-        btnWhite.classList.remove('active');
-        if(active==='black') {
-          btnBlack.classList.add('active');
-          svgImg.src = 'svg/resume-black.svg';
-          pdfEmbed.src = 'svg/resume black.pdf';
-        } else {
-          btnWhite.classList.add('active');
-          svgImg.src = 'svg/resume.svg';
-          pdfEmbed.src = 'svg/resume.pdf';
-        }
-      }
+    <!-- SIDEBAR -->
+    <div class="sidebar">
 
-      // Always open black resume as default, even if page reloads
-      setActive('black');
+      <!-- Education -->
+      <div>
+        <div class="sec">Education</div>
+        <div class="edu-item">
+          <div class="edu-deg">B.Tech — AI & ML</div>
+          <div class="edu-school">JSPM University, Pune</div>
+          <div class="edu-year">2025 — 2028</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-deg">Diploma — AI & ML</div>
+          <div class="edu-school">K.K. Wagh Polytechnic, Nashik</div>
+          <div class="edu-year">2022 — 2025</div>
+        </div>
+      </div>
 
-      btnBlack.addEventListener('click', function(){ setActive('black'); });
-      btnWhite.addEventListener('click', function(){ setActive('white'); });
-    })();
-  </script>
+      <!-- Technical Skills -->
+      <div>
+        <div class="sec">Technical Skills</div>
+
+        <div class="skill-group">
+          <div class="sg-name">Languages</div>
+          <div class="pills">
+            <span class="pill hi">Python</span>
+            <span class="pill hi">C/C++</span>
+            <span class="pill hi">Java</span>
+            <span class="pill">R</span>
+            <span class="pill">MATLAB</span>
+            <span class="pill">Bash</span>
+            <span class="pill">SQL</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="sg-name">ML / DL</div>
+          <div class="pills">
+            <span class="pill hi">PyTorch</span>
+            <span class="pill hi">Scikit-Learn</span>
+            <span class="pill">TensorFlow</span>
+            <span class="pill">OpenVINO</span>
+            <span class="pill">NumPy</span>
+            <span class="pill">Pandas</span>
+            <span class="pill">SciPy</span>
+            <span class="pill">Matplotlib</span>
+            <span class="pill">Seaborn</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="sg-name">AI & Agents</div>
+          <div class="pills">
+            <span class="pill hi">Ollama</span>
+            <span class="pill hi">Playwright</span>
+            <span class="pill">LangChain</span>
+            <span class="pill">Gemma</span>
+            <span class="pill">NVIDIA API</span>
+            <span class="pill">Groq</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="sg-name">Infra & Tools</div>
+          <div class="pills">
+            <span class="pill hi">AWS</span>
+            <span class="pill">Git</span>
+            <span class="pill">REST APIs</span>
+            <span class="pill">Termux</span>
+            <span class="pill">BeautifulSoup</span>
+            <span class="pill">Power BI</span>
+            <span class="pill">Jupyter</span>
+            <span class="pill">LaTeX</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Languages Spoken -->
+      <div>
+        <div class="sec">Languages</div>
+        <div class="lang-item">
+          <span class="lang-name">English</span>
+          <span class="lang-level">Professional</span>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">Hindi</span>
+          <span class="lang-level">Native</span>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">Marathi</span>
+          <span class="lang-level">Native</span>
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div>
+        <div class="sec">Certifications</div>
+        <div class="cert-item">AWS ML – Specialty<div class="cert-iss">AWS · 2024</div></div>
+        <div class="cert-item">ML with PyTorch<div class="cert-iss">IBM · 2025</div></div>
+        <div class="cert-item">Object Detection R-CNN & PyTorch<div class="cert-iss">IBM · 2025</div></div>
+        <div class="cert-item">AWS Cloud Foundations<div class="cert-iss">AWS Academy · 2024</div></div>
+        <div class="cert-item">Git Training<div class="cert-iss">IIT Bombay · 2025</div></div>
+        <div class="cert-item">Java Training<div class="cert-iss">IIT Bombay · 2024</div></div>
+      </div>
+
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+      <!-- Profile -->
+      <div>
+        <div class="sec">Profile</div>
+        <p class="profile-text">AI/ML engineer who <strong>builds first, theorizes later</strong>. Deployed a fully autonomous AI agent on Android with zero cloud dependency, architected a <strong>5-layer multi-LLM browser automation pipeline</strong>, and worked across data science and AI roles in production environments. Work spans edge deployment, LLM orchestration, and applied ML — <strong>all the way to prod</strong>.</p>
+      </div>
+
+      <!-- Experience -->
+      <div>
+        <div class="sec">Experience</div>
+
+        <!-- Syntecxhub -->
+        <div class="exp-block">
+          <div class="exp-company-header">
+            <div class="exp-company-name">Syntecxhub</div>
+            <div class="exp-company-meta">Remote · 2 mos</div>
+          </div>
+
+          <div class="exp-role-item">
+            <div class="exp-role-header">
+              <div class="exp-role-title">Data Science Intern</div>
+              <div class="exp-role-date">Feb 2026 — Mar 2026</div>
+            </div>
+            <ul class="exp-bullets">
+              <li>Worked on data pipelines and ML model development in a remote production environment.</li>
+              <li>Applied data analysis, feature engineering and model evaluation workflows.</li>
+            </ul>
+          </div>
+
+          <div class="exp-role-item">
+            <div class="exp-role-header">
+              <div class="exp-role-title">Artificial Intelligence Intern</div>
+              <div class="exp-role-date">Feb 2026 — Mar 2026</div>
+            </div>
+            <ul class="exp-bullets">
+              <li>Built and evaluated AI-driven solutions within the company's product stack.</li>
+              <li>Collaborated on model integration and deployment pipelines.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- V Analytics -->
+        <div class="exp-block">
+          <div class="exp-company-header">
+            <div class="exp-company-name">V Analytics</div>
+            <div class="exp-company-meta">Jun 2024 — Oct 2024</div>
+          </div>
+
+          <div class="exp-role-item">
+            <div class="exp-role-header">
+              <div class="exp-role-title">Machine Learning Intern</div>
+              <div class="exp-role-date">4 mos</div>
+            </div>
+            <ul class="exp-bullets">
+              <li>Built NLP emotion analysis system on real-world text datasets end-to-end.</li>
+              <li>Designed and deployed REST APIs backing a live web application interface.</li>
+              <li>Ran full EDA pipeline on Kaggle datasets using Pandas and NumPy.</li>
+              <li>Applied Scikit-Learn classifiers, evaluated models via visual analytics dashboards.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Projects -->
+      <div>
+        <div class="sec">Projects</div>
+
+        <div class="proj-item">
+          <div class="proj-top">
+            <div class="proj-name">NEXUS — On-Device Autonomous AI Agent</div>
+            <div class="proj-badges">
+              <span class="badge b-green">Edge AI</span>
+              <span class="badge b-blue">On-Device LLM</span>
+            </div>
+          </div>
+          <p class="proj-desc">Fully autonomous agent running natively on Android via Termux — no cloud, no latency floor. Serves Gemma 3 4B locally through Ollama. Implements file management, hardware control via Termux:API, WhatsApp integration, steganography, WiFi file transfer, and a Rich terminal UI.</p>
+          <div class="proj-stack">
+            <span class="stag">Python</span><span class="stag">Ollama</span><span class="stag">Gemma3-4B</span><span class="stag">Termux</span><span class="stag">Termux:API</span><span class="stag">Android</span>
+          </div>
+        </div>
+
+        <div class="proj-item">
+          <div class="proj-top">
+            <div class="proj-name">nexus_agent.py — Browser Automation Agent</div>
+            <div class="proj-badges">
+              <span class="badge b-blue">5-Layer Pipeline</span>
+              <span class="badge b-gray">LLM Orchestration</span>
+            </div>
+          </div>
+          <p class="proj-desc">Multi-LLM pipeline: intent parsing → planning → orchestration → vision observation → execution. Persistent Playwright sessions, 3-strategy CAPTCHA engine, vision LLM observer layer, NVIDIA API backend. Built for automation on platforms where public APIs are restricted.</p>
+          <div class="proj-stack">
+            <span class="stag">Python</span><span class="stag">Playwright</span><span class="stag">NVIDIA API</span><span class="stag">Vision LLM</span><span class="stag">CAPTCHA Engine</span>
+          </div>
+        </div>
+
+        <div class="proj-item">
+          <div class="proj-top">
+            <div class="proj-name">Real-Time AI Chess Review System</div>
+            <div class="proj-badges"><span class="badge b-gray">Computer Vision</span></div>
+          </div>
+          <p class="proj-desc">Live board-state recognition and move evaluation engine delivering real-time strategic recommendations during active games.</p>
+          <div class="proj-stack">
+            <span class="stag">Python</span><span class="stag">PyTorch</span><span class="stag">OpenCV</span>
+          </div>
+        </div>
+
+        <div class="proj-item">
+          <div class="proj-top">
+            <div class="proj-name">AI Tomato Leaf Disease Detection</div>
+            <div class="proj-badges"><span class="badge b-green">AgriTech</span></div>
+          </div>
+          <p class="proj-desc">CNN-based classifier identifying tomato plant pathology from leaf images for early agricultural intervention.</p>
+          <div class="proj-stack">
+            <span class="stag">Python</span><span class="stag">PyTorch</span><span class="stag">CNN</span><span class="stag">Image Classification</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Achievements -->
+      <div>
+        <div class="sec">Achievements</div>
+        <div class="ach-item">
+          <div class="ach-medal medal-gold">1st</div>
+          <div class="ach-text">
+            <div class="ach-title">National-Level Hackathon Winner</div>
+            <div class="ach-venue">Sanjivni University · 2025</div>
+          </div>
+        </div>
+        <div class="ach-item">
+          <div class="ach-medal medal-gold">1st</div>
+          <div class="ach-text">
+            <div class="ach-title">Paper Presentation Winner</div>
+            <div class="ach-venue">2025</div>
+          </div>
+        </div>
+        <div class="ach-item">
+          <div class="ach-medal medal-silver">2nd</div>
+          <div class="ach-text">
+            <div class="ach-title">State-Level Hackathon Runner-Up</div>
+            <div class="ach-venue">Jondhale Polytechnic · 2025</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-l">rutujdhodapkar.tech · github/rutujdhodapkar · linkedin/rutujdhodapkar</div>
+    <div class="footer-r">April 2026</div>
+  </div>
+
+</div>
 </body>
 </html>
