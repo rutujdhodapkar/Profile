@@ -122,35 +122,52 @@ h1 {
 <!-- FULLSCREEN VIEW -->
 <iframe id="frame"></iframe>
 
-<script>
+
+
+
+    <script>
 const frame = document.getElementById("frame");
 const landing = document.getElementById("landing");
 
-/* INITIAL STATE (important) */
-history.replaceState({ page: null }, "", location.pathname);
+/* ROUTES (controlled, no guessing) */
+const routes = {
+    "/": null,
+    "/portfolio": "static/frame-index.html",
+    "/contact": "contact.html",
+    "/cloud": "cloud.html",
+    "/message": "message.html"
+};
+
+/* INITIAL STATE */
+history.replaceState({ path: "/" }, "", "/");
 
 /* LOAD PAGE */
-function enterSite(page) {
+function enterSite(path) {
+    const page = routes[path];
+    if (!page) return;
+
     frame.src = page;
     frame.style.display = "block";
     landing.style.display = "none";
 
-    // clean URL (optional but good)
-    const cleanURL = "/" + page.replace(".html", "").replace(/\s+/g, "-");
-
-    history.pushState({ page: page }, "", cleanURL);
+    history.pushState({ path }, "", path);
 }
 
-/* HANDLE BACK / FORWARD */
+/* BACK / FORWARD */
 window.addEventListener("popstate", (event) => {
-    if (event.state && event.state.page) {
-        frame.src = event.state.page;
-        frame.style.display = "block";
-        landing.style.display = "none";
-    } else {
-        // go back to landing
+    const path = event.state?.path || "/";
+
+    if (path === "/") {
         frame.style.display = "none";
         landing.style.display = "block";
+        return;
+    }
+
+    const page = routes[path];
+    if (page) {
+        frame.src = page;
+        frame.style.display = "block";
+        landing.style.display = "none";
     }
 });
 
@@ -164,9 +181,12 @@ const timer = setInterval(() => {
 
     if (t === 0) {
         clearInterval(timer);
-        enterSite('static/frame-index.html'); // rename file properly
+        enterSite("/portfolio");
     }
 }, 1000);
 </script>
+
+
+    
 </body>
 </html>
