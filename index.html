@@ -126,28 +126,33 @@ h1 {
 const frame = document.getElementById("frame");
 const landing = document.getElementById("landing");
 
-/* ENTER / LOAD PAGE */
+/* INITIAL STATE (important) */
+history.replaceState({ page: null }, "", location.pathname);
+
+/* LOAD PAGE */
 function enterSite(page) {
     frame.src = page;
     frame.style.display = "block";
     landing.style.display = "none";
 
-    // push state into history
-    history.pushState({ page: page }, "", "");
+    // clean URL (optional but good)
+    const cleanURL = "/" + page.replace(".html", "").replace(/\s+/g, "-");
+
+    history.pushState({ page: page }, "", cleanURL);
 }
 
 /* HANDLE BACK / FORWARD */
-window.onpopstate = function (event) {
+window.addEventListener("popstate", (event) => {
     if (event.state && event.state.page) {
         frame.src = event.state.page;
         frame.style.display = "block";
         landing.style.display = "none";
     } else {
-        // fallback → show landing again
+        // go back to landing
         frame.style.display = "none";
         landing.style.display = "block";
     }
-};
+});
 
 /* AUTO ENTRY */
 let t = 5;
@@ -159,10 +164,9 @@ const timer = setInterval(() => {
 
     if (t === 0) {
         clearInterval(timer);
-        enterSite('static/frame-index.html');
+        enterSite('static/frame-index.html'); // rename file properly
     }
 }, 1000);
 </script>
-
 </body>
 </html>
