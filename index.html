@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Rutuj Dhodapkar</title>
+<link rel="icon" href="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/icons.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -20,66 +21,136 @@ body {
     height: 100vh;
     background: #0f0f0f0f;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* frame border */
+body::before {
+    content: "";
+    position: absolute;
+    inset: 20px;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 16px;
+}
+
+/* main container */
+.container {
+    width: 90%;
+    max-width: 900px;
+    height: 80vh;
+    display: flex;
     flex-direction: column;
 }
 
-/* top nav */
-.nav {
-    padding: 15px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+/* top card */
+.card {
+    text-align: center;
+    padding: 20px;
 }
 
-.nav button {
-    padding: 8px 14px;
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.sub {
+    font-size: 14px;
+    opacity: 0.6;
+    margin-bottom: 15px;
+}
+
+/* buttons */
+.primary-btn, .nav-btn {
+    padding: 10px 16px;
+    border-radius: 30px;
     border: 1px solid #000;
-    background: transparent;
     cursor: pointer;
-    border-radius: 20px;
+    margin: 5px;
 }
 
-.nav button:hover {
+.primary-btn {
     background: black;
     color: white;
 }
 
-/* content viewer */
-#app {
+.nav-btn {
+    background: transparent;
+}
+
+.nav-btn:hover, .primary-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* iframe viewer */
+.viewer {
     flex: 1;
-    padding: 20px;
-    overflow: auto;
+    border: none;
+    border-radius: 12px;
+    background: white;
+}
+
+/* footer */
+.footer {
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.5;
+    margin-top: 5px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="nav">
-    <button onclick="load('portfolio')">Portfolio</button>
-    <button onclick="load('contact')">Contact</button>
-    <button onclick="load('cloud')">Cloud</button>
-</div>
+<div class="container">
 
-<div id="app">
-    Loading...
+    <div class="card">
+        <h1>Rutuj Dhodapkar</h1>
+        <div class="sub">AI/ML Engineer • On-device systems</div>
+
+        <button class="primary-btn" onclick="loadPage('static/frame of index.html')">
+            Enter Portfolio →
+        </button>
+
+        <div>
+            <button class="nav-btn" onclick="loadPage('contact.html')">Contact</button>
+            <button class="nav-btn" onclick="loadPage('cloud.html')">Cloud</button>
+            <button class="nav-btn" onclick="loadPage('https://openmeg.vercel.app/')">
+                Messaging
+            </button>
+        </div>
+    </div>
+
+    <!-- 🔥 THIS is your internal "browser" -->
+    <iframe id="frame" class="viewer"></iframe>
+
+    <div class="footer" id="countdown">
+        Redirecting in 5...
+    </div>
+
 </div>
 
 <script>
-const routes = {
-    portfolio: "static/frame of index.html",
-    contact: "contact.html",
-    cloud: "cloud.html"
-};
+const frame = document.getElementById("frame");
 
-async function load(route) {
-    const res = await fetch(routes[route]);
-    const html = await res.text();
-    document.getElementById("app").innerHTML = html;
+function loadPage(page) {
+    frame.src = page;
 }
 
-// default load
-load("portfolio");
+// auto load portfolio after 5s
+let t = 5;
+const el = document.getElementById("countdown");
+
+const timer = setInterval(() => {
+    t--;
+    el.innerText = "Redirecting in " + t + "...";
+
+    if (t === 0) {
+        clearInterval(timer);
+        loadPage('static/frame of index.html');
+    }
+}, 1000);
 </script>
 
 </body>
