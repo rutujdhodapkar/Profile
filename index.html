@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Rutuj Dhodapkar</title>
-<link rel="icon" href="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/icons.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -21,128 +20,66 @@ body {
     height: 100vh;
     background: #0f0f0f0f;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #111;
-    position: relative;
+    flex-direction: column;
 }
 
-/* subtle border frame */
-body::before {
-    content: "";
-    position: absolute;
-    inset: 20px;
-    border: 1px solid rgba(0,0,0,0.08);
-    border-radius: 16px;
-}
-
-.card {
-    text-align: center;
-    padding: 50px 30px;
-    max-width: 420px;
-    width: 90%;
-}
-
-h1 {
-    font-size: 26px;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.sub {
-    font-size: 14px;
-    opacity: 0.6;
-    margin-bottom: 30px;
-}
-
-/* primary button */
-.primary-btn {
-    width: 100%;
-    padding: 14px;
-    border-radius: 40px;
-    border: 1px solid #000;
-    background: black;
-    color: white;
-    cursor: pointer;
-    margin-bottom: 15px;
-    transition: 0.2s;
-}
-
-.primary-btn:hover {
-    transform: translateY(-2px);
-}
-
-/* secondary buttons */
-.btn-group {
+/* top nav */
+.nav {
+    padding: 15px;
     display: flex;
     gap: 10px;
     justify-content: center;
-    flex-wrap: wrap;
 }
 
-.nav-btn {
+.nav button {
     padding: 8px 14px;
-    border-radius: 30px;
     border: 1px solid #000;
     background: transparent;
     cursor: pointer;
-    transition: 0.2s;
+    border-radius: 20px;
 }
 
-.nav-btn:hover {
+.nav button:hover {
     background: black;
     color: white;
 }
 
-.footer {
-    margin-top: 20px;
-    font-size: 12px;
-    opacity: 0.5;
+/* content viewer */
+#app {
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-    <h1>Rutuj Dhodapkar</h1>
-    <div class="sub">AI/ML Engineer • On-device systems</div>
+<div class="nav">
+    <button onclick="load('portfolio')">Portfolio</button>
+    <button onclick="load('contact')">Contact</button>
+    <button onclick="load('cloud')">Cloud</button>
+</div>
 
-    <button class="primary-btn" onclick="goTo('static/frame of index.html')">
-        Enter Portfolio →
-    </button>
-
-    <div class="btn-group">
-        <button class="nav-btn" onclick="goTo('contact.html')">Contact</button>
-        <button class="nav-btn" onclick="goTo('cloud.html')">Cloud</button>
-        <button class="nav-btn" onclick="window.location.href='https://openmeg.vercel.app/'">
-            Messaging
-        </button>
-    </div>
-
-    <div class="footer" id="countdown">
-        Redirecting in 5...
-    </div>
+<div id="app">
+    Loading...
 </div>
 
 <script>
-function goTo(page) {
-    window.location.href = page;
+const routes = {
+    portfolio: "static/frame of index.html",
+    contact: "contact.html",
+    cloud: "cloud.html"
+};
+
+async function load(route) {
+    const res = await fetch(routes[route]);
+    const html = await res.text();
+    document.getElementById("app").innerHTML = html;
 }
 
-// countdown + redirect
-let t = 5;
-const el = document.getElementById("countdown");
-
-const timer = setInterval(() => {
-    t--;
-    el.innerText = "Redirecting in " + t + "...";
-
-    if (t === 0) {
-        clearInterval(timer);
-        goTo('static/frame of index.html');
-    }
-}, 1000);
+// default load
+load("portfolio");
 </script>
 
 </body>
