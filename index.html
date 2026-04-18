@@ -76,7 +76,7 @@ h1 {
     margin: 5px;
 }
 
-/* 🔥 FULLSCREEN FRAME */
+/* iframe */
 #frame {
     position: fixed;
     inset: 0;
@@ -85,13 +85,6 @@ h1 {
     border: none;
     display: none;
     z-index: 10;
-}
-
-/* footer */
-.footer {
-    margin-top: 20px;
-    font-size: 12px;
-    opacity: 0.5;
 }
 </style>
 </head>
@@ -102,33 +95,39 @@ h1 {
     <h1>Rutuj Dhodapkar</h1>
     <div class="sub">AI/ML Student</div>
 
-    <button class="primary-btn" onclick="enterSite('static/frame of index.html')">
+    <!-- internal page -->
+    <button class="primary-btn" onclick="openFrame('static/frame of index.html')">
         Enter Portfolio →
     </button>
 
     <div>
-        <button class="nav-btn" onclick="enterSite('contact.html')">Contact</button>
-        <button class="nav-btn" onclick="enterSite('cloud.html')">Cloud</button>
-        <button class="nav-btn" onclick="enterSite('https://openmeg.vercel.app/')">
+        <button class="nav-btn" onclick="openFrame('contact.html')">Contact</button>
+        <button class="nav-btn" onclick="openFrame('cloud.html')">Cloud</button>
+
+        <!-- external -->
+        <button class="nav-btn" onclick="openExternal('https://openmeg.vercel.app/')">
             Messaging
         </button>
     </div>
 </div>
 
-<!-- FULLSCREEN VIEW -->
 <iframe id="frame"></iframe>
 
 <script>
 const frame = document.getElementById("frame");
 const landing = document.getElementById("landing");
 
-function enterSite(page) {
+// internal pages → iframe
+function openFrame(page) {
     frame.src = page;
     frame.style.display = "block";
     landing.style.display = "none";
 }
 
-
+// external links → new tab
+function openExternal(url) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+}
 </script>
 
 </body>
