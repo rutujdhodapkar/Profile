@@ -85,13 +85,6 @@ h1 {
     display: none;
     z-index: 10;
 }
-
-/* footer */
-.footer {
-    margin-top: 20px;
-    font-size: 12px;
-    opacity: 0.5;
-}
 </style>
 </head>
 
@@ -110,10 +103,6 @@ h1 {
         <button class="nav-btn" onclick="enterSite('cloud.html')">Cloud</button>
         <button class="nav-btn" onclick="enterSite('message.html')">Messaging</button>
     </div>
-
-    <div class="footer" id="countdown">
-        Redirecting in 5...
-    </div>
 </div>
 
 <iframe id="frame"></iframe>
@@ -125,7 +114,7 @@ const landing = document.getElementById("landing");
 /* INITIAL STATE */
 history.replaceState({ page: null }, "", "");
 
-/* LOAD PAGE INTO FRAME */
+/* LOAD PAGE */
 function enterSite(page) {
     frame.src = page;
     frame.style.display = "block";
@@ -134,7 +123,7 @@ function enterSite(page) {
     history.pushState({ page: page }, "", "");
 }
 
-/* BACK BUTTON SUPPORT */
+/* BACK BUTTON */
 window.addEventListener("popstate", (e) => {
     if (e.state && e.state.page) {
         frame.src = e.state.page;
@@ -145,20 +134,6 @@ window.addEventListener("popstate", (e) => {
         landing.style.display = "block";
     }
 });
-
-/* AUTO ENTER AFTER 5s */
-let t = 5;
-const el = document.getElementById("countdown");
-
-const timer = setInterval(() => {
-    t--;
-    el.innerText = "Redirecting in " + t + "...";
-
-    if (t === 0) {
-        clearInterval(timer);
-        enterSite("static/frame-index.html");
-    }
-}, 1000);
 </script>
 
 </body>
