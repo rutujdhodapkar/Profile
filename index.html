@@ -26,7 +26,7 @@ body {
     position: relative;
 }
 
-/* border */
+/* border frame */
 body::before {
     content: "";
     position: absolute;
@@ -35,7 +35,7 @@ body::before {
     border-radius: 16px;
 }
 
-/* landing */
+/* landing card */
 .card {
     text-align: center;
     padding: 50px 30px;
@@ -55,6 +55,7 @@ h1 {
     margin-bottom: 30px;
 }
 
+/* buttons */
 .primary-btn {
     width: 100%;
     padding: 14px;
@@ -75,7 +76,7 @@ h1 {
     margin: 5px;
 }
 
-/* FULLSCREEN FRAME */
+/* 🔥 FULLSCREEN FRAME */
 #frame {
     position: fixed;
     inset: 0;
@@ -84,6 +85,13 @@ h1 {
     border: none;
     display: none;
     z-index: 10;
+}
+
+/* footer */
+.footer {
+    margin-top: 20px;
+    font-size: 12px;
+    opacity: 0.5;
 }
 </style>
 </head>
@@ -94,56 +102,33 @@ h1 {
     <h1>Rutuj Dhodapkar</h1>
     <div class="sub">AI/ML Engineer • On-device systems</div>
 
-    <!-- 🔥 FIXED PORTFOLIO -->
-    <button class="primary-btn" onclick="enterSite('frame-index.html')">
+    <button class="primary-btn" onclick="enterSite('static/frame of index.html')">
         Enter Portfolio →
     </button>
 
     <div>
         <button class="nav-btn" onclick="enterSite('contact.html')">Contact</button>
         <button class="nav-btn" onclick="enterSite('cloud.html')">Cloud</button>
-
-        <!-- 🔥 OPEN IN NEW TAB -->
-        <button class="nav-btn" onclick="openExternal('https://openmeg.vercel.app/')">
+        <button class="nav-btn" onclick="enterSite('https://openmeg.vercel.app/')">
             Messaging
         </button>
     </div>
 </div>
 
+<!-- FULLSCREEN VIEW -->
 <iframe id="frame"></iframe>
 
 <script>
 const frame = document.getElementById("frame");
 const landing = document.getElementById("landing");
 
-/* INITIAL STATE */
-history.replaceState({ page: null }, "", "");
-
-/* LOAD PAGE INSIDE FRAME */
 function enterSite(page) {
     frame.src = page;
     frame.style.display = "block";
     landing.style.display = "none";
-
-    history.pushState({ page: page }, "", "");
 }
 
-/* OPEN EXTERNAL */
-function openExternal(url) {
-    window.open(url, "_blank");
-}
 
-/* BACK BUTTON */
-window.addEventListener("popstate", (e) => {
-    if (e.state && e.state.page) {
-        frame.src = e.state.page;
-        frame.style.display = "block";
-        landing.style.display = "none";
-    } else {
-        frame.style.display = "none";
-        landing.style.display = "block";
-    }
-});
 </script>
 
 </body>
@@ -175,7 +160,7 @@ body {
     position: relative;
 }
 
-/* border */
+/* border frame */
 body::before {
     content: "";
     position: absolute;
@@ -184,7 +169,7 @@ body::before {
     border-radius: 16px;
 }
 
-/* landing */
+/* landing card */
 .card {
     text-align: center;
     padding: 50px 30px;
@@ -204,6 +189,7 @@ h1 {
     margin-bottom: 30px;
 }
 
+/* buttons */
 .primary-btn {
     width: 100%;
     padding: 14px;
@@ -224,7 +210,7 @@ h1 {
     margin: 5px;
 }
 
-/* FULLSCREEN FRAME */
+/* 🔥 FULLSCREEN FRAME */
 #frame {
     position: fixed;
     inset: 0;
@@ -233,6 +219,13 @@ h1 {
     border: none;
     display: none;
     z-index: 10;
+}
+
+/* footer */
+.footer {
+    margin-top: 20px;
+    font-size: 12px;
+    opacity: 0.5;
 }
 </style>
 </head>
@@ -243,56 +236,33 @@ h1 {
     <h1>Rutuj Dhodapkar</h1>
     <div class="sub">AI/ML Engineer • On-device systems</div>
 
-    <!-- 🔥 FIXED PORTFOLIO -->
-    <button class="primary-btn" onclick="enterSite('frame-index.html')">
+    <button class="primary-btn" onclick="enterSite('static/frame of index.html')">
         Enter Portfolio →
     </button>
 
     <div>
         <button class="nav-btn" onclick="enterSite('contact.html')">Contact</button>
         <button class="nav-btn" onclick="enterSite('cloud.html')">Cloud</button>
-
-        <!-- 🔥 OPEN IN NEW TAB -->
-        <button class="nav-btn" onclick="openExternal('https://openmeg.vercel.app/')">
+        <button class="nav-btn" onclick="enterSite('https://openmeg.vercel.app/')">
             Messaging
         </button>
     </div>
 </div>
 
+<!-- FULLSCREEN VIEW -->
 <iframe id="frame"></iframe>
 
 <script>
 const frame = document.getElementById("frame");
 const landing = document.getElementById("landing");
 
-/* INITIAL STATE */
-history.replaceState({ page: null }, "", "");
-
-/* LOAD PAGE INSIDE FRAME */
 function enterSite(page) {
     frame.src = page;
     frame.style.display = "block";
     landing.style.display = "none";
-
-    history.pushState({ page: page }, "", "");
 }
 
-/* OPEN EXTERNAL */
-function openExternal(url) {
-    window.open(url, "_blank");
-}
 
-/* BACK BUTTON */
-window.addEventListener("popstate", (e) => {
-    if (e.state && e.state.page) {
-        frame.src = e.state.page;
-        frame.style.display = "block";
-        landing.style.display = "none";
-    } else {
-        frame.style.display = "none";
-        landing.style.display = "block";
-    }
-});
 </script>
 
 </body>
