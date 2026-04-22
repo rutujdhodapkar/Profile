@@ -220,6 +220,15 @@
     </div>
   </div>
   <script>
+    // Function to send height to parent
+    function sendHeight() {
+      // Use offsetHeight of main-flex-container or scrollHeight of document
+      const container = document.querySelector('.main-flex-container');
+      const height = container ? container.offsetHeight : document.documentElement.scrollHeight;
+      window.parent.postMessage({ type: 'set-iframe-height', height: height, src: 'info.html' }, '*');
+    }
+    window.addEventListener('resize', sendHeight);
+
     // Utility: Check if element is in viewport
     function isElementOnScreen(el) {
       if (!el) return false;
@@ -432,8 +441,11 @@
             }).join("");
             container.appendChild(p);
           });
+          // Send height after content is rendered
+          setTimeout(sendHeight, 100);
         }
       })
+
       .catch(err => {
         // Fallback if fetch fails or no data
         // window.location.href = "error.html";
