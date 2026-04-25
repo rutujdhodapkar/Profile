@@ -3,132 +3,166 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Rutuj Dhodapkar</title>
 <link rel="icon" href="https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/icons.png">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-}
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-    height: 100vh;
-    background: #0f0f0f0f;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
+  :root {
+    --bg: #f5f3ee;
+    --ink: #111;
+    --muted: rgba(17,17,17,0.45);
+    --border: rgba(17,17,17,0.12);
+    --pill-h: 44px;
+  }
 
-/* border frame */
-body::before {
-    content: "";
-    position: absolute;
-    inset: 20px;
-    border: 1px solid rgba(0,0,0,0.08);
-    border-radius: 16px;
-}
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+  }
 
-/* landing card */
-.card {
-    text-align: center;
-    padding: 50px 30px;
-    max-width: 420px;
-    width: 90%;
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none; z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed; inset: 18px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    pointer-events: none; z-index: 0;
+  }
+
+  #landing {
+    position: fixed; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
     z-index: 2;
-}
+    animation: fadeUp .7s ease both;
+  }
 
-h1 {
-    font-size: 26px;
-    font-weight: 600;
-}
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-.sub {
-    font-size: 14px;
-    opacity: 0.6;
-    margin-bottom: 30px;
-}
+  .eyebrow {
+    font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
 
-/* buttons */
-.primary-btn {
-    width: 100%;
-    padding: 14px;
-    border-radius: 40px;
-    border: 1px solid #000;
-    background: black;
-    color: white;
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .tagline {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 44px;
+  }
+
+  .cta {
+    display: flex; align-items: center; gap: 10px;
+    height: var(--pill-h);
+    padding: 0 26px;
+    background: var(--ink); color: #fff;
+    border: none; border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
     cursor: pointer;
-    margin-bottom: 15px;
-}
+    margin-bottom: 20px;
+    transition: transform .18s, box-shadow .18s;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+  .cta svg { transition: transform .2s; }
+  .cta:hover svg { transform: translateX(3px); }
 
-.nav-btn {
-    padding: 8px 14px;
-    border-radius: 30px;
-    border: 1px solid #000;
+  .nav-row { display: flex; gap: 8px; }
+
+  .nav-btn {
+    height: 36px; padding: 0 18px;
     background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; color: var(--ink);
     cursor: pointer;
-    margin: 5px;
-}
+    transition: background .15s, border-color .15s, transform .15s;
+  }
+  .nav-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); transform: translateY(-1px); }
 
-/* iframe */
-#frame {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: none;
-    z-index: 10;
-}
+  /* ── fullscreen shell ── */
+  #shell {
+    position: fixed; inset: 0;
+    display: none; flex-direction: column;
+    z-index: 20;
+    background: #fff;
+  }
+
+  #viewer {
+    flex: 1;
+    width: 100%; border: none;
+  }
 </style>
 </head>
-
 <body>
 
-<div class="card" id="landing">
-    <h1>Rutuj Dhodapkar</h1>
-    <div class="sub">AI/ML Student</div>
+<div id="landing">
+  <p class="eyebrow">Portfolio</p>
+  <h1>Rutuj Dhodapkar</h1>
+  <p class="tagline">AI / ML · Builder · CS Student</p>
 
-    <!-- internal page -->
-    <button class="primary-btn" onclick="openFrame('static/frame of index.html')">
-        Enter Portfolio →
-    </button>
+  <button class="cta" onclick="openFrame('static/frame of index.html', 'Portfolio')">
+    Enter Portfolio
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 
-    <div>
-        <button class="nav-btn" onclick="openFrame('contact.html')">Contact</button>
-        <button class="nav-btn" onclick="openFrame('cloud.html')">Cloud</button>
-
-        <!-- external -->
-        <button class="nav-btn" onclick="openExternal('https://openmeg.vercel.app/')">
-            Messaging
-        </button>
-    </div>
+  <div class="nav-row">
+  </div>
 </div>
 
-<iframe id="frame"></iframe>
+<div id="shell">
+  <iframe id="viewer" allowfullscreen></iframe>
+</div>
 
 <script>
-const frame = document.getElementById("frame");
-const landing = document.getElementById("landing");
+  const landing = document.getElementById('landing');
+  const shell    = document.getElementById('shell');
+  const viewer   = document.getElementById('viewer');
 
-// internal pages → iframe
-function openFrame(page) {
-    frame.src = page;
-    frame.style.display = "block";
-    landing.style.display = "none";
-}
+  function openFrame(src, label) {
+    viewer.src = src;
+    shell.style.display = 'flex';
+    landing.style.display = 'none';
+  }
 
-// external links → new tab
-function openExternal(url) {
+  function goBack() {
+    viewer.src = '';
+    shell.style.display = 'none';
+    landing.style.display = 'flex';
+  }
+
+  function openExternal(url) {
     window.open(url, '_blank', 'noopener,noreferrer');
-}
+  }
 </script>
-
 </body>
 </html>
