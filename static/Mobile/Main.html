@@ -1,1057 +1,1076 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Portfolio -Rutuj Dhodapkar</title>
-  <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
-  <style>
-    @font-face {
-      font-family: 'BitmapFont';
-      src: url('BitmapFont.ttf') format('truetype');
-      font-weight: 300;
-      font-style: normal;
-    }
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
-    body {
-      background: #0f0f0f;
-      color: #fff;  
-      min-height: 200vh;
-      margin: 0;
-      font-family: 'Krona One', 'BitmapFont', Arial, sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 0.01em;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-    }
-    /* --- 3-dot menu styles --- */
-    .menu-dot-social-row {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 1.1em;
-    }
-    .menu-dot-container {
-      position: fixed;
-      top: 28px;
-      left: 32px;
-      z-index: 10002;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      user-select: none;
-      gap: 0.7em;
-    }
-    .menu-dot-btn {
-      background: #fff;
-      border: none;
-      outline: none;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
-      transition: background 0.18s;
-      z-index: 10003;
-    }
-    .menu-dot-btn:hover, .menu-dot-btn:focus {
-      background: rgb(255, 255, 255);
-    }
-    .menu-dot-svg {
-      width: 28px;
-      height: 28px;
-      display: block;
-    }
-    .menu-dot-svg circle {
-      fill: #000 !important;
-    }
-    .menu-dropdown {
-      display: none;
-      position: absolute;
-      top: 56px;
-      left: 0;
-      min-width: 170px;
-      background: #fff;
-      color: #111;
-      border-radius: 1em;
-      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
-      padding: 0.7em 0.2em;
-      z-index: 10004;
-      font-family: 'BitmapFont', 'Krona One', Arial, sans-serif;
-      font-size: 1rem;
-      animation: menuFadeIn 0.18s;
-    }
-    .menu-dropdown.active {
-      display: block;
-      animation: menuFadeIn 0.18s;
-    }
-    @keyframes menuFadeIn {
-      from { opacity: 0; transform: translateY(-10px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    .menu-dropdown-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .menu-dropdown-list li {
-      margin: 0;
-      padding: 0;
-    }
-    .menu-dropdown-list button {
-      width: 100%;
-      background: none;
-      border: none;
-      outline: none;
-      color: #111;
-      font-family: inherit;
-      font-size: 1rem;
-      text-align: left;
-      padding: 0.5em 1em;
-      border-radius: 0.7em;
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
-      margin-bottom: 0.1em;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      display: flex;
-      align-items: center;
-      gap: 0.5em;
-    }
-    .menu-dropdown-list button:last-child {
-      margin-bottom: 0;
-    }
-    .menu-dropdown-list button:hover, .menu-dropdown-list button:focus {
-      background: #f0f0f0;
-      color: #000;
-    }
-    .social-btns-bar {
-      display: none !important;
-    }
-    .social-btn {
-      display: none !important;
-    }
-    @media (max-width: 600px) {
-      .menu-dot-container {
-        top: 12px;
-        left: 10px;
-        gap: 0.3em;
-      }
-      .menu-dot-btn {
-        width: 38px;
-        height: 38px;
-      }
-      .menu-dot-svg {
-        width: 20px;
-        height: 20px;
-      }
-      .menu-dropdown {
-        min-width: 110px;
-        font-size: 0.85rem;
-      }
-      .social-btn {
-        width: 28px;
-        height: 28px;
-      }
-    }
-    #rain-pattern-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 1s;
-    }
-    #rain-pattern-overlay.active {
-      opacity: 1;
-      pointer-events: none;
-    }
-    .main-center-container {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      min-height: 100vh;
-      width: 100vw;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .main-message {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
-      z-index: 2;
-      pointer-events: auto;
-      margin-left: 6vw;
-    }
-    .main-greeting {
-      font-size: 2.6rem; /* Increased from 2.1rem */
-      font-family: 'Krona One', 'BitmapFont', Arial, sans-serif;
-      font-weight: bold;
-      line-height: 1.1;
-      margin-bottom: 0.1em;
-    }
-    .mdesc1 {
-      font-size: 0.95rem;
-      font-family: 'BitmapFont', Arial, sans-serif;
-      color: #fff;
-      margin-bottom: 0.2em;
-      margin-top: 0.2em;
-      line-height: 1.4;
-      max-width: 700px;
-    }
-    @media (max-width: 600px) {
-      .mdesc1 {
-        font-size: 0.85rem;
-        max-width: 95vw;
-      }
-      .main-greeting {
-        font-size: 1.85rem; /* Increased from 1.45rem */
-      }
-      .name-box {
-        font-size: 1.85rem; /* Increased from 1.45rem */
-        padding: 0.18em 0.18em 0.18em 0.4em;
-      }
-    }
-    .name-box {
-      background: #ffffffdb;
-      color: #000;
-      -webkit-backdrop-filter: blur(5px);
-      backdrop-filter: blur(5px);
-      padding: 0.3em 0.3em 0.3em 0.7em;
-      border-radius: 0.45em;
-      font-size: 2.6rem; /* Increased from 2.1rem */
-      font-weight: bold;
-      display: inline-block;
-      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
-      min-width: 2ch;
-      position: relative;
-      white-space: pre;
-      max-width: fit-content;
-      font-family: 'Krona One', 'BitmapFont', Arial, sans-serif;
-      vertical-align: middle;
-    }
-    .typing-caret {
-      display: inline-block;
-      width: 0.45em;
-      height: 0.45em;
-      border-radius: 50%;
-      background: #000;
-      color: #000;
-      margin-left: 0.12em;
-      margin-bottom: 0.25em;
-      animation: blink-caret 1s steps(1) infinite;
-      font-weight: bold;
-      font-size: inherit;
-      opacity: 1;
-      transition: opacity 0.2s;
-      position: relative;
-      left: 0.1ch;
-      vertical-align: bottom;
-    }
-    @keyframes blink-caret {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
-    }
-    .get-connected-container {
-      margin-top: 1.2rem;
-      pointer-events: auto;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 0.5em;
-    }
-    .get-connected-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5em;
-      font-family: 'BitmapFont', 'Krona One', Arial, sans-serif;
-      font-size: 0.95rem;
-      font-weight: bold;
-      color: #fff;
-      background: transparent;
-      border: 2px solid #fff;
-      border-radius: 2em;
-      padding: 0.35em 1em 0.35em 0.8em;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s, border-color 0.18s;
-      outline: none;
-      position: relative;
-      z-index: 2;
-      box-shadow: 0 2px 16px 0 #00000011;
-      backdrop-filter: blur(5px);
-      user-select: none;
-      overflow: hidden;
-    }
-    .get-connected-btn .light-effect {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -60%;
-      width: 60%;
-      height: 100%;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.151) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.195) 100%);
-      opacity: 0.85;
-      pointer-events: none;
-      z-index: 1;
-      transform: skewX(-18deg);
-      transition: left 0.45s cubic-bezier(.4,1.2,.6,1);
-    }
-    .get-connected-btn:hover .light-effect,
-    .get-connected-btn:focus .light-effect {
-      left: 110%;
-      transition: left 0.45s cubic-bezier(.4,1.2,.6,1);
-    }
-    .get-connected-btn:hover, .get-connected-btn:focus {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      border-color: #fff;
-    }
-    .arrow-inside-btn {
-      display: inline-block;
-      width: 1em;
-      height: 1em;
-      vertical-align: middle;
-      z-index: 2;
-      position: relative;
-    }
-    .blogs-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5em;
-      font-family: 'BitmapFont', 'Krona One', Arial, sans-serif;
-      font-size: 0.9rem;
-      font-weight: bold;
-      color: #000;
-      background: #fff;
-      border: 2px solid #fff;
-      border-radius: 2em;
-      padding: 0.32em 0.9em 0.32em 0.7em;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s, border-color 0.18s;
-      outline: none;
-      position: relative;
-      z-index: 2;
-      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
-      user-select: none;
-      overflow: hidden;
-    }
-    .blogs-btn:hover, .blogs-btn:focus {
-      background: #f5f5f5;
-      color: #000;
-      border-color: #fff;
-    }
-    .arrow-topright-btn {
-      display: inline-block;
-      width: 0.8em;
-      height: 0.8em;
-      vertical-align: middle;
-      z-index: 2;
-      position: relative;
-    }
-    @media (max-width: 600px) {
-      .menu-dot-container {
-        top: 12px;
-        left: 10px;
-        gap: 0.3em;
-      }
-      .menu-dot-btn {
-        width: 32px;
-        height: 32px;
-      }
-      .menu-dot-svg {
-        width: 16px;
-        height: 16px;
-      }
-      .menu-dropdown {
-        min-width: 90px;
-        font-size: 0.75rem;
-      }
-      .get-connected-btn {
-        font-size: 0.8rem;
-        padding: 0.28em 0.7em 0.28em 0.6em;
-      }
-      .arrow-inside-btn {
-        width: 0.8em;
-        height: 0.8em;
-      }
-      .blogs-btn {
-        font-size: 0.75rem;
-        padding: 0.22em 0.7em 0.22em 0.5em;
-      }
-      .arrow-topright-btn {
-        width: 0.6em;
-        height: 0.6em;
-      }
-      .main-greeting {
-        font-size: 1.85rem; /* Increased from 1.45rem */
-      }
-      .name-box {
-        font-size: 1.85rem; /* Increased from 1.45rem */
-        padding: 0.18em 0.18em 0.18em 0.4em;
-      }
-    }
-    .circle-reveal {
-      display: none !important;
-    }
-    .content {
-      position: relative;
-      z-index: 2;
-      color: #111;
-      font-family: 'Krona One', 'BitmapFont', Arial, sans-serif;
-      font-size: 1.1rem;
-      text-align: center;
-      margin-top: 40vh;
-      transition: color 0.5s;
-      pointer-events: none;
-    }
-    .number {
-      position: fixed;
-      right: 10%;
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 80px;
-      font-weight: 900;
-      color: transparent;
-      -webkit-text-stroke: 2px #ffff;
-      opacity: 0.3;
-      z-index: 2002;
-    }
-    .sign-up-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      font-family: 'BitmapFont', Arial, sans-serif;
-      font-size: 0.8rem;
-      font-weight: bold;
-      color: #fff;
-      background: transparent;
-      border: 2px solid #fff;
-      border-radius: 2em;
-      padding: 0.3em 0.8em;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s, border-color 0.18s;
-      outline: none;
-      z-index: 3;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5em;
-    }
-    .sign-up-btn:hover, .sign-up-btn:focus {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      border-color: #fff;
-    }
-    .arrow-topright-signup {
-      display: inline-block;
-      width: 0.8em;
-      height: 0.8em;
-      vertical-align: middle;
-      z-index: 2;
-      position: relative;
-    }
-    .black-fade-overlay {
-      position: fixed;
-      z-index: 10000;
-      top: 0; left: 0; right: 0; bottom: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
-      opacity: 1;
-      pointer-events: none;
-      transition: opacity 1s linear;
-    }
-    .black-fade-overlay.transparent {
-      opacity: 0;
-      transition: opacity 1s linear;
-    }
-    .blur-overlay {
-      position: fixed;
-      z-index: 9999;
-      top: 0; left: 0; right: 0; bottom: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      background: rgba(0,0,0,0.18);
-      backdrop-filter: blur(32px);
-      -webkit-backdrop-filter: blur(32px);
-      opacity: 1;
-      transition: opacity 1.2s cubic-bezier(.4,1.2,.6,1);
-      will-change: opacity;
-    }
-    .blur-overlay.hide {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 1.2s cubic-bezier(.4,1.2,.6,1);
-    }
-    .project-transition-overlay {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: -150px;
-      height: 0;
-      background: #fff;
-      z-index: 10010;
-      transition: height 0.6s cubic-bezier(.4,1.2,.6,1), bottom 0.6s cubic-bezier(.4,1.2,.6,1);
-      pointer-events: none;
-    }
-    .project-transition-overlay.active {
-      height: 100vh;
-      bottom: 0;
-      transition: height 0.6s cubic-bezier(.4,1.2,.6,1), bottom 0.6s cubic-bezier(.4,1.2,.6,1);
-    }
-    .bottom-center-prompt {
-      position: fixed;
-      left: 50%;
-      bottom: 3.5vh;
-      transform: translateX(-50%);
-      z-index: 13;
-      background: #00000011;
-      backdrop-filter: blur(8px);
-      border: 2px solid #ffffff;
-      color: #fff;
-      font-family: 'BitmapFont', Arial, sans-serif;
-      font-size: 0.95rem;
-      padding: 0.5em 1.1em;
-      border-radius: 2em;
-      box-shadow: 0 2px 16px 0 #00000011;
-      letter-spacing: 0.01em;
-      text-align: center;
-      pointer-events: none;
-      user-select: none;
-      opacity: 0.97;
-      transition: opacity 0.3s;
-    }
-    @media (max-width: 600px) {
-      .bottom-center-prompt {
-        font-size: 0.8rem;
-        padding: 0.3em 0.7em;
-        bottom: 1.5vh;
-      }
-    }
-  </style>
-  <script>
-    window.addEventListener('beforeunload', function () {
-      window.scrollTo(0, 0);
-    });
-    window.addEventListener('DOMContentLoaded', function () {
-      setTimeout(function() {
-        window.scrollTo(0, 0);
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-      }, 0);
-    });
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rutuj Dhodapkar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f2eb;
+  --bg2:#ede9e0;
+  --ink:#1a1714;
+  --ink2:#4a4540;
+  --ink3:#8a8278;
+  --red:#d63f2a;
+  --cream:#faf7f0;
+  --line:rgba(26,23,20,0.12);
+  --line2:rgba(26,23,20,0.06);
+  --display:'Bebas Neue',sans-serif;
+  --body:'Bricolage Grotesque',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:var(--body);
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  cursor:none;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor{
+  position:fixed;
+  width:10px;height:10px;
+  background:var(--red);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.08s ease,width 0.2s ease,height 0.2s ease,background 0.2s ease;
+  mix-blend-mode:multiply;
+}
+.cursor-ring{
+  position:fixed;
+  width:36px;height:36px;
+  border:1.5px solid var(--red);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform 0.18s ease,width 0.25s ease,height 0.25s ease,opacity 0.2s ease;
+  opacity:0.5;
+}
+body:has(a:hover) .cursor,.cursor.expanded{width:16px;height:16px}
+body:has(a:hover) .cursor-ring,.cursor-ring.expanded{width:52px;height:52px;opacity:0.3}
+
+/* ── NOISE ── */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;height:52px;
+  background:rgba(245,242,235,0.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+  transition:background 0.3s;
+}
+.nav-logo{
+  font-family:var(--display);font-size:22px;letter-spacing:0.04em;
+  color:var(--ink);text-decoration:none;
+  transition:color 0.2s;
+}
+.nav-logo:hover{color:var(--red)}
+.nav-logo sup{font-family:var(--mono);font-size:8px;color:var(--red);vertical-align:super;letter-spacing:0.1em}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{
+  font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--ink3);text-decoration:none;transition:color 0.15s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;
+  height:1px;background:var(--red);transform:scaleX(0);
+  transform-origin:right;transition:transform 0.25s ease;
+}
+.nav-links a:hover{color:var(--red)}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav-hire{
+  font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--cream);background:var(--ink);padding:6px 14px;border-radius:2px;
+  text-decoration:none;transition:background 0.2s,transform 0.2s;
+}
+.nav-hire:hover{background:var(--red);transform:translateY(-1px)}
+.hamburger{
+  display:none;cursor:none;width:32px;height:32px;
+  align-items:center;justify-content:center;flex-direction:column;gap:6px;
+}
+.hamburger span{display:block;width:20px;height:1.5px;background:var(--ink);transition:all 0.3s;transform-origin:center}
+.mob-menu{
+  display:none;position:fixed;top:52px;left:0;right:0;
+  background:rgba(245,242,235,0.97);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);padding:1.5rem;z-index:499;flex-direction:column;
+}
+.mob-menu a{
+  font-size:13px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--ink2);text-decoration:none;padding:0.875rem 0;
+  border-bottom:1px solid var(--line2);display:block;transition:color 0.15s,padding-left 0.2s;
+}
+.mob-menu a:last-child{border:none}
+.mob-menu a:hover{color:var(--red);padding-left:8px}
+@media(max-width:680px){
+  .nav-links,.nav-hire{display:none}
+  .hamburger{display:flex}
+}
+
+/* ── HERO ── */
+.hero{
+  min-height:100svh;padding:80px 1.5rem 3rem;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  position:relative;border-bottom:1px solid var(--line);overflow:hidden;
+}
+
+/* Animated grid bg */
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(var(--line2) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line2) 1px,transparent 1px);
+  background-size:60px 60px;
+  animation:gridfade 3s ease forwards;
+  pointer-events:none;
+}
+@keyframes gridfade{from{opacity:0}to{opacity:1}}
+
+.hero-eyebrow{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--red);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;
+  opacity:0;animation:fadeup 0.6s 0.3s ease forwards;
+}
+.hero-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--red)}
+
+.hero-name{
+  font-family:var(--display);
+  font-size:clamp(4.5rem,20vw,12rem);
+  line-height:0.88;letter-spacing:0.01em;color:var(--ink);
+  overflow:hidden;
+}
+.hero-name .word{
+  display:block;opacity:0;transform:translateY(100%);
+  animation:wordslide 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.hero-name .word:nth-child(1){animation-delay:0.5s}
+.hero-name .word.outline{
+  color:transparent;-webkit-text-stroke:2px var(--ink);
+  animation-delay:0.65s;
+}
+@media(max-width:480px){.hero-name .word.outline{-webkit-text-stroke:1.5px var(--ink)}}
+
+@keyframes wordslide{to{opacity:1;transform:translateY(0)}}
+
+.hero-bottom{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:1.5rem;flex-wrap:wrap;margin-top:2rem;
+  opacity:0;animation:fadeup 0.6s 1s ease forwards;
+}
+.hero-desc{
+  font-size:14px;color:var(--ink2);line-height:1.75;
+  max-width:360px;font-weight:400;
+}
+.hero-ctas{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.25rem}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--body);font-size:12px;font-weight:600;
+  letter-spacing:0.06em;text-transform:uppercase;
+  padding:9px 18px;border-radius:2px;text-decoration:none;
+  transition:all 0.2s;border:1px solid transparent;
+}
+.btn-solid{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.btn-solid:hover{background:var(--red);border-color:var(--red);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-outline:hover{border-color:var(--ink);transform:translateY(-2px)}
+
+.hero-scroll{
+  position:absolute;bottom:2rem;right:1.5rem;
+  font-family:var(--mono);font-size:9px;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--ink3);writing-mode:vertical-rl;
+  display:flex;align-items:center;gap:8px;
+  opacity:0;animation:fadeup 0.6s 1.3s ease forwards;
+}
+.hero-scroll::after{
+  content:'';width:1px;height:40px;background:var(--ink3);
+  animation:scrollpulse 1.8s ease-in-out infinite;
+}
+@keyframes scrollpulse{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(0.3);opacity:0.3}}
+
+/* ── MARQUEE ── */
+.marquee-wrap{
+  overflow:hidden;border-bottom:1px solid var(--line);
+  padding:0.65rem 0;background:var(--ink);
+}
+.marquee-track{
+  display:flex;animation:marquee 20s linear infinite;white-space:nowrap;
+}
+.marquee-track span{
+  font-family:var(--display);font-size:13px;letter-spacing:0.12em;
+  color:rgba(250,247,240,0.85);padding:0 2rem;
+}
+.marquee-track span.sep{color:var(--red);padding:0;font-size:10px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTION SHELL ── */
+.section{
+  padding:4.5rem 1.5rem;max-width:960px;margin:0 auto;
+  border-bottom:1px solid var(--line);
+}
+.section-label{display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem}
+.section-num{font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:0.1em}
+.section-line{flex:1;height:1px;background:var(--line)}
+.section-title{
+  font-family:var(--display);font-size:clamp(2.2rem,9vw,4rem);
+  line-height:1;letter-spacing:0.03em;margin-bottom:2.5rem;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.65s ease,transform 0.65s cubic-bezier(0.16,1,0.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity 0.6s ease,transform 0.6s cubic-bezier(0.16,1,0.3,1)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(0.95);transition:opacity 0.6s ease,transform 0.6s cubic-bezier(0.16,1,0.3,1)}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
+.d1{transition-delay:0.05s}.d2{transition-delay:0.12s}.d3{transition-delay:0.19s}
+.d4{transition-delay:0.26s}.d5{transition-delay:0.33s}.d6{transition-delay:0.4s}
+
+/* ── ABOUT ── */
+.about-grid{
+  display:grid;grid-template-columns:1fr;gap:2rem;
+}
+@media(min-width:680px){.about-grid{grid-template-columns:1fr 1fr;gap:3rem;align-items:start}}
+
+.about-accent{
+  font-family:var(--display);font-size:clamp(5rem,18vw,9rem);
+  line-height:0.85;letter-spacing:0.02em;
+  color:transparent;-webkit-text-stroke:1.5px var(--line);
+  user-select:none;pointer-events:none;
+  position:absolute;top:-1rem;right:1.5rem;
+  opacity:0.6;
+}
+.about-wrap{position:relative;overflow:hidden}
+
+.about-para{
+  font-size:14px;color:var(--ink2);line-height:1.85;font-weight:400;
+  margin-bottom:1.5rem;
+}
+.about-para:last-child{margin-bottom:0}
+.about-para strong{color:var(--ink);font-weight:600}
+
+.about-side{}
+.about-quote{
+  font-family:var(--display);font-size:clamp(1.4rem,4vw,2rem);
+  line-height:1.2;color:var(--ink);letter-spacing:0.02em;
+  border-left:3px solid var(--red);padding-left:1.25rem;
+  margin-bottom:2rem;
+}
+.about-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.5rem}
+.chip{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--ink3);
+  border:1px solid var(--line);padding:4px 10px;border-radius:2px;
+  transition:border-color 0.2s,color 0.2s,background 0.2s;
+}
+.chip:hover{border-color:var(--red);color:var(--red);background:rgba(214,63,42,0.05)}
+
+/* ── EXPERIENCE ── */
+.exp-item{
+  border-top:1px solid var(--line);padding:1.75rem 0;
+  transition:padding-left 0.25s ease;
+}
+.exp-item:last-child{border-bottom:1px solid var(--line)}
+.exp-item:hover{padding-left:8px}
+.exp-header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:0.75rem}
+.exp-role{font-size:16px;font-weight:700;color:var(--ink);line-height:1.2}
+.exp-co{font-family:var(--mono);font-size:11px;color:var(--red);letter-spacing:0.06em;margin-top:3px}
+.exp-period{font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:0.06em;white-space:nowrap;padding-top:3px}
+.exp-body{font-size:13px;color:var(--ink2);line-height:1.7;max-width:600px;margin-bottom:1rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink3);border:1px solid var(--line);padding:3px 8px;border-radius:2px;
+  transition:all 0.15s;
+}
+.tag:hover{border-color:var(--red);color:var(--red)}
+
+/* ── PROJECTS ── */
+.proj-grid{
+  display:grid;grid-template-columns:1fr;
+  border:1px solid var(--line);border-radius:4px;overflow:hidden;
+}
+.proj-card{
+  background:var(--cream);padding:1.75rem;
+  border-bottom:1px solid var(--line);
+  text-decoration:none;display:block;
+  position:relative;overflow:hidden;
+  transition:background 0.2s;
+}
+.proj-card:last-child{border-bottom:none}
+.proj-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:3px;background:var(--red);transform:scaleY(0);
+  transform-origin:bottom;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.proj-card:hover{background:var(--bg2)}
+.proj-card:hover::before{transform:scaleY(1)}
+
+.proj-img{
+  width:100%;height:160px;object-fit:cover;border-radius:2px;
+  margin-bottom:1.25rem;filter:grayscale(30%);
+  transition:filter 0.3s,transform 0.3s;
+}
+.proj-card:hover .proj-img{filter:grayscale(0%);transform:scale(1.01)}
+
+.proj-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.4rem}
+.proj-name{font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-0.01em}
+.proj-arrow{
+  font-size:18px;color:var(--ink3);
+  transition:transform 0.25s,color 0.2s;flex-shrink:0;
+}
+.proj-card:hover .proj-arrow{transform:translate(4px,-4px);color:var(--red)}
+.proj-type{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--red);margin-bottom:0.75rem;
+}
+.proj-desc{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:1rem}
+.proj-meta{
+  display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;
+  margin-bottom:0.75rem;
+}
+.proj-date{
+  font-family:var(--mono);font-size:9px;color:var(--ink3);
+  letter-spacing:0.06em;
+}
+
+@media(min-width:640px){
+  .proj-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ── SKILLS ── */
+.skills-wrap{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  border:1px solid var(--line);border-radius:4px;overflow:hidden;
+}
+.skill-group{
+  background:var(--cream);padding:1.5rem;
+  border-bottom:1px solid var(--line);
+  transition:background 0.2s;
+}
+.skill-group:nth-child(odd){border-right:1px solid var(--line)}
+.skill-group:hover{background:var(--bg2)}
+@media(max-width:400px){
+  .skills-wrap{grid-template-columns:1fr}
+  .skill-group:nth-child(odd){border-right:none}
+}
+.sg-title{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--red);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--line2);
+}
+.sg-items{display:flex;flex-direction:column;gap:7px}
+.sg-item{
+  font-size:12.5px;color:var(--ink2);font-weight:400;
+  display:flex;align-items:center;gap:8px;
+  transition:color 0.15s,transform 0.15s;
+}
+.sg-item:hover{color:var(--ink);transform:translateX(4px)}
+.sg-item::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--ink3);flex-shrink:0;transition:background 0.15s}
+.sg-item:hover::before{background:var(--red)}
+
+/* ── EDUCATION ── */
+.edu-wrap{
+  display:flex;flex-direction:column;border:1px solid var(--line);
+  border-radius:4px;overflow:hidden;
+}
+.edu-item{
+  background:var(--cream);padding:1.5rem 1.75rem;
+  display:flex;gap:1.25rem;border-bottom:1px solid var(--line);align-items:flex-start;
+  transition:background 0.2s,padding-left 0.25s;
+}
+.edu-item:last-child{border-bottom:none}
+.edu-item:hover{background:var(--bg2);padding-left:2.25rem}
+.edu-yr{
+  font-family:var(--display);font-size:2rem;line-height:1;
+  color:var(--line);flex-shrink:0;width:60px;letter-spacing:0.02em;
+  transition:color 0.2s;
+}
+.edu-item:hover .edu-yr{color:rgba(214,63,42,0.2)}
+.edu-degree{font-size:14px;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:3px}
+.edu-school{font-family:var(--mono);font-size:11px;color:var(--red);letter-spacing:0.04em}
+.edu-sub{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:2px}
+
+/* ── ACHIEVEMENTS ── */
+.ach-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  border:1px solid var(--line);border-radius:4px;overflow:hidden;
+}
+.ach-item{
+  background:var(--cream);padding:1.5rem;
+  border-bottom:1px solid var(--line);
+  transition:background 0.2s;position:relative;overflow:hidden;
+}
+.ach-item:nth-child(odd){border-right:1px solid var(--line)}
+.ach-item:hover{background:var(--bg2)}
+.ach-item::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:2px;background:var(--red);transform:scaleX(0);
+  transform-origin:left;transition:transform 0.35s ease;
+}
+.ach-item:hover::after{transform:scaleX(1)}
+@media(max-width:400px){
+  .ach-grid{grid-template-columns:1fr}
+  .ach-item:nth-child(odd){border-right:none}
+}
+.ach-rank{
+  font-family:var(--display);font-size:2.5rem;color:var(--red);
+  line-height:1;margin-bottom:0.5rem;
+}
+.ach-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.ach-sub{font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:0.04em}
+
+/* ── CERTS ── */
+.cert-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  border:1px solid var(--line);border-radius:4px;overflow:hidden;
+}
+.cert-item{
+  background:var(--cream);padding:1.25rem 1.5rem;
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:1rem;
+  text-decoration:none;transition:background 0.2s,padding-left 0.25s;
+}
+.cert-item:nth-child(odd){border-right:1px solid var(--line)}
+.cert-item:hover{background:var(--bg2);padding-left:2rem}
+.cert-img{
+  width:40px;height:40px;object-fit:contain;border-radius:4px;
+  flex-shrink:0;filter:grayscale(20%);transition:filter 0.2s;
+}
+.cert-item:hover .cert-img{filter:grayscale(0%)}
+.cert-name{font-size:12px;font-weight:600;color:var(--ink)}
+.cert-by{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:0.06em;margin-top:2px}
+@media(max-width:400px){
+  .cert-grid{grid-template-columns:1fr}
+  .cert-item:nth-child(odd){border-right:none}
+}
+
+/* ── CONTACT ── */
+.contact-wrap{
+  display:grid;grid-template-columns:1fr;border:1px solid var(--line);
+  border-radius:4px;overflow:hidden;
+}
+.contact-row{
+  display:flex;align-items:center;gap:1rem;
+  padding:1.25rem 1.5rem;background:var(--cream);
+  border-bottom:1px solid var(--line);text-decoration:none;
+  transition:background 0.2s,padding-left 0.25s;
+}
+.contact-row:last-child{border-bottom:none}
+.contact-row:hover{background:var(--bg2);padding-left:2.25rem}
+.contact-row:hover .c-arrow{transform:translate(4px,-4px);color:var(--red)}
+.c-type{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);width:70px;flex-shrink:0}
+.c-val{font-size:13px;color:var(--ink);font-weight:500}
+.c-arrow{margin-left:auto;font-size:16px;color:var(--ink3);transition:all 0.25s;flex-shrink:0}
+
+/* ── FOOTER ── */
+.footer-inner{
+  padding:2rem 1.5rem;display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:0.5rem;
+  max-width:960px;margin:0 auto;
+}
+.foot-copy{font-family:var(--mono);font-size:10px;letter-spacing:0.06em;color:var(--ink3)}
+.foot-tag{font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:0.06em}
+
+/* ── PAGE LOAD BAR ── */
+.load-bar{
+  position:fixed;top:0;left:0;right:0;height:2px;
+  background:var(--red);z-index:9999;
+  transform-origin:left;animation:loadbar 0.8s ease forwards;
+}
+@keyframes loadbar{from{transform:scaleX(0)}to{transform:scaleX(1);opacity:0}}
+
+/* ── KEYFRAMES ── */
+@keyframes fadeup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+</style>
 </head>
 <body>
-  <div class="menu-dot-container">
-    <div class="menu-dot-social-row">
-      <button class="menu-dot-btn" id="menuDotBtn" aria-label="Open menu">
-        <svg class="menu-dot-svg" viewBox="0 0 32 32" fill="none">
-          <circle cx="6" cy="16" r="3.2"/>
-          <circle cx="16" cy="16" r="3.2"/>
-          <circle cx="26" cy="16" r="3.2"/>
-        </svg>
-      </button>
-    </div>
-    <div class="menu-dropdown" id="menuDropdown">
-      <ul class="menu-dropdown-list">
-        <li>
-          <button type="button" id="menuHomeBtn">Home</button>
-        </li>
-        <li>
-          <button type="button" id="menuAboutBtn">About</button>
-        </li>
-        <li>
-          <button type="button" id="menuProjectsBtn">Projects</button>
-        </li>
-        <li>
-          <button type="button" id="menuContactBtn">Contact</button>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="black-fade-overlay" id="blackFadeOverlay"></div>
-  <div id="rain-pattern-overlay"></div>
-  <div class="blur-overlay" id="blurOverlay"></div>
-  <div class="project-transition-overlay" id="projectTransitionOverlay"></div>
 
-  <div class="main-center-container">
-    <div class="main-message">
-      <div class="main-greeting" id="greeting-hello">Hello There!!!</div>
-      <div class="main-greeting" id="greeting-im">
-        I'm <span class="name-box"><b id="typed-name"></b><span class="typing-caret"></span></span>
-      </div>
-      <div id="mdesc1" class="mdesc1" style="display:none;"></div>
-      <div style="font-size: 0.85rem; color: #fff; margin-top: 0.2em; margin-bottom: 0.2em; font-family: 'BitmapFont', Arial, sans-serif;">
-        Building systems that can talk think and improve itself.
-      </div>
-      <div class="get-connected-container">
-        <button class="get-connected-btn" onclick="window.location.href='contact.html'">
-          <span class="light-effect"></span>
-          Get connected
-          <span class="arrow-inside-btn">
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M7 7 L17 17"/>
-              <polyline points="10 17 17 17 17 10"/>
-            </svg>
-          </span>
-        </button>
+<div class="load-bar"></div>
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">RD<sup>®</sup></a>
+  <div style="display:flex;align-items:center;gap:1.5rem">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Work</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="mailto:rutujdhodapkar@gmail.com" class="nav-hire">Hire me</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span id="h1"></span><span id="h2"></span><span id="h3"></span>
+  </div>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#experience" onclick="closeMenu()">Work</a>
+  <a href="#projects" onclick="closeMenu()">Projects</a>
+  <a href="#skills" onclick="closeMenu()">Skills</a>
+  <a href="#education" onclick="closeMenu()">Education</a>
+  <a href="#achievements" onclick="closeMenu()">Wins</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-eyebrow">AI/ML Engineer · Pune, India · 2026</div>
+  <h1 class="hero-name">
+    <span class="word">RUTUJ</span>
+    <span class="word outline">DHODAPKAR</span>
+  </h1>
+  <div class="hero-bottom">
+    <div>
+      <p class="hero-desc">Building autonomous AI systems, agentic pipelines, and on-device LLM infrastructure. Not for the hype — for the science.</p>
+      <div class="hero-ctas">
+        <a href="mailto:rutujdhodapkar@gmail.com" class="btn btn-solid">Hire me →</a>
+        <a href="https://github.com/rutujdhodapkar" target="_blank" class="btn btn-outline">GitHub ↗</a>
+        <a href="https://linkedin.com/rutujdhodapkar" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
       </div>
     </div>
   </div>
-  <div class="content">
-    <div style="font-size:0.85rem; margin-top:2em;"></div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span>AI ENGINEER</span><span class="sep">✦</span>
+    <span>PYTHON</span><span class="sep">✦</span>
+    <span>AUTONOMOUS AGENTS</span><span class="sep">✦</span>
+    <span>ON-DEVICE LLM</span><span class="sep">✦</span>
+    <span>AWS ML SPECIALTY</span><span class="sep">✦</span>
+    <span>BROWSER AUTOMATION</span><span class="sep">✦</span>
+    <span>OLLAMA · GEMMA</span><span class="sep">✦</span>
+    <span>NEXUS PROJECT</span><span class="sep">✦</span>
+    <span>JSPM UNIVERSITY</span><span class="sep">✦</span>
+    <span>PUNE INDIA</span><span class="sep">✦</span>
+    <span>AI ENGINEER</span><span class="sep">✦</span>
+    <span>PYTHON</span><span class="sep">✦</span>
+    <span>AUTONOMOUS AGENTS</span><span class="sep">✦</span>
+    <span>ON-DEVICE LLM</span><span class="sep">✦</span>
+    <span>AWS ML SPECIALTY</span><span class="sep">✦</span>
+    <span>BROWSER AUTOMATION</span><span class="sep">✦</span>
+    <span>OLLAMA · GEMMA</span><span class="sep">✦</span>
+    <span>NEXUS PROJECT</span><span class="sep">✦</span>
+    <span>JSPM UNIVERSITY</span><span class="sep">✦</span>
+    <span>PUNE INDIA</span><span class="sep">✦</span>
   </div>
-  <div class="number"></div>
-  <div class="bottom-center-prompt">
-    Scroll to get started
+</div>
+
+<!-- ABOUT -->
+<section class="section reveal" id="about">
+  <div class="section-label">
+    <span class="section-num">00</span>
+    <div class="section-line"></div>
   </div>
-  <script>
-    (function() {
-      const menuBtn = document.getElementById('menuDotBtn');
-      const menuDropdown = document.getElementById('menuDropdown');
-      let menuOpen = false;
+  <h2 class="section-title">ABOUT</h2>
 
-      function openMenu() {
-        menuDropdown.classList.add('active');
-        menuOpen = true;
-        const firstBtn = menuDropdown.querySelector('button');
-        if (firstBtn) firstBtn.focus();
-      }
-      function closeMenu() {
-        menuDropdown.classList.remove('active');
-        menuOpen = false;
-      }
-      menuBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (menuOpen) {
-          closeMenu();
-        } else {
-          openMenu();
-        }
-      });
-      document.addEventListener('mousedown', function(e) {
-        if (menuOpen && !menuDropdown.contains(e.target) && e.target !== menuBtn) {
-          closeMenu();
-        }
-      });
-      document.addEventListener('keydown', function(e) {
-        if (menuOpen && e.key === 'Escape') {
-          closeMenu();
-        }
-      });
+  <div class="about-grid">
+    <div class="about-wrap">
+      <p class="about-para reveal d1">
+        <strong>I'm Rutuj Dhodapkar</strong>, a student deeply focused on Artificial Intelligence, Machine Learning, and Deep Learning — with a commitment to contributing to the theoretical and algorithmic foundations of intelligent systems.
+      </p>
+      <p class="about-para reveal d2">
+        My academic interests span learning theory, optimization, model behavior, and the design of systems capable of <strong>adapting, reasoning, and making decisions</strong> with reliability and precision. AI will contribute to the world in many ways, but the gains to quality of life from AI driving faster scientific progress and increased productivity will be enormous.
+      </p>
+      <p class="about-para reveal d3">
+        I see AI not as a product tech, but as one of the most important <strong>research and scientific frontiers</strong> of our time — demanding clarity, mathematical depth, and long-term thinking. I'm driven by a desire to ask foundational questions, build rigorous solutions, and contribute to research that shapes the future of intelligence itself.
+      </p>
+      <p class="about-para reveal d4" style="color:var(--red);font-style:italic;font-size:13px">
+        We are past the event horizon. The takeoff has started.
+      </p>
+      <div class="about-chips reveal d5">
+        <span class="chip">English · Professional</span>
+        <span class="chip">Hindi · Native</span>
+        <span class="chip">Marathi · Native</span>
+        <span class="chip">Pune, India</span>
+        <span class="chip">Crypto Trader</span>
+        <span class="chip">GSoC 2026</span>
+      </div>
+    </div>
 
-      document.getElementById('menuHomeBtn').onclick = function(e) {
-        closeMenu();
-      };
-      document.getElementById('menuAboutBtn').onclick = function(e) {
-        closeMenu();
-        window.location.href = "detail.html";
-      };
-      document.getElementById('menuProjectsBtn').onclick = function(e) {
-        closeMenu();
-        var overlay = document.getElementById('projectTransitionOverlay');
-        if (overlay) {
-          overlay.classList.add('active');
-          setTimeout(function() {
-            window.location.href = "detail.html";
-          }, 650);
-        } else {
-          window.location.href = "detail.html";
-        }
-      };
-      document.getElementById('menuContactBtn').onclick = function(e) {
-        closeMenu();
-        window.location.href = "contact.html";
-      };
-    })();
+    <div class="about-side reveal-left d2">
+      <div class="about-quote">
+        "Building AI to Help Humanity — not just to hype."
+      </div>
+      <div style="border:1px solid var(--line);border-radius:4px;overflow:hidden">
+        <div style="padding:1.25rem;border-bottom:1px solid var(--line);background:var(--cream)">
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;color:var(--red);margin-bottom:0.5rem;text-transform:uppercase">Currently</div>
+          <div style="font-size:13px;color:var(--ink2)">B.Tech AI/ML at JSPM University, Pune</div>
+        </div>
+        <div style="padding:1.25rem;border-bottom:1px solid var(--line);background:var(--cream)">
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;color:var(--red);margin-bottom:0.5rem;text-transform:uppercase">Focus</div>
+          <div style="font-size:13px;color:var(--ink2)">Autonomous AI Agents · On-device LLMs · Agentic Systems</div>
+        </div>
+        <div style="padding:1.25rem;background:var(--cream)">
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;color:var(--red);margin-bottom:0.5rem;text-transform:uppercase">Exploring</div>
+          <div style="font-size:13px;color:var(--ink2)">GSoC 2026 · Gemini CLI · Trading Agents</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    window.addEventListener('DOMContentLoaded', function() {
-      const blackFade = document.getElementById('blackFadeOverlay');
-      setTimeout(() => {
-        blackFade.classList.add('transparent');
-      }, 10);
-      setTimeout(() => {
-        blackFade.style.display = 'none';
-      }, 1010);
-    });
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+  <div class="section-label">
+    <span class="section-num">01</span>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title reveal">EXPERIENCE</h2>
 
-    window.addEventListener('DOMContentLoaded', function() {
-      const blur = document.getElementById('blurOverlay');
-      setTimeout(() => {
-        blur.classList.add('hide');
-      }, 900);
-      setTimeout(() => {
-        blur.style.display = 'none';
-      }, 2200);
-    });
+  <div>
+    <div class="exp-item reveal d1">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Data Science & AI Intern</div>
+          <div class="exp-co">Syntecxhub · Remote</div>
+        </div>
+        <div class="exp-period">Early 2026</div>
+      </div>
+      <p class="exp-body">Contributed to AI and data science pipelines, working on intelligent system design and production-grade ML workflows in a fully remote capacity.</p>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">AI Systems</span>
+        <span class="tag">Data Science</span><span class="tag">ML Pipelines</span>
+      </div>
+    </div>
 
-    fetch('https://raw.githubusercontent.com/rutujdhodapkar/Profile/main/data.csv', {cache: "no-store"})
-      .then(response => {
-        if (!response.ok) {
-          window.location.href = "error.html";
-          throw new Error('Network response was not ok');
-        }
-        return response.text();
-      })
-      .then(data => {
-        const rows = data.split('\n').filter(row => row.trim().length > 0);
-        const headers = rows[0].split(',');
-        const nameIndex = headers.indexOf('name');
-        const mdesc1Index = headers.indexOf('mdesc1');
-        if (nameIndex === -1 || rows.length < 2) {
-          window.location.href = "error.html";
-          return;
-        }
-        let nameToType = "";
-        let mdesc1 = "";
-        for (let i = 1; i < rows.length; ++i) {
-          const cols = rows[i].split(',');
-          if (cols.length > nameIndex) {
-            nameToType = cols[nameIndex].trim();
-            if (mdesc1Index !== -1 && cols.length > mdesc1Index) {
-              mdesc1 = cols[mdesc1Index].trim();
-            }
-            break;
-          }
-        }
-        if (!nameToType) {
-          window.location.href = "error.html";
-          return;
-        }
+    <div class="exp-item reveal d2">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">NLP & Backend Intern</div>
+          <div class="exp-co">V Analytics · Remote</div>
+        </div>
+        <div class="exp-period">2025</div>
+      </div>
+      <p class="exp-body">Built NLP pipelines and REST APIs. Performed EDA and delivered end-to-end solutions integrating language models into production systems.</p>
+      <div class="tags">
+        <span class="tag">NLP</span><span class="tag">REST APIs</span>
+        <span class="tag">EDA</span><span class="tag">Python</span><span class="tag">LLMs</span>
+      </div>
+    </div>
 
-        const typedNameElem = document.getElementById('typed-name');
-        const caretElem = document.querySelector('.typing-caret');
-        let idx = 0;
-        let caretStableTimeout = null;
-        let caretHideTimeout = null;
+    <div class="exp-item reveal d3">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Student Ambassador</div>
+          <div class="exp-co">OpenAI Codex & Google Gemini</div>
+        </div>
+        <div class="exp-period">2025–26</div>
+      </div>
+      <p class="exp-body">Dual campus ambassador for OpenAI Codex and Google Gemini — bridging cutting-edge AI tools with the student developer community at JSPM University.</p>
+      <div class="tags">
+        <span class="tag">OpenAI</span><span class="tag">Google Gemini</span>
+        <span class="tag">Dev Advocacy</span><span class="tag">Community</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-        const baseDelays = Array.from(nameToType).map(char => char === ' ' ? 920 : 300);
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-label">
+    <span class="section-num">02</span>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title reveal">PROJECTS</h2>
 
-        function setCaretStable() {
-          caretElem.style.animation = "none";
-          caretElem.style.opacity = "1";
-        }
-        function setCaretBlinking() {
-          caretElem.style.animation = "blink-caret 1s steps(1) infinite";
-          caretElem.style.opacity = "1";
-        }
-        function hideCaret() {
-          caretElem.style.animation = "none";
-          caretElem.style.opacity = "0";
-        }
+  <div class="proj-grid">
 
-        function typeName() {
-          if (idx <= nameToType.length) {
-            typedNameElem.textContent = nameToType.slice(0, idx);
-            if (idx < nameToType.length) {
-              setCaretStable();
-              if (caretStableTimeout) clearTimeout(caretStableTimeout);
-              caretStableTimeout = setTimeout(setCaretBlinking, 500);
+    <a class="proj-card reveal d1" href="https://rutujproject1-czzltsg8apdmaxpiz4xgzj.streamlit.app/" target="_blank">
+      <img class="proj-img" src="https://images.unsplash.com/photo-1525116848140-a3b75fdf4eb4?q=80&w=600&auto=format&fit=crop" alt="Emotion Detection" loading="lazy">
+      <div class="proj-head">
+        <div class="proj-name">Emotion Detection AI</div>
+        <div class="proj-arrow">↗</div>
+      </div>
+      <div class="proj-type">Machine Learning · ANN · 2024</div>
+      <p class="proj-desc">Deep Learning model that detects emotions from input text. Fast, high parameters, high accuracy.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">ANN</span><span class="tag">Deep Learning</span></div>
+    </a>
 
-              let delay = baseDelays[idx] || 300;
-              idx++;
-              setTimeout(typeName, delay);
-            } else {
-              setCaretBlinking();
-              if (caretHideTimeout) clearTimeout(caretHideTimeout);
-              caretHideTimeout = setTimeout(hideCaret, 5000);
-            }
-          }
-        }
-        setTimeout(typeName, 700);
+    <a class="proj-card reveal d2" href="https://rutujprojectnotdeployed.netlify.app/" target="_blank">
+      <img class="proj-img" src="https://images.unsplash.com/photo-1669026219505-0545ae1dabf5?q=80&w=600&auto=format&fit=crop" alt="Chess AI" loading="lazy">
+      <div class="proj-head">
+        <div class="proj-name">Real-Time Chess Review AI</div>
+        <div class="proj-arrow">↗</div>
+      </div>
+      <div class="proj-type">Artificial Intelligence · CNN · 2024</div>
+      <p class="proj-desc">AI-based project that detects and classifies chess moves in real-time using deep learning and generates the best move as output.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">CNN</span><span class="tag">Computer Vision</span></div>
+    </a>
 
-        if (mdesc1) {
-          const mdesc1Elem = document.getElementById('mdesc1');
-          mdesc1Elem.textContent = mdesc1;
-          mdesc1Elem.style.display = '';
-        }
-      })
-      .catch(error => {
-        window.location.href = "error.html";
-      });
+    <a class="proj-card reveal d3" href="https://tictactoerutuj.netlify.app/" target="_blank">
+      <img class="proj-img" src="https://images.unsplash.com/photo-1539900492308-6bcbb7b54a19?q=80&w=600&auto=format&fit=crop" alt="Tic-tac-toe" loading="lazy">
+      <div class="proj-head">
+        <div class="proj-name">AI Tic-Tac-Toe</div>
+        <div class="proj-arrow">↗</div>
+      </div>
+      <div class="proj-type">Machine Learning · RNN/ANN · 2024</div>
+      <p class="proj-desc">AI that plays Tic-Tac-Toe and never lets you win. Fast. Cannot be defeated by humans.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">JS</span><span class="tag">RNN</span><span class="tag">ANN</span></div>
+    </a>
 
-    setTimeout(function() {
-      var overlay = document.getElementById('rain-pattern-overlay');
-      if (overlay) {
-        if (!overlay.hasChildNodes()) {
-          var obj = document.createElement('object');
-          obj.type = 'text/html';
-          obj.data = 'animations/rain pattern.html';
-          obj.style.width = '100vw';
-          obj.style.height = '100vh';
-          obj.style.pointerEvents = 'none';
-          obj.style.display = 'block';
-          obj.style.position = 'absolute';
-          obj.style.top = '0';
-          obj.style.left = '0';
-          overlay.appendChild(obj);
-        }
-        overlay.classList.add('active');
-      }
-    }, 5000);
-  </script>
+    <a class="proj-card reveal d4" href="https://diabetes-prediction-main-600million.streamlit.app/" target="_blank">
+      <img class="proj-img" src="https://images.ctfassets.net/kftzwdyauwt9/i79hUWh2fSdSUgwRpESz3/2c8fb076268951d1bf68988736ccd4bd/oai_Company_WatershedBlog_16.9.png?w=600&q=80&fm=webp" alt="Diabetes Detection" loading="lazy">
+      <div class="proj-head">
+        <div class="proj-name">Diabetes Detection AI</div>
+        <div class="proj-arrow">↗</div>
+      </div>
+      <div class="proj-type">Deep Learning · ANN/DNN · 2025</div>
+      <p class="proj-desc">PyTorch deep learning model to predict diabetes based on medical data. High accuracy, high performance.</p>
+      <div class="tags"><span class="tag">PyTorch</span><span class="tag">ANN</span><span class="tag">DNN</span><span class="tag">Python</span></div>
+    </a>
+
+    <a class="proj-card reveal d5" href="https://object-detection-basic-vhs0.onrender.com/" target="_blank">
+      <img class="proj-img" src="https://images.unsplash.com/photo-1667287660813-668f9f7700b9?q=80&w=600&auto=format&fit=crop" alt="Object Detection" loading="lazy">
+      <div class="proj-head">
+        <div class="proj-name">Object Detection AI</div>
+        <div class="proj-arrow">↗</div>
+      </div>
+      <div class="proj-type">Computer Vision · CNN · 2025</div>
+      <p class="proj-desc">AI model that detects objects from input images and real-time camera. High performance, real-time detection.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">CNN</span><span class="tag">Real-time</span><span class="tag">CV</span></div>
+    </a>
+
+    <a class="proj-card reveal d6" href="https://image-hosting-rutujdhodapkar.streamlit.app/" target="_blank">
+      <img class="proj-img" src="https://i0.wp.com/thetechhacker.com/wp-content/uploads/2017/11/Best-Free-Image-Hosting-Websites.jpg?w=600&ssl=1" alt="Image Hosting" loading="lazy">
+      <div class="proj-head">
+        <div class="proj-name">Cloud Image Hosting</div>
+        <div class="proj-arrow">↗</div>
+      </div>
+      <div class="proj-type">Cloud Computing · 2025</div>
+      <p class="proj-desc">Public image hosting on cloud — import images as direct links, preventing local storage dependency for development.</p>
+      <div class="tags"><span class="tag">Cloud</span><span class="tag">Python</span><span class="tag">Streamlit</span></div>
+    </a>
+
+    <a class="proj-card reveal d1" href="https://rutujprojectunderdevelopment.netlify.app/" target="_blank">
+      <img class="proj-img" src="https://images.pexels.com/photos/268415/pexels-photo-268415.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Everything AI" loading="lazy">
+      <div class="proj-head">
+        <div class="proj-name">Everything AI</div>
+        <div class="proj-arrow">↗</div>
+      </div>
+      <div class="proj-type">AGI · LLMs · Under Development</div>
+      <p class="proj-desc">AI which can execute all human tasks on computers. Everything. The endgame project.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">Java</span><span class="tag">JS</span><span class="tag">AGI</span><span class="tag">LLM</span></div>
+    </a>
+
+    <a class="proj-card reveal d2" href="https://rutujprojectunderdevelopment.netlify.app/" target="_blank">
+      <img class="proj-img" src="https://images.pexels.com/photos/32324106/pexels-photo-32324106/free-photo-of-serene-blue-water-ripples-at-daylight.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Text to Website" loading="lazy">
+      <div class="proj-head">
+        <div class="proj-name">Text to Website AI</div>
+        <div class="proj-arrow">↗</div>
+      </div>
+      <div class="proj-type">AI · Web Development · Under Development</div>
+      <p class="proj-desc">AI which makes a whole dynamic website using just a single small prompt.</p>
+      <div class="tags"><span class="tag">AI</span><span class="tag">Web Gen</span><span class="tag">LLM</span></div>
+    </a>
+
+  </div>
+
+  <!-- Other Projects -->
+  <div style="margin-top:1.5rem">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:1rem">Also Built</div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem">
+      <a href="https://chessbot1.netlify.app/" target="_blank" class="btn btn-outline reveal d1">Chess Bot ↗</a>
+      <a href="https://rutujprojectnotdeployed.netlify.app/" target="_blank" class="btn btn-outline reveal d2">Self-Replicating Virus ↗</a>
+      <a href="https://hashnode.com/@rutujdhodapkar" target="_blank" class="btn btn-outline reveal d3">Blogs ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="section-label">
+    <span class="section-num">03</span>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title reveal">SKILLS</h2>
+  <div class="skills-wrap reveal-scale">
+    <div class="skill-group">
+      <div class="sg-title">AI / ML</div>
+      <div class="sg-items">
+        <span class="sg-item">PyTorch</span>
+        <span class="sg-item">TensorFlow</span>
+        <span class="sg-item">Scikit-learn</span>
+        <span class="sg-item">ANN / CNN / RNN / DNN</span>
+        <span class="sg-item">LLM Fine-tuning</span>
+        <span class="sg-item">RAG Systems</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="sg-title">Agentic AI</div>
+      <div class="sg-items">
+        <span class="sg-item">Ollama / llama.cpp</span>
+        <span class="sg-item">Gemma · LLaMA</span>
+        <span class="sg-item">LangChain</span>
+        <span class="sg-item">Playwright</span>
+        <span class="sg-item">On-device LLM</span>
+        <span class="sg-item">Browser Agents</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="sg-title">Backend & Web</div>
+      <div class="sg-items">
+        <span class="sg-item">Python</span>
+        <span class="sg-item">FastAPI · Flask</span>
+        <span class="sg-item">REST APIs</span>
+        <span class="sg-item">WebSocket</span>
+        <span class="sg-item">Node.js</span>
+        <span class="sg-item">Streamlit</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="sg-title">Cloud & Tools</div>
+      <div class="sg-items">
+        <span class="sg-item">AWS (ML Specialty)</span>
+        <span class="sg-item">Git · GitHub</span>
+        <span class="sg-item">Docker</span>
+        <span class="sg-item">Linux · Bash</span>
+        <span class="sg-item">Termux · ADB</span>
+        <span class="sg-item">Arduino · C++</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section" id="education">
+  <div class="section-label">
+    <span class="section-num">04</span>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title reveal">EDUCATION</h2>
+  <div class="edu-wrap reveal">
+    <div class="edu-item">
+      <div class="edu-yr">'26</div>
+      <div>
+        <div class="edu-degree">B.Tech — Artificial Intelligence & Machine Learning</div>
+        <div class="edu-school">JSPM University, Pune · Lateral Entry</div>
+        <div class="edu-sub">2023 – 2026</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-yr">'23</div>
+      <div>
+        <div class="edu-degree">Diploma — Computer Engineering</div>
+        <div class="edu-school">K.K. Wagh Polytechnic, Nashik</div>
+        <div class="edu-sub">2020 – 2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="section" id="achievements">
+  <div class="section-label">
+    <span class="section-num">05</span>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title reveal">WINS</h2>
+  <div class="ach-grid">
+    <div class="ach-item reveal d1">
+      <div class="ach-rank">1ST</div>
+      <div class="ach-title">National Hackathon</div>
+      <div class="ach-sub">Sanjivni University · 2025</div>
+    </div>
+    <div class="ach-item reveal d2">
+      <div class="ach-rank">1ST</div>
+      <div class="ach-title">Paper Presentation</div>
+      <div class="ach-sub">State-level · 2025</div>
+    </div>
+    <div class="ach-item reveal d3">
+      <div class="ach-rank">2ND</div>
+      <div class="ach-title">State Hackathon</div>
+      <div class="ach-sub">Jondhale Polytechnic · 2025</div>
+    </div>
+    <div class="ach-item reveal d4">
+      <div class="ach-rank">×2</div>
+      <div class="ach-title">AI Ambassador</div>
+      <div class="ach-sub">OpenAI Codex + Google Gemini</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="section" id="certifications">
+  <div class="section-label">
+    <span class="section-num">06</span>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title reveal">CERTS</h2>
+  <div class="cert-grid">
+    <a class="cert-item reveal d1" href="https://www.credly.com/badges/c82cd67d-8903-4611-bc52-b71b7fc784b3/public_url" target="_blank">
+      <img class="cert-img" src="https://images.credly.com/size/680x680/images/e3541a0c-dd4a-4820-8052-5001006efc85/blob" alt="AWS cert">
+      <div>
+        <div class="cert-name">AWS Cloud Foundations</div>
+        <div class="cert-by">Amazon Web Services · 2024</div>
+      </div>
+    </a>
+    <a class="cert-item reveal d2" href="https://www.credly.com/badges/9fdff037-5639-42ee-9f8b-85191b0bb2cc/public_url/" target="_blank">
+      <img class="cert-img" src="https://images.credly.com/size/680x680/images/247efe36-9fa6-4209-ad56-0fd522283872/blob" alt="AWS ML cert">
+      <div>
+        <div class="cert-name">AWS ML Foundations</div>
+        <div class="cert-by">Amazon Web Services · 2024</div>
+      </div>
+    </a>
+    <a class="cert-item reveal d3" href="https://www.credly.com/badges/9fdff037-5639-42ee-9f8b-85191b0bb2cc/public_url/" target="_blank">
+      <img class="cert-img" src="https://images.credly.com/size/680x680/images/73e4a58b-a8ef-41a3-a7db-9183dd269882/image.png" alt="AWS cert 2">
+      <div>
+        <div class="cert-name">AWS Cloud Foundations II</div>
+        <div class="cert-by">Amazon Web Services · 2024</div>
+      </div>
+    </a>
+    <a class="cert-item reveal d4" href="https://www.credly.com/badges/9fdff037-5639-42ee-9f8b-85191b0bb2cc/public_url/" target="_blank">
+      <img class="cert-img" src="https://images.credly.com/size/680x680/images/51984979-f759-49f0-8bb3-5310d364fdbe/image.png" alt="AWS ML cert 2">
+      <div>
+        <div class="cert-name">AWS ML Foundations II</div>
+        <div class="cert-by">Amazon Web Services · 2024</div>
+      </div>
+    </a>
+    <div class="cert-item reveal d5" style="cursor:default">
+      <div style="width:40px;height:40px;border-radius:4px;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🔥</div>
+      <div>
+        <div class="cert-name">PyTorch Developer</div>
+        <div class="cert-by">IBM</div>
+      </div>
+    </div>
+    <div class="cert-item reveal d6" style="cursor:default">
+      <div style="width:40px;height:40px;border-radius:4px;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">💻</div>
+      <div>
+        <div class="cert-name">Git & Java Training</div>
+        <div class="cert-by">IIT Bombay</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-label">
+    <span class="section-num">07</span>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title reveal">CONTACT</h2>
+  <div class="contact-wrap reveal">
+    <a href="mailto:rutujdhodapkar@gmail.com" class="contact-row">
+      <span class="c-type">Email</span>
+      <span class="c-val">rutujdhodapkar@gmail.com</span>
+      <span class="c-arrow">↗</span>
+    </a>
+    <a href="https://github.com/rutujdhodapkar" target="_blank" class="contact-row">
+      <span class="c-type">GitHub</span>
+      <span class="c-val">github.com/rutujdhodapkar</span>
+      <span class="c-arrow">↗</span>
+    </a>
+    <a href="https://linkedin.com/rutujdhodapkar" target="_blank" class="contact-row">
+      <span class="c-type">LinkedIn</span>
+      <span class="c-val">linkedin.com/in/rutujdhodapkar</span>
+      <span class="c-arrow">↗</span>
+    </a>
+    <a href="https://instagram.com/rutujdhodapkar/" target="_blank" class="contact-row">
+      <span class="c-type">Instagram</span>
+      <span class="c-val">@rutujdhodapkar</span>
+      <span class="c-arrow">↗</span>
+    </a>
+    <a href="https://x.com/rutujdhodapkar/" target="_blank" class="contact-row">
+      <span class="c-type">X / Twitter</span>
+      <span class="c-val">@rutujdhodapkar</span>
+      <span class="c-arrow">↗</span>
+    </a>
+    <a href="https://hashnode.com/@rutujdhodapkar" target="_blank" class="contact-row">
+      <span class="c-type">Blog</span>
+      <span class="c-val">hashnode.com/@rutujdhodapkar</span>
+      <span class="c-arrow">↗</span>
+    </a>
+  </div>
+</section>
+
+<footer style="border-top:1px solid var(--line)">
+  <div class="footer-inner">
+    <span class="foot-copy">© 2026 Rutuj Dhodapkar · Pune, India</span>
+    <span class="foot-tag">Student Learning Artificial Intelligence</span>
+  </div>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+const cur=document.getElementById('cur');
+const curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+function animRing(){
+  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+  curR.style.left=rx+'px';curR.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.classList.add('expanded');curR.classList.add('expanded')});
+  el.addEventListener('mouseleave',()=>{cur.classList.remove('expanded');curR.classList.remove('expanded')});
+});
+
+/* ── MOBILE MENU ── */
+let open=false;
+function toggleMenu(){
+  open=!open;
+  const m=document.getElementById('mobMenu');
+  m.style.display=open?'flex':'none';
+  const h1=document.getElementById('h1'),h2=document.getElementById('h2'),h3=document.getElementById('h3');
+  if(open){h1.style.transform='rotate(45deg) translate(4px,4.5px)';h2.style.opacity='0';h3.style.transform='rotate(-45deg) translate(4px,-4.5px)'}
+  else{h1.style.transform='';h2.style.opacity='1';h3.style.transform=''}
+}
+function closeMenu(){
+  open=false;
+  document.getElementById('mobMenu').style.display='none';
+  ['h1','h2','h3'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.style.transform='';if(i===1)el.style.opacity='1';
+  });
+}
+
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-scale').forEach(el=>obs.observe(el));
+
+/* ── ACTIVE NAV ── */
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur2='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur2=s.getAttribute('id')});
+  navLinks.forEach(a=>{
+    a.style.color=a.getAttribute('href')==='#'+cur2?'var(--red)':'';
+  });
+},{ passive:true });
+</script>
 </body>
-
-<style>
-  .custom-cursor {
-    position: relative;
-    display: inline-block;
-    width: 220px;
-  }
-  .custom-cursor input {
-    background: transparent;
-    border: none;
-    color: #fff;
-    outline: none;
-    width: 100%;
-    font-family: 'BitmapFont', Arial, sans-serif;
-    font-size: 0.9rem;
-    margin-left: 5px;
-    caret-color: transparent;
-    position: relative;
-    z-index: 1;
-  }
-  .typing-cursor {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 1em;
-    width: 2px;
-    background: #fff;
-    animation: blink-cursor 1s steps(1) infinite;
-    pointer-events: none;
-    z-index: 2;
-  }
-  @keyframes blink-cursor {
-    0%, 49% { opacity: 1; }
-    50%, 100% { opacity: 0; }
-  }
-</style>
-
-<script>
-  (function() {
-    let buffer = '';
-    let timeout = null;
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key.length === 1 && /^[a-zA-Z]$/.test(e.key)) {
-        buffer += e.key.toLowerCase();
-        if (buffer.length > 4) buffer = buffer.slice(-4);
-
-        if (buffer === 'help') {
-          window.location.href = 'resume.html';
-          buffer = '';
-        }
-
-        clearTimeout(timeout);
-        timeout = setTimeout(() => { buffer = ''; }, 2000);
-      }
-    });
-  })();
-</script>
-
-<style>
-  ::-webkit-scrollbar {
-    display: none;
-    width: 0 !important;
-    background: transparent !important;
-  }
-  html {
-    scrollbar-width: none !important;
-    -ms-overflow-style: none;
-  }
-  body {
-    -ms-overflow-style: none;
-    scrollbar-width: none !important;
-  }
-  ::selection {
-    background: #fff;
-    color: #000;
-  }
-</style>
 </html>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&display=swap" rel="stylesheet">
-<style>
-  #fullscreen-black-box {
-    position: fixed;
-    left: 0;
-    bottom: -100vh;
-    width: 100vw;
-    height: 100vh;
-    background: #ffffff;
-    z-index: 999999;
-    transition: bottom 0.7s cubic-bezier(0.77,0,0.175,1);
-    pointer-events: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  #fullscreen-black-box.active {
-    bottom: 0;
-  }
-  #ai-message {
-    color: #fff;
-    font-size: 5vw;
-    font-family: 'Inter', 'Arial', sans-serif;
-    font-weight: 100;
-    letter-spacing: 0.04em;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(60px) scale(0.98);
-    transition:
-      opacity 0.7s cubic-bezier(0.77,0,0.175,1),
-      transform 0.7s cubic-bezier(0.77,0,0.175,1);
-    min-height: 1.2em;
-    line-height: 1.1;
-    white-space: pre-line;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    will-change: opacity, transform;
-    user-select: none;
-  }
-  #fullscreen-black-box.active #ai-message {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    transition-delay: 0.1s;
-  }
-  #fullscreen-black-box:not(.active) #ai-message {
-    opacity: 0;
-    transform: translateY(-60px) scale(0.98);
-    transition-delay: 0s;
-  }
-  .typing-cursor {
-    display: inline-block;
-    width: 1ch;
-    animation: blink 1s steps(1) infinite;
-    color: #fff;
-  }
-  @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-  }
-  @media (max-width: 600px) {
-    #ai-message {
-      font-size: 7vw;
-    }
-  }
-</style>
-
-<div id="fullscreen-black-box">
-  <span id="ai-message"></span>
-</div>
-<script>
-  (function() {
-    let box = document.getElementById('fullscreen-black-box');
-    let messageEl = document.getElementById('ai-message');
-    let lastScroll = window.scrollY;
-    let ticking = false;
-    const message = "";
-    let typingTimeout;
-    let cursorSpan;
-    let redirectTimeout = null;
-    let hasRedirected = false;
-
-    function showMessageWithTyping() {
-      if (!messageEl) return;
-      messageEl.textContent = '';
-      if (cursorSpan) cursorSpan.remove();
-      let i = 0;
-      function typeChar() {
-        if (i <= message.length) {
-          messageEl.textContent = message.slice(0, i);
-          if (!cursorSpan) {
-            cursorSpan = document.createElement('span');
-            cursorSpan.className = 'typing-cursor';
-            cursorSpan.textContent = '|';
-            messageEl.appendChild(cursorSpan);
-          }
-          i++;
-          typingTimeout = setTimeout(typeChar, 45);
-        } else {
-          if (cursorSpan) cursorSpan.remove();
-        }
-      }
-      typeChar();
-    }
-
-    function clearMessage() {
-      if (typingTimeout) clearTimeout(typingTimeout);
-      if (messageEl) messageEl.textContent = '';
-      if (cursorSpan) cursorSpan.remove();
-    }
-
-    function onScroll() {
-      let currentScroll = window.scrollY;
-      if (currentScroll > lastScroll) {
-        box.classList.add('active');
-        setTimeout(showMessageWithTyping, 120);
-      } else if (currentScroll < lastScroll) {
-        box.classList.remove('active');
-        clearMessage();
-        if (redirectTimeout) {
-          clearTimeout(redirectTimeout);
-          redirectTimeout = null;
-        }
-      }
-      lastScroll = currentScroll;
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', function() {
-      if (!ticking) {
-        window.requestAnimationFrame(onScroll);
-        ticking = true;
-      }
-    });
-
-    box.addEventListener('transitionend', function(e) {
-      if (
-        e.propertyName === 'bottom' &&
-        box.classList.contains('active') &&
-        !hasRedirected
-      ) {
-        redirectTimeout = setTimeout(function() {
-          hasRedirected = true;
-          window.location.href = "detail.html";
-        }, 500);
-      }
-    });
-
-    clearMessage();
-  })();
-</script>
-
-<style>
-  @media (max-width: 1370px) {
-    .side-image-container {
-      display: none !important;
-    }
-  }
-</style>
-
-<div class="side-image-container" style="position: fixed; top: 50%; right: 6%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center; z-index: 12;">
-  <img src="svg\img.png" alt="Image" style="max-height: 700px; max-width: 500px; display: block;">
-</div>
